@@ -1,0 +1,29 @@
+#!/bin/sh
+rm -rf lua-5.3.4_kcc_test
+mkdir lua-5.3.4_kcc_test
+cd lua-5.3.4_kcc_test
+STRTDIR=$(pwd)
+wget http://www.lua.org/ftp/lua-5.3.4.tar.gz
+tar -xvzf lua-5.3.4.tar.gz
+rm lua-5.3.4.tar.gz
+cd $STRTDIR/lua-5.3.4
+make linux CC=kcc LD=kcc 2>&1 | tee kcc_make_out.txt
+kcc -d -O2 -Wall -Wextra -DLUA_COMPAT_5_2 -DLUA_USE_LINUX -c -o src/luac.o src/luac.c 2>&1 | tee kccout.txt
+mkdir kcc_compile_out
+mv kcc_make_out.txt kcc_compile_out
+mv kccout.txt kcc_compile_out
+cd $STRTDIR
+wget https://www.lua.org/tests/lua-5.3.4-tests.tar.gz
+tar -xvzf lua-5.3.4-tests.tar.gz
+rm lua-5.3.4-tests.tar.gz
+cd $STRTDIR/lua-5.3.4-tests
+$STRTDIR/lua-5.3.4/src/lua all.lua 2>&1 | tee kcc_runtime.txt
+mkdir kcc_runtime_out
+mv config kcc_runtime_out
+mv kcc_runtime.txt kcc_runtime_out
+cd $STRTDIR
+mkdir kcc_all
+mv $STRTDIR/lua-5.3.4/kcc_compile_out kcc_all
+mv $STRTDIR/lua-5.3.4-tests/kcc_runtime_out kcc_all
+tar -czvf kcc_all.tar.gz kcc_all
+cd $STRTDIR/..
