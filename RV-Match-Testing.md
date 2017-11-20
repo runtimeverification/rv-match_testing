@@ -1,15 +1,17 @@
 
 
-| project | touch date | compile [gcc] | test [gcc] | compile [kcc] | test [kcc] | issue [open] | issue [closed]
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| bind9 | ? | ✅ |❓| ❌ | ❌ |[548](https://github.com/runtimeverification/rv-match/issues/548)|.
-| coreutils | ? | ✅ |❓| ❌ | ❌ |[559](https://github.com/runtimeverification/rv-match/issues/559), [570](https://github.com/runtimeverification/rv-match/issues/570)|.
-| lua-5.3.4 | 20 Nov 2017 | ✅ |❓| ✅ | ❌ | [601](https://github.com/runtimeverification/rv-match/issues/601)|.
-| mbedtls | ? | ✅ |❓| ❌ | ❌ | [558](https://github.com/runtimeverification/rv-match/issues/558)|.
-| openssl | ? | ✅ |❓|❌|❌| [547](https://github.com/runtimeverification/rv-match/issues/547)|.
+| project | touch date | compile [gcc] | test [gcc] | compile [kcc] | test [kcc] | issue [open] | issue [closed] | exists standalone script |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| bind9 | ? | ✅ |❓| ❌ | ❌ |[548](https://github.com/runtimeverification/rv-match/issues/548)|.|none
+| coreutils | ? | ✅ |❓| ❌ | ❌ |[559](https://github.com/runtimeverification/rv-match/issues/559), [570](https://github.com/runtimeverification/rv-match/issues/570)|.|none
+| lua-5.3.4 | 20 Nov 2017 | ✅ |❓| ✅ | ❌ | [601](https://github.com/runtimeverification/rv-match/issues/601)|.|see next table
+| mbedtls | ? | ✅ |❓| ❌ | ❌ | [558](https://github.com/runtimeverification/rv-match/issues/558)|.|none
+| openssl | ? | ✅ |❓|❌|❌| [547](https://github.com/runtimeverification/rv-match/issues/547)|.|none
 
 
-
+| project | standalone script |
+| --- | --- |
+| lua-5.3.4 | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/lua-5.3.4_kcc_test.sh; sh lua-5.3.4_kcc_test.sh`
 
 **Legend:**
 
