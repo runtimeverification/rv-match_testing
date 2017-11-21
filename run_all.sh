@@ -1,10 +1,6 @@
 #!/bin/bash 
-DIR=$(dirname $0)
-for x in $(ls $DIR/*.sh | sort)
+for x in $(ls *.sh | grep -v $(basename $0) | sort)
 do
-    if [ "$x" != "$DIR/$0" ]
-    then
-        echo ==== $x
-        bash $x
-    fi
+    echo ==== $x
+    # bash $x
 done
