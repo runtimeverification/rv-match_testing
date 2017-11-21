@@ -5,7 +5,7 @@
 | bind9 | ? | ✅ |❓| ❌ | ❌ |[548](https://github.com/runtimeverification/rv-match/issues/548)|.|none
 | coreutils | ? | ✅ |❓| ❌ | ❌ |[559](https://github.com/runtimeverification/rv-match/issues/559), [570](https://github.com/runtimeverification/rv-match/issues/570)|.|none
 | lua-5.3.4 | 20 Nov 2017 | ✅ |❓| ✅ | ❌ | [601](https://github.com/runtimeverification/rv-match/issues/601)|.|see next table
-| mbedtls | ? | ✅ |❓| ❌ | ❌ | [558](https://github.com/runtimeverification/rv-match/issues/558)|.|none
+| mbedtls | ? | ✅ |❓| ❌ | ❌ | [558](https://github.com/runtimeverification/rv-match/issues/558)|[550](https://github.com/runtimeverification/rv-match/issues/550)|none
 | openssl | ? | ✅ |❓|❌|❌| [547](https://github.com/runtimeverification/rv-match/issues/547)|.|none
 
 
