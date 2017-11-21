@@ -2,7 +2,9 @@ rm -rf openssl_kcc_test
 mkdir openssl_kcc_test
 cd openssl_kcc_test
 STRTDIR=$(pwd)
-git clone https://github.com/openssl/openssl.git
+if [[ ! -d openssl ]]; then
+   git clone https://github.com/openssl/openssl.git
+fi
 cd openssl
 git checkout 7a908204ed3afe1379151c6d090148edb2fcc87e
 CC=kcc LD=kcc ./config |& tee kcc_config_out.txt

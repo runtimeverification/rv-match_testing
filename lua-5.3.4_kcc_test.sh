@@ -1,8 +1,10 @@
-rm -rf lua-5.3.4_kcc_test
-mkdir lua-5.3.4_kcc_test
+# rm -rf lua-5.3.4_kcc_test
+mkdir -p lua-5.3.4_kcc_test
 cd lua-5.3.4_kcc_test
 STRTDIR=$(pwd)
-wget http://www.lua.org/ftp/lua-5.3.4.tar.gz
+if [[ ! -f lua-5.3.4.tar.gz ]]; then
+  wget http://www.lua.org/ftp/lua-5.3.4.tar.gz
+fi
 tar -xvzf lua-5.3.4.tar.gz
 rm lua-5.3.4.tar.gz
 cd $STRTDIR/lua-5.3.4
