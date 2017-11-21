@@ -1,9 +1,10 @@
-#! /bin/bash                                                                    
+#!/bin/bash 
 DIR=$(dirname $0)
-for x in $DIR/*.sh
+for x in $(ls $DIR/*.sh | sort)
 do
-        if [ "$x" != "$DIR/$0" ]
-        then
-            sh $x
-        fi
+    if [ "$x" != "$DIR/$0" ]
+    then
+        echo ==== $x
+        bash $x
+    fi
 done
