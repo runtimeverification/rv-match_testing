@@ -11,7 +11,7 @@ kcc -d -Wall -W -Wdeclaration-after-statement -I../include -D_FILE_OFFSET_BITS=6
 mkdir kcc_compile_out
 mv kcc_make_out.txt kcc_compile_out/
 mv kcc_out.txt kcc_compile_out/
-mv ./library/config kcc_compile_out/
+mv library/config kcc_compile_out/
 cd $STRTDIR
 mv mbedtls-2.4.0/kcc_compile_out/ .
 tar -czvf kcc_compile_out.tar.gz kcc_compile_out
