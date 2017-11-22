@@ -1,4 +1,5 @@
 #!/bin/bash
+#!/bin/bash
 rm -rf openssl_kcc_test
 mkdir openssl_kcc_test
 cd openssl_kcc_test

@@ -1,13 +1,7 @@
-<<<<<<< HEAD
 #!/bin/bash
-rm -rf coreutils-8.28_kcc_test
-mkdir coreutils-8.28_kcc_test
-cd coreutils-8.28_kcc_test
-=======
 rm -rf coreutils_kcc_test
 mkdir coreutils_kcc_test
 cd coreutils_kcc_test
->>>>>>> 10183eeec0e76d0d803237b0508a05b7440c769a
 STRTDIR=$(pwd)
 wget http://ftp.gnu.org/gnu/coreutils/coreutils-8.28.tar.xz
 tar xf coreutils-8.28.tar.xz

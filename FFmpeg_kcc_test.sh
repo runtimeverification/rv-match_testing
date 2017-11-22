@@ -1,3 +1,4 @@
+#!/bin/bash
 rm -rf FFmpeg_kcc_test
 mkdir FFmpeg_kcc_test
 cd FFmpeg_kcc_test
