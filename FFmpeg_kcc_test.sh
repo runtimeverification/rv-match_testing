@@ -1,7 +1,7 @@
 rm -rf FFmpeg_kcc_test
 mkdir FFmpeg_kcc_test
 cd FFmpeg_kcc_test
-STRTDIR=($pwd)
+STRTDIR=$(pwd)
 git clone https://github.com/FFmpeg/FFmpeg.git
 cd FFmpeg
 git checkout acf70639fb534a4ae9b1e4c76153f0faa0bda190
