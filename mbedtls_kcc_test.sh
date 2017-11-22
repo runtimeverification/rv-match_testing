@@ -1,5 +1,4 @@
 #!/bin/bash
-#!/bin/bash
 rm -rf mbedtls_kcc_test
 mkdir mbedtls_kcc_test
 cd mbedtls_kcc_test
