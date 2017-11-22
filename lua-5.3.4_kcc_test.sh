@@ -21,7 +21,7 @@ cd $STRTDIR/lua-5.3.4-tests
 $STRTDIR/lua-5.3.4/src/lua all.lua |& tee kcc_runtime.txt
 mkdir kcc_runtime_out
 mv kcc_runtime.txt kcc_runtime_out/
-mv config kcc_runtime_out/
+mv kcc_config kcc_runtime_out/
 cd $STRTDIR
 mkdir kcc_all
 mv $STRTDIR/lua-5.3.4/kcc_compile_out kcc_all/
