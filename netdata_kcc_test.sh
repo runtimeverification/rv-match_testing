@@ -1,3 +1,4 @@
+#!/bin/bash
 rm -rf netdata_kcc_test/
 mkdir netdata_kcc_test/
 cd netdata_kcc_test/

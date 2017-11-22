@@ -1,3 +1,4 @@
+#!/bin/bash
 rm -rf bind9_kcc_test
 mkdir bind9_kcc_test
 cd bind9_kcc_test
