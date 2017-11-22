@@ -1,6 +1,6 @@
-rm -rf coreutils-8.28_kcc_test
-mkdir coreutils-8.28_kcc_test
-cd coreutils-8.28_kcc_test
+rm -rf coreutils_kcc_test
+mkdir coreutils_kcc_test
+cd coreutils_kcc_test
 STRTDIR=$(pwd)
 wget http://ftp.gnu.org/gnu/coreutils/coreutils-8.28.tar.xz
 tar xf coreutils-8.28.tar.xz
@@ -18,7 +18,7 @@ mkdir kcc_compile_out
 mv kcc_configure_out.txt kcc_compile_out/
 mv kcc_make_out.txt kcc_compile_out/
 mv kcc_out.txt kcc_compile_out/
-mv config kcc_compile_out/
+mv kcc_config kcc_compile_out/
 cd $STRTDIR
 mv coreutils-8.28/kcc_compile_out/ .
 tar -czvf kcc_compile_out.tar.gz kcc_compile_out/

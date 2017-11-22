@@ -14,7 +14,7 @@ mkdir kcc_compile_out
 mv kcc_config_out.txt kcc_compile_out/
 mv kcc_make_out.txt kcc_compile_out/
 mv kcc_out.txt kcc_compile_out/
-mv config kcc_compile_out/
+mv kcc_config kcc_compile_out/
 cd $STRTDIR
 mv openssl/kcc_compile_out .
 tar -czvf kcc_compile_out.tar.gz kcc_compile_out

@@ -13,7 +13,7 @@ mkdir kcc_compile_out
 mv kcc_configure_out.txt kcc_compile_out/
 mv kcc_make_out.txt kcc_compile_out/
 mv kcc_out.txt kcc_compile_out/
-mv lib/dns/config kcc_compile_out/
+mv lib/dns/kcc_config kcc_compile_out/
 cd $STRTDIR
 mv bind9/kcc_compile_out .
 tar -czvf kcc_compile_out.tar.gz kcc_compile_out
