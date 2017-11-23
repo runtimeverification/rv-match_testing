@@ -15,7 +15,7 @@
 **Legend:**
 
 | description | symbol | hardcoded symbol
-| --- | --- |
+| --- | --- | --- |
 | pass | :white_check_mark: | ✅ |
 | passes only with special patch | :warning: | ⚠️ |
 | fail | :x: | ❌ |
