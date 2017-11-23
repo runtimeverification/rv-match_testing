@@ -10,6 +10,7 @@ export CC=kcc
 export CFLAGS="-std=gnu11 -frecover-all-errors"
 cp defconfig .config
 sed -i '/CONFIG_LIBNL32=y/s/^#//g' .config
+sed -i '157iOBJS_c += ../src/utils/wpabuf.o' Makefile
 make |& tee kcc_make_out.txt
 cd $STRTDIR
 #sed -i '/<pattern>/s/^#//g' file
