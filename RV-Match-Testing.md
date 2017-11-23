@@ -14,14 +14,14 @@
 
 **Legend:**
 
-| description | symbol |
+| description | symbol | hardcoded symbol
 | --- | --- |
-| pass | :white_check_mark: |
-| passes only with special patch | ⚠️ |
-| fail | :x: |
-| not available in project | :exclamation: |
-| todo | :question: |
-| needs prerequisite | ❔ |
+| pass | :white_check_mark: | ✅ |
+| passes only with special patch | :warning: | ⚠️ |
+| fail | :x: | ❌ |
+| not available in project | :exclamation: | ❗️ |
+| todo | :question: | ❓ |
+| needs prerequisite | :grey_question: | ❔ |
 
 
 | project | standalone script |
