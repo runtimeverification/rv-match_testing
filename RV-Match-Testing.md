@@ -1,7 +1,7 @@
 
 
 | project | touch date | compile [gcc] | test [gcc] | compile [kcc] | test [kcc] | issue [open] | issue [closed] |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- | --- | --- | --- |
 | bind9 | ? | ✅ |❓| ❌ | ❌ |[548](https://github.com/runtimeverification/rv-match/issues/548)|.|
 | coreutils | ? | ✅ |❓| ❌ | ❌ |[559](https://github.com/runtimeverification/rv-match/issues/559), [570](https://github.com/runtimeverification/rv-match/issues/570)|.|none
 | FFmpeg | ? | ❓ | ❓ | ❓ | ❓ | [541](https://github.com/runtimeverification/rv-match/issues/541) | . | . |
