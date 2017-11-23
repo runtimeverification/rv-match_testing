@@ -26,11 +26,11 @@
 
 | project | standalone script |
 | --- | --- |
-| bind9 | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/bind9_kcc_test.sh; sh bind9_kcc_test.sh` |
-| coreutils | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/coreutils_kcc_test.sh; sh coreutils_kcc_test.sh` |
-| FFmpeg | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/FFmpeg_kcc_test.sh; sh FFmpeg_kcc_test.sh` |
-| hostapd | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/hostapd_kcc_test.sh; sh hostapd_kcc_test.sh` |
-| lua-5.3.4 | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/lua-5.3.4_kcc_test.sh; sh lua-5.3.4_kcc_test.sh` |
-| mbedtls | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/mbedtls_kcc_test.sh; sh mbedtls_kcc_test.sh` |
-| netdata | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/netdata_kcc_test.sh; sh netdata_kcc_test.sh` |
-| openssl | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/openssl_kcc_test.sh; sh openssl_kcc_test.sh` |
+| bind9 | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/bind9_kcc_test.sh && sh bind9_kcc_test.sh` |
+| coreutils | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/coreutils_kcc_test.sh && sh coreutils_kcc_test.sh` |
+| FFmpeg | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/FFmpeg_kcc_test.sh && sh FFmpeg_kcc_test.sh` |
+| hostapd | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/hostapd_kcc_test.sh && sh hostapd_kcc_test.sh` |
+| lua-5.3.4 | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/lua-5.3.4_kcc_test.sh && sh lua-5.3.4_kcc_test.sh` |
+| mbedtls | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/mbedtls_kcc_test.sh && sh mbedtls_kcc_test.sh` |
+| netdata | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/netdata_kcc_test.sh && sh netdata_kcc_test.sh` |
+| openssl | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/openssl_kcc_test.sh && sh openssl_kcc_test.sh` |
