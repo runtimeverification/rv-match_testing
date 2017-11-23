@@ -1,3 +1,4 @@
+#!/bin/bash
 rm -rf coreutils_kcc_test
 mkdir coreutils_kcc_test
 cd coreutils_kcc_test

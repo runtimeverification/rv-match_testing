@@ -1,3 +1,4 @@
+#!/bin/bash
 # rm -rf lua-5.3.4_kcc_test
 mkdir -p lua-5.3.4_kcc_test
 cd lua-5.3.4_kcc_test
