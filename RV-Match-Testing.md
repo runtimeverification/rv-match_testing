@@ -5,7 +5,7 @@
 | bind9 | 22 Nov 2017 | ✅ |❓| ❌ | ❔ |[548](https://github.com/runtimeverification/rv-match/issues/548)|.|
 | coreutils | 22 Nov 2017 | ✅ |❓| ❌ | ❔ |[559](https://github.com/runtimeverification/rv-match/issues/559), [570](https://github.com/runtimeverification/rv-match/issues/570)|.|none
 | FFmpeg | 22 Nov 2017 | ✅ | ✅ | ❌ | ❔ | [541](https://github.com/runtimeverification/rv-match/issues/541) | . | . |
-| hostapd | 22 Nov 2017 | ✅ | ❓ | ✅ | ❓ | [587](https://github.com/runtimeverification/rv-match/issues/587) | . | . |
+| hostapd | 22 Nov 2017 | ✅ | ❓ | ⚠️ | ❓ | [587](https://github.com/runtimeverification/rv-match/issues/587) | . | . |
 | lua-5.3.4 | 22 Nov 2017 | ✅ |❓| ✅ | ❌ | [601](https://github.com/runtimeverification/rv-match/issues/601)|.|
 | mbedtls | 22 Nov 2017 | ✅ |❓| ❌ | ❔ | [558](https://github.com/runtimeverification/rv-match/issues/558)|[550](https://github.com/runtimeverification/rv-match/issues/550)|none
 | netdata | 22 Nov 2017 | ✅ | ❓ | ❌ | ❔ | [544](https://github.com/runtimeverification/rv-match/issues/544) | . | . |
@@ -28,6 +28,7 @@
 | description | symbol |
 | --- | --- |
 | pass | :white_check_mark: |
+| passes only with special patch | ⚠️ |
 | fail | :x: |
 | not available in project | :exclamation: |
 | todo | :question: |
