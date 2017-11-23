@@ -14,7 +14,7 @@
 
 **Legend:**
 
-| description | symbol | hardcoded symbol
+| description | symbol | hardcoded symbol (different for some browsers)
 | --- | --- | --- |
 | pass | :white_check_mark: | ✅ |
 | passes only with special patch | :warning: | ⚠️ |
