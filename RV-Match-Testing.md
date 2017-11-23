@@ -5,7 +5,7 @@
 | bind9 | ? | ✅ |❓| ❌ | ❌ |[548](https://github.com/runtimeverification/rv-match/issues/548)|.|none
 | coreutils | ? | ✅ |❓| ❌ | ❌ |[559](https://github.com/runtimeverification/rv-match/issues/559), [570](https://github.com/runtimeverification/rv-match/issues/570)|.|none
 | FFmpeg | ? | . | . | . | . | [541](https://github.com/runtimeverification/rv-match/issues/541) | . | . |
-| hostapd | . | . | . | . | . | [587](https://github.com/runtimeverification/rv-match/issues/587) | . | . |
+| hostapd | . | ✅ | . | ✅ | . | [587](https://github.com/runtimeverification/rv-match/issues/587) | . | . |
 | lua-5.3.4 | 20 Nov 2017 | ✅ |❓| ✅ | ❌ | [601](https://github.com/runtimeverification/rv-match/issues/601)|.|see next table
 | mbedtls | ? | ✅ |❓| ❌ | ❌ | [558](https://github.com/runtimeverification/rv-match/issues/558)|[550](https://github.com/runtimeverification/rv-match/issues/550)|none
 | netdata | ? | . | . | . | . | [544](https://github.com/runtimeverification/rv-match/issues/544) | . | . |
