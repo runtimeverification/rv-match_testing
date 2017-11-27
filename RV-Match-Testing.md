@@ -6,6 +6,7 @@
 | coreutils | 22 Nov 2017 | :white_check_mark: |:question:| :x: | :grey_question: |[559](https://github.com/runtimeverification/rv-match/issues/559), [570](https://github.com/runtimeverification/rv-match/issues/570)|.|none
 | FFmpeg | 22 Nov 2017 | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | [541](https://github.com/runtimeverification/rv-match/issues/541) | . | . |
 | hostapd | 22 Nov 2017 | :white_check_mark: | :question: | :warning: | :question: | [587](https://github.com/runtimeverification/rv-match/issues/587) | . | . |
+| libuv | 27 Nov 2017 | :white_check_mark: | :question: | :x: | :grey_question:| [555](https://github.com/runtimeverification/rv-match/issues/555) | . |
 | linux | 27 Nov 2017 | :x: |:grey_question:| :grey_question: | :grey_question: |.|.|
 | lua-5.3.4 | 22 Nov 2017 | :white_check_mark: |:question:| :white_check_mark: | :x: | [601](https://github.com/runtimeverification/rv-match/issues/601)|.|
 | mbedtls | 22 Nov 2017 | :white_check_mark: |:question:| :x: | :grey_question: | [558](https://github.com/runtimeverification/rv-match/issues/558)|[550](https://github.com/runtimeverification/rv-match/issues/550)|none
@@ -33,6 +34,7 @@ Note, to run all, check out the project and run `bash run-all.sh`.
 | coreutils | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/coreutils_kcc_test.sh && bash coreutils_kcc_test.sh` |
 | FFmpeg | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/FFmpeg_kcc_test.sh && bash FFmpeg_kcc_test.sh` |
 | hostapd | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/hostapd_kcc_test.sh && bash hostapd_kcc_test.sh` |
+| libuv | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/libuv_kcc_test.sh && bash libuv_kcc_test.sh` |
 | linux | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/linux_kcc_test.sh && bash linux_kcc_test.sh` |
 | lua-5.3.4 | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/lua-5.3.4_kcc_test.sh && bash lua-5.3.4_kcc_test.sh` |
 | mbedtls | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/mbedtls_kcc_test.sh && bash mbedtls_kcc_test.sh` |
