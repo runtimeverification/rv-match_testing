@@ -37,4 +37,4 @@
 | mbedtls | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/mbedtls_kcc_test.sh && bash mbedtls_kcc_test.sh` |
 | netdata | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/netdata_kcc_test.sh && bash netdata_kcc_test.sh` |
 | openssl | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/openssl_kcc_test.sh && bash openssl_kcc_test.sh` |
-| php-src | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/linux_kcc_test.sh && bash php-src_kcc_test.sh` |
+| php-src | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/php-src_kcc_test.sh && bash php-src_kcc_test.sh` |
