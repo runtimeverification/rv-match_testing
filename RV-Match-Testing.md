@@ -6,10 +6,12 @@
 | coreutils | 22 Nov 2017 | :white_check_mark: |:question:| :x: | :grey_question: |[559](https://github.com/runtimeverification/rv-match/issues/559), [570](https://github.com/runtimeverification/rv-match/issues/570)|.|none
 | FFmpeg | 22 Nov 2017 | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | [541](https://github.com/runtimeverification/rv-match/issues/541) | . | . |
 | hostapd | 22 Nov 2017 | :white_check_mark: | :question: | :warning: | :question: | [587](https://github.com/runtimeverification/rv-match/issues/587) | . | . |
+| linux | 27 Nov 2017 | :x: |:grey_question:| :grey_question: | :grey_question: |.|.|
 | lua-5.3.4 | 22 Nov 2017 | :white_check_mark: |:question:| :white_check_mark: | :x: | [601](https://github.com/runtimeverification/rv-match/issues/601)|.|
 | mbedtls | 22 Nov 2017 | :white_check_mark: |:question:| :x: | :grey_question: | [558](https://github.com/runtimeverification/rv-match/issues/558)|[550](https://github.com/runtimeverification/rv-match/issues/550)|none
 | netdata | 22 Nov 2017 | :white_check_mark: | :question: | :x: | :grey_question: | [544](https://github.com/runtimeverification/rv-match/issues/544) | . | . |
 | openssl | 22 Nov 2017 | :white_check_mark: |:question:|:x:|:grey_question:| [547](https://github.com/runtimeverification/rv-match/issues/547)|.|
+| php-src | 27 Nov 2017 | :x: |:grey_question:| :grey_question: | :grey_question: |.|.|
 
 
 **Legend:**
