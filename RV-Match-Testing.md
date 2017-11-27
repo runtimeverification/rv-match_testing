@@ -25,6 +25,7 @@
 | todo | :question: | ❓ |
 | needs prerequisite | :grey_question: | ❔ |
 
+Note, to run all, check out the project and run `bash run-all.sh`.
 
 | project | standalone script |
 | --- | --- |
