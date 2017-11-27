@@ -1,6 +1,5 @@
 #!/bin/bash
-#!/bin/bash
-for x in $(ls *.sh | grep -v $(basename $0) | sort)
+for x in tests/*/test.sh
 do
     echo ==== $x started at $(date)
     bash $x

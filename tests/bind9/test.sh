@@ -1,7 +1,6 @@
 #!/bin/bash
-rm -rf bind9_kcc_test
-mkdir bind9_kcc_test
-cd bind9_kcc_test
+. prepare.sh $(basename $(dirname $BASH_SOURCE))
+
 STRTDIR=$(pwd)
 git clone https://source.isc.org/git/bind9.git
 cd bind9
