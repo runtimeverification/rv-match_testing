@@ -27,4 +27,4 @@ cd $STRTDIR
 mkdir kcc_all
 mv $STRTDIR/lua-5.3.4/kcc_compile_out kcc_all/
 mv $STRTDIR/lua-5.3.4-tests/kcc_runtime_out kcc_all/
-tar -czvf kcc_all.tar.gz kcc_all/
+tar -czvf kcc_all.tar.gz --exclude "kcc_config.txt" kcc_all/

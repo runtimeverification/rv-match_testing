@@ -22,4 +22,7 @@ mv kcc_out.txt kcc_compile_out/
 mv kcc_config kcc_compile_out/
 cd $STRTDIR
 mv coreutils-8.28/kcc_compile_out/ .
-tar -czvf kcc_compile_out.tar.gz kcc_compile_out/
+cd kcc_compile_out
+k-bin-to-text kcc_config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt
+cd $STRTDIR
+tar -czvf kcc_compile_out.tar.gz --exclude "kcc_config.txt" kcc_compile_out/
