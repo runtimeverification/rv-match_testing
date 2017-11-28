@@ -1,7 +1,9 @@
 #wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/project_testing.sh && bash project_testing.sh
 git clone https://github.com/TimJSwan89/rv-match_testing.git
-STRTDIR = $(pwd)
+STRTDIR=$(pwd)
 cd rv-match_testing
 bash run_all.sh
 cd $STRTDIR
+# For some reason, I am having trouble with this script removing itself. So this is temporarily commented until this is fixed.
+#echo $STRTDIR
 rm project_testing.sh
