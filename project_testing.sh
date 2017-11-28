@@ -4,6 +4,4 @@ STRTDIR=$(pwd)
 cd rv-match_testing
 bash run_all.sh
 cd $STRTDIR
-# For some reason, I am having trouble with this script removing itself. So this is temporarily commented until this is fixed.
-#echo $STRTDIR
 rm project_testing.sh

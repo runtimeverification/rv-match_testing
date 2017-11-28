@@ -2,7 +2,7 @@
 for x in $(ls *_kcc_test.sh | sort)
 do
     echo ==== $x started at $(date)
-    #bash $x
+    bash $x
     echo ==== $x finished at $(date)
 done
 bash extract_output.sh
