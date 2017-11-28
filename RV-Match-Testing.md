@@ -29,7 +29,10 @@
 | todo | :question: | ❓ |
 | needs prerequisite | :grey_question: | ❔ |
 
-Note, to run all, check out the project and run `bash run-all.sh`.
+To test all these projects, run this command:
+```
+wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/project_testing.sh && bash project_testing.sh
+```
 
 | project | standalone script |
 | --- | --- |
