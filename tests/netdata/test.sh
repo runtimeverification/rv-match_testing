@@ -17,5 +17,7 @@ kcc -d -g -pthread -o apps.plugin apps_plugin.o avl.o clocks.o common.o log.o pr
 cd $build_dir/netdata/
 mv_kcc_out
 mv src/kcc_config $log_dir
+cd $log_dir
+k-bin-to-text kcc_config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt
 cd $build_dir
-#tar -czvf kcc_compile_out.tar.gz kcc_compile_out
+#tar -czvf kcc_compile_out.tar.gz --exclude "kcc_config.txt" kcc_compile_out
