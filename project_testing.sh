@@ -2,6 +2,7 @@
 git clone https://github.com/TimJSwan89/rv-match_testing.git
 STRTDIR=$(pwd)
 cd rv-match_testing
+git pull
 bash run_all.sh
 cd $STRTDIR
 rm project_testing.sh
