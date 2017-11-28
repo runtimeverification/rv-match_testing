@@ -12,16 +12,18 @@ elif [[ ! "$test_name" =~ ^[A-Za-z0-9_\-\.]+$ ]]; then
     exit
 fi
 
-test_file=$(pwd)/tests/$test_name/test.sh
-build_dir=$(pwd)/tests/$test_name/build
-log_dir=$(pwd)/tests/$test_name/log
+test_dir=$(pwd)/tests/$test_name
+test_file=$test_dir/test.sh
+build_dir=$test_dir/build
+log_dir=$test_dir/log/$(date +%Y-%m-%d.%H:%M:%S)
 
 mkdir -p $build_dir
 mkdir -p $log_dir
 
-log_file=$log_dir/$(date +%Y-%m-%d.%H:%M:%S).log
-
-touch $log_file
-ln -sf $log_file $log_dir/latest.log
+ln -sf $log_dir $test_dir/log/latest
 
 cd $build_dir
+
+mv_kcc_out() {
+    mv kcc_* $log_dir
+}
