@@ -3,13 +3,13 @@
 | project | touch date | compile [gcc] | test [gcc] | compile [kcc] | test [kcc] | issue [open] | issue [closed] |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | bind9 | 22 Nov 2017 | :white_check_mark: |:question:| :x: | :grey_question: |[548](https://github.com/runtimeverification/rv-match/issues/548)|.|
-| bogosort | 29 Nov 2017 | :question: |:grey_question:| :grey_question: | :grey_question: |.|.|
+| bogosort | 29 Nov 2017 | :question: |:grey_question:| :grey_question: | :grey_question: |.|[583](https://github.com/runtimeverification/rv-match/issues/583)|
 | cFE | 28 Nov 2017 | :question: |:grey_question:| :grey_question: | :grey_question: |.|.|
-| coreutils | 22 Nov 2017 | :white_check_mark: |:question:| :x: | :grey_question: |[559](https://github.com/runtimeverification/rv-match/issues/559), [570](https://github.com/runtimeverification/rv-match/issues/570)|.|none
-| curve25519 | 29 Nov 2017 | :question: |:grey_question:| :grey_question: | :grey_question: |.|.|
-| dpkg | 29 Nov 2017 | :question: |:grey_question:| :grey_question: | :grey_question: |.|.|
+| coreutils | 22 Nov 2017 | :white_check_mark: |:question:| :x: | :grey_question: |[559](https://github.com/runtimeverification/rv-match/issues/559), [570](https://github.com/runtimeverification/rv-match/issues/570)|[561](https://github.com/runtimeverification/rv-match/issues/561)|none
+| curve25519 | 29 Nov 2017 | :question: |:grey_question:| :grey_question: | :grey_question: |.|[590](https://github.com/runtimeverification/rv-match/issues/590)|
+| dpkg | 29 Nov 2017 | :question: |:grey_question:| :grey_question: | :grey_question: |[613](https://github.com/runtimeverification/rv-match/issues/613)|[594](https://github.com/runtimeverification/rv-match/issues/594)|
 | FFmpeg | 22 Nov 2017 | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | [541](https://github.com/runtimeverification/rv-match/issues/541) | . | . |
-| hashcat | 29 Nov 2017 | :question: |:grey_question:| :grey_question: | :grey_question: |.|.|
+| hashcat | 29 Nov 2017 | :question: |:grey_question:| :grey_question: | :grey_question: |.|[564](https://github.com/runtimeverification/rv-match/issues/564)|
 | hostapd | 22 Nov 2017 | :white_check_mark: | :question: | :warning: | :question: | [587](https://github.com/runtimeverification/rv-match/issues/587) | . | . |
 | libuv | 27 Nov 2017 | :white_check_mark: | :question: | :x: | :grey_question:| [555](https://github.com/runtimeverification/rv-match/issues/555) | . |
 | linux | 27 Nov 2017 | :x: |:grey_question:| :grey_question: | :grey_question: |.|.|
@@ -19,10 +19,10 @@
 | Open-Chargeport | 28 Nov 2017 | :question: |:grey_question:| :grey_question: | :grey_question: |.|.|
 | openssl | 22 Nov 2017 | :white_check_mark: |:question:|:x:|:grey_question:| [547](https://github.com/runtimeverification/rv-match/issues/547)|.|
 | php-src | 27 Nov 2017 | :x: |:grey_question:| :grey_question: | :grey_question: |.|.|
-| Reptile | 29 Nov 2017 | :question: |:grey_question:| :grey_question: | :grey_question: |.|.|
+| Reptile | 29 Nov 2017 | :question: |:grey_question:| :grey_question: | :grey_question: |.|[572](https://github.com/runtimeverification/rv-match/issues/572)|
 | SystemC | 28 Nov 2017 | :question: |:grey_question:| :grey_question: | :grey_question: |.|.|
 | systemc-2.3 | 28 Nov 2017 | :question: |:grey_question:| :grey_question: | :grey_question: |.|.|
-| tmux | 29 Nov 2017 | :question: |:grey_question:| :grey_question: | :grey_question: |.|.|
+| tmux | 29 Nov 2017 | :question: |:grey_question:| :grey_question: | :grey_question: |.|[552](https://github.com/runtimeverification/rv-match/issues/552)|
 
 **Legend:**
 
