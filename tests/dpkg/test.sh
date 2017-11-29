@@ -1,8 +1,6 @@
 #!/bin/bash
-rm -rf dpkg_kcc_test/
-mkdir dpkg_kcc_test/
-cd dpkg_kcc_test/
-STRTDIR=$(pwd)
+. prepare.sh $(basename $(dirname $BASH_SOURCE))
+
 git clone git://anonscm.debian.org/dpkg/dpkg.git
 cd dpkg
 git checkout b9798daaa596ad5d539bcdd5ca89de1cb0b81697
