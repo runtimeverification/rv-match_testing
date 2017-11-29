@@ -1,11 +1,7 @@
-Start of auto generated wiki page.  
-A script generated this wiki page.  
-More is here. Are new lines working?  
+This script was automatically generated.  
   
-| Sample | Table |  
+| project | standalone script |  
 | --- | --- |  
-| Dog | Hairy |  
-| Cat | Angry |  
 | bind9 | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/bind9_kcc_test.sh && bash bind9_kcc_test.sh |
 | bogosort | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/bogosort_kcc_test.sh && bash bogosort_kcc_test.sh |
 | cFE | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/cFE_kcc_test.sh && bash cFE_kcc_test.sh |
