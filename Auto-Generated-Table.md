@@ -1,2 +1,3 @@
-Start of auto generated wiki page.
-A script generated this wiki page.
+Start of auto generated wiki page.\n
+A script generated this wiki page.\n
+More is here.
