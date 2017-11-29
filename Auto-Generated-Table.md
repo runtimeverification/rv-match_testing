@@ -1,3 +1,3 @@
-Start of auto generated wiki page.\n
-A script generated this wiki page.\n
-More is here.
+Start of auto generated wiki page.  
+A script generated this wiki page.  
+More is here. Are new lines working?
