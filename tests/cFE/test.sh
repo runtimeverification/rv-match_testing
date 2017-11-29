@@ -1,20 +1,18 @@
 #!/bin/bash
-rm -rf cFE_kcc_test
-mkdir cFE_kcc_test
-cd cFE_kcc_test
-STRTDIR=$(pwd)
+. prepare.sh $(basename $(dirname $BASH_SOURCE))
+
 if [[ ! -f cFE-6.5.0a-OSS-release.tar.gz ]]; then
   wget "https://sourceforge.net/projects/coreflightexec/files/cFE-6.5.0a-OSS-release.tar.gz"
 fi
 tar -xvzf cFE-6.5.0a-OSS-release.tar.gz
-cd $STRTDIR/cFE-6.5.0-OSS-release
+cd $build_dir/cFE-6.5.0-OSS-release
 rm -rf osal
 git clone https://github.com/nasa/osal.git
 cd osal
 git checkout 7139592f04e47f7522b07b1ef9f84a21393df88a
 cd src/os
 ln -s posix posix-ng
-cd $STRTDIR/cFE-6.5.0-OSS-release
+cd $build_dir/cFE-6.5.0-OSS-release
 cp -r cfe/cmake/sample_defs/ cfe/sample_defs
 mkdir build-sim
 cd build-sim

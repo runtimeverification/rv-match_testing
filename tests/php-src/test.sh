@@ -1,8 +1,7 @@
-# This script is incomplete
-rm -rf php-src_kcc_test
-mkdir php-src_kcc_test
-cd php-src_kcc_test
-STRTDIR=$(pwd)
+#!/bin/bash
+. prepare.sh $(basename $(dirname $BASH_SOURCE))
+
+# TODO
 git clone https://github.com/php/php-src.git
 cd php-src
 git checkout edc77d5d00ec3ee3c547e7e08ae4e36fc11deb49
