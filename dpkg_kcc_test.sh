@@ -16,7 +16,14 @@ autoreconf -vif
 make |& tee kcc_make_out.txt
 cd dpkg-split
 kcc -d -g -O1 -o dpkg-split info.o join.o main.o queue.o split.o ../lib/dpkg/.libs/libdpkg.a |& tee kcc_out.txt
-cd ..
+cd $STRTDIR/dpkg
+mkdir kcc_compile_out
+mv kcc_configure_out.txt kcc_compile_out/
+mv kcc_make_out.txt kcc_compile_out/
+mv kcc_config kcc_compile_out/kcc_config_from_make
+mv dpkg-split/kcc_config kcc_compile_out/
+cd $STRTDIR
+mv dpkg/kcc_compile_out .
 # timothy@timothy-RVMatch-VirtualBox:~/Desktop/dpkg$ diff kcc_config dpkg-split/kcc_config
 # Binary files kcc_config and dpkg-split/kcc_config differ
 echo "dpkg script is not yet finished."
