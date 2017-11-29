@@ -1,0 +1,6 @@
+1. Scripts need to be able to be run stand alone, or at least you need to be able to select which ones run, perhaps in a configuration file.
+2. Collecting kcc_config information is important, keeping that automated that will save time.
+3. The scripts differ. Some projects use configure, others use cmake. Generalization can't get in the way of ability to modify.
+4. Scripts need to be easily understood by outsiders. Ideally, there should be a way to present to someone a literal build script that they can inspect.
+5. We're not trying to make this scalable to add thousands of scripts, we are trying to make it so that when rv-match changes, the scripts still get useful information from their projects without too much management, hopefully automatically. The project should support the test scripts and what they do, not the other way around. 
+6. Having a "prepare" script sounds like it's a good idea if it is only called when you "run-all" but is not necessary for running a script as a stand-alone.
