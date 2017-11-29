@@ -1,5 +1,7 @@
+#!/bin/bash
+
 spacer=" ========== "
-STRTDIR=$(pwd)
+build_dir=$(pwd)
 for D in *_kcc_test; do
     if [ -d "${D}" ]; then
        echo $spacer${D%_kcc_test}$spacer
@@ -15,13 +17,13 @@ for D in *_kcc_test; do
              echo "There is compile output for this project."
              cd kcc_compile_out
              ls -c | cat
-             cd $STRTDIR
+             cd $build_dir
           else
              echo "no kcc_compile_out for this project"
           fi
        fi
        echo "Leaving ${D}."
-       cd $STRTDIR
+       cd $build_dir
        echo $spacer"/"${D%_kcc_test}$spacer
     fi
 done

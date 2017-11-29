@@ -1,7 +1,6 @@
-rm -rf libuv_kcc_test
-mkdir libuv_kcc_test
-cd libuv_kcc_test
-STRTDIR=$(pwd)
+#!/bin/bash
+. prepare.sh $(basename $(dirname $BASH_SOURCE))
+
 git clone https://github.com/libuv/libuv.git
 cd libuv
 git checkout 719dfecf95b0c74af6494f05049e56d5771ebfae
@@ -13,9 +12,9 @@ mkdir kcc_compile_out
 mv kcc_configure_out.txt kcc_compile_out/
 mv kcc_make_out.txt kcc_compile_out/
 mv kcc_config kcc_compile_out/
-cd $STRTDIR
+cd $build_dir
 mv libuv/kcc_compile_out/ .
 cd kcc_compile_out/
 k-bin-to-text kcc_config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt
-cd $STRTDIR
+cd $build_dir
 tar -czvf kcc_compile_out.tar.gz --exclude "kcc_config.txt" kcc_compile_out/

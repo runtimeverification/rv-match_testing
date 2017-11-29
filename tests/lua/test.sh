@@ -29,4 +29,4 @@ cd $build_dir
 mkdir kcc_all
 mv $build_dir/lua-$VERSION/kcc_compile_out kcc_all/
 mv $build_dir/lua-$VERSION-tests/kcc_runtime_out kcc_all/
-tar -czvf kcc_all.tar.gz kcc_all/
+tar -czvf kcc_all.tar.gz --exclude "kcc_config.txt" kcc_all/
