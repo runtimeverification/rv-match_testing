@@ -23,6 +23,8 @@ chmod +x run_all.sh && chmod +x tests/*/test.sh
       - 2017-11-19-14:37:16.log
       - ...
     - test.sh
-- prepare.sh
+- extract_output.sh
+- prepare.sh  
   _This script will be put at the beginning of each test script passing the test name. This should be non-executable._
-- run-all.sh
+- project_testing.sh
+- run_all.sh

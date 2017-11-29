@@ -1,5 +1,6 @@
 #!/bin/bash
-. prepare.sh $(basename $(dirname $BASH_SOURCE))
+[ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/prepare.sh
+base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh
 
 if [[ ! -f cFE-6.5.0a-OSS-release.tar.gz ]]; then
   wget "https://sourceforge.net/projects/coreflightexec/files/cFE-6.5.0a-OSS-release.tar.gz"
