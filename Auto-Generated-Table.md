@@ -2,26 +2,26 @@ This wiki page was automatically generated.
   
 | project | configure | make |  
 | --- | --- | --- |  
-| bind9 | :white_check_mark: | :x: |
-| bogosort | :grey_question: | :grey_question: |
-| cFE | :grey_question: | :grey_question: |
-| coreutils | :grey_question: | :grey_question: |
-| curve25519 | :grey_question: | :grey_question: |
-| dpkg | :grey_question: | :grey_question: |
-| FFmpeg | :white_check_mark: | :x: |
-| hashcat | :grey_question: | :grey_question: |
-| helloworld | :grey_question: | :white_check_mark: |
-| hostapd | :grey_question: | :grey_question: |
-| libuv | :white_check_mark: | :x: |
-| linux | :grey_question: | :grey_question: |
-| lua-5.3.4 | :grey_question: | :grey_question: |
-| mbedtls | :grey_question: | :x: |
-| netdata | :white_check_mark: | :x: |
-| Open-Chargeport | :grey_question: | :grey_question: |
-| openssl | :white_check_mark: | :x: |
-| php-src | :grey_question: | :grey_question: |
-| Reptile | :grey_question: | :grey_question: |
-| tmux | :grey_question: | :grey_question: |
+| bind9 | :grey_question: | :grey_question: |  |  |
+| bogosort | :grey_question: | :grey_question: |  |  |
+| cFE | :grey_question: | :grey_question: |  |  |
+| coreutils | :grey_question: | :grey_question: |  |  |
+| curve25519 | :grey_question: | :grey_question: |  | [590](https://github.com/runtimeverification/rv-match/issues/590)  |
+| dpkg | :grey_question: | :grey_question: | [613](https://github.com/runtimeverification/rv-match/issues/613)  | [594](https://github.com/runtimeverification/rv-match/issues/594)  |
+| FFmpeg | :grey_question: | :grey_question: |  |  |
+| hashcat | :grey_question: | :grey_question: |  |  |
+| helloworld | :grey_question: | :white_check_mark: |  |  |
+| hostapd | :grey_question: | :grey_question: | [587](https://github.com/runtimeverification/rv-match/issues/587)  |  |
+| libuv | :grey_question: | :grey_question: |  |  |
+| linux | :grey_question: | :grey_question: |  |  |
+| lua-5.3.4 | :grey_question: | :grey_question: | [601](https://github.com/runtimeverification/rv-match/issues/601)  |  |
+| mbedtls | :grey_question: | :grey_question: |  |  |
+| netdata | :white_check_mark: | :x: |  |  |
+| Open-Chargeport | :grey_question: | :grey_question: |  |  |
+| openssl | :grey_question: | :grey_question: |  |  |
+| php-src | :grey_question: | :grey_question: |  |  |
+| Reptile | :grey_question: | :grey_question: |  |  |
+| tmux | :grey_question: | :grey_question: |  |  |
   
 | project | standalone script |  
 | --- | --- |  
