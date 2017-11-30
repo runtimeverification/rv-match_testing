@@ -10,6 +10,7 @@ This wiki page was automatically generated.
 | dpkg | :grey_question: | :grey_question: |
 | FFmpeg | :white_check_mark: | :x: |
 | hashcat | :grey_question: | :grey_question: |
+| helloworld | :grey_question: | :white_check_mark: |
 | hostapd | :grey_question: | :grey_question: |
 | libuv | :white_check_mark: | :x: |
 | linux | :grey_question: | :grey_question: |
@@ -32,6 +33,7 @@ This wiki page was automatically generated.
 | dpkg | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/dpkg_kcc_test.sh && bash dpkg_kcc_test.sh |
 | FFmpeg | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/FFmpeg_kcc_test.sh && bash FFmpeg_kcc_test.sh |
 | hashcat | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/hashcat_kcc_test.sh && bash hashcat_kcc_test.sh |
+| helloworld | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/helloworld_kcc_test.sh && bash helloworld_kcc_test.sh |
 | hostapd | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/hostapd_kcc_test.sh && bash hostapd_kcc_test.sh |
 | libuv | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/libuv_kcc_test.sh && bash libuv_kcc_test.sh |
 | linux | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/linux_kcc_test.sh && bash linux_kcc_test.sh |
