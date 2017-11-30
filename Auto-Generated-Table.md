@@ -15,7 +15,7 @@ This wiki page was automatically generated.
 | linux | :grey_question: | :grey_question: |
 | lua-5.3.4 | :grey_question: | :grey_question: |
 | mbedtls | :grey_question: | :grey_question: |
-| netdata | :x: | :x: |
+| netdata | :white_check_mark: | :x: |
 | Open-Chargeport | :grey_question: | :grey_question: |
 | openssl | :grey_question: | :grey_question: |
 | php-src | :grey_question: | :grey_question: |
