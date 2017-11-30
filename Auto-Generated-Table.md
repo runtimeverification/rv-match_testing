@@ -1,7 +1,7 @@
 This wiki page was automatically generated.  
   
-| project | configure | make |  
-| --- | --- | --- |  
+| project | configure | make | open issues | closed issues | 
+| --- | --- | --- | --- | --- | 
 | bind9 | :grey_question: | :grey_question: |  |  |
 | bogosort | :grey_question: | :grey_question: |  |  |
 | cFE | :grey_question: | :grey_question: |  |  |
