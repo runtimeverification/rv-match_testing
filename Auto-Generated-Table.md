@@ -1,4 +1,26 @@
-This script was automatically generated.  
+This wiki page was automatically generated.  
+  
+| project | make |  
+| --- | --- |  
+| bind9 | :question: |
+| bogosort | :question: |
+| cFE | :question: |
+| coreutils | :question: |
+| curve25519 | :question: |
+| dpkg | :question: |
+| FFmpeg | :question: |
+| hashcat | :question: |
+| hostapd | :question: |
+| libuv | :question: |
+| linux | :question: |
+| lua-5.3.4 | :question: |
+| mbedtls | :question: |
+| netdata | :question: |
+| Open-Chargeport | :question: |
+| openssl | :question: |
+| php-src | :question: |
+| Reptile | :question: |
+| tmux | :question: |
   
 | project | standalone script |  
 | --- | --- |  
