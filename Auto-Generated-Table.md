@@ -1,26 +1,26 @@
 This wiki page was automatically generated.  
   
-| project | make |  
-| --- | --- |  
-| bind9 | :grey_question: |
-| bogosort | :grey_question: |
-| cFE | :grey_question: |
-| coreutils | :grey_question: |
-| curve25519 | :grey_question: |
-| dpkg | :grey_question: |
-| FFmpeg | :grey_question: |
-| hashcat | :grey_question: |
-| hostapd | :grey_question: |
-| libuv | :grey_question: |
-| linux | :grey_question: |
-| lua-5.3.4 | :grey_question: |
-| mbedtls | :grey_question: |
-| netdata | :x: |
-| Open-Chargeport | :grey_question: |
-| openssl | :grey_question: |
-| php-src | :grey_question: |
-| Reptile | :grey_question: |
-| tmux | :grey_question: |
+| project | configure | make |  
+| --- | --- | --- |  
+| bind9 | :grey_question: | :grey_question: |
+| bogosort | :grey_question: | :grey_question: |
+| cFE | :grey_question: | :grey_question: |
+| coreutils | :grey_question: | :grey_question: |
+| curve25519 | :grey_question: | :grey_question: |
+| dpkg | :grey_question: | :grey_question: |
+| FFmpeg | :grey_question: | :grey_question: |
+| hashcat | :grey_question: | :grey_question: |
+| hostapd | :grey_question: | :grey_question: |
+| libuv | :grey_question: | :grey_question: |
+| linux | :grey_question: | :grey_question: |
+| lua-5.3.4 | :grey_question: | :grey_question: |
+| mbedtls | :grey_question: | :grey_question: |
+| netdata | :x: | :x: |
+| Open-Chargeport | :grey_question: | :grey_question: |
+| openssl | :grey_question: | :grey_question: |
+| php-src | :grey_question: | :grey_question: |
+| Reptile | :grey_question: | :grey_question: |
+| tmux | :grey_question: | :grey_question: |
   
 | project | standalone script |  
 | --- | --- |  
