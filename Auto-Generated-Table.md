@@ -6,15 +6,15 @@ This wiki page was automatically generated.
 | bogosort | :grey_question: | :grey_question: |  |  |
 | cFE | :grey_question: | :grey_question: |  |  |
 | coreutils | :grey_question: | :grey_question: |  |  |
-| curve25519 | :grey_question: | :grey_question: |  | [590](https://github.com/runtimeverification/rv-match/issues/590)  |
-| dpkg | :grey_question: | :grey_question: | [613](https://github.com/runtimeverification/rv-match/issues/613)  | [594](https://github.com/runtimeverification/rv-match/issues/594)  |
+| curve25519 | :grey_question: | :grey_question: |  |  |
+| dpkg | :grey_question: | :grey_question: |  |  |
 | FFmpeg | :grey_question: | :grey_question: |  |  |
 | hashcat | :grey_question: | :grey_question: |  |  |
 | helloworld | :grey_question: | :white_check_mark: |  |  |
-| hostapd | :grey_question: | :grey_question: | [587](https://github.com/runtimeverification/rv-match/issues/587)  |  |
+| hostapd | :grey_question: | :grey_question: |  |  |
 | libuv | :grey_question: | :grey_question: |  |  |
 | linux | :grey_question: | :grey_question: |  |  |
-| lua-5.3.4 | :grey_question: | :grey_question: | [601](https://github.com/runtimeverification/rv-match/issues/601)  |  |
+| lua-5.3.4 | :grey_question: | :grey_question: |  |  |
 | mbedtls | :grey_question: | :grey_question: |  |  |
 | netdata | :white_check_mark: | :x: |  |  |
 | Open-Chargeport | :grey_question: | :grey_question: |  |  |
