@@ -10,6 +10,9 @@ tar -xvzf lua-5.3.4.tar.gz
 rm lua-5.3.4.tar.gz
 cd $STRTDIR/lua-5.3.4
 make linux CC=kcc LD=kcc |& tee kcc_make_out.txt
+echo "Hello"
+echo $?
+echo "Goodbye"
 kcc -d -O2 -Wall -Wextra -DLUA_COMPAT_5_2 -DLUA_USE_LINUX -c -o src/luac.o src/luac.c |& tee kcc_out.txt
 mkdir kcc_compile_out
 mv kcc_make_out.txt kcc_compile_out/
