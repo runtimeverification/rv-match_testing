@@ -3,13 +3,13 @@ This wiki page was automatically generated.
 | project | configure | make | open issues | closed issues | 
 | --- | --- | --- | --- | --- | 
 | bind9 | :grey_question: | :grey_question: |  |  |
-| bogosort | :grey_question: | :grey_question: |  |  |
+| bogosort | :grey_question: | :grey_question: |  | [583](https://github.com/runtimeverification/rv-match/issues/583)  |
 | cFE | :grey_question: | :grey_question: |  |  |
-| coreutils | :grey_question: | :grey_question: |  |  |
+| coreutils | :grey_question: | :grey_question: | [570](https://github.com/runtimeverification/rv-match/issues/570) [559](https://github.com/runtimeverification/rv-match/issues/559)  | [561](https://github.com/runtimeverification/rv-match/issues/561)  |
 | curve25519 | :grey_question: | :grey_question: |  | [590](https://github.com/runtimeverification/rv-match/issues/590)  |
 | dpkg | :grey_question: | :grey_question: | [613](https://github.com/runtimeverification/rv-match/issues/613)  | [594](https://github.com/runtimeverification/rv-match/issues/594)  |
 | FFmpeg | :grey_question: | :grey_question: |  |  |
-| hashcat | :grey_question: | :grey_question: |  |  |
+| hashcat | :grey_question: | :grey_question: |  | [564](https://github.com/runtimeverification/rv-match/issues/564)  |
 | helloworld | :grey_question: | :white_check_mark: |  |  |
 | hostapd | :grey_question: | :grey_question: | [587](https://github.com/runtimeverification/rv-match/issues/587)  |  |
 | libuv | :grey_question: | :grey_question: |  |  |
@@ -20,8 +20,8 @@ This wiki page was automatically generated.
 | Open-Chargeport | :grey_question: | :grey_question: |  |  |
 | openssl | :grey_question: | :grey_question: |  |  |
 | php-src | :grey_question: | :grey_question: |  |  |
-| Reptile | :grey_question: | :grey_question: |  |  |
-| tmux | :grey_question: | :grey_question: |  |  |
+| Reptile | :grey_question: | :grey_question: |  | [572](https://github.com/runtimeverification/rv-match/issues/572)  |
+| tmux | :grey_question: | :grey_question: | [574](https://github.com/runtimeverification/rv-match/issues/574)  |  |
   
 | project | standalone script |  
 | --- | --- |  
