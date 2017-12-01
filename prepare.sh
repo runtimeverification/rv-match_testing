@@ -6,8 +6,11 @@
 # 
 # All functions called in this script that start with an underscore should be
 # defined inside the test. After defining these, the test should call `init`.
+# They should assume that they are called in test_dir
 #
 # _download: Download source code and other resources needed here.
+# _build: 
+# _extract: 
 
 err(){ >&2 echo "$@"; }
 
@@ -28,6 +31,7 @@ mkdir -p $log_dir
 ln -sf $log_dir $test_dir/log/latest
 
 init() {
+    # Step 1: download
     if [ ! -d $download_dir ] || [ -z "$(ls -A $download_dir)" ]; then
         mkdir -p $download_dir
         cd $download_dir
@@ -35,7 +39,24 @@ init() {
     fi
     rm -rf $build_dir/*
     cp $download_dir/* $build_dir -r
-    cd $build_dir
+    
+    # Step 2: build
+    cd $build_dir && _build
+    
+    # Step 3: extract
+    cd $build_dir && _extract    
+
+    cd $log_dir
+    echo "==== kcc configure status reported:"$configure_success
+    echo $configure_success > kcc_configure_success.ini
+    echo "==== kcc make status reported:"$make_success
+    echo $make_success > kcc_make_success.ini
+    tar -czvf kcc_compile_out.tar.gz --exclude "kcc_config.txt" kcc_compile_out
+}
+
+process_kcc_config() {
+    cd $log_dir
+    k-bin-to-text kcc_config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt
 }
 
 call_compiler() {
