@@ -18,4 +18,4 @@ echo $configure_success > kcc_configure_success.ini
 echo "==== kcc make status reported:"$make_success
 echo $make_success > kcc_make_success.ini
 cd $build_dir
-tar -czvf kcc_compile_out.tar.gz --exclude "kcc_config.txt" kcc_compile_out
+tar -czvf kcc_compile_out.tar.gz --exclude "kcc_config.txt" $log_dir

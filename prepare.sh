@@ -17,9 +17,10 @@ test_name=$(basename $(dirname $(pwd)))
 
 test_dir=$(pwd)
 test_file=$test_dir/test.sh
-downloads_dir=$test_dir/downloads
+download_dir=$test_dir/download
 build_dir=$test_dir/build
 log_dir=$test_dir/log/$(date +%Y-%m-%d.%H:%M:%S)
+unit_test_dir=$test_dir/unit_test
 
 mkdir -p $build_dir
 mkdir -p $log_dir
@@ -27,13 +28,13 @@ mkdir -p $log_dir
 ln -sf $log_dir $test_dir/log/latest
 
 init() {
-    if [ ! -d $downloads_dir ] || [ -z "$(ls -A $downloads_dir)" ]; then
-        mkdir -p $downloads_dir
-        cd $downloads_dir
+    if [ ! -d $download_dir ] || [ -z "$(ls -A $download_dir)" ]; then
+        mkdir -p $download_dir
+        cd $download_dir
         _download
     fi
     rm -rf $build_dir/*
-    cp $downloads_dir/* $build_dir -r
+    cp $download_dir/* $build_dir -r
     cd $build_dir
 }
 
