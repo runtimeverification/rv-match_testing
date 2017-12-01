@@ -15,9 +15,9 @@ set -o pipefail
 ./configure CC=kcc LD=kcc |& tee kcc_configure_out.txt ; configure_success="$?"
 make |& tee kcc_make_out.txt ; make_success="$?"
 cd $build_dir/src/
-kcc -d -g -pthread -o apps.plugin apps_plugin.o avl.o clocks.o common.o log.o procfile.o web_buffer.o -lm
+kcc -d -g -pthread -o apps.plugin apps_plugin.o avl.o clocks.o common.o log.o procfile.o web_buffer.o -lm |& tee kcc_out.txt
 cd $build_dir/netdata/
-mv_kcc_out
+mv kcc_out.txt $log_dir
 mv src/kcc_config $log_dir
 cd $log_dir
 k-bin-to-text kcc_config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt

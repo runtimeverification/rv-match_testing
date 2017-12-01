@@ -55,15 +55,15 @@ call_compiler() {
 }
 
 call_gcc() {
-
+return
 }
 
 call_kcc() {
-    
+return
 }
 
 call_rvpc() {
-    
+return
 }
 
 mv_kcc_out() {
