@@ -14,14 +14,9 @@ mv_kcc_out
 mv lib/dns/kcc_config $log_dir
 cd $log_dir
 k-bin-to-text kcc_config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt
-<<<<<<< HEAD:bind9_kcc_test.sh
 echo "==== kcc configure status reported:"$configure_success
 echo $configure_success > kcc_configure_success.ini
 echo "==== kcc make status reported:"$make_success
 echo $make_success > kcc_make_success.ini
-cd $STRTDIR
-tar -czvf kcc_compile_out.tar.gz --exclude "kcc_config.txt" kcc_compile_out/
-=======
 cd $build_dir
-#tar -czvf kcc_compile_out.tar.gz --exclude "kcc_config.txt" $log_dir
->>>>>>> 6e9b8bc82f502afedef726b1fe8c692ff51f54db:tests/bind9/test.sh
+tar -czvf kcc_compile_out.tar.gz --exclude "kcc_config.txt" $log_dir
