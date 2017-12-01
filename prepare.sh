@@ -10,7 +10,7 @@
 #
 # _download: Download source code and other resources needed here.
 # _build: 
-# _extract: 
+# _extract: Move interesting files like kcc_* to log_dir and call process_kcc_config if applicable
 
 err(){ >&2 echo "$@"; }
 
@@ -29,6 +29,17 @@ mkdir -p $build_dir
 mkdir -p $log_dir
 
 ln -sf $log_dir $test_dir/log/latest
+
+process_kcc_config() {
+    if mv kcc_config $log_dir
+    then
+        cd $log_dir
+        k-bin-to-text kcc_config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt
+    else
+        echo "prepare.sh did not find a kcc_config in "$(dirname $(pwd))
+    fi
+    cd $build_dir
+}
 
 init() {
     # Step 1: download
@@ -51,12 +62,6 @@ init() {
     echo $configure_success > kcc_configure_success.ini
     echo "==== kcc make status reported:"$make_success
     echo $make_success > kcc_make_success.ini
-    tar -czvf kcc_compile_out.tar.gz --exclude "kcc_config.txt" kcc_compile_out
-}
-
-process_kcc_config() {
-    cd $log_dir
-    k-bin-to-text kcc_config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt
 }
 
 call_compiler() {
@@ -86,8 +91,4 @@ return
 
 call_rvpc() {
 return
-}
-
-mv_kcc_out() {
-    mv kcc_* $log_dir
 }
