@@ -1,9 +1,10 @@
-rm -rf libuv_kcc_test
-mkdir libuv_kcc_test
-cd libuv_kcc_test
-STRTDIR=$(pwd)
+#!/bin/bash
+[ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/prepare.sh
+base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh
+
 git clone https://github.com/libuv/libuv.git
-cd libuv
+build_dir=$base_dir/libuv/
+cd $build_dir
 git checkout 719dfecf95b0c74af6494f05049e56d5771ebfae
 bash autogen.sh
 set -o pipefail
@@ -14,7 +15,7 @@ mkdir kcc_compile_out
 mv kcc_configure_out.txt kcc_compile_out/
 mv kcc_make_out.txt kcc_compile_out/
 mv kcc_config kcc_compile_out/
-cd $STRTDIR
+cd $build_dir
 mv libuv/kcc_compile_out/ .
 cd kcc_compile_out/
 k-bin-to-text kcc_config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt
@@ -22,5 +23,5 @@ echo "==== kcc configure status reported:"$configure_success
 echo $configure_success > kcc_configure_success.ini
 echo "==== kcc make status reported:"$make_success
 echo $make_success > kcc_make_success.ini
-cd $STRTDIR
+cd $build_dir
 tar -czvf kcc_compile_out.tar.gz --exclude "kcc_config.txt" kcc_compile_out/

@@ -1,8 +1,7 @@
 #!/bin/bash
-rm -rf dpkg_kcc_test/
-mkdir dpkg_kcc_test/
-cd dpkg_kcc_test/
-STRTDIR=$(pwd)
+[ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/prepare.sh
+base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh
+
 git clone git://anonscm.debian.org/dpkg/dpkg.git
 cd dpkg
 git checkout b9798daaa596ad5d539bcdd5ca89de1cb0b81697

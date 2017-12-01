@@ -1,5 +1,5 @@
 #!/bin/bash
-for x in $(ls *_kcc_test.sh | sort)
+for x in tests/*/test.sh
 do
     echo ==== $x started at $(date)
     bash $x
