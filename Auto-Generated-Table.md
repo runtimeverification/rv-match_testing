@@ -18,10 +18,10 @@ This is an auto generated wiki.
 | mbedtls | :grey_question: | :x: | [558](https://github.com/runtimeverification/rv-match/issues/558)  | [550](https://github.com/runtimeverification/rv-match/issues/550)  |
 | netdata | :white_check_mark: | :x: | [544](https://github.com/runtimeverification/rv-match/issues/544)  |  |
 | Open-Chargeport | :grey_question: | :grey_question: |  |  |
-| openssl | :white_check_mark: | :x: |  |  |
+| openssl | :white_check_mark: | :x: | [547](https://github.com/runtimeverification/rv-match/issues/547)  |  |
 | php-src | :grey_question: | :grey_question: |  |  |
-| Reptile | :grey_question: | :grey_question: |  |  |
-| tmux | :grey_question: | :grey_question: |  |  |
+| Reptile | :grey_question: | :grey_question: |  | [572](https://github.com/runtimeverification/rv-match/issues/572)  |
+| tmux | :grey_question: | :grey_question: | [574](https://github.com/runtimeverification/rv-match/issues/574)  | [552](https://github.com/runtimeverification/rv-match/issues/552)  |
   
 | project | standalone script |  
 | --- | --- |  
