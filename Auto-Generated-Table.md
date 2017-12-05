@@ -9,14 +9,14 @@ This is an auto generated wiki.
 | curve25519 | :grey_question: | :grey_question: |  | [590](https://github.com/runtimeverification/rv-match/issues/590)  |
 | dpkg | :grey_question: | :grey_question: | [613](https://github.com/runtimeverification/rv-match/issues/613)  | [594](https://github.com/runtimeverification/rv-match/issues/594)  |
 | FFmpeg | :grey_question: | :grey_question: |  | [541](https://github.com/runtimeverification/rv-match/issues/541)  |
-| hashcat | :grey_question: | :grey_question: |  | [564](https://github.com/runtimeverification/rv-match/issues/564)  |
+| hashcat | :grey_question: | :grey_question: |  |  |
 | helloworld | :grey_question: | :white_check_mark: |  |  |
-| hostapd | :grey_question: | :grey_question: | [587](https://github.com/runtimeverification/rv-match/issues/587)  |  |
-| libuv | :grey_question: | :grey_question: | [555](https://github.com/runtimeverification/rv-match/issues/555)  |  |
-| linux | :grey_question: | :grey_question: |  | [10](https://github.com/runtimeverification/rv-match/issues/10)  |
-| lua-5.3.4 | :grey_question: | :grey_question: | [601](https://github.com/runtimeverification/rv-match/issues/601)  |  |
-| mbedtls | :grey_question: | :grey_question: | [558](https://github.com/runtimeverification/rv-match/issues/558)  | [550](https://github.com/runtimeverification/rv-match/issues/550)  |
-| netdata | :white_check_mark: | :x: | [544](https://github.com/runtimeverification/rv-match/issues/544)  |  |
+| hostapd | :grey_question: | :grey_question: |  |  |
+| libuv | :grey_question: | :grey_question: |  |  |
+| linux | :grey_question: | :grey_question: |  |  |
+| lua-5.3.4 | :grey_question: | :grey_question: |  |  |
+| mbedtls | :grey_question: | :grey_question: |  |  |
+| netdata | :white_check_mark: | :x: |  |  |
 | Open-Chargeport | :grey_question: | :grey_question: |  |  |
 | openssl | :grey_question: | :grey_question: |  |  |
 | php-src | :grey_question: | :grey_question: |  |  |
