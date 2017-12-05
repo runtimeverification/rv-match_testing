@@ -48,7 +48,7 @@ init() {
         cd $download_dir
         _download
     fi
-    rm -rf $build_dir/*
+    safe_rm=$build_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
     cp $download_dir/* $build_dir -r
     
     # Step 2: build
