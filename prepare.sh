@@ -60,10 +60,10 @@ init_helper() {
     cd $build_dir && _extract    
 
     cd $log_dir
-    echo "==== kcc configure status reported:"$configure_success
-    echo $configure_success > kcc_configure_success.ini
-    echo "==== kcc make status reported:"$make_success
-    echo $make_success > kcc_make_success.ini
+    echo "==== $compiler configure status reported:"$configure_success
+    echo $configure_success > configure_success.ini
+    echo "==== $compiler make status reported:"$make_success
+    echo $make_success > make_success.ini
 }
 
 init() {
@@ -71,6 +71,7 @@ init() {
     compiler="kcc" && init_helper
 }
 
+# The following functions are currently unused.
 call_compiler() {
     case "$compiler" in
         gcc)
