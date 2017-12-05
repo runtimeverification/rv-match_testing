@@ -35,13 +35,13 @@ do
     test_name=$(basename $(dirname $file_path))
    
     compiler="gcc" ; buildstage="configure"
-    gcc_configure_result=get_successes_for_compiler_and_buildstage
+    get_successes_for_compiler_and_buildstage && gcc_configure_result=$result
     compiler="gcc" ; buildstage="make"
-    gcc_make_result=get_successes_for_compiler_and_buildstage
+    get_successes_for_compiler_and_buildstage && gcc_make_result=$result
     compiler="kcc" ; buildstage="configure"
-    kcc_configure_result=get_successes_for_compiler_and_buildstage
+    get_successes_for_compiler_and_buildstage && kcc_configure_result=$result
     compiler="kcc" ; buildstage="make"
-    kcc_make_result=get_successes_for_compiler_and_buildstage
+    get_successes_for_compiler_and_buildstage && kcc_make_result=$result
 
 
     # Get issue {link, number}s in format: [number](link)
@@ -58,9 +58,8 @@ echo "| project | standalone script |  " >> $tablefile
 echo "| --- | --- |  " >> $tablefile
 for file_path in $(ls $tests_dir/*/test.sh | sort)
 do
-    script_name=$(basename $file_path)
-    test_name=${script_name%_kcc_test.sh}
-    echo "| $test_name | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/${test_name}/test.sh && bash ${test_name}_kcc_test.sh |" >> $tablefile
+    test_name=$(basename $(dirname $file_path))
+    echo "| $test_name | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/${test_name}/test.sh && bash test.sh |" >> $tablefile
 done
 git add $tablefile
 git commit -am "Auto generated commit."
