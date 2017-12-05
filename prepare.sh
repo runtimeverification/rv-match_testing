@@ -21,14 +21,6 @@ test_name=$(basename $(dirname $(pwd)))
 test_dir=$(pwd)
 test_file=$test_dir/test.sh
 download_dir=$test_dir/download
-build_dir=$test_dir/build
-log_dir=$test_dir/log/$(date +%Y-%m-%d.%H:%M:%S)
-unit_test_dir=$test_dir/unit_test
-
-mkdir -p $build_dir
-mkdir -p $log_dir
-
-ln -sf $log_dir $test_dir/log/latest
 
 process_kcc_config() {
     if mv kcc_config $log_dir
@@ -41,7 +33,17 @@ process_kcc_config() {
     cd $build_dir
 }
 
-init() {
+init_helper() {
+    # Step 0: prepare
+    build_dir=$test_dir/$compiler/build
+    mkdir -p $build_dir
+
+    log_dir=$test_dir/$compiler/log/$(date +%Y-%m-%d.%H:%M:%S)
+    mkdir -p $log_dir
+    ln -sf $log_dir $test_dir/$compiler/log/latest
+
+    unit_test_dir=$test_dir/unit_test
+
     # Step 1: download
     if [ ! -d $download_dir ] || [ -z "$(ls -A $download_dir)" ]; then
         mkdir -p $download_dir
@@ -62,6 +64,11 @@ init() {
     echo $configure_success > kcc_configure_success.ini
     echo "==== kcc make status reported:"$make_success
     echo $make_success > kcc_make_success.ini
+}
+
+init() {
+    compiler="gcc" && init_helper
+    compiler="kcc" && init_helper
 }
 
 call_compiler() {
