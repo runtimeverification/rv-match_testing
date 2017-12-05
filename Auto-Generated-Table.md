@@ -8,7 +8,7 @@ This is an auto generated wiki.
 | coreutils | :grey_question: | :grey_question: | [559](https://github.com/runtimeverification/rv-match/issues/559) [570](https://github.com/runtimeverification/rv-match/issues/570)  | [561](https://github.com/runtimeverification/rv-match/issues/561)  |
 | curve25519 | :grey_question: | :grey_question: |  | [590](https://github.com/runtimeverification/rv-match/issues/590)  |
 | dpkg | :grey_question: | :grey_question: | [613](https://github.com/runtimeverification/rv-match/issues/613)  | [594](https://github.com/runtimeverification/rv-match/issues/594)  |
-| FFmpeg | :grey_question: | :grey_question: | [541](https://github.com/runtimeverification/rv-match/issues/541)  |  |
+| FFmpeg | :grey_question: | :grey_question: |  | [541](https://github.com/runtimeverification/rv-match/issues/541)  |
 | hashcat | :grey_question: | :grey_question: |  | [564](https://github.com/runtimeverification/rv-match/issues/564)  |
 | helloworld | :grey_question: | :white_check_mark: |  |  |
 | hostapd | :grey_question: | :grey_question: | [587](https://github.com/runtimeverification/rv-match/issues/587)  |  |
