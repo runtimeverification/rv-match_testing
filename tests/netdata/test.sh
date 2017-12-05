@@ -17,7 +17,7 @@ _build() {
     automake --add-missing
     autoreconf
     set -o pipefail
-    ./configure CC=kcc LD=kcc |& tee kcc_configure_out.txt ; configure_success="$?"
+    ./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
     make |& tee kcc_make_out.txt ; make_success="$?"
     cd ./src/
     kcc -d -g -pthread -o apps.plugin apps_plugin.o avl.o clocks.o common.o log.o procfile.o web_buffer.o -lm |& tee kcc_out.txt
