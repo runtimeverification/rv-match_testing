@@ -3,20 +3,16 @@ tests_dir=$(pwd)
 git clone https://github.com/TimJSwan89/rv-match_testing.wiki.git
 cd rv-match_testing.wiki
 git pull
-#Old directory structure:
-#echo "| $test_name | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/${test_name}_kcc_test.sh && bash ${test_name}_kcc_test.sh |" >> Auto-Generated-Table.md
-
-#New directory structure:
-#echo "| $test_name | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/$test_name/test.sh -O ${test_name}_kcc_test.sh && bash ${test_name}_kcc_test.sh |" >> Auto-Generated-Table.md
+tablefile="Auto-Generated-Table-2.0.md"
 read -s -p "Enter GitHub Password: " password
 
 # Do not delete this line.
-echo "This is an auto generated wiki." > Auto-Generated-Table.md
+echo "This is an auto generated wiki." > $tablefile
 
 # Table showing configure and make success.
-echo "  " >> Auto-Generated-Table.md
-echo "| project | configure | make | open issues | closed issues | " >> Auto-Generated-Table.md
-echo "| --- | --- | --- | --- | --- | " >> Auto-Generated-Table.md
+echo "  " >> $tablefile
+echo "| project | configure gcc | make gcc | configure kcc | make kcc | open issues | closed issues | " >> $tablefile
+echo "| --- | --- | --- | --- | --- | --- | --- |" >> $tablefile
 for file_path in $(ls $tests_dir/*_kcc_test.sh | sort)
 do
     script_name=$(basename $file_path)
@@ -56,20 +52,20 @@ do
     echo "https://api.github.com/search/issues?q=repo:runtimeverification/rv-match+in:title+state:open+$test_name"
     open_issues=$(curl -u "TimJSwan89:$password" "https://api.github.com/search/issues?q=repo:runtimeverification/rv-match+in:title+state:open+$test_name" | jq '[.items[] | {html_url: .html_url, state: .state, number: .number, title: .title}]' | jq -r ".[] | select(.title | contains(\"$test_name\")) | select(.state | contains(\"open\")) | @text \"[\\(.number)](\\(.html_url))\"" | tr '\n' ' ')
     closed_issues=$(curl -u "TimJSwan89:$password" "https://api.github.com/search/issues?q=repo:runtimeverification/rv-match+in:title+state:closed+$test_name" | jq '[.items[] | {html_url: .html_url, state: .state, number: .number, title: .title}]' | jq -r ".[] | select(.title | contains(\"$test_name\")) | select(.state | contains(\"closed\")) | @text \"[\\(.number)](\\(.html_url))\"" | tr '\n' ' ')
-    echo "| $test_name | $configure_result | $make_result | $open_issues | $closed_issues |" >> Auto-Generated-Table.md
+    echo "| $test_name | $configure_result | $make_result | $open_issues | $closed_issues |" >> $tablefile
 done
 #rm rv-match_issues.json
 
 # Table for single command run scripts.
-echo "  " >> Auto-Generated-Table.md
-echo "| project | standalone script |  " >> Auto-Generated-Table.md
-echo "| --- | --- |  " >> Auto-Generated-Table.md
+echo "  " >> $tablefile
+echo "| project | standalone script |  " >> $tablefile
+echo "| --- | --- |  " >> $tablefile
 for file_path in $(ls $tests_dir/*_kcc_test.sh | sort)
 do
     script_name=$(basename $file_path)
     test_name=${script_name%_kcc_test.sh}
-    echo "| $test_name | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/${test_name}_kcc_test.sh && bash ${test_name}_kcc_test.sh |" >> Auto-Generated-Table.md
+    echo "| $test_name | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/${test_name}/test.sh && bash ${test_name}_kcc_test.sh |" >> $tablefile
 done
-git add Auto-Generated-Table.md
+git add $tablefile
 git commit -am "Auto generated commit."
 git push
