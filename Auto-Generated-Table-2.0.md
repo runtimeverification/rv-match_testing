@@ -3,15 +3,15 @@ This is an auto generated wiki.
 | project | configure gcc | make gcc | configure kcc | make kcc | open issues | closed issues | 
 | --- | --- | --- | --- | --- | --- | --- |
 | bind9 | :white_check_mark: | :white_check_mark: | :white_check_mark: | :x: | [548](https://github.com/runtimeverification/rv-match/issues/548)  |  |
-| bogosort | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  | [583](https://github.com/runtimeverification/rv-match/issues/583)  |
+| bogosort | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |  | [583](https://github.com/runtimeverification/rv-match/issues/583)  |
 | cFE | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  | [125](https://github.com/runtimeverification/rv-match/issues/125)  |
-| coreutils | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [559](https://github.com/runtimeverification/rv-match/issues/559) [570](https://github.com/runtimeverification/rv-match/issues/570)  | [561](https://github.com/runtimeverification/rv-match/issues/561)  |
-| curve25519 | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  | [590](https://github.com/runtimeverification/rv-match/issues/590)  |
-| dpkg | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [613](https://github.com/runtimeverification/rv-match/issues/613)  | [594](https://github.com/runtimeverification/rv-match/issues/594)  |
+| coreutils | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | [559](https://github.com/runtimeverification/rv-match/issues/559) [570](https://github.com/runtimeverification/rv-match/issues/570)  | [561](https://github.com/runtimeverification/rv-match/issues/561)  |
+| curve25519 | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |  | [590](https://github.com/runtimeverification/rv-match/issues/590)  |
+| dpkg | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | [613](https://github.com/runtimeverification/rv-match/issues/613)  | [594](https://github.com/runtimeverification/rv-match/issues/594)  |
 | FFmpeg | :white_check_mark: | :white_check_mark: | :white_check_mark: | :x: |  | [541](https://github.com/runtimeverification/rv-match/issues/541)  |
-| hashcat | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  | [564](https://github.com/runtimeverification/rv-match/issues/564)  |
-| helloworld | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  |  |
-| hostapd | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [587](https://github.com/runtimeverification/rv-match/issues/587)  |  |
+| hashcat | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: |  | [564](https://github.com/runtimeverification/rv-match/issues/564)  |
+| helloworld | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |  |  |
+| hostapd | :white_check_mark: | :x: | :grey_question: | :grey_question: | [587](https://github.com/runtimeverification/rv-match/issues/587)  |  |
 | libuv | :white_check_mark: | :white_check_mark: | :white_check_mark: | :x: | [555](https://github.com/runtimeverification/rv-match/issues/555)  |  |
 | linux | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  | [10](https://github.com/runtimeverification/rv-match/issues/10)  |
 | lua | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [601](https://github.com/runtimeverification/rv-match/issues/601) [600](https://github.com/runtimeverification/rv-match/issues/600)  |  |
