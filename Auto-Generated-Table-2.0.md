@@ -9,7 +9,7 @@ This is an auto generated wiki.
 | coreutils | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: | :grey_question: | [559](https://github.com/runtimeverification/rv-match/issues/559) [570](https://github.com/runtimeverification/rv-match/issues/570)  | [561](https://github.com/runtimeverification/rv-match/issues/561)  |
 | curl | :x: | :x: | :grey_question: | :white_check_mark: | :x: | :grey_question: | [579](https://github.com/runtimeverification/rv-match/issues/579)  |  |
 | curve25519 | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: |  | [590](https://github.com/runtimeverification/rv-match/issues/590)  |
-| dhcpcd | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [589](https://github.com/runtimeverification/rv-match/issues/589)  |  |
+| dhcpcd | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: | [589](https://github.com/runtimeverification/rv-match/issues/589)  |  |
 | dpkg | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: | :grey_question: | [613](https://github.com/runtimeverification/rv-match/issues/613)  | [594](https://github.com/runtimeverification/rv-match/issues/594)  |
 | FFmpeg | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: | :grey_question: |  | [541](https://github.com/runtimeverification/rv-match/issues/541)  |
 | getty | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: | :grey_question: | [597](https://github.com/runtimeverification/rv-match/issues/597)  |  |
@@ -30,7 +30,7 @@ This is an auto generated wiki.
 | openssl | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: | :grey_question: | [547](https://github.com/runtimeverification/rv-match/issues/547)  |  |
 | php-src | :white_check_mark: | :x: | :x: | :white_check_mark: | :x: | :x: |  |  |
 | Remotery | :white_check_mark: | :x: | :grey_question: | :white_check_mark: | :x: | :grey_question: | [571](https://github.com/runtimeverification/rv-match/issues/571)  |  |
-| Reptile | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  | [572](https://github.com/runtimeverification/rv-match/issues/572)  |
+| Reptile | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: |  | [572](https://github.com/runtimeverification/rv-match/issues/572)  |
 | systemc-2.3 | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  |  |
 | SystemC | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  |  |
 | tcpdump | :x: | :x: | :grey_question: | :x: | :x: | :grey_question: | [293](https://github.com/runtimeverification/rv-match/issues/293)  |  |
