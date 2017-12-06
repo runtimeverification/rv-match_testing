@@ -40,7 +40,8 @@ init_helper() {
 
     log_dir=$test_dir/$compiler/log/$(date +%Y-%m-%d.%H:%M:%S)
     mkdir -p $log_dir
-    ln -sf $log_dir $test_dir/$compiler/log/latest
+    ln -sfn $log_dir $test_dir/$compiler/log/latest && echo "LATEST"
+    echo $log_dir
 
     unit_test_dir=$test_dir/unit_test
 
@@ -54,6 +55,7 @@ init_helper() {
     cp $download_dir/* $build_dir -r
     
     # Step 2: build
+    set -o pipefail
     cd $build_dir && _build
     
     # Step 3: extract

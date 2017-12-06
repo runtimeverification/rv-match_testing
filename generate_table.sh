@@ -70,7 +70,7 @@ echo "| --- | --- |  " >> $tablefile
 for file_path in $(ls $tests_dir/*/test.sh | sort)
 do
     test_name=$(basename $(dirname $file_path))
-    echo "| $test_name | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/${test_name}/test.sh && bash test.sh |" >> $tablefile
+    echo "| $test_name | \`wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/${test_name}/test.sh && bash test.sh\` |" >> $tablefile
 done
 git add $tablefile
 git commit -am "Auto generated commit."
