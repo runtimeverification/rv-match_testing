@@ -3,14 +3,22 @@
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh
 
 # TODO
-git clone https://github.com/php/php-src.git
-cd php-src
-git checkout edc77d5d00ec3ee3c547e7e08ae4e36fc11deb49
-autoscan
-aclocal
-autoheader
-autoreconf
-./buildconf CC=kcc LD=kcc
-#sudo apt install libxml2-dev
-./configure CC=kcc LD=kcc |& tee kcc_configure_out.txt
-make
+_download() {
+    git clone https://github.com/php/php-src.git
+    cd php-src/
+    git checkout edc77d5d00ec3ee3c547e7e08ae4e36fc11deb49
+}
+
+_build() {
+    cd php-src/
+    autoscan
+    aclocal
+    autoheader
+    autoreconf
+   ./buildconf CC=$compiler LD=$compiler
+    #sudo apt install libxml2-dev
+    ./configure CC=kcc LD=kcc |& tee kcc_configure_out.txt ; configure_success="$?"
+    make |& tee kcc_make_out.txt ; make_success="$?"
+}
+
+init

@@ -11,8 +11,8 @@ echo "This is an auto generated wiki." > $tablefile
 
 # Table showing configure and make success.
 echo "  " >> $tablefile
-echo "| project | configure gcc | make gcc | configure kcc | make kcc | open issues | closed issues | " >> $tablefile
-echo "| --- | --- | --- | --- | --- | --- | --- |" >> $tablefile
+echo "| project | configure gcc | make gcc | test gcc | configure kcc | make kcc | test kcc | open issues | closed issues | " >> $tablefile
+echo "| --- | --- | --- | --- | --- | --- | --- | --- | --- |" >> $tablefile
 get_successes_for_compiler_and_buildstage() {
     # Gets either configure or make results from either gcc or kcc
     result=":grey_question:"
@@ -38,10 +38,14 @@ do
     get_successes_for_compiler_and_buildstage && gcc_configure_result=$result
     compiler="gcc" ; buildstage="make"
     get_successes_for_compiler_and_buildstage && gcc_make_result=$result
+    compiler="gcc" ; buildstage="test"
+    get_successes_for_compiler_and_buildstage && gcc_test_result=$result
     compiler="kcc" ; buildstage="configure"
     get_successes_for_compiler_and_buildstage && kcc_configure_result=$result
     compiler="kcc" ; buildstage="make"
     get_successes_for_compiler_and_buildstage && kcc_make_result=$result
+    compiler="kcc" ; buildstage="test"
+    get_successes_for_compiler_and_buildstage && kcc_test_result=$result
 
     #(rem=$(curl -u "TimJSwan89:$password" "https://api.github.com/rate_limit" | jq '.resources.search.remaining')) ; echo $rem" should work"
     while rem=$(curl -u "TimJSwan89:$password" "https://api.github.com/rate_limit" | jq '.resources.search.remaining') && [[ $rem -le 2 ]]
@@ -59,7 +63,7 @@ do
     echo "https://api.github.com/search/issues?q=repo:runtimeverification/rv-match+in:title+state:open+\"$test_name\""
     open_issues=$(curl -u "TimJSwan89:$password" "https://api.github.com/search/issues?q=repo:runtimeverification/rv-match+in:title+state:open+\"$test_name\"" | jq '[.items[] | {html_url: .html_url, state: .state, number: .number, title: .title}]' | jq -r ".[] | select(.title | contains(\"$test_name\")) | select(.state | contains(\"open\")) | @text \"[\\(.number)](\\(.html_url))\"" | tr '\n' ' ')
     closed_issues=$(curl -u "TimJSwan89:$password" "https://api.github.com/search/issues?q=repo:runtimeverification/rv-match+in:title+state:closed+\"$test_name\"" | jq '[.items[] | {html_url: .html_url, state: .state, number: .number, title: .title}]' | jq -r ".[] | select(.title | contains(\"$test_name\")) | select(.state | contains(\"closed\")) | @text \"[\\(.number)](\\(.html_url))\"" | tr '\n' ' ')
-    echo "| $test_name | $gcc_configure_result | $gcc_make_result | $kcc_configure_result | $kcc_make_result | $open_issues | $closed_issues |" >> $tablefile
+    echo "| $test_name | $gcc_configure_result | $gcc_make_result | $gcc_test_result | $kcc_configure_result | $kcc_make_result | $kcc_test_result | $open_issues | $closed_issues |" >> $tablefile
 done
 #rm rv-match_issues.json
 
