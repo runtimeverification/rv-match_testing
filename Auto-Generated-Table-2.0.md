@@ -27,25 +27,25 @@ This is an auto generated wiki.
   
 | project | standalone script |  
 | --- | --- |  
-| bind9 | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/bind9/test.sh && bash test.sh |
-| bogosort | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/bogosort/test.sh && bash test.sh |
-| cFE | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/cFE/test.sh && bash test.sh |
-| coreutils | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/coreutils/test.sh && bash test.sh |
-| curve25519 | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/curve25519/test.sh && bash test.sh |
-| dpkg | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/dpkg/test.sh && bash test.sh |
-| FFmpeg | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/FFmpeg/test.sh && bash test.sh |
-| hashcat | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/hashcat/test.sh && bash test.sh |
-| helloworld | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/helloworld/test.sh && bash test.sh |
-| hostapd | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/hostapd/test.sh && bash test.sh |
-| libuv | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/libuv/test.sh && bash test.sh |
-| linux | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/linux/test.sh && bash test.sh |
-| lua | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/lua/test.sh && bash test.sh |
-| mbedtls | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/mbedtls/test.sh && bash test.sh |
-| netdata | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/netdata/test.sh && bash test.sh |
-| Open-Chargeport | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/Open-Chargeport/test.sh && bash test.sh |
-| openssl | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/openssl/test.sh && bash test.sh |
-| php-src | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/php-src/test.sh && bash test.sh |
-| Reptile | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/Reptile/test.sh && bash test.sh |
-| systemc-2.3 | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/systemc-2.3/test.sh && bash test.sh |
-| SystemC | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/SystemC/test.sh && bash test.sh |
-| tmux | wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/unflattening/tests/tmux/test.sh && bash test.sh |
+| bind9 | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/bind9/test.sh && bash test.sh` |
+| bogosort | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/bogosort/test.sh && bash test.sh` |
+| cFE | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/cFE/test.sh && bash test.sh` |
+| coreutils | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/coreutils/test.sh && bash test.sh` |
+| curve25519 | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/curve25519/test.sh && bash test.sh` |
+| dpkg | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/dpkg/test.sh && bash test.sh` |
+| FFmpeg | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/FFmpeg/test.sh && bash test.sh` |
+| hashcat | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/hashcat/test.sh && bash test.sh` |
+| helloworld | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/helloworld/test.sh && bash test.sh` |
+| hostapd | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/hostapd/test.sh && bash test.sh` |
+| libuv | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/libuv/test.sh && bash test.sh` |
+| linux | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/linux/test.sh && bash test.sh` |
+| lua | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/lua/test.sh && bash test.sh` |
+| mbedtls | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/mbedtls/test.sh && bash test.sh` |
+| netdata | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/netdata/test.sh && bash test.sh` |
+| Open-Chargeport | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/Open-Chargeport/test.sh && bash test.sh` |
+| openssl | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/openssl/test.sh && bash test.sh` |
+| php-src | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/php-src/test.sh && bash test.sh` |
+| Reptile | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/Reptile/test.sh && bash test.sh` |
+| systemc-2.3 | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/systemc-2.3/test.sh && bash test.sh` |
+| SystemC | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/SystemC/test.sh && bash test.sh` |
+| tmux | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/tmux/test.sh && bash test.sh` |
