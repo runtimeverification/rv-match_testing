@@ -12,5 +12,7 @@ _build() {
     cd tcpdump/
     aclocal; autoreconf
     ./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
-    make |& kcc_make_out.txt ; make_success="$?"
+    make |& tee kcc_make_out.txt ; make_success="$?"
 }
+
+init
