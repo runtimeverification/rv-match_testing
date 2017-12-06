@@ -4,7 +4,7 @@ This is an auto generated wiki.
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | bind9 | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: | :grey_question: | [548](https://github.com/runtimeverification/rv-match/issues/548)  |  |
 | bogosort | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: |  | [583](https://github.com/runtimeverification/rv-match/issues/583)  |
-| cFE | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  | [125](https://github.com/runtimeverification/rv-match/issues/125)  |
+| cFE | :x: | :x: | :x: | :x: | :x: | :x: |  | [125](https://github.com/runtimeverification/rv-match/issues/125)  |
 | coreutils | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: | :grey_question: | [559](https://github.com/runtimeverification/rv-match/issues/559) [570](https://github.com/runtimeverification/rv-match/issues/570)  | [561](https://github.com/runtimeverification/rv-match/issues/561)  |
 | curve25519 | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: |  | [590](https://github.com/runtimeverification/rv-match/issues/590)  |
 | dpkg | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: | :grey_question: | [613](https://github.com/runtimeverification/rv-match/issues/613)  | [594](https://github.com/runtimeverification/rv-match/issues/594)  |
@@ -12,17 +12,19 @@ This is an auto generated wiki.
 | hashcat | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  | [564](https://github.com/runtimeverification/rv-match/issues/564)  |
 | helloworld | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: |  |  |
 | hostapd | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [587](https://github.com/runtimeverification/rv-match/issues/587)  |  |
+| libpcap | :white_check_mark: | :white_check_mark: | :x: | :white_check_mark: | :x: | :x: | [263](https://github.com/runtimeverification/rv-match/issues/263) [293](https://github.com/runtimeverification/rv-match/issues/293)  |  |
 | libuv | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: | :grey_question: | [555](https://github.com/runtimeverification/rv-match/issues/555)  |  |
 | linux | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  | [10](https://github.com/runtimeverification/rv-match/issues/10)  |
-| lua | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: | [601](https://github.com/runtimeverification/rv-match/issues/601) [600](https://github.com/runtimeverification/rv-match/issues/600)  |  |
+| lua | :white_check_mark: | :white_check_mark: | :x: | :white_check_mark: | :white_check_mark: | :x: | [601](https://github.com/runtimeverification/rv-match/issues/601) [600](https://github.com/runtimeverification/rv-match/issues/600)  |  |
 | mbedtls | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: | :grey_question: | [558](https://github.com/runtimeverification/rv-match/issues/558)  | [550](https://github.com/runtimeverification/rv-match/issues/550)  |
 | netdata | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: | :grey_question: | [544](https://github.com/runtimeverification/rv-match/issues/544)  |  |
 | Open-Chargeport | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  |  |
 | openssl | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: | :grey_question: | [547](https://github.com/runtimeverification/rv-match/issues/547)  |  |
-| php-src | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  |  |
+| php-src | :white_check_mark: | :x: | :x: | :white_check_mark: | :x: | :x: |  |  |
 | Reptile | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  | [572](https://github.com/runtimeverification/rv-match/issues/572)  |
 | systemc-2.3 | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  |  |
 | SystemC | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  |  |
+| tcpdump | :x: | :x: | :x: | :x: | :x: | :x: | [293](https://github.com/runtimeverification/rv-match/issues/293)  |  |
 | tmux | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [574](https://github.com/runtimeverification/rv-match/issues/574)  | [552](https://github.com/runtimeverification/rv-match/issues/552)  |
   
 | project | standalone script |  
@@ -37,6 +39,7 @@ This is an auto generated wiki.
 | hashcat | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/hashcat/test.sh && bash test.sh` |
 | helloworld | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/helloworld/test.sh && bash test.sh` |
 | hostapd | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/hostapd/test.sh && bash test.sh` |
+| libpcap | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/libpcap/test.sh && bash test.sh` |
 | libuv | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/libuv/test.sh && bash test.sh` |
 | linux | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/linux/test.sh && bash test.sh` |
 | lua | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/lua/test.sh && bash test.sh` |
@@ -48,4 +51,5 @@ This is an auto generated wiki.
 | Reptile | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/Reptile/test.sh && bash test.sh` |
 | systemc-2.3 | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/systemc-2.3/test.sh && bash test.sh` |
 | SystemC | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/SystemC/test.sh && bash test.sh` |
+| tcpdump | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/tcpdump/test.sh && bash test.sh` |
 | tmux | `wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/tmux/test.sh && bash test.sh` |
