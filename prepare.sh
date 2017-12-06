@@ -9,8 +9,10 @@
 # They should assume that they are called in test_dir
 #
 # _download: Download source code and other resources needed here.
-# _build: 
+# _build: Set make_success and configure_success. "set -o pipefail" should be run before this function is called, otherwise expect false positive results for compilation.
 # _extract: Move interesting files like kcc_* to log_dir and call process_kcc_config if applicable
+# _test: Set test_success. Same rules as _build for "set -o pipefail".
+# _extract_test: Same rules as _extract except for tests instead of build.
 
 err(){ >&2 echo "$@"; }
 
@@ -40,7 +42,7 @@ init_helper() {
 
     log_dir=$test_dir/$compiler/log/$(date +%Y-%m-%d.%H:%M:%S)
     mkdir -p $log_dir
-    ln -sfn $log_dir $test_dir/$compiler/log/latest && echo "LATEST"
+    ln -sfn $log_dir $test_dir/$compiler/log/latest
     echo $log_dir
 
     unit_test_dir=$test_dir/unit_test
@@ -60,12 +62,21 @@ init_helper() {
     
     # Step 3: extract
     cd $build_dir && _extract    
-
     cd $log_dir
     echo "==== $compiler configure status reported:"$configure_success
     echo $configure_success > configure_success.ini
     echo "==== $compiler make status reported:"$make_success
     echo $make_success > make_success.ini
+
+    # Step 4: test
+    set -o pipefail
+    cd $build_dir && _test
+
+    # Step 5: extract tests
+    cd $build_dir && _extract_test
+    cd $log_dir
+    echo "==== $compiler test status reported:"$test_success
+    echo $test_success > test_success.ini
 }
 
 init() {
