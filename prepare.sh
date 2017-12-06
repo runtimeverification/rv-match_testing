@@ -44,6 +44,7 @@ init_helper() {
     mkdir -p $log_dir
     ln -sfn $log_dir $test_dir/$compiler/log/latest
     echo $log_dir
+    rm $log_dir/*_success.ini    
 
     unit_test_dir=$test_dir/unit_test
 
@@ -58,25 +59,33 @@ init_helper() {
     
     # Step 2: build
     set -o pipefail
+    unset configure_success
+    unset make_success
     cd $build_dir && _build
     
     # Step 3: extract
     cd $build_dir && _extract    
     cd $log_dir
-    echo "==== $compiler configure status reported:"$configure_success
-    echo $configure_success > configure_success.ini
-    echo "==== $compiler make status reported:"$make_success
-    echo $make_success > make_success.ini
-
+    if [ ! -z ${configure_success+x} ]; then
+        echo $configure_success > configure_success.ini
+        echo "==== $compiler configure status reported:"$configure_success
+    fi
+    if [ ! -z ${make_success+x} ]; then
+        echo $make_success > make_success.ini
+        echo "==== $compiler make status reported:"$make_success
+    fi
     # Step 4: test
     set -o pipefail
+    unset test_success
     cd $build_dir && _test
 
     # Step 5: extract tests
     cd $build_dir && _extract_test
     cd $log_dir
-    echo "==== $compiler test status reported:"$test_success
-    echo $test_success > test_success.ini
+    if [ ! -z ${test_success+x} ]; then
+        echo "==== $compiler test status reported:"$test_success
+        echo $test_success > test_success.ini
+    fi
 }
 
 init() {

@@ -3,21 +3,20 @@
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh
 
 _download() {
-    git clone https://github.com/tmux/tmux.git
-    cd tmux/
-    git checkout cf782c4f546fb11f3157de7aecff85845b0dbed9
+    git clone https://github.com/rsmarples/dhcpcd.git
+    cd dhcpcd/
+    git checkout ad23fe653d8ad6a87e284fd9c93a6e55f865eb13
 }
 
 _build() {
-    cd tmux/
-    CC=$compiler LD=$compiler bash autogen.sh
+    cd dhcpcd/
     ./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
     make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
 _export() {
-    cd tmux/ && process_kcc_config
-    cd tmux/ && mv kcc_* $log_dir
+    cd dhcpcd/ && process_kcc_config
+    cd dhcpcd/ && mv kcc_* $log_dir
 }
 
 init
