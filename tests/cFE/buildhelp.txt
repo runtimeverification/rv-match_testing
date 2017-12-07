@@ -1,0 +1,178 @@
+Dwight:
+#you start by placing the osal directory under "osal" under the cfe directory
+#for some reason it wants the os-specific code for the posix-ng platform which do
+#esn't appear to be included in the repository
+#so I just created a symlink from posix-ng to posix
+#in osal/src/os
+#then you copy cfe/cmake/sample_defs to sample_defs under the cfe root
+#then you make a directory build-sim
+#cd to it
+#export SIMULATION=native
+#and run cmake -DENABLE_UNIT_TESTS=TRUE ../cfe
+#followed by make mission-all to build all the tests
+#and then you cd into the native directory and run ctest
+#that will build it for gcc
+#so all you need to do to build it for rv-predict is
+#add the -DCMAKE_C_COMPILER flag
+
+David:
+I will describe how I build and run NASA cFE 6.5.0a using OSAL 4.2.1a
+and RV-Predict/C.  You should be able to build and run with RV-Match by
+replacing `rvpc` with `kcc`.
+
+1) Extract cFE & OSAL sources in the same directory---let's call that
+   directory $TOP:
+
+tar zxf cFE-6.5.0a-OSS-release.tar.gz
+tar zxf rvpredict-osal-4.2.1a.tgz
+
+2) Create a link from posix-ng to posix in OSAL:
+
+cd $TOP/osal-4.2.1a-release/src/os
+ln -sf posix posix-ng
+
+3) Make a copy of cfe/cmake/sample_defs/ at the top of
+   cFE:
+
+cd $TOP/cFE-6.5.0-OSS-release/
+cp -a cfe/cmake/sample_defs/ .
+
+4) In the same directory, replace the stub directory `osal` with a link
+   to the copy you extracted, before:
+
+rm -r osal
+ln -s ../osal-4.2.1a-release ./osal
+
+4) Remove build/:
+
+rm -r build/
+
+4) Create a new build/ directory:
+
+mkdir build/
+
+5) RV-Predict only supports 64-bit builds right now.  Change occurrences
+   of -m32 to -m64 in these files, *or* apply the attached patch:
+
+find . -type f \! -name '*_log.txt' \! -name '*.doc' -print0 | xargs -0 grep -l -- -m32
+
+6) Add SIMULATION=native to your environment:
+
+export SIMULATION=native
+
+7) Configure cFE:
+
+cd $TOP/cFE-6.5.0-OSS-release/build
+
+8) Build cFE:
+
+make mission-all
+
+9) Increase POSIX message queue size:
+
+sudo /bin/sh -c "echo 100 > /proc/sys/fs/mqueue/msg_max"
+
+10) Run the OSAL tests:
+
+native/osal/unit-tests/ostimer-test/osal_timer_UT
+native/osal/unit-tests/ostimer-test/osal_timer_UT
+native/osal/unit-tests/osnetwork-test/osal_network_UT
+native/osal/unit-tests/osloader-test/osal_loader_UT
+native/osal/unit-tests/osfile-test/osal_file_UT
+native/osal/unit-tests/osfilesys-test/osal_filesys_UT
+native/osal/unit-tests/oscore-test/osal_core_UT
+
+native/osal/tests/bin-sem-flush-test
+native/osal/tests/bin-sem-test
+native/osal/tests/bin-sem-timeout-test
+native/osal/tests/count-sem-test
+native/osal/tests/file-api-test
+native/osal/tests/mutex-test
+native/osal/tests/osal-core-test
+native/osal/tests/queue-timeout-test
+native/osal/tests/symbol-api-test
+native/osal/tests/timer-test
+
+11) Run the cFE app.  Send it commands.  (Please look for
+    clues about sending commands in the documentation,
+    $TOP/cFE-6.5.0-OSS-release/cfe-OSS-readme.txt.  I haven't tried to
+    send any commands, myself.  Beware: the documentation appears to be
+    out-of-date.)
+
+native/cpu1/core-cpu1
+# TBD
+
+Dave
+
+Tim:
+sys/cdefs.h
+solved with 
+libc6-dev-i386
+
+ 2086  vi prepare.sh 
+ 2087  vi generate_table.sh 
+ 2088  ls
+ 2089  cd ..
+ 2090  ls
+ 2091  cd ..
+ 2092  tar zxf cFE-6.5.0a-OSS-release.tar.gz
+ 2093  man cp
+ 2094  cd matchTesting/temp_testing/
+ 2095  vi prepare.sh 
+ 2096  cd ../..
+ 2097  wget "https://sourceforge.net/projects/coreflightexec/files/cFE-6.5.0a-OSS-release.tar.gz"
+ 2098  tar -xvzf cFE-6.5.0a-OSS-release.tar.gz
+ 2099  cd cFE-6.5.0-OSS-release/
+ 2100  ls
+ 2101  rm -rf osal/
+ 2102  git clone https://github.com/nasa/osal.git
+ 2103  cd osal/
+ 2104  git checkout 7139592f04e47f7522b07b1ef9f84a21393df88a
+ 2105  cd src/os
+ 2106  ln -sf posix posix-ng
+ 2107  ls
+ 2108  cd ..
+ 2109  cd ../..
+ 2110  ls
+ 2111  man ln
+ 2112  rm -r build/
+ 2113  mkdir build/
+ 2114  export SIMULATION=native
+ 2115  cmake -DCMAKE_C_COMPILER=rvpc -DENABLE_UNIT_TESTS=TRUE --build ../cfe
+ 2116  ls
+ 2117  cd build
+ 2118  cmake -DCMAKE_C_COMPILER=rvpc -DENABLE_UNIT_TESTS=TRUE --build ../cfe
+ 2119  cd ..
+ 2120  cp -a cfe/cmake/sample_defs/ .
+ 2121  ls
+ 2122  cd build/
+ 2123  cmake -DCMAKE_C_COMPILER=rvpc -DENABLE_UNIT_TESTS=TRUE --build ../cfe
+ 2124  make mission-all
+ 2125  cd ..
+ 2126  ls
+ 2127  rm -r osal/
+ 2128  cd ..
+ 2129  wget "https://sourceforge.net/projects/osal/files/osal-4.2.1a-release.tar.gz"
+ 2130  tar zxf rvpredict-osal-4.2.1a.tgz
+ 2131  ls
+ 2132  tar zxf osal-4.2.1a-release.tar.gz 
+ 2133  cd osal-4.2.1a-release/src/os/
+ 2134  ln -sf posix posix-ng
+ 2135  cd ../../..
+ 2136  ls
+ 2137  cd cFE-6.5.0-OSS-release/
+ 2138  rm -r osal
+ 2139  ln -s ../osal-4.2.1a-release ./osal
+ 2140  cd build/
+ 2141  cmake -DCMAKE_C_COMPILER=rvpc -DENABLE_UNIT_TESTS=TRUE --build ../cfe
+ 2142  make mission-all
+ 2143  sudo apt install libc6-dev-i386
+ 2144  make mission-all
+ 2145  cmake -DCMAKE_C_COMPILER=gcc -DENABLE_UNIT_TESTS=TRUE --build ../cfe
+ 2146  make mission-all
+ 2147  cmake -DCMAKE_C_COMPILER=kcc -DENABLE_UNIT_TESTS=TRUE --build ../cfe
+ 2148  make mission-all
+ 2149  make mission-all ; echo "$?"
+ 2150  cd ../..
+ 2151  history 500
+
