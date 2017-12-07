@@ -1,4 +1,4 @@
-# To activate ssh key: git remote set-url origin git@github.com:TimJSwan89/rv-match_testing.wiki.git
+# To activate ssh key: git remote set-url origin git@github.com:runtimeverification/rv-match_testing.wiki.git
 tests_dir="$(pwd)/tests/"
 git clone https://github.com/runtimeverification/rv-match_testing.wiki.git
 cd rv-match_testing.wiki
