@@ -62,8 +62,13 @@ init_helper() {
     unset configure_success
     unset make_success
     cd $build_dir && _build
-    
+
     # Step 3: extract
+    [ ""$(find $build_dir -name "kcc_config") == "" ] ; no_kcc_config_generated_success="$?"
+    cd $log_dir
+    echo $no_kcc_config_generated_success > no_kcc_config_generated_success.ini
+    echo "==== $compiler kcc_config prevention status reported:"$no_kcc_config_generated_success
+    
     cd $build_dir && _extract    
     cd $log_dir
     if [ ! -z ${configure_success+x} ]; then
@@ -74,6 +79,7 @@ init_helper() {
         echo $make_success > make_success.ini
         echo "==== $compiler make status reported:"$make_success
     fi
+    
     # Step 4: test
     set -o pipefail
     unset test_success

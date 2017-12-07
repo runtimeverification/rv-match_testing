@@ -11,19 +11,19 @@ echo "This is an auto generated wiki." > $tablefile
 
 # Table showing configure and make success.
 echo "  " >> $tablefile
-echo "| project | configure gcc | make gcc | test gcc | configure kcc | make kcc | test kcc | open issues | closed issues | " >> $tablefile
-echo "| --- | --- | --- | --- | --- | --- | --- | --- | --- |" >> $tablefile
+echo "| project | configure gcc | make gcc | test gcc | configure kcc | make kcc | kcc config | test kcc | open issues | closed issues | " >> $tablefile
+echo "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |" >> $tablefile
 get_successes_for_compiler_and_buildstage() {
     # Gets either configure or make results from either gcc or kcc
-    result=":grey_question:"
+    result=$string_non_exist
     result_path=$tests_dir/$test_name/$compiler/log/latest/${buildstage}_success.ini
     echo $result_path
     echo -e $result_path
     if [[ -e $result_path ]] ; then
         if [[ "$(head -n 1 $result_path)" == 0 ]] ; then
-            result=":white_check_mark:"
+            result=$string_success
         else
-            result=":x:"
+            result=$string_fail
         fi
         echo "Test start"
         echo "$(head -n 1 $result_path)"
@@ -33,7 +33,10 @@ get_successes_for_compiler_and_buildstage() {
 for file_path in $(ls $tests_dir/*/test.sh | sort)
 do
     test_name=$(basename $(dirname $file_path))
-   
+    
+    string_non_exist=":grey_question:"
+    string_success=":white_check_mark:"
+    string_fail=":x:"
     compiler="gcc" ; buildstage="configure"
     get_successes_for_compiler_and_buildstage && gcc_configure_result=$result
     compiler="gcc" ; buildstage="make"
@@ -46,6 +49,12 @@ do
     get_successes_for_compiler_and_buildstage && kcc_make_result=$result
     compiler="kcc" ; buildstage="test"
     get_successes_for_compiler_and_buildstage && kcc_test_result=$result
+    
+    string_success=" "
+    string_fail=":exclamation:"
+    compiler="kcc" ; buildstage="no_kcc_config_generated"
+    get_successes_for_compiler_and_buildstage && kcc_config_result=$result
+
 
     #(rem=$(curl -u "TimJSwan89:$password" "https://api.github.com/rate_limit" | jq '.resources.search.remaining')) ; echo $rem" should work"
     while rem=$(curl -u "TimJSwan89:$password" "https://api.github.com/rate_limit" | jq '.resources.search.remaining') && [[ $rem -le 2 ]]
@@ -63,7 +72,7 @@ do
     echo "https://api.github.com/search/issues?q=repo:runtimeverification/rv-match+in:title+state:open+\"$test_name\""
     open_issues=$(curl -u "TimJSwan89:$password" "https://api.github.com/search/issues?q=repo:runtimeverification/rv-match+in:title+state:open+\"$test_name\"" | jq '[.items[] | {html_url: .html_url, state: .state, number: .number, title: .title}]' | jq -r ".[] | select(.title | contains(\"$test_name\")) | select(.state | contains(\"open\")) | @text \"[\\(.number)](\\(.html_url))\"" | tr '\n' ' ')
     closed_issues=$(curl -u "TimJSwan89:$password" "https://api.github.com/search/issues?q=repo:runtimeverification/rv-match+in:title+state:closed+\"$test_name\"" | jq '[.items[] | {html_url: .html_url, state: .state, number: .number, title: .title}]' | jq -r ".[] | select(.title | contains(\"$test_name\")) | select(.state | contains(\"closed\")) | @text \"[\\(.number)](\\(.html_url))\"" | tr '\n' ' ')
-    echo "| $test_name | $gcc_configure_result | $gcc_make_result | $gcc_test_result | $kcc_configure_result | $kcc_make_result | $kcc_test_result | $open_issues | $closed_issues |" >> $tablefile
+    echo "| $test_name | $gcc_configure_result | $gcc_make_result | $gcc_test_result | $kcc_configure_result | $kcc_make_result | $kcc_config_result | $kcc_test_result | $open_issues | $closed_issues |" >> $tablefile
 done
 #rm rv-match_issues.json
 
