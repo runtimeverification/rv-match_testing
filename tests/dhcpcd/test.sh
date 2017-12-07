@@ -11,12 +11,15 @@ _download() {
 _build() {
     cd dhcpcd/
     ./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
-    make |& tee kcc_make_out.txt ; make_success="$?"
+    set -o pipefail
+    make ; make_success="$?"
+    echo "internal report make: "$make_success
+    #make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
 _export() {
-    cd dhcpcd/ && process_kcc_config
-    cd dhcpcd/ && mv kcc_* $log_dir
+    cd dhcpcd/dhcpcd && process_kcc_config
+    cd dhcpcd/dhcpcd && mv kcc_* $log_dir
 }
 
 init
