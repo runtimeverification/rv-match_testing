@@ -1,6 +1,6 @@
 # To activate ssh key: git remote set-url origin git@github.com:TimJSwan89/rv-match_testing.wiki.git
 tests_dir="$(pwd)/tests/"
-git clone https://github.com/TimJSwan89/rv-match_testing.wiki.git
+git clone https://github.com/runtimeverification/rv-match_testing.wiki.git
 cd rv-match_testing.wiki
 git pull
 tablefile="Auto-Generated-Table-2.0.md"
@@ -83,7 +83,7 @@ echo "| --- | --- |  " >> $tablefile
 for file_path in $(ls $tests_dir/*/test.sh | sort)
 do
     test_name=$(basename $(dirname $file_path))
-    echo "| $test_name | \`wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/tests/${test_name}/test.sh && bash test.sh\` |" >> $tablefile
+    echo "| $test_name | \`wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/${test_name}/test.sh && bash test.sh\` |" >> $tablefile
 done
 git add $tablefile
 git commit -am "Auto generated commit."
