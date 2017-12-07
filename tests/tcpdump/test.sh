@@ -10,8 +10,9 @@ _download() {
 
 _build() {
     cd tcpdump/
+    #sudo apt intall libpcap-dev
     aclocal; autoreconf
-    ./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
+    ./configure CC="$compiler -std=gnu11" LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
     make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
