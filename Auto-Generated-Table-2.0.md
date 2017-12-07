@@ -2,7 +2,7 @@ This is an auto generated wiki.
   
 | project | configure gcc | make gcc | test gcc | configure kcc | make kcc | test kcc | open issues | closed issues | 
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| bind9 | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: | :grey_question: | [548](https://github.com/runtimeverification/rv-match/issues/548)  |  |
+| bind9 | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: | :x: | :grey_question: | [548](https://github.com/runtimeverification/rv-match/issues/548)  |  |
 | bogosort | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: |  | [583](https://github.com/runtimeverification/rv-match/issues/583)  |
 | cFE | :x: | :x: | :x: | :x: | :x: | :x: |  | [125](https://github.com/runtimeverification/rv-match/issues/125)  |
 | cineform | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: | :grey_question: | [546](https://github.com/runtimeverification/rv-match/issues/546)  |  |
