@@ -11,18 +11,20 @@ _download() {
     cd osal
     git checkout 7139592f04e47f7522b07b1ef9f84a21393df88a
     cd src/os
-    ln -s posix posix-ng
-    cd $build_dir/cFE-6.5.0-OSS-release/
+    ln -sf posix posix-ng
+    cd $download_dir/cFE-6.5.0-OSS-release/
     cp -r cfe/cmake/sample_defs/ cfe/sample_defs/
+    rm -r build/
+    mkdir build/
+    cp $download_dir/cFE.m64.patch .
+    find . -type f \! -name '*_log.txt' \! -name '*.doc' -print0 | xargs -0 grep -l -- -m32
 }
 
 _build() {
     cd cFE-6.5.0-OSS-release/
-    mkdir build-sim/
-    cd build-sim/
     export SIMULATION=native
-    cmake -DCMAKE_C_COMPILER=$compiler -DENABLE_UNIT_TESTS=TRUE ../cfe ; configure_success="$?"
-    make ; make_success="$?"
+    cmake -DCMAKE_C_COMPILER=$compiler -DENABLE_UNIT_TESTS=TRUE --build ; configure_success="$?"
+    make mission-all ; make_success="$?"
 }
 
 _extract() {

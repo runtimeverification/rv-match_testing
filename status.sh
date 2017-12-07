@@ -38,8 +38,9 @@ get_info() {
 printresultforcompiler() {
     infofolder="tests/$line/$compiler/log/latest/"
     get_info
-    echo $line$midstring$result"."
+    output+=$line'\t'$midstring$result'\n'
 }
+output='\n'
 while read line; do
     string_success="passed"
     string_failed="failed"
@@ -47,13 +48,13 @@ while read line; do
     
     infoname="configure"
     midstring=" configuration "
-    compiler="gcc" ; get_info
-    compiler="kcc" ; get_info
+    compiler="gcc" ; printresultforcompiler
+    compiler="kcc" ; printresultforcompiler
     
     infoname="make"
     midstring="        making "
-    compiler="gcc" ; get_info
-    compiler="kcc" ; get_info
+    compiler="gcc" ; printresultforcompiler
+    compiler="kcc" ; printresultforcompiler
 
     string_success="not generated"
     string_failed="produced"
@@ -64,5 +65,7 @@ while read line; do
     compiler="gcc" ; get_info
     compiler="kcc" ; get_info
 
-    echo ""
 done < $whitelistpath
+
+echo -e $output
+printf $output'\n' | column -t

@@ -1,0 +1,165 @@
+diff -purN ../pristine/cFE-6.5.0-OSS-release/psp/fsw/grut699-vxworks6/make/compiler-opts.mak ./psp/fsw/grut699-vxworks6/make/compiler-opts.mak
+
+--- ../pristine/cFE-6.5.0-OSS-release/psp/fsw/grut699-vxworks6/make/compiler-opts.mak	2016-07-27 10:30:46.000000000 -0500
+
++++ ./psp/fsw/grut699-vxworks6/make/compiler-opts.mak	2017-12-07 11:43:32.813555374 -0600
+
+@@ -53,9 +53,9 @@ ENDIAN_DEFS=-D_EB -DENDIAN=_EB -DSOFTWAR
+
+ ##
+
+ ## Compiler Architecture Switches
+
+ ## 
+
+-##ARCH_OPTS = -mv8 -mfpu -m32 -fno-builtin -fvolatile -mfaster-structs -Wcast-align
+
+-#ARCH_OPTS = -m32 -fno-builtin -fvolatile -Wcast-align -mtune=ut699
+
+-ARCH_OPTS = -fno-builtin -fvolatile -Wcast-align -m32 -mtune=ut699 -mv8 -ffloat-int-mode
+
++##ARCH_OPTS = -mv8 -mfpu -m64 -fno-builtin -fvolatile -mfaster-structs -Wcast-align
+
++#ARCH_OPTS = -m64 -fno-builtin -fvolatile -Wcast-align -mtune=ut699
+
++ARCH_OPTS = -fno-builtin -fvolatile -Wcast-align -m64 -mtune=ut699 -mv8 -ffloat-int-mode
+
+ 
+
+ ##
+
+ ## Application specific compiler switches 
+
+diff -purN ../pristine/cFE-6.5.0-OSS-release/psp/fsw/pc-linux/make/compiler-opts.mak ./psp/fsw/pc-linux/make/compiler-opts.mak
+
+--- ../pristine/cFE-6.5.0-OSS-release/psp/fsw/pc-linux/make/compiler-opts.mak	2016-07-27 10:30:46.000000000 -0500
+
++++ ./psp/fsw/pc-linux/make/compiler-opts.mak	2017-12-07 11:43:35.569521687 -0600
+
+@@ -30,7 +30,7 @@ ENDIAN_DEFS=-D_EL -DENDIAN=_EL -DSOFTWAR
+
+ ##
+
+ ## Compiler Architecture Switches
+
+ ## 
+
+-ARCH_OPTS = -m32
+
++ARCH_OPTS = -m64
+
+ 
+
+ ##
+
+ ## Application specific compiler switches 
+
+diff -purN ../pristine/cFE-6.5.0-OSS-release/psp/fsw/pc-linux/make/link-rules.mak ./psp/fsw/pc-linux/make/link-rules.mak
+
+--- ../pristine/cFE-6.5.0-OSS-release/psp/fsw/pc-linux/make/link-rules.mak	2016-07-27 10:30:46.000000000 -0500
+
++++ ./psp/fsw/pc-linux/make/link-rules.mak	2017-12-07 11:43:41.689446675 -0600
+
+@@ -18,7 +18,7 @@ CORE_INSTALL_FILES = $(EXE_TARGET)
+
+ ##
+
+ ## Linker flags that are needed
+
+ ##
+
+-LDFLAGS = -m32 -Wl,-export-dynamic
+
++LDFLAGS = -m64 -Wl,-export-dynamic
+
+ 
+
+ ##
+
+ ## Libraries to link in
+
+@@ -39,4 +39,4 @@ $(EXE_TARGET): $(CORE_OBJS)
+
+ ## Application Link Rule
+
+ ##
+
+ $(APPTARGET).$(APP_EXT): $(OBJS)
+
+-	$(COMPILER) -m32 -shared -o $@ $(OBJS) 
+
++	$(COMPILER) -m64 -shared -o $@ $(OBJS) 
+
+diff -purN ../pristine/cFE-6.5.0-OSS-release/tools/elf2cfetbl/CMakeLists.txt ./tools/elf2cfetbl/CMakeLists.txt
+
+--- ../pristine/cFE-6.5.0-OSS-release/tools/elf2cfetbl/CMakeLists.txt	2016-07-27 10:30:46.000000000 -0500
+
++++ ./tools/elf2cfetbl/CMakeLists.txt	2017-12-07 11:42:43.694145659 -0600
+
+@@ -30,7 +30,7 @@ file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/i
+
+ include_directories(${CMAKE_CURRENT_BINARY_DIR}/inc_stubs)
+
+ 
+
+ # force build as 32-bit
+
+-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32")
+
++set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m64")
+
+ add_executable(elf2cfetbl elf2cfetbl.c)
+
+ 
+
+ install(TARGETS elf2cfetbl DESTINATION host)
+
+diff -purN ../pristine/cFE-6.5.0-OSS-release/tools/elf2cfetbl/for_build/Makefile ./tools/elf2cfetbl/for_build/Makefile
+
+--- ../pristine/cFE-6.5.0-OSS-release/tools/elf2cfetbl/for_build/Makefile	2016-07-27 10:30:46.000000000 -0500
+
++++ ./tools/elf2cfetbl/for_build/Makefile	2017-12-07 11:42:41.238174656 -0600
+
+@@ -32,7 +32,7 @@ TARGET_DEFS = -D__ix86__ -D_ix86_ -D_LIN
+
+ ##
+
+ ## Architecture / debug defines
+
+ ## 
+
+-ARCH_DEFS = -m32 -g
+
++ARCH_DEFS = -m64 -g
+
+ 
+
+ ## 
+
+ ## Endian Defines
+
+diff -purN ../pristine/cFE-6.5.0-OSS-release/tools/gen_app_code/app_code_tests.py ./tools/gen_app_code/app_code_tests.py
+
+--- ../pristine/cFE-6.5.0-OSS-release/tools/gen_app_code/app_code_tests.py	2016-07-27 10:30:46.000000000 -0500
+
++++ ./tools/gen_app_code/app_code_tests.py	2017-12-07 11:42:46.630110932 -0600
+
+@@ -94,7 +94,7 @@ clean::
+
+ 
+
+ ut_%s.bin: ut_%s.c
+
+ 	gcc $(LOCAL_COPTS) $(INC_PATH) $(COPTS) $(DEBUG_OPTS) \\
+
+-            -DOS_DEBUG_LEVEL=$(DEBUG_LEVEL) -m32 $^ \\
+
++            -DOS_DEBUG_LEVEL=$(DEBUG_LEVEL) -m64 $^ \\
+
+             -o ut_%s.bin
+
+ 
+
+ #######################################################################################
+
+
