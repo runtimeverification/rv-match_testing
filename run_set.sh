@@ -21,6 +21,6 @@ if [ $blacklist_check == $blacklist_indicator ]; then
 fi
 while read line; do
   echo ==== $line started at $(date)
-  echo tests/$line/test.sh
+  bash tests/$line/test.sh
   echo ==== $line finished at $(date)
 done < $whitelistpath

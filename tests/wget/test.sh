@@ -6,11 +6,11 @@ _download() {
     git clone https://github.com/mirror/wget.git
     cd wget/
     git checkout 6aa6b669efbef62f60471c18e7fdef0206f92337
+    ./bootstrap
 }
 
 _build() {
     cd wget/
-    ./bootstrap
     ./configure --disable-threads CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
     make |& tee kcc_make_out.txt ; make_success="$?"
 }

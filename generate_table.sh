@@ -11,7 +11,7 @@ echo "This is an auto generated wiki." > $tablefile
 
 # Table showing configure and make success.
 echo "  " >> $tablefile
-echo "| project | configure gcc | make gcc | test gcc | configure kcc | make kcc | kcc config | test kcc | open issues | closed issues | " >> $tablefile
+echo "| project | conf gcc | make gcc | test gcc | conf kcc | make kcc | kcc conf | test kcc | open issue | clsd issue | " >> $tablefile
 echo "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |" >> $tablefile
 get_successes_for_compiler_and_buildstage() {
     # Gets either configure or make results from either gcc or kcc
