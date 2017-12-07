@@ -5,8 +5,19 @@
 ```
 cd rv-match_testing
 chmod +x run_all.sh && chmod +x tests/*/test.sh
-./run_all.sh
+bash run_all.sh
 ```
+
+## Script Instructions
+
+- run_set.sh
+ - Example: "bash run_set.h sets/crashless.ini"
+ - Use to run either a whitelist or a blacklist set of tests.
+ - The default set is sets/crashless.ini which blacklists the tests that crash the machine.
+ - To get a set of all possible tests, run generate_run_set.sh. It will create sets/_generated_all.ini
+ - Sets beginning with line "BLACKLIST" are treated as the complement of the actual set to be ran. A whitelist set will be generated with a similar name when it is ran.
+
+- 
 
 ## Folder Structure
 
