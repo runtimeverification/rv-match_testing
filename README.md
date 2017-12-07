@@ -28,3 +28,8 @@ chmod +x run_all.sh && chmod +x tests/*/test.sh
   _This script will be put at the beginning of each test script passing the test name. This should be non-executable._
 - project_testing.sh
 - run_all.sh
+
+## Gource
+December 6, 2017
+https://youtu.be/kAirik81ANs
+`gource -a .4 -c 4.0 -1280x720 -o - | ffmpeg -y -r 60 -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 gource.mp4`
