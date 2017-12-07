@@ -1,6 +1,6 @@
 This is an auto generated wiki.
   
-| project | configure gcc | make gcc | test gcc | configure kcc | make kcc | kcc config | test kcc | open issues | closed issues | 
+| project | conf gcc | make gcc | test gcc | conf kcc | make kcc | kcc conf | test kcc | open issues | closed issues | 
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | bind9 | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: | :x: | :grey_question: | :grey_question: | [548](https://github.com/runtimeverification/rv-match/issues/548)  |  |
 | bogosort | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :white_check_mark: |   | :grey_question: |  | [583](https://github.com/runtimeverification/rv-match/issues/583)  |
