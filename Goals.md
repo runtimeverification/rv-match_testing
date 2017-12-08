@@ -5,6 +5,6 @@
 [did locally] 5. Integrate at least one project test into the Jenkin's testing system to exercise that process which may eventually take place.  
 [complete] 6. Table generating script finds relevant issues and links them in their columns.  
 [todo] 7. Get a test working for `cFE`.  
-[todo] 8. Get a job going on the `jenkins` machine.  
+[complete] 8. Get a job going on the `jenkins` machine.  
 [todo] 9. Write a script which produces set {projects which build scripts have been updated since their last run}.  
 [todo] 10. There are multiple individual tests that can be done individually for projects like {`cFE`, `spin`}. The scripts should be able to handle reporting results for more than just one test.
