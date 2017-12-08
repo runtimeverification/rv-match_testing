@@ -12,6 +12,7 @@ _download() {
     cd ../../../cFE-6.5.0-OSS-release/
     rm -r osal
     ln -s ../osal-4.2.1a-release ./osal
+    cp -a cfe/cmake/sample_defs/ .
     rm -r build/
     mkdir build/
     # sudo apt install libc6-dev-i386
@@ -21,7 +22,11 @@ _download() {
 _build() {
     cd cFE-6.5.0-OSS-release/build/
     export SIMULATION=native
-    cmake -DCMAKE_C_COMPILER=$compiler -DENABLE_UNIT_TESTS=TRUE --build ../cfe ; configure_success="$?"
+    #cmake -DCMAKE_C_COMPILER=gcc -DENABLE_UNIT_TESTS=TRUE --build ../cfe
+    #make mission-all
+    #CMAKE_C_LINK_EXECUTABLE
+    #CMAKE_C_FLAGS
+    cmake -DCMAKE_C_COMPILER="$compiler" -DENABLE_UNIT_TESTS=TRUE --build ../cfe ; configure_success="$?"
     make mission-all ; make_success="$?"
 }
 
