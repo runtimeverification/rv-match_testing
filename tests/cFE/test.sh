@@ -34,4 +34,13 @@ _extract() {
     return
 }
 
+_test() {
+    #sudo /bin/sh -c "echo 100 > /proc/sys/fs/mqueue/msg_max"
+
+}
+
+_extract_test() {
+
+}
+
 init
