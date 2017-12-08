@@ -26,7 +26,7 @@ _build() {
     #make mission-all
     #CMAKE_C_LINK_EXECUTABLE
     #CMAKE_C_FLAGS
-    cmake -DCMAKE_C_COMPILER="$compiler" -DENABLE_UNIT_TESTS=TRUE --build ../cfe ; configure_success="$?"
+    cmake -DCMAKE_C_COMPILER=$compiler -DENABLE_UNIT_TESTS=TRUE --build ../cfe ; configure_success="$?"
     make mission-all ; make_success="$?"
 }
 
