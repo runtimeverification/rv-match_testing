@@ -8,4 +8,5 @@
 [complete] 8. Get a job going on the `jenkins` machine.  
 [todo] 9. Write a script which produces set {projects which build scripts have been updated since their last run}.  
 [todo] 10. There are multiple individual tests that can be done individually for projects like {`cFE`, `spin`}. The scripts should be able to handle reporting results for more than just one test.  
-[todo] 11. Work out build dependencies that don't work on Jenkins but do work locally on my personal VM.
+[todo] 11. Work out build dependencies that don't work on Jenkins but do work locally on my personal VM.  
+[todo] 12. Separate build and tests so build doesn't need to be redone for each test.
