@@ -35,6 +35,7 @@ _test() {
         echo "---- testing spin on "$f
         ../Src6.4.7/spin $f
         process_config
+        cd Spin/Examples/
         echo "---- finished testing spin on "$f
     done
 }
