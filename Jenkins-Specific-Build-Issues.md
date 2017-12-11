@@ -1,3 +1,4 @@
+```
 cineform
 CMake Error at CMakeLists.txt:2 (cmake_minimum_required):
   CMake 3.5.1 or higher is required.  You are running version 2.8.12.2
@@ -61,3 +62,4 @@ wget
 ./bootstrap: Error: 'gperf' not found
 ./bootstrap: Please install the prerequisite programs
 tests/wget/test.sh: line 14: ./configure: No such file or directory
+```
