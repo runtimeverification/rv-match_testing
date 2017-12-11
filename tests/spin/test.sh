@@ -20,9 +20,13 @@ _extract() {
 }
 
 _test() {
-    cd Spin/Examples
+    cd Spin/Examples/
+    mkdir ignore/
+    mv abp.pml ignore/
     for f in *.pml; do
+        echo "---- testing spin on "$f
         ../Src6.4.7/spin $f
+        echo "---- finished testing spin on "$f
     done
 }
 
