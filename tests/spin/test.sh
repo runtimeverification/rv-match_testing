@@ -23,6 +23,7 @@ _test() {
     cd Spin/Examples/
     mkdir ignore/
     mv abp.pml ignore/
+    mv cambridge.pml ignore/
     for f in *.pml; do
         echo "---- testing spin on "$f
         ../Src6.4.7/spin $f
