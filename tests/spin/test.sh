@@ -26,6 +26,7 @@ _test() {
     mv cambridge.pml ignore/
     mv life.pml ignore/
     mv loops.pml ignore/
+    mv hajek.pml ignore/
     for f in *.pml; do
         echo "---- testing spin on "$f
         ../Src6.4.7/spin $f
