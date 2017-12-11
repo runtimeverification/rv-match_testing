@@ -19,4 +19,11 @@ _extract() {
     return
 }
 
+_test() {
+    cd Spin/Examples
+    for f in *.pml; do
+        ../Src6.4.7/spin $f
+    done
+}
+
 init
