@@ -1,44 +1,43 @@
-Table generated from Jenkins run.
-Updated to the wiki page manually by Tim.
+This is an auto generated wiki.
   
 | project | conf gcc | make gcc | test gcc | conf kcc | make kcc | kcc conf | test kcc | open issue | clsd issue | 
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| bind9 | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: | :exclamation: | :grey_question: |  |  |
-| bogosort | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :white_check_mark: |   | :grey_question: |  |  |
-| cFE | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  |  |
-| cineform | :x: | :x: | :grey_question: | :x: | :x: |   | :grey_question: |  |  |
-| coreutils | :white_check_mark: | :x: | :grey_question: | :white_check_mark: | :x: | :exclamation: | :grey_question: |  |  |
-| curl | :white_check_mark: | :white_check_mark: | :grey_question: | :x: | :x: |   | :grey_question: |  |  |
-| curve25519 | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :white_check_mark: |   | :grey_question: |  |  |
-| dhcpcd | :white_check_mark: | :white_check_mark: | :grey_question: | :x: | :white_check_mark: |   | :grey_question: |  |  |
-| dpkg | :x: | :x: | :grey_question: | :x: | :x: |   | :grey_question: |  |  |
-| FFmpeg | :x: | :x: | :grey_question: | :x: | :x: |   | :grey_question: |  |  |
-| getty | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: |   | :grey_question: |  |  |
-| hashcat | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  |  |
-| helloworld | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :white_check_mark: |   | :grey_question: |  |  |
-| hostapd | :white_check_mark: | :x: | :grey_question: | :white_check_mark: | :x: |   | :grey_question: |  |  |
-| libpcap | :white_check_mark: | :white_check_mark: | :grey_question: | :x: | :x: |   | :grey_question: |  |  |
-| libuv | :white_check_mark: | :white_check_mark: | :grey_question: | :x: | :x: |   | :grey_question: |  |  |
-| linux | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :white_check_mark: | :exclamation: | :grey_question: |  |  |
-| LuaDist | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: | :exclamation: | :grey_question: |  |  |
-| lua | :x: | :white_check_mark: | :x: | :x: | :white_check_mark: | :exclamation: | :x: |  |  |
-| makefs | :white_check_mark: | :x: | :grey_question: | :white_check_mark: | :x: | :exclamation: | :grey_question: |  |  |
-| mawk | :x: | :x: | :grey_question: | :x: | :x: |   | :grey_question: |  |  |
-| mbedtls | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: | :exclamation: | :grey_question: |  |  |
-| musl | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: |   | :grey_question: |  |  |
-| netdata | :x: | :x: | :grey_question: | :x: | :x: | :exclamation: | :grey_question: |  |  |
+| bind9 | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [548](https://github.com/runtimeverification/rv-match/issues/548)  |  |
+| bogosort | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  | [583](https://github.com/runtimeverification/rv-match/issues/583)  |
+| cFE | :x: | :x: | :grey_question: | :x: | :x: |   | :grey_question: | [622](https://github.com/runtimeverification/rv-match/issues/622)  | [125](https://github.com/runtimeverification/rv-match/issues/125)  |
+| cineform | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [546](https://github.com/runtimeverification/rv-match/issues/546)  |  |
+| coreutils | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [559](https://github.com/runtimeverification/rv-match/issues/559) [570](https://github.com/runtimeverification/rv-match/issues/570)  | [561](https://github.com/runtimeverification/rv-match/issues/561)  |
+| curl | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [579](https://github.com/runtimeverification/rv-match/issues/579)  |  |
+| curve25519 | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  | [590](https://github.com/runtimeverification/rv-match/issues/590)  |
+| dhcpcd | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [589](https://github.com/runtimeverification/rv-match/issues/589)  |  |
+| dpkg | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [613](https://github.com/runtimeverification/rv-match/issues/613)  | [594](https://github.com/runtimeverification/rv-match/issues/594)  |
+| FFmpeg | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  | [541](https://github.com/runtimeverification/rv-match/issues/541)  |
+| getty | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [597](https://github.com/runtimeverification/rv-match/issues/597)  |  |
+| hashcat | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  | [564](https://github.com/runtimeverification/rv-match/issues/564)  |
+| helloworld | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  |  |
+| hostapd | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [587](https://github.com/runtimeverification/rv-match/issues/587)  |  |
+| libpcap | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [263](https://github.com/runtimeverification/rv-match/issues/263) [293](https://github.com/runtimeverification/rv-match/issues/293)  |  |
+| libuv | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [555](https://github.com/runtimeverification/rv-match/issues/555)  |  |
+| linux | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  | [10](https://github.com/runtimeverification/rv-match/issues/10)  |
+| LuaDist | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [600](https://github.com/runtimeverification/rv-match/issues/600)  |  |
+| lua | :white_check_mark: | :white_check_mark: | :x: | :white_check_mark: | :white_check_mark: |   | :x: | [600](https://github.com/runtimeverification/rv-match/issues/600)  | [601](https://github.com/runtimeverification/rv-match/issues/601)  |
+| makefs | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [586](https://github.com/runtimeverification/rv-match/issues/586)  |  |
+| mawk | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  | [588](https://github.com/runtimeverification/rv-match/issues/588)  |
+| mbedtls | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [558](https://github.com/runtimeverification/rv-match/issues/558)  | [550](https://github.com/runtimeverification/rv-match/issues/550)  |
+| musl | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [596](https://github.com/runtimeverification/rv-match/issues/596)  |  |
+| netdata | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [544](https://github.com/runtimeverification/rv-match/issues/544)  |  |
 | Open-Chargeport | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  |  |
-| openssl | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :x: |   | :grey_question: |  |  |
-| php-src | :x: | :x: | :grey_question: | :x: | :x: |   | :grey_question: |  |  |
-| Remotery | :white_check_mark: | :x: | :grey_question: | :white_check_mark: | :x: |   | :grey_question: |  |  |
-| Reptile | :white_check_mark: | :white_check_mark: | :grey_question: | :white_check_mark: | :white_check_mark: |   | :grey_question: |  |  |
-| spin | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  |  |
+| openssl | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [547](https://github.com/runtimeverification/rv-match/issues/547)  |  |
+| php-src | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  |  |
+| Remotery | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [571](https://github.com/runtimeverification/rv-match/issues/571)  |  |
+| Reptile | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  | [572](https://github.com/runtimeverification/rv-match/issues/572)  |
+| spin | :white_check_mark: | :x: | :grey_question: | :white_check_mark: | :white_check_mark: |   | :grey_question: |  | [171](https://github.com/runtimeverification/rv-match/issues/171) [188](https://github.com/runtimeverification/rv-match/pull/188)  |
 | systemc-2.3 | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  |  |
 | SystemC | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  |  |
-| tcpdump | :x: | :x: | :grey_question: | :x: | :x: |   | :grey_question: |  |  |
-| tmux | :x: | :x: | :grey_question: | :x: | :x: |   | :grey_question: |  |  |
-| vim | :white_check_mark: | :white_check_mark: | :grey_question: | :x: | :white_check_mark: |   | :grey_question: |  |  |
-| wget | :x: | :x: | :grey_question: | :x: | :x: |   | :grey_question: |  |  |
+| tcpdump | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [293](https://github.com/runtimeverification/rv-match/issues/293)  |  |
+| tmux | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |  | [574](https://github.com/runtimeverification/rv-match/issues/574) [552](https://github.com/runtimeverification/rv-match/issues/552)  |
+| vim | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [585](https://github.com/runtimeverification/rv-match/issues/585)  |  |
+| wget | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [626](https://github.com/runtimeverification/rv-match/issues/626) [580](https://github.com/runtimeverification/rv-match/issues/580)  |  |
   
 | project | standalone script |  
 | --- | --- |  
