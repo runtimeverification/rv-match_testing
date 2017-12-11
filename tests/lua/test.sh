@@ -4,7 +4,6 @@ base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh
 VERSION=5.3.4
 
 _download() {
-
     # For building
     tar=lua-$VERSION.tar.gz
     wget http://www.lua.org/ftp/$tar
@@ -16,7 +15,6 @@ _download() {
     wget https://www.lua.org/tests/$tar_tests
     tar -xvzf $tar_tests
     rm $tar_tests
-
 }
 
 _build() {

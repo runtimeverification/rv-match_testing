@@ -1,15 +1,13 @@
 # To activate ssh key: git remote set-url origin git@github.com:runtimeverification/rv-match_testing.wiki.git
 tests_dir="$(pwd)/tests/"
-git remote set-url origin git@github.com:runtimeverification/rv-match_testing.wiki.git
 git clone https://github.com/runtimeverification/rv-match_testing.wiki.git
 cd rv-match_testing.wiki
 git pull
 tablefile="Auto-Generated-Table-2.0.md"
-#read -s -p "Enter GitHub Password: " password
+read -s -p "Enter GitHub Password: " password
 
 # Do not delete this line.
 echo "This is an auto generated wiki." > $tablefile
-echo "Generated from Jenkins run - success." > $tablefile
 
 # Table showing configure and make success.
 echo "  " >> $tablefile
@@ -32,7 +30,6 @@ get_successes_for_compiler_and_buildstage() {
         echo "Test end"
     fi
 }
-git remote set-url origin git@github.com:runtimeverification/rv-match.git
 for file_path in $(ls $tests_dir/*/test.sh | sort)
 do
     test_name=$(basename $(dirname $file_path))
@@ -73,8 +70,8 @@ do
     echo $rem" calls remaining"
     # Get issue {link, number}s in format: [number](link)
     echo "https://api.github.com/search/issues?q=repo:runtimeverification/rv-match+in:title+state:open+\"$test_name\""
-    open_issues=$(curl "https://api.github.com/search/issues?q=repo:runtimeverification/rv-match+in:title+state:open+\"$test_name\"" | jq '[.items[] | {html_url: .html_url, state: .state, number: .number, title: .title}]' | jq -r ".[] | select(.title | contains(\"$test_name\")) | select(.state | contains(\"open\")) | @text \"[\\(.number)](\\(.html_url))\"" | tr '\n' ' ')
-    closed_issues=$(curl "https://api.github.com/search/issues?q=repo:runtimeverification/rv-match+in:title+state:closed+\"$test_name\"" | jq '[.items[] | {html_url: .html_url, state: .state, number: .number, title: .title}]' | jq -r ".[] | select(.title | contains(\"$test_name\")) | select(.state | contains(\"closed\")) | @text \"[\\(.number)](\\(.html_url))\"" | tr '\n' ' ')
+    open_issues=$(curl -u "TimJSwan89:$password" "https://api.github.com/search/issues?q=repo:runtimeverification/rv-match+in:title+state:open+\"$test_name\"" | jq '[.items[] | {html_url: .html_url, state: .state, number: .number, title: .title}]' | jq -r ".[] | select(.title | contains(\"$test_name\")) | select(.state | contains(\"open\")) | @text \"[\\(.number)](\\(.html_url))\"" | tr '\n' ' ')
+    closed_issues=$(curl -u "TimJSwan89:$password" "https://api.github.com/search/issues?q=repo:runtimeverification/rv-match+in:title+state:closed+\"$test_name\"" | jq '[.items[] | {html_url: .html_url, state: .state, number: .number, title: .title}]' | jq -r ".[] | select(.title | contains(\"$test_name\")) | select(.state | contains(\"closed\")) | @text \"[\\(.number)](\\(.html_url))\"" | tr '\n' ' ')
     echo "| $test_name | $gcc_configure_result | $gcc_make_result | $gcc_test_result | $kcc_configure_result | $kcc_make_result | $kcc_config_result | $kcc_test_result | $open_issues | $closed_issues |" >> $tablefile
 done
 #rm rv-match_issues.json
@@ -88,7 +85,6 @@ do
     test_name=$(basename $(dirname $file_path))
     echo "| $test_name | \`wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/${test_name}/test.sh && bash test.sh\` |" >> $tablefile
 done
-git remote set-url origin git@github.com:runtimeverification/rv-match_testing.wiki.git
 git add $tablefile
 git commit -am "Auto generated commit."
 git push
