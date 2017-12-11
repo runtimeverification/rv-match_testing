@@ -28,7 +28,7 @@ process_kcc_config() {
     if mv kcc_config $log_dir
     then
         cd $log_dir
-        k-bin-to-text kcc_config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt
+        k-bin-to-text kcc_config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt && echo kcc_config_k_summary.txt
     else
         echo "prepare.sh did not find a kcc_config in "$(dirname $(pwd))
     fi
