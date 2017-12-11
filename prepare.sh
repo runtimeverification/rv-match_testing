@@ -35,6 +35,17 @@ process_kcc_config() {
     cd $build_dir
 }
 
+process_config() {
+    if mv config $log_dir
+    then
+        cd $log_dir
+        k-bin-to-text config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt && echo kcc_config_k_summary.txt
+    else
+        echo "prepare.sh did not find a config in "$(dirname $(pwd))
+    fi
+    cd $build_dir
+}
+
 init_helper() {
     # Step 0: prepare
     build_dir=$test_dir/$compiler/build
