@@ -24,7 +24,7 @@ _build() {
 }
 
 _extract() {
-    cd lua-$VERSION/ && mv kcc_* $log_dir
+    cd lua-$VERSION/ && cp kcc_* $log_dir
 }
 
 _test() {
@@ -34,7 +34,7 @@ _test() {
 
 _extract_test() {
     cd lua-$VERSION-tests/ && process_kcc_config
-    cd lua-$VERSION-tests/ && mv kcc_* $log_dir
+    cd lua-$VERSION-tests/ && cp kcc_* $log_dir
 }
 
 init

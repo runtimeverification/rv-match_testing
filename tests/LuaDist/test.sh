@@ -16,7 +16,7 @@ _build() {
 
 _export() {
     cd lua/ && process_kcc_config
-    cd lua/ && mv kcc_* $log_dir
+    cd lua/ && cp kcc_* $log_dir
 }
 
 init

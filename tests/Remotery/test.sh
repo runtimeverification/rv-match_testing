@@ -15,7 +15,7 @@ _build() {
 
 _export() {
     cd Remotery/ && process_kcc_config
-    cd Remotery/ && mv kcc_* $log_dir
+    cd Remotery/ && cp kcc_* $log_dir
 }
 
 init

@@ -16,7 +16,7 @@ _build() {
 
 _extract() {
     cd Open-Chargeport/ && process_kcc_config
-    cd Open-Chargeport/ && mv kcc_* $log_dir
+    cd Open-Chargeport/ && cp kcc_* $log_dir
 }
 
 init

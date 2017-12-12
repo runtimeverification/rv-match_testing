@@ -17,7 +17,7 @@ _build() {
 
 _extract() {
     cd hashcat/ && process_kcc_config
-    cd hashcat/ && mv kcc_* $log_dir
+    cd hashcat/ && cp kcc_* $log_dir
 }
 
 init

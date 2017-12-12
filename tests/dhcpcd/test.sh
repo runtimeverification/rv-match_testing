@@ -19,7 +19,7 @@ _build() {
 
 _export() {
     cd dhcpcd/dhcpcd && process_kcc_config
-    cd dhcpcd/dhcpcd && mv kcc_* $log_dir
+    cd dhcpcd/dhcpcd && cp kcc_* $log_dir
 }
 
 init

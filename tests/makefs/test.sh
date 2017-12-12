@@ -16,7 +16,7 @@ _build() {
 
 _export() {
     cd makefs/src/ && process_kcc_config
-    cd makefs/src/ && mv kcc_* $log_dir
+    cd makefs/src/ && cp kcc_* $log_dir
 }
 
 init

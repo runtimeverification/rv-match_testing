@@ -25,7 +25,7 @@ test_file=$test_dir/test.sh
 download_dir=$test_dir/download
 
 process_kcc_config() {
-    if mv kcc_config $log_dir
+    if cp kcc_config $log_dir
     then
         cd $log_dir
         k-bin-to-text kcc_config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt && cat kcc_config_k_summary.txt
@@ -36,7 +36,7 @@ process_kcc_config() {
 }
 
 process_config() {
-    if mv config $log_dir
+    if cp config $log_dir
     then
         cd $log_dir
         #k-bin-to-text config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt && echo kcc_config_k_summary.txt
@@ -76,14 +76,11 @@ prep_download() {
 
 prep_build() {
     
-    # build
-    build_report_info="Build hash is dependent on 3 things: {_build() function definition, $compiler --version, download hash}."
+    # Build hash is dependent on 3 things: {_build() function definition, $compiler --version, download hash}.
     buildhashinfo=$(type _build)$($compiler --version)$(head -n 1 $download_dir/download_function_hash)
     if [ ! -e $build_dir/build_function_hash ] || [ "$(echo $(sha1sum <<< $buildhashinfo))" != "$(head -n 1 $build_dir/build_function_hash)" ] ; then
-        echo "."$(echo $(sha1sum <<< $buildhashinfo))"."
-        echo "."$(head -n 1 $build_dir/build_function_hash)"."
+        # build
         echo $report_string" building. Either build hash changed or was not there."
-        echo $build_report_info
         safe_rm=$build_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
         cp $download_dir/* $build_dir -r
         set -o pipefail
@@ -110,7 +107,6 @@ prep_build() {
         fi
     else
         echo $report_string" not building. Build hash is the same as last build."
-        echo $build_report_info
     fi 
 }
 

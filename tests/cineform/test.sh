@@ -16,7 +16,7 @@ _build() {
 
 _export() {
     cd cineform-sdk/ && process_kcc_config
-    cd cineform-sdk/ && mv kcc_* $log_dir
+    cd cineform-sdk/ && cp kcc_* $log_dir
 }
 
 init

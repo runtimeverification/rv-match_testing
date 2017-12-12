@@ -16,7 +16,7 @@ _build() {
 
 _export() {
     cd vim/ && process_kcc_config
-    cd vim/ && mv kcc_* $log_dir
+    cd vim/ && cp kcc_* $log_dir
 }
 
 init

@@ -17,7 +17,7 @@ _build() {
 
 _export() {
     cd wget/ && process_kcc_config
-    cd wget/ && mv kcc_* $log_dir
+    cd wget/ && cp kcc_* $log_dir
 }
 
 init

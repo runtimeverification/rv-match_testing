@@ -16,7 +16,7 @@ _build() {
 
 _export() {
     cd musl/ && process_kcc_config
-    cd musl/ && mv kcc_* $log_dir
+    cd musl/ && cp kcc_* $log_dir
 }
 
 init

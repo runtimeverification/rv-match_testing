@@ -17,7 +17,7 @@ _build() {
 
 _export() {
     cd tmux/ && process_kcc_config
-    cd tmux/ && mv kcc_* $log_dir
+    cd tmux/ && cp kcc_* $log_dir
 }
 
 init

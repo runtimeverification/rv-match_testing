@@ -18,7 +18,7 @@ _build() {
 
 _export() {
     cd Reptile/ && process_kcc_config
-    cd Reptile/ && mv kcc_* $log_dir
+    cd Reptile/ && cp kcc_* $log_dir
 }
 
 init

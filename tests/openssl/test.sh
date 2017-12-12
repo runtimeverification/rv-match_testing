@@ -18,7 +18,7 @@ _build() {
 
 _extract() {
     cd openssl/ && process_kcc_config
-    cd openssl/ && mv kcc_* $log_dir
+    cd openssl/ && cp kcc_* $log_dir
 }
 
 init

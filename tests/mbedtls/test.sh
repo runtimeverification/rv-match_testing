@@ -16,7 +16,7 @@ _build() {
 
 extract() {
     cd mbedtls-2.4.0/library/ && process_kcc_config
-    cd mbedtls-2.4.0/ && mv kcc_* $log_dir
+    cd mbedtls-2.4.0/ && cp kcc_* $log_dir
 }
 
 init

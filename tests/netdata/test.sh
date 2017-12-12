@@ -25,7 +25,7 @@ _build() {
 
 _extract() {
     cd netdata/src/ && process_kcc_config
-    cd netdata/ && mv kcc_* $log_dir
+    cd netdata/ && cp kcc_* $log_dir
 }
 
 init

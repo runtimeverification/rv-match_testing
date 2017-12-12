@@ -18,7 +18,7 @@ _build() {
 
 _extract() {
     cd FFmpeg/ && process_kcc_config
-    cd FFmpeg/ && mv kcc_* $log_dir
+    cd FFmpeg/ && cp kcc_* $log_dir
 }
 
 init

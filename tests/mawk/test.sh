@@ -19,7 +19,7 @@ _build() {
 
 _export() {
     cd mawk-1.3.3/ && process_kcc_config
-    cd mawk-1.3.3/ && mv kcc_* $log_dir
+    cd mawk-1.3.3/ && cp kcc_* $log_dir
 }
 
 init

@@ -19,7 +19,7 @@ _build() {
 
 _extract() {
     cd libuv/ && process_kcc_config
-    cd libuv/ && mv kcc_* $log_dir
+    cd libuv/ && cp kcc_* $log_dir
 }
 
 init

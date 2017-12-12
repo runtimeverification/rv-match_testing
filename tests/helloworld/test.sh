@@ -26,7 +26,7 @@ _build() {
 
 _extract() {
     cd helloworld/ && process_kcc_config
-    cd helloworld/ && mv kcc_* $log_dir
+    cd helloworld/ && cp kcc_* $log_dir
 }
 
 init

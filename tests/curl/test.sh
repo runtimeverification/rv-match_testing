@@ -17,7 +17,7 @@ _build() {
 
 _export() {
     cd curl/lib/ && process_kcc_config
-    cd curl/ && mv kcc_* $log_dir
+    cd curl/ && cp kcc_* $log_dir
 }
 
 init

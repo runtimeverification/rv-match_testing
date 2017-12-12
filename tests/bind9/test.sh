@@ -19,7 +19,7 @@ _build() {
 
 _extract() {
     cd bind9/lib/dns/ && process_kcc_config
-    cd bind9 && mv kcc_* $log_dir
+    cd bind9 && cp kcc_* $log_dir
 }
 
 init

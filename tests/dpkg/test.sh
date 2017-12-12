@@ -25,7 +25,7 @@ _build() {
 _extract() {
     cd dpkg/dpkg-split && process_kcc_config
     #cd dpkg/ && process_kcc_config
-    cd dpkg/ && mv kcc_* $log_dir
+    cd dpkg/ && cp kcc_* $log_dir
 }
 
 init

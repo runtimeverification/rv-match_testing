@@ -83,7 +83,7 @@ _build() {
 
 _extract() {
     cd bogosort/ && process_kcc_config
-    cd bogosort/ && mv kcc_* $log_dir
+    cd bogosort/ && cp kcc_* $log_dir
 }
 
 init

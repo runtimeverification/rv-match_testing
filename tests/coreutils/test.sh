@@ -18,7 +18,7 @@ _build() {
 
 _extract() {
     cd coreutils-8.28/ && process_kcc_config
-    cd coreutils-8.28/ && mv kcc_* $log_dir
+    cd coreutils-8.28/ && cp kcc_* $log_dir
 }
 
 init
