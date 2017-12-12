@@ -11,7 +11,8 @@ _download() {
 
 _build() {
     cd Spin/Src6.4.7
-    sed -i -e "s/CC=gcc/CC=$compiler/g" makefile ; configure_success="$?"
+    #sed -i -e "s/CC=gcc/CC=$compiler/g" makefile ; configure_success="$?"
+    sed -i -e "s/CC=gcc/CC=$compiler -frecover-all-errors/g" makefile ; configure_success="$?"
     make ; make_success="$?"
 }
 
@@ -24,9 +25,18 @@ _test() {
     mkdir ignore/
     mv abp.pml ignore/
     mv cambridge.pml ignore/
+    mv life.pml ignore/
+    mv loops.pml ignore/
+    mv hajek.pml ignore/
+    mv manna_pnueli.pml ignore/
+    mv peterson.pml ignore/
+    mv priorities.pml ignore/
+    mv wordcount.pml ignore/
     for f in *.pml; do
         echo "---- testing spin on "$f
         ../Src6.4.7/spin $f
+        process_config
+        cd Spin/Examples/
         echo "---- finished testing spin on "$f
     done
 }
