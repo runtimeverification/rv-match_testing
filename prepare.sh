@@ -48,8 +48,7 @@ process_config() {
     cd $build_dir
 }
 
-init_helper() {
-    # Step 0: prepare
+prep_prepare() {
     build_dir=$test_dir/$compiler/build
     mkdir -p $build_dir
 
@@ -60,8 +59,9 @@ init_helper() {
     rm $log_dir/*_success.ini    
 
     unit_test_dir=$test_dir/unit_test
+}
 
-    # Step 1: download
+prep_download() {
     if [ ! -d $download_dir ] || [ -z "$(ls -A $download_dir)" ]; then
         mkdir -p $download_dir
         cd $download_dir
@@ -69,20 +69,23 @@ init_helper() {
     fi
     safe_rm=$build_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
     cp $download_dir/* $build_dir -r
+}
+
+prep_build() {
     
-    # Step 2: build
+    # build
     set -o pipefail
     unset configure_success
     unset make_success
     cd $build_dir && _build
 
-    # Step 3: extract
+    # extract build results
     [ ""$(find $build_dir -name "kcc_config") == "" ] ; no_kcc_config_generated_success="$?"
     cd $log_dir
     echo $no_kcc_config_generated_success > no_kcc_config_generated_success.ini
     echo "==== $compiler kcc_config prevention status reported:"$no_kcc_config_generated_success
-    
-    cd $build_dir && _extract    
+
+    cd $build_dir && _extract
     cd $log_dir
     if [ ! -z ${configure_success+x} ]; then
         echo $configure_success > configure_success.ini
@@ -92,19 +95,28 @@ init_helper() {
         echo $make_success > make_success.ini
         echo "==== $compiler make status reported:"$make_success
     fi
-    
-    # Step 4: test
+}
+
+prep_test() {
+    # test
     set -o pipefail
     unset test_success
     cd $build_dir && _test
 
-    # Step 5: extract tests
+    # extract test results
     cd $build_dir && _extract_test
     cd $log_dir
     if [ ! -z ${test_success+x} ]; then
         echo "==== $compiler test status reported:"$test_success
         echo $test_success > test_success.ini
     fi
+}
+
+init_helper() {
+    prep_prepare
+    prep_download
+    prep_build
+    prep_test
 }
 
 init() {
