@@ -61,11 +61,12 @@ prep_prepare() {
     rm $log_dir/*_success.ini    
 
     unit_test_dir=$test_dir/unit_test
+    mkdir -p $unit_test_dir
 }
 
 prep_download() {
     if [ ! -d $download_dir ] || [ -z "$(ls -A $download_dir)" ] || [ ! -e $download_dir/download_function_hash ] || [ "$(echo $(sha1sum <<< $(type _download)))" != "$(head -n 1 $download_dir/download_function_hash)" ] ; then
-        echo $report_string" source was not present or hash didn't exist or has changed. Downloading..."
+        echo $report_string" downloading. Either this is the initial download or the download hash has changed since the last download."
         mkdir -p $download_dir
         cd $download_dir && _download
         cd $download_dir && echo $(sha1sum <<< $(type _download)) > download_function_hash
@@ -80,15 +81,17 @@ prep_build() {
     buildhashinfo=$(type _build)$($compiler --version)$(head -n 1 $download_dir/download_function_hash)
     if [ ! -e $build_dir/build_function_hash ] || [ "$(echo $(sha1sum <<< $buildhashinfo))" != "$(head -n 1 $build_dir/build_function_hash)" ] ; then
         # build
-        echo $report_string" building. Either build hash changed or was not there."
+        echo $report_string" building. Either build hash changed or this is the first time building."
         safe_rm=$build_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
         cp $download_dir/* $build_dir -r
         set -o pipefail
         unset configure_success
         unset make_success
         cd $build_dir && _build
+        
+        # generate build hash - should be the last function in the build process since it indicates completion
         cd $build_dir && echo $(sha1sum <<< $buildhashinfo) > build_function_hash
-        ls
+
         # extract build results
         [ ""$(find $build_dir -name "kcc_config") == "" ] ; no_kcc_config_generated_success="$?"
         cd $log_dir
@@ -111,17 +114,29 @@ prep_build() {
 }
 
 prep_test() {
-    # test
-    set -o pipefail
-    unset test_success
-    cd $build_dir && _test
+    # Test hash is dependent on 3 things: {_test() function definition, $compiler --version, build hash}.
+    testhashinfo=$(type _test)$($compiler --version)$(head -n 1 $build_dir/build_function_hash)
+    if [ ! -e $unit_test_dir/test_function_hash ] || [ "$(echo $(sha1sum <<< $testhashinfo))" != "$(head -n 1 $unit_test_dir/test_function_hash)" ] ; then
+        # test
+        echo $report_string" testing. Either the test hash changed or this is the first unit test run."
+        safe_rm=$unit_test_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
+        cp $build_dir/* $unit_test_dir -r
+        set -o pipefail
+        unset test_success
+        cd $unit_test_dir && _test
 
-    # extract test results
-    cd $build_dir && _extract_test
-    cd $log_dir
-    if [ ! -z ${test_success+x} ]; then
-        echo $report_string"      test:"$test_success
-        echo $test_success > test_success.ini
+        # generate test hash - should be the last function in the testing process since it indicates completion
+        cd $build_dir && echo $(sha1sum <<< $buildhashinfo) > build_function_hash
+
+        # extract test results
+        cd $unit_test_dir && _extract_test
+        cd $log_dir
+        if [ ! -z ${test_success+x} ]; then
+            echo $report_string"      test:"$test_success
+            echo $test_success > test_success.ini
+        fi
+    else
+        echo $report_string" not running unit tests. Testing hash is the same as last test run."
     fi
 }
 
