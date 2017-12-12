@@ -18,7 +18,7 @@ err(){ >&2 echo "$@"; }
 
 compiler=${1:-kcc}
 
-test_name=$(basename $(dirname $(pwd)))
+test_name=$(basename $(pwd))
 
 test_dir=$(pwd)
 test_file=$test_dir/test.sh
@@ -49,6 +49,8 @@ process_config() {
 }
 
 prep_prepare() {
+    report_string=" ===> "$test_name" "$compiler" "
+
     build_dir=$test_dir/$compiler/build
     mkdir -p $build_dir
 
@@ -62,39 +64,54 @@ prep_prepare() {
 }
 
 prep_download() {
-    if [ ! -d $download_dir ] || [ -z "$(ls -A $download_dir)" ]; then
+    if [ ! -d $download_dir ] || [ -z "$(ls -A $download_dir)" ] || [ ! -e $download_dir/download_function_hash ] || [ "$(echo $(sha1sum <<< $(type _download)))" != "$(head -n 1 $download_dir/download_function_hash)" ] ; then
+        echo $report_string" source was not present or hash didn't exist or has changed. Downloading..."
         mkdir -p $download_dir
-        cd $download_dir
-        _download
+        cd $download_dir && _download
+        cd $download_dir && echo $(sha1sum <<< $(type _download)) > download_function_hash
+    else
+        echo $report_string" source was already downloaded. Copying from there."
     fi
-    safe_rm=$build_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
-    cp $download_dir/* $build_dir -r
 }
 
 prep_build() {
     
     # build
-    set -o pipefail
-    unset configure_success
-    unset make_success
-    cd $build_dir && _build
+    build_report_info="Build hash is dependent on 3 things: {_build() function definition, $compiler --version, download hash}."
+    buildhashinfo=$(type _build)$($compiler --version)$(head -n 1 $download_dir/download_function_hash)
+    if [ ! -e $build_dir/build_function_hash ] || [ "$(echo $(sha1sum <<< $buildhashinfo))" != "$(head -n 1 $build_dir/build_function_hash)" ] ; then
+        echo "."$(echo $(sha1sum <<< $buildhashinfo))"."
+        echo "."$(head -n 1 $build_dir/build_function_hash)"."
+        echo $report_string" building. Either build hash changed or was not there."
+        echo $build_report_info
+        safe_rm=$build_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
+        cp $download_dir/* $build_dir -r
+        set -o pipefail
+        unset configure_success
+        unset make_success
+        cd $build_dir && _build
+        cd $build_dir && echo $(sha1sum <<< $buildhashinfo) > build_function_hash
+        ls
+        # extract build results
+        [ ""$(find $build_dir -name "kcc_config") == "" ] ; no_kcc_config_generated_success="$?"
+        cd $log_dir
+        echo $no_kcc_config_generated_success > no_kcc_config_generated_success.ini
+        echo $report_string" kcc_config prevention status reported:"$no_kcc_config_generated_success
 
-    # extract build results
-    [ ""$(find $build_dir -name "kcc_config") == "" ] ; no_kcc_config_generated_success="$?"
-    cd $log_dir
-    echo $no_kcc_config_generated_success > no_kcc_config_generated_success.ini
-    echo "==== $compiler kcc_config prevention status reported:"$no_kcc_config_generated_success
-
-    cd $build_dir && _extract
-    cd $log_dir
-    if [ ! -z ${configure_success+x} ]; then
-        echo $configure_success > configure_success.ini
-        echo "==== $compiler configure status reported:"$configure_success
-    fi
-    if [ ! -z ${make_success+x} ]; then
-        echo $make_success > make_success.ini
-        echo "==== $compiler make status reported:"$make_success
-    fi
+        cd $build_dir && _extract
+        cd $log_dir
+        if [ ! -z ${configure_success+x} ]; then
+            echo $configure_success > configure_success.ini
+            echo $report_string" configure:"$configure_success
+        fi
+        if [ ! -z ${make_success+x} ]; then
+            echo $make_success > make_success.ini
+            echo $report_string"      make:"$make_success
+        fi
+    else
+        echo $report_string" not building. Build hash is the same as last build."
+        echo $build_report_info
+    fi 
 }
 
 prep_test() {
@@ -107,7 +124,7 @@ prep_test() {
     cd $build_dir && _extract_test
     cd $log_dir
     if [ ! -z ${test_success+x} ]; then
-        echo "==== $compiler test status reported:"$test_success
+        echo $report_string"      test:"$test_success
         echo $test_success > test_success.ini
     fi
 }
