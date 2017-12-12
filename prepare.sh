@@ -60,7 +60,7 @@ prep_prepare() {
     echo $log_dir
     rm $log_dir/*_success.ini    
 
-    unit_test_dir=$test_dir/unit_test
+    unit_test_dir=$test_dir/$compiler/unit_test
     mkdir -p $unit_test_dir
 }
 
@@ -71,7 +71,7 @@ prep_download() {
         cd $download_dir && _download
         cd $download_dir && echo $(sha1sum <<< $(type _download)) > download_function_hash
     else
-        echo $report_string" source was already downloaded. Copying from there."
+        echo $report_string" not downloading. Copying from there."
     fi
 }
 
@@ -126,7 +126,7 @@ prep_test() {
         cd $unit_test_dir && _test
 
         # generate test hash - should be the last function in the testing process since it indicates completion
-        cd $build_dir && echo $(sha1sum <<< $buildhashinfo) > build_function_hash
+        cd $unit_test_dir && echo $(sha1sum <<< $testhashinfo) > test_function_hash
 
         # extract test results
         cd $unit_test_dir && _extract_test

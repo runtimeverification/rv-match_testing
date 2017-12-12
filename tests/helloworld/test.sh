@@ -29,4 +29,14 @@ _extract() {
     cd helloworld/ && cp kcc_* $log_dir
 }
 
+_test() {
+    cd helloworld/
+    ./a.out ; test_success="$?"
+}
+
+_extract_test() {
+    cd helloworld/
+    echo "Inside the _extract_test() function now."
+}
+
 init
