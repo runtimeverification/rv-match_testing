@@ -1,6 +1,6 @@
 #!/bin/bash
 
-bash run_set.sh sets/crashless.ini
+bash run_set.sh sets/interesting.ini
 
 #for x in tests/*/test.sh
 #do
