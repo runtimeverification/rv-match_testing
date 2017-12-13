@@ -4,6 +4,9 @@
 # There should be an option to pass in a flag to control whether the tests are being ran or not.
 # The code for parsing the .ini files is the same as generate_table, so that should be extracted and generalized.
 
+cout="kcc_configure_out.txt"
+mout="kcc_make_out.txt"
+kout="kcc_config_k_summary.txt"
 filepath=$1
 file=$(basename $filepath)
 setfolder=$(basename $(dirname $filepath))"/"
@@ -49,12 +52,16 @@ while read line; do
     infoname="configure"
     midstring=" configuration "
     compiler="gcc" ; printresultforcompiler
+    if [[ $result == $string_failed ]]; then echo $(tail -5 $infofolder$cout); fi
     compiler="kcc" ; printresultforcompiler
+    if [[ $result == $string_failed ]]; then echo $(tail -5 $infofolder$cout); fi
     
     infoname="make"
     midstring="        making "
     compiler="gcc" ; printresultforcompiler
+    if [[ $result == $string_failed ]]; then echo $(tail -5 $infofolder$mout); fi
     compiler="kcc" ; printresultforcompiler
+    if [[ $result == $string_failed ]]; then echo $(tail -5 $infofolder$mout); fi
 
     string_success="not generated"
     string_failed="produced"
@@ -64,6 +71,7 @@ while read line; do
     midstring="'s  kcc_config was "
     compiler="gcc" ; get_info
     compiler="kcc" ; get_info
+    if [[ -e $infofolder/$kout ]]; then echo $infofolder$kout; fi
 
 done < $whitelistpath
 
