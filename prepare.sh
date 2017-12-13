@@ -75,6 +75,26 @@ prep_download() {
     fi
 }
 
+prep_extract() {
+    # extract build results
+    [ ""$(find $build_dir -name "kcc_config") == "" ] ; no_kcc_config_generated_success="$?"
+    cd $log_dir
+    echo $no_kcc_config_generated_success > no_kcc_config_generated_success.ini
+    echo $report_string" kcc_config prevention status reported:"$no_kcc_config_generated_success
+
+    cd $build_dir && _extract
+    cd $log_dir
+    if [ ! -z ${configure_success+x} ]; then
+        echo $configure_success > configure_success.ini
+        echo $report_string" configure:"$configure_success
+    fi
+    if [ ! -z ${make_success+x} ]; then
+        echo $make_success > make_success.ini
+        echo $report_string"      make:"$make_success
+    fi
+
+}
+
 prep_build() {
     
     # Build hash is dependent on 3 things: {_build() function definition, $compiler --version, download hash}.
@@ -91,26 +111,20 @@ prep_build() {
         
         # generate build hash - should be the last function in the build process since it indicates completion
         cd $build_dir && echo $(sha1sum <<< $buildhashinfo) > build_function_hash
-
-        # extract build results
-        [ ""$(find $build_dir -name "kcc_config") == "" ] ; no_kcc_config_generated_success="$?"
-        cd $log_dir
-        echo $no_kcc_config_generated_success > no_kcc_config_generated_success.ini
-        echo $report_string" kcc_config prevention status reported:"$no_kcc_config_generated_success
-
-        cd $build_dir && _extract
-        cd $log_dir
-        if [ ! -z ${configure_success+x} ]; then
-            echo $configure_success > configure_success.ini
-            echo $report_string" configure:"$configure_success
-        fi
-        if [ ! -z ${make_success+x} ]; then
-            echo $make_success > make_success.ini
-            echo $report_string"      make:"$make_success
-        fi
     else
         echo $report_string" not building. Build hash is the same as last build."
     fi 
+}
+
+prep_extract_test() {
+    # extract test results
+    cd $unit_test_dir && _extract_test
+    cd $log_dir
+    if [ ! -z ${test_success+x} ]; then
+        echo $report_string"      test:"$test_success
+        echo $test_success > test_success.ini
+    fi
+
 }
 
 prep_test() {
@@ -128,13 +142,6 @@ prep_test() {
         # generate test hash - should be the last function in the testing process since it indicates completion
         cd $unit_test_dir && echo $(sha1sum <<< $testhashinfo) > test_function_hash
 
-        # extract test results
-        cd $unit_test_dir && _extract_test
-        cd $log_dir
-        if [ ! -z ${test_success+x} ]; then
-            echo $report_string"      test:"$test_success
-            echo $test_success > test_success.ini
-        fi
     else
         echo $report_string" not running unit tests. Testing hash is the same as last test run."
     fi
@@ -144,7 +151,9 @@ init_helper() {
     prep_prepare
     prep_download
     prep_build
+    prep_extract
     prep_test
+    prep_extract_test
 }
 
 init() {

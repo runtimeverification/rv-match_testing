@@ -15,4 +15,19 @@ _build() {
     make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
+_extract() {
+    cd libpcap/ && process_kcc_config
+    cd libpcap/ && cp kcc_* $log_dir
+}
+
+_test() {
+    cd libpcap/
+    #./a.out ; test_success="$?"
+}
+
+_extract_test() {
+    cd libpcap/
+    echo "Inside the _extract_test() function now."
+}
+
 init
