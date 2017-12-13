@@ -37,13 +37,21 @@ get_info() {
             result=$string_failed
         fi
     fi
+    if [[ $result == $string_failed ]]; then
+        if [[ -e $infofolder$out ]]; then
+            echo "$(tail -8 $infofolder$out)"
+        else
+            echo "$infofolder$out is supposed to be in the log folder."
+        fi
+    fi
 }
 printresultforcompiler() {
     infofolder="tests/$line/$compiler/log/latest/"
     get_info
-    output+=$line'\t'$midstring$result'\n'
+    #output+=$line'\t'$midstring$result'\n'
+    echo $line" "$midstring$result
 }
-output='\n'
+#output='\n'
 while read line; do
     string_success="passed"
     string_failed="failed"
@@ -51,17 +59,15 @@ while read line; do
     
     infoname="configure"
     midstring=" configuration "
+    out=$cout
     compiler="gcc" ; printresultforcompiler
-    if [[ $result == $string_failed ]]; then echo $(tail -5 $infofolder$cout); fi
     compiler="kcc" ; printresultforcompiler
-    if [[ $result == $string_failed ]]; then echo $(tail -5 $infofolder$cout); fi
     
     infoname="make"
     midstring="        making "
+    out=$mout
     compiler="gcc" ; printresultforcompiler
-    if [[ $result == $string_failed ]]; then echo $(tail -5 $infofolder$mout); fi
     compiler="kcc" ; printresultforcompiler
-    if [[ $result == $string_failed ]]; then echo $(tail -5 $infofolder$mout); fi
 
     string_success="not generated"
     string_failed="produced"
@@ -69,11 +75,11 @@ while read line; do
     
     infoname="no_kcc_config_generated"
     midstring="'s  kcc_config was "
+    out=$kout
     compiler="gcc" ; get_info
     compiler="kcc" ; get_info
-    if [[ -e $infofolder/$kout ]]; then echo $infofolder$kout; fi
 
 done < $whitelistpath
 
-echo -e $output
-printf $output'\n' | column -t
+#echo -e $output
+#printf $output'\n' | column -t
