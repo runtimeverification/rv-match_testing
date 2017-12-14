@@ -49,7 +49,7 @@ get_info() {
 }
 printresultforcompiler() {
     infofolder="tests/$line/$compiler/log/latest/"
-    juLog -name=unitTesting get_info
+    juLog -name=$line get_info
     #output+=$line'\t'$compiler$midstring$result'\n'
     echo $line" "$compiler$midstring$result
 }
