@@ -4,6 +4,7 @@
 # There should be an option to pass in a flag to control whether the tests are being ran or not.
 # The code for parsing the .ini files is the same as generate_table, so that should be extracted and generalized.
 . ./testtable/shell2junit/sh2ju.sh
+juLogClean
 cout="kcc_configure_out.txt"
 mout="kcc_make_out.txt"
 kout="kcc_config_k_summary.txt"
@@ -30,9 +31,11 @@ fi
 get_info() {
     infopath=$infofolder$infoname"_success.ini"
     result=$string_non_exist
+    testtableresult=false
     if [[ -e $infopath ]] ; then
         if [[ "$(head -n 1 $infopath)" == 0 ]] ; then
             result=$string_success
+            testtableresult=true
         else
             result=$string_failed
         fi
@@ -40,16 +43,15 @@ get_info() {
     if [[ $result == $string_failed ]]; then
         if [[ -e $infofolder$out ]]; then
             echo "$(tail -8 $infofolder$out)"
-            return 1
         else
             echo "$infofolder$out is supposed to be in the log folder."
-            return 0
         fi
     fi
 }
 printresultforcompiler() {
     infofolder="tests/$line/$compiler/log/latest/"
-    juLog -name=$line get_info
+    get_info
+    juLog -name=$line $testtableresult
     #output+=$line'\t'$compiler$midstring$result'\n'
     echo $line" "$compiler$midstring$result
 }
