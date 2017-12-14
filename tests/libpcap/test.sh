@@ -11,12 +11,12 @@ _download() {
 _build() {
     cd libpcap/
     aclocal; autoreconf
-    ./configure CC="$compiler -std=gnu11 -Dlinux" LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
+    ./configure CC="$compiler -std=gnu11 -Dlinux -D_BSD_SOURCE" LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
     make |& tee kcc_make_out.txt ; make_success="$?"
     if [[ make_success ]] ; then
         echo "make supposedly succeeded"
         cd tests/
-        make CC="$compiler -std=gnu11 -Dlinux" LD=$compiler |& kcc_make_tests.txt ; make_success="$?"
+        make CC="$compiler -std=gnu11 -Dlinux" LD=$compiler |& tee kcc_make_tests.txt ; make_success="$?"
     else
         echo "make supposedly failed"
     fi
