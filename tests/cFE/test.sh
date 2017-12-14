@@ -22,8 +22,8 @@ _download() {
 _build() {
     cd cFE-6.5.0-OSS-release/build/
     export SIMULATION=native
-    #cmake -DCMAKE_C_COMPILER=gcc -DENABLE_UNIT_TESTS=TRUE --build ../cfe
-    #make mission-all
+    cmake -DCMAKE_C_COMPILER=gcc -DENABLE_UNIT_TESTS=TRUE --build ../cfe
+    make mission-all
     #CMAKE_C_LINK_EXECUTABLE
     #CMAKE_C_FLAGS
     cmake -DCMAKE_C_COMPILER=$compiler -DENABLE_UNIT_TESTS=TRUE --build ../cfe ; configure_success="$?"
