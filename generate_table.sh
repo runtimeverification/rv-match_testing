@@ -1,8 +1,7 @@
 # To activate ssh key: git remote set-url origin git@github.com:runtimeverification/rv-match_testing.wiki.git
 tests_dir="$(pwd)/tests/"
-git remote set-url origin git@github.com:runtimeverification/rv-match_testing.wiki.git
 git clone https://github.com/runtimeverification/rv-match_testing.wiki.git
-cd rv-match_testing.wiki
+cd rv-match_testing.wiki/ && git remote set-url origin git@github.com:runtimeverification/rv-match_testing.wiki.git
 git pull
 tablefile="Auto-Generated-Table-2.0.md"
 #read -s -p "Enter GitHub Password: " password

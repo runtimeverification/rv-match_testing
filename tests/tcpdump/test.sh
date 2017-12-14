@@ -16,4 +16,17 @@ _build() {
     make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
+_extract() {
+    cd tcpdump/ && process_kcc_config
+    cd tcpdump/ && cp kcc_* $log_dir
+}
+
+_test() {
+    cd tcpdump/tests/
+    bash TESTrun.sh && test_success="$?"
+}
+
+_extract_test() {
+    return
+}
 init
