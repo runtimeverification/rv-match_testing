@@ -33,7 +33,7 @@ _test() {
 }
 
 _extract_test() {
-    cd lua-$VERSION-tests/ && process_kcc_config
+    cd lua-$VERSION-tests/ && process_config
     cd lua-$VERSION-tests/ && cp kcc_* $log_dir
 }
 

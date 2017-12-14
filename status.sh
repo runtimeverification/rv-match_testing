@@ -3,7 +3,7 @@
 # This file should be merged with run_set.sh as soon as possible.
 # There should be an option to pass in a flag to control whether the tests are being ran or not.
 # The code for parsing the .ini files is the same as generate_table, so that should be extracted and generalized.
-
+. ./testtable/shell2junit/sh2ju.sh
 cout="kcc_configure_out.txt"
 mout="kcc_make_out.txt"
 kout="kcc_config_k_summary.txt"
@@ -40,18 +40,21 @@ get_info() {
     if [[ $result == $string_failed ]]; then
         if [[ -e $infofolder$out ]]; then
             echo "$(tail -8 $infofolder$out)"
+            return 1
         else
             echo "$infofolder$out is supposed to be in the log folder."
+            return 0
         fi
     fi
 }
 printresultforcompiler() {
     infofolder="tests/$line/$compiler/log/latest/"
-    get_info
+    juLog -name=unitTesting get_info
     #output+=$line'\t'$compiler$midstring$result'\n'
     echo $line" "$compiler$midstring$result
 }
 #output='\n'
+
 while read line; do
     string_success="passed"
     string_failed="failed"
