@@ -11,9 +11,10 @@ _download() {
 
 _build() {
     cd Spin/Src6.4.7
-    #sed -i -e "s/CC=gcc/CC=$compiler/g" makefile ; configure_success="$?"
-    sed -i -e "s/CC=gcc/CC=$compiler -frecover-all-errors/g" makefile ; configure_success="$?"
+    sed -i -e "s/CC=gcc/CC=$compiler/g" makefile ; configure_success="$?"
+    #sed -i -e "s/CC=gcc/CC=$compiler -frecover-all-errors/g" makefile ; configure_success="$?"
     make ; make_success="$?"
+    echo "sdufhod"
 }
 
 _extract() {
@@ -39,6 +40,7 @@ _test() {
         cd Spin/Examples/
         echo "---- finished testing spin on "$f
     done
+    echo "akjsndui"
 }
 
 init

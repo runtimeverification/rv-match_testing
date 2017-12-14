@@ -48,8 +48,8 @@ get_info() {
 printresultforcompiler() {
     infofolder="tests/$line/$compiler/log/latest/"
     get_info
-    #output+=$line'\t'$midstring$result'\n'
-    echo $line" "$midstring$result
+    #output+=$line'\t'$compiler$midstring$result'\n'
+    echo $line" "$compiler$midstring$result
 }
 #output='\n'
 while read line; do

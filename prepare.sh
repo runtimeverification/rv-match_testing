@@ -130,7 +130,7 @@ prep_extract_test() {
 prep_test() {
     # Test hash is dependent on 3 things: {_test() function definition, $compiler --version, build hash}.
     testhashinfo=$(type _test)$($compiler --version)$(head -n 1 $build_dir/build_function_hash)
-    if [ ! -e $unit_test_dir/test_function_hash ] || [ "$(echo $(sha1sum <<< $testhashinfo))" != "$(head -n 1 $unit_test_dir/test_function_hash)" ] ; then
+    if [ ! -e $unit_test_dir/test_function_hash ] || [ "$(echo $(sha1sum <<< $testhashinfo))" != "$(head -n 1 $unit_test_dir/test_function_hash)" ]  || [ "0" == "0" ] ; then
         # test
         echo $report_string" testing. Either the test hash changed or this is the first unit test run."
         safe_rm=$unit_test_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
