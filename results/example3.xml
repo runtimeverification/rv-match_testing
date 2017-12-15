@@ -6,7 +6,7 @@
 <property name="nameC12" value="valueC12">
 </property>
 </properties>
-<testcase assertions="assertionsC1" classname="classnameC1" name="nameC1" status="statusC1" time="timeC1">
+<testcase assertions="assertionsC12" classname="classnameC12" name="nameC12" status="statusC12" time="timeC12">
 <![CDATA[testline6]]>
 <skipped>
 <![CDATA[testline6.5]]>
@@ -30,7 +30,7 @@
 <![CDATA[testline11]]>
 </testcase>
 <![CDATA[testline11.01]]>
-<testcase assertions="assertionsD1" classname="classnameD1" name="nameD1" status="statusD1" time="timeD1">
+<testcase assertions="assertionsD12" classname="classnameD12" name="nameD12" status="statusD12" time="timeD12">
 <![CDATA[testline11.04]]>
 <error message="messageD1.0" type="typeD1.0">
 <![CDATA[testline11.05]]>
@@ -50,7 +50,7 @@
 <![CDATA[testline11.12]]>
 </testcase>
 <![CDATA[testline11.13]]>
-<testcase assertions="assertionsE1" classname="classnameE1" name="nameE1" status="statusE1" time="timeE1">
+<testcase assertions="assertionsE12" classname="classnameE12" name="nameE12" status="statusE12" time="timeE12">
 <![CDATA[testline11.14]]>
 <error message="messageE1.0" type="typeE1.0">
 <![CDATA[testline11.15]]>
@@ -66,7 +66,7 @@
 <![CDATA[testline11.20]]>
 </testcase>
 <![CDATA[testline11.21]]>
-<testcase assertions="assertionsF1" classname="classnameE1" name="nameF1" status="statusF1" time="timeF1">
+<testcase assertions="assertionsF12" classname="classnameE12" name="nameF12" status="statusF12" time="timeF12">
 <![CDATA[testline11.24]]>
 <system-out>
 <![CDATA[testline11.25]]>
