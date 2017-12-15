@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites disabled="disabledA" errors="errorsA" failures="failuresA" name="nameA" tests="testsA" time="timeA">
+    <testsuite disabled="disabledB1" errors="errorsB1" failures="failuresB1" hostname="hostnameB1" id="idB1"
+               name="nameB1" package="packageB1" skipped="skippedB1" tests="testsB1" time="timeB1" timestamp="timestampB1">
+        <properties>
+            <property name="nameC1" value="valueC1"/>
+        </properties>
+        <testcase assertions="assertionsC1" classname="classnameC1" name="nameC1" status="statusC1" time="timeC1">
+            <skipped/>
+            <error message="messageC1" type="typeC1"/>
+            <failure message="messageC1" type="typeC1"/>
+            <system-out/>
+            <system-err/>
+        </testcase>
+        <system-out/>
+        <system-err/>
+    </testsuite>
+    <testsuite disabled="disabledB2" errors="errorsB2" failures="failuresB2" hostname="hostnameB2" id="idB2"
+               name="nameB2" package="packageB2" skipped="skippedB2" tests="testsB2" time="timeB2" timestamp="timestampB2">
+        <properties>
+            <property name="nameC2" value="valueC2"/>
+        </properties>
+        <testcase assertions="assertionsC2" classname="classnameC2" name="nameC2" status="statusC2" time="timeC2">
+            <skipped/>
+            <error message="messageC2" type="typeC2"/>
+            <failure message="messageC2" type="typeC2"/>
+            <system-out/>
+            <system-err/>
+        </testcase>
+        <system-out/>
+        <system-err/>
+    </testsuite>
+</testsuites>
