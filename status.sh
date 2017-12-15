@@ -43,12 +43,12 @@ get_info() {
             echo '<error message="Failed.">' >> $export
             result=$string_failed
             if [[ -e $infofolder$out ]]; then
-                print="$(tail -8 $infofolder$out)"
+                print="$(tail -20 $infofolder$out)"
             else
                 print="$infofolder$out is supposed to be in the log folder."
             fi
             echo $print
-            echo '<![CDATA['$print']]>' >> $export
+            printf "'<![CDATA['$print']]>'" >> $export
             echo '</error>' >> $export
         fi
     else
