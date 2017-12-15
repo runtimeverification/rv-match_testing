@@ -33,7 +33,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 <testsuite name="StatusScriptReport" package="StatusPackage">
 <properties/>' > $export
 get_info() {
-    echo '<testcase classname="status.'${line/_/.}'" name="'$compiler' '$infoname'">' >> $export
+    echo '<testcase classname="status.'${line/_/"."}'" name="'$compiler' '$infoname'">' >> $export
     infopath=$infofolder$infoname"_success.ini"
     result=$string_non_exist
     if [[ -e $infopath ]] ; then
