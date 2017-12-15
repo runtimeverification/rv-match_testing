@@ -35,6 +35,26 @@
 </system-err>
 <![CDATA[testline11]]>
 </testcase>
+<![CDATA[testline11.01]]>
+<testcase assertions="assertionsC1" classname="classnameC1" name="nameC1" status="statusC1" time="timeC1">
+<![CDATA[testline11.04]]>
+<error message="messageC1" type="typeC1">
+<![CDATA[testline11.05]]>
+</error>
+<![CDATA[testline11.06]]>
+<failure message="messageC1" type="typeC1">
+<![CDATA[testline11.07]]>
+</failure>
+<![CDATA[testline11.08]]>
+<system-out>
+<![CDATA[testline11.09]]>
+</system-out>
+<![CDATA[testline11.10]]>
+<system-err>
+<![CDATA[testline11.11]]>
+</system-err>
+<![CDATA[testline11.12]]>
+</testcase>
 <![CDATA[testline12]]>
 <system-out>
 <![CDATA[testline12.5]]>
