@@ -9,7 +9,7 @@
 <testcase assertions="assertionsC12" classname="classnameC12" name="nameC12" status="statusC12" time="timeC12">
 <![CDATA[testline6]]>
 <skipped>
-<![CDATA[testline6.5]]>
+<![CDATA[testline6.6]]>
 </skipped>
 <![CDATA[testline7]]>
 <error message="messageC1.0" type="typeC1.0">
