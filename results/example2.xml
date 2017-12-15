@@ -6,6 +6,7 @@
   <property name="nameC1" value="valueC1">
   </property>
 </properties>
+
 <testcase assertions="assertionsC1" classname="Example Project" name="First Test" status="statusC1" time="timeC1">
   <system-out>
     <![CDATA[Example Standard Output]]>
