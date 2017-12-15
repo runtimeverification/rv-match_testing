@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites>
-<testsuite>
-
+<testsuites disabled="disabledA" errors="errorsA" failures="failuresA" name="nameA" tests="testsA" time="timeA">
+<testsuite disabled="disabledB1" errors="errorsB1" failures="failuresB1" hostname="hostnameB1" id="idB1"
+               name="nameB1" package="packageB1" skipped="skippedB1" tests="testsB1" time="timeB1" timestamp="timestampB1">
+<properties/>
 <testcase classname="Example Project" name="First Test">
   <system-out>
     <![CDATA[Example Standard Output]]>
