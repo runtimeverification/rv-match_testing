@@ -18,11 +18,11 @@
 <![CDATA[testline6.5]]>
 </skipped>
 <![CDATA[testline7]]>
-<error message="messageC1" type="typeC1">
+<error message="messageC1.0" type="typeC1.0">
 <![CDATA[testline7.5]]>
 </error>
 <![CDATA[testline8]]>
-<failure message="messageC1" type="typeC1">
+<failure message="messageC1.1" type="typeC1.1">
 <![CDATA[testline8.5]]>
 </failure>
 <![CDATA[testline9]]>
@@ -36,13 +36,13 @@
 <![CDATA[testline11]]>
 </testcase>
 <![CDATA[testline11.01]]>
-<testcase assertions="assertionsC1" classname="classnameC1" name="nameC1" status="statusC1" time="timeC1">
+<testcase assertions="assertionsD1" classname="classnameD1" name="nameD1" status="statusD1" time="timeD1">
 <![CDATA[testline11.04]]>
-<error message="messageC1" type="typeC1">
+<error message="messageD1.0" type="typeD1.0">
 <![CDATA[testline11.05]]>
 </error>
 <![CDATA[testline11.06]]>
-<failure message="messageC1" type="typeC1">
+<failure message="messageD1.1" type="typeC1.1">
 <![CDATA[testline11.07]]>
 </failure>
 <![CDATA[testline11.08]]>
@@ -54,6 +54,22 @@
 <![CDATA[testline11.11]]>
 </system-err>
 <![CDATA[testline11.12]]>
+</testcase>
+<![CDATA[testline11.13]]>
+<testcase assertions="assertionsE1" classname="classnameE1" name="nameE1" status="statusE1" time="timeE1">
+<![CDATA[testline11.14]]>
+<error message="messageE1.0" type="typeE1.0">
+<![CDATA[testline11.15]]>
+</error>
+<![CDATA[testline11.16]]>
+<system-out>
+<![CDATA[testline11.17]]>
+</system-out>
+<![CDATA[testline11.18]]>
+<system-err>
+<![CDATA[testline11.19]]>
+</system-err>
+<![CDATA[testline11.20]]>
 </testcase>
 <![CDATA[testline12]]>
 <system-out>
