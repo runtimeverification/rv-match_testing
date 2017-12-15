@@ -71,6 +71,18 @@
 </system-err>
 <![CDATA[testline11.20]]>
 </testcase>
+<![CDATA[testline11.21]]>
+<testcase assertions="assertionsF1" classname="classnameE1" name="nameF1" status="statusF1" time="timeF1">
+<![CDATA[testline11.24]]>
+<system-out>
+<![CDATA[testline11.25]]>
+</system-out>
+<![CDATA[testline11.26]]>
+<system-err>
+<![CDATA[testline11.27]]>
+</system-err>
+<![CDATA[testline11.28]]>
+</testcase>
 <![CDATA[testline12]]>
 <system-out>
 <![CDATA[testline12.5]]>
