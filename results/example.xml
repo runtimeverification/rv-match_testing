@@ -6,27 +6,43 @@
 <![CDATA[testline2]]>
 <properties>
 <![CDATA[testline3]]>
-<property name="nameC1" value="valueC1"/>
+<property name="nameC1" value="valueC1">
+<![CDATA[testline3.5]]>
+</property>
 <![CDATA[testline4]]>
 </properties>
 <![CDATA[testline5]]>
 <testcase assertions="assertionsC1" classname="classnameC1" name="nameC1" status="statusC1" time="timeC1">
 <![CDATA[testline6]]>
-<skipped/>
+<skipped>
+<![CDATA[testline6.5]]>
+</skipped>
 <![CDATA[testline7]]>
-<error message="messageC1" type="typeC1"/>
+<error message="messageC1" type="typeC1">
+<![CDATA[testline7.5]]>
+</error>
 <![CDATA[testline8]]>
-<failure message="messageC1" type="typeC1"/>
+<failure message="messageC1" type="typeC1">
+<![CDATA[testline8.5]]>
+</failure>
 <![CDATA[testline9]]>
-<system-out/>
+<system-out>
+<![CDATA[testline9.5]]>
+</system-out>
 <![CDATA[testline10]]>
-<system-err/>
+<system-err>
+<![CDATA[testline10.5]]>
+</system-err>
 <![CDATA[testline11]]>
 </testcase>
 <![CDATA[testline12]]>
-<system-out/>
+<system-out>
+<![CDATA[testline12.5]]>
+</system-out>
 <![CDATA[testline13]]>
-<system-err/>
+<system-err>
+<![CDATA[testline13.5]]>
+</system-err>
 <![CDATA[testline14]]>
 </testsuite>
 <![CDATA[testline15]]>
@@ -35,7 +51,9 @@
 <![CDATA[testline16]]>
 <properties>
 <![CDATA[testline17]]>
-<property name="nameC2" value="valueC2"/>
+<property name="nameC2" value="valueC2">
+<![CDATA[testline17.5]]>
+</property>
 <![CDATA[testline18]]>
 </properties>
 <![CDATA[testline19]]>
@@ -43,19 +61,31 @@
 <![CDATA[testline20]]>
 <skipped/>
 <![CDATA[testline21]]>
-<error message="messageC2" type="typeC2"/>
+<error message="messageC2" type="typeC2">
+<![CDATA[testline21.5]]>
+</error>
 <![CDATA[testline22]]>
-<failure message="messageC2" type="typeC2"/>
+<failure message="messageC2" type="typeC2">
+<![CDATA[testline22.5]]>
+</failure>
 <![CDATA[testline23]]>
-<system-out/>
+<system-out>
+<![CDATA[testline23.5]]>
+</system-out>
 <![CDATA[testline24]]>
-<system-err/>
+<system-err>
+<![CDATA[testline24.5]]>
+</system-err>
 <![CDATA[testline25]]>
 </testcase>
 <![CDATA[testline26]]>
-<system-out/>
+<system-out>
+<![CDATA[testline26.5]]>
+</system-out>
 <![CDATA[testline27]]>
-<system-err/>
+<system-err>
+<![CDATA[testline27.5]]>
+</system-err>
 <![CDATA[testline28]]>
 </testsuite>
 <![CDATA[testline29]]>
