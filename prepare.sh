@@ -25,9 +25,9 @@ test_file=$test_dir/test.sh
 download_dir=$test_dir/download
 
 process_kcc_config() {
-    if cp kcc_config $log_dir
+    if cp kcc_config $build_log_dir
     then
-        cd $log_dir
+        cd $build_log_dir
         k-bin-to-text kcc_config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt && cat kcc_config_k_summary.txt
     else
         echo "prepare.sh did not find a kcc_config in "$(dirname $(pwd))
@@ -36,9 +36,9 @@ process_kcc_config() {
 }
 
 process_config() {
-    if cp config $log_dir
+    if cp config $test_log_dir
     then
-        cd $log_dir
+        cd $test_log_dir
         #k-bin-to-text config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt && echo kcc_config_k_summary.txt
         grep -o "<k>.\{500\}" config &> kcc_config_k_summary.txt && cat kcc_config_k_summary.txt
         grep -o "<curr-program-loc>.\{500\}" config &> kcc_config_loc_summary.txt && cat kcc_config_loc_summary.txt
@@ -53,12 +53,6 @@ prep_prepare() {
 
     build_dir=$test_dir/$compiler/build
     mkdir -p $build_dir
-
-    log_dir=$test_dir/$compiler/log/$(date +%Y-%m-%d.%H:%M:%S)
-    mkdir -p $log_dir
-    ln -sfn $log_dir $test_dir/$compiler/log/latest
-    echo $log_dir
-    rm $log_dir/*_success.ini    
 
     unit_test_dir=$test_dir/$compiler/unit_test
     mkdir -p $unit_test_dir
@@ -76,14 +70,21 @@ prep_download() {
 }
 
 prep_extract() {
+    
+    build_log_dir=$test_dir/$compiler/build_log/$(date +%Y-%m-%d.%H:%M:%S)
+    mkdir -p $build_log_dir
+    ln -sfn $build_log_dir $test_dir/$compiler/build_log/latest
+    echo $build_log_dir    
+    log_dir=$build_log_dir #until scripts are updated
+
     # extract build results
     [ ""$(find $build_dir -name "kcc_config") == "" ] ; no_kcc_config_generated_success="$?"
-    cd $log_dir
+    cd $build_log_dir
     echo $no_kcc_config_generated_success > no_kcc_config_generated_success.ini
     echo $report_string" kcc_config prevention status reported:"$no_kcc_config_generated_success
 
     cd $build_dir && _extract
-    cd $log_dir
+    cd $build_log_dir
     if [ ! -z ${configure_success+x} ]; then
         echo $configure_success > configure_success.ini
         echo $report_string" configure:"$configure_success
@@ -100,6 +101,7 @@ prep_build() {
     # Build hash is dependent on 3 things: {_build() function definition, $compiler --version, download hash}.
     buildhashinfo=$(type _build)$($compiler --version)$(head -n 1 $download_dir/download_function_hash)
     if [ ! -e $build_dir/build_function_hash ] || [ "$(echo $(sha1sum <<< $buildhashinfo))" != "$(head -n 1 $build_dir/build_function_hash)" ] ; then
+
         # build
         echo $report_string" building. Either build hash changed or this is the first time building."
         safe_rm=$build_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
@@ -111,15 +113,22 @@ prep_build() {
         
         # generate build hash - should be the last function in the build process since it indicates completion
         cd $build_dir && echo $(sha1sum <<< $buildhashinfo) > build_function_hash
+        prep_extract
     else
         echo $report_string" not building. Build hash is the same as last build."
     fi 
 }
 
 prep_extract_test() {
+    test_log_dir=$test_dir/$compiler/test_log/$(date +%Y-%m-%d.%H:%M:%S)
+    mkdir -p $test_log_dir
+    ln -sfn $test_log_dir $test_dir/$compiler/test_log/latest
+    echo $test_log_dir
+    log_dir=$test_log_dir #until scripts are updated
+
     # extract test results
     cd $unit_test_dir && _extract_test
-    cd $log_dir
+    cd $test_log_dir
     if [ ! -z ${test_success+x} ]; then
         echo $report_string"      test:"$test_success
         echo $test_success > test_success.ini
@@ -131,6 +140,7 @@ prep_test() {
     # Test hash is dependent on 3 things: {_test() function definition, $compiler --version, build hash}.
     testhashinfo=$(type _test)$($compiler --version)$(head -n 1 $build_dir/build_function_hash)
     if [ ! -e $unit_test_dir/test_function_hash ] || [ "$(echo $(sha1sum <<< $testhashinfo))" != "$(head -n 1 $unit_test_dir/test_function_hash)" ]  || [ "0" == "0" ] ; then
+
         # test
         echo $report_string" testing. Either the test hash changed or this is the first unit test run."
         safe_rm=$unit_test_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
@@ -141,7 +151,7 @@ prep_test() {
 
         # generate test hash - should be the last function in the testing process since it indicates completion
         cd $unit_test_dir && echo $(sha1sum <<< $testhashinfo) > test_function_hash
-
+        prep_extract_test
     else
         echo $report_string" not running unit tests. Testing hash is the same as last test run."
     fi
@@ -151,9 +161,7 @@ init_helper() {
     prep_prepare
     prep_download
     prep_build
-    prep_extract
     prep_test
-    prep_extract_test
 }
 
 init() {
