@@ -2,8 +2,11 @@
 <testsuites disabled="disabledA" errors="errorsA" failures="failuresA" name="nameA" tests="testsA" time="timeA">
 <testsuite disabled="disabledB1" errors="errorsB1" failures="failuresB1" hostname="hostnameB1" id="idB1"
                name="nameB1" package="packageB1" skipped="skippedB1" tests="testsB1" time="timeB1" timestamp="timestampB1">
-<properties/>
-<testcase classname="Example Project" name="First Test">
+<properties>
+  <property name="nameC1" value="valueC1">
+  </property>
+</properties>
+<testcase assertions="assertionsC1" classname="Example Project" name="First Test" status="statusC1" time="timeC1">
   <system-out>
     <![CDATA[Example Standard Output]]>
   </system-out>
@@ -12,7 +15,7 @@
   </system-err>
 </testcase>
 
-<testcase classname="Example Project" name="Second Test">
+<testcase assertions="assertionsC1" classname="Example Project" name="Second Test" status="statusC1" time="timeC1">
   <error message="Example Error Message">
     <![CDATA[Example Stacktrace]]>
   </error>
@@ -24,7 +27,7 @@
   </system-err>
 </testcase>
 
-<testcase classname="Example Project" name="Third Test">
+<testcase assertions="assertionsC1" classname="Example Project" name="Third Test" status="statusC1" time="timeC1">
   <skipped/>
   <error message="Example Error Message">
     <![CDATA[Example Stacktrace]]>
