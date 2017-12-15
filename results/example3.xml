@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites disabled="disabledA" errors="errorsA" failures="failuresA" name="nameA" tests="testsA" time="timeA">
-<![CDATA[testline1]]>
-<testsuite disabled="disabledB1" errors="errorsB1" failures="failuresB1" hostname="hostnameB1" id="idB1"
-               name="nameB1" package="packageB1" skipped="skippedB1" tests="testsB1" time="timeB1" timestamp="timestampB1">
+<testsuites disabled="disabledA2" errors="errorsA2" failures="failuresA2" name="nameA2" tests="testsA2" time="timeA2">
+<testsuite disabled="disabledB12" errors="errorsB12" failures="failuresB12" hostname="hostnameB12" id="idB12"
+               name="nameB12" package="packageB12" skipped="skippedB12" tests="testsB12" time="timeB12" timestamp="timestampB12">
 <properties>
-<property name="nameC1" value="valueC1">
+<property name="nameC12" value="valueC12">
 </property>
 </properties>
 <testcase assertions="assertionsC1" classname="classnameC1" name="nameC1" status="statusC1" time="timeC1">
