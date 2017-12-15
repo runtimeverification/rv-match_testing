@@ -40,18 +40,19 @@ get_info() {
         if [[ "$(head -n 1 $infopath)" == 0 ]] ; then
             result=$string_success
         else
-            echo '<error message="Failed."></error>' >> $export
+            echo '<error message="Failed.">' >> $export
             result=$string_failed
+            if [[ -e $infofolder$out ]]; then
+                print="$(tail -8 $infofolder$out)"
+            else
+                print="$infofolder$out is supposed to be in the log folder."
+            fi
+            echo $print
+            echo '<![CDATA['$print']]>' >> $export
+            echo '</error>' >> $export
         fi
     else
         echo '<skipped/>' >> $export
-    fi
-    if [[ $result == $string_failed ]]; then
-        if [[ -e $infofolder$out ]]; then
-            echo "$(tail -8 $infofolder$out)"
-        else
-            echo "$infofolder$out is supposed to be in the log folder."
-        fi
     fi
     echo '</testcase>' >> $export
 }
