@@ -3,11 +3,11 @@
 # This file should be merged with run_set.sh as soon as possible.
 # There should be an option to pass in a flag to control whether the tests are being ran or not.
 # The code for parsing the .ini files is the same as generate_table, so that should be extracted and generalized.
-. ./testtable/shell2junit/sh2ju.sh
-juLogClean
 cout="kcc_configure_out.txt"
 mout="kcc_make_out.txt"
 kout="kcc_config_k_summary.txt"
+export="results/status.xml"
+touch $export
 filepath=$1
 file=$(basename $filepath)
 setfolder=$(basename $(dirname $filepath))"/"
@@ -28,17 +28,23 @@ if [ $blacklist_check == $blacklist_indicator ]; then
     touch $whitelistpath
     grep -f $filepath -v -F -x $allpath > $whitelistpath
 fi
+echo '<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+<testsuite name="StatusScriptReport" package="StatusPackage">
+<properties/>' > $export
 get_info() {
+    echo '<testcase classname='$line' name="'$compiler' '$infoname'">' >> $export
     infopath=$infofolder$infoname"_success.ini"
     result=$string_non_exist
-    testtableresult=false
     if [[ -e $infopath ]] ; then
         if [[ "$(head -n 1 $infopath)" == 0 ]] ; then
             result=$string_success
-            testtableresult=true
         else
+            echo '<error message="Failed."></error>' >> $export
             result=$string_failed
         fi
+    else
+        echo '<skipped/>' >> $export
     fi
     if [[ $result == $string_failed ]]; then
         if [[ -e $infofolder$out ]]; then
@@ -47,11 +53,12 @@ get_info() {
             echo "$infofolder$out is supposed to be in the log folder."
         fi
     fi
+    echo '</testcase>' >> $export
 }
+
 printresultforcompiler() {
     infofolder="tests/$line/$compiler/log/latest/"
     get_info
-    juLog -name="$line $compiler" $testtableresult
     #output+=$line'\t'$compiler$midstring$result'\n'
     echo $line" "$compiler$midstring$result
 }
@@ -88,3 +95,7 @@ done < $whitelistpath
 
 #echo -e $output
 #printf $output'\n' | column -t
+
+echo '</testsuite>
+</testsuites>
+' >> $export
