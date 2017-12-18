@@ -19,7 +19,7 @@ if [ $blacklist_check == $blacklist_indicator ]; then
     touch $whitelistpath
     grep -f $filepath -v -F -x $allpath > $whitelistpath
 fi
-$full_report="./results/report.xml"
+full_report=$(pwd)"/results/report.xml"
 echo '<?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
 <testsuite name="ReportScriptReport" package="ReportPackage">
