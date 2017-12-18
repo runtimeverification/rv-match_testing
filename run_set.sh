@@ -19,8 +19,17 @@ if [ $blacklist_check == $blacklist_indicator ]; then
     touch $whitelistpath
     grep -f $filepath -v -F -x $allpath > $whitelistpath
 fi
+$full_report="./results/report.xml"
+echo '<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+<testsuite name="ReportScriptReport" package="ReportPackage">
+<properties/>' > $full_report
 while read line; do
   echo ==== $line started at $(date)
   bash tests/$line/test.sh
+  tests/$line/report.xml >> $full_report
   echo ==== $line finished at $(date)
 done < $whitelistpath
+echo '</testsuite>
+</testsuites>
+' >> $full_report

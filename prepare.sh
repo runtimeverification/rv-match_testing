@@ -1,4 +1,4 @@
-#!/bin/bash
+#/bin/bash
 # This script should be called using the following code at the beginning of each test:
 #   [ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/prepare.sh
 #   base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh
@@ -23,6 +23,8 @@ test_name=$(basename $(pwd))
 test_dir=$(pwd)
 test_file=$test_dir/test.sh
 download_dir=$test_dir/download
+report_file=$test_dir/report.xml
+rm $report_file ; touch $report_file
 
 process_kcc_config() {
     if cp kcc_config $build_log_dir
@@ -83,7 +85,6 @@ prep_extract() {
     echo $no_kcc_config_generated_success > no_kcc_config_generated_success.ini
     echo $report_string" kcc_config prevention status reported:"$no_kcc_config_generated_success
 
-    cd $build_dir && _extract
     cd $build_log_dir
     if [ ! -z ${configure_success+x} ]; then
         echo $configure_success > configure_success.ini
@@ -92,8 +93,15 @@ prep_extract() {
     if [ ! -z ${make_success+x} ]; then
         echo $make_success > make_success.ini
         echo $report_string"      make:"$make_success
+        echo '<testcase classname="report.'${test_name/./"_"}'" name="'$compiler' make success">' >> $report_file
+        if [[ "$make_success" != 0 ]] ; then
+            echo '<error message="Failed."> </error>' >> $report_file
+        fi
     fi
-
+    cd $build_dir && _extract
+    if [ ! -z ${make_success+x} ]; then
+        echo '</testcase>' >> $report_file
+    fi
 }
 
 prep_build() {
