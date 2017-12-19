@@ -11,8 +11,11 @@ _download() {
 
 _build() {
     cd Spin/Src6.4.7
-    #sed -i -e "s/CC=gcc/CC=$compiler/g" makefile ; configure_success="$?"
-    sed -i -e "s/CC=gcc/CC=$compiler -frecover-all-errors/g" makefile ; configure_success="$?"
+    if [[ $compiler == "kcc" ]] ; then
+        sed -i -e "s/CC=gcc/CC=$compiler -frecover-all-errors/g" makefile ; configure_success="$?"
+    else
+        sed -i -e "s/CC=gcc/CC=$compiler/g" makefile ; configure_success="$?"
+    fi
     make ; make_success="$?"
     echo "sdufhod"
 }
