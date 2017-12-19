@@ -9,5 +9,5 @@ cd dep1/ ; ls ; cd ..
 cd dep2/ ; ls ; cd ..
 cd dep3/ ; ls ; cd ..
 echo "Old PATH: "$PATH
-PATH=$(pwd)/dep1:$(pwd)/dep2:$(pwd)/dep3:$PATH
+export PATH=$(pwd)/dep1:$(pwd)/dep2:$(pwd)/dep3:$PATH
 echo "New PATH: "$PATH
