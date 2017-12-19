@@ -135,13 +135,27 @@ prep_extract_test() {
     log_dir=$test_log_dir #until scripts are updated
 
     # extract test results
-    cd $unit_test_dir && _extract_test
     cd $test_log_dir
     if [ ! -z ${test_success+x} ]; then
         echo $report_string"      test:"$test_success
         echo $test_success > test_success.ini
     fi
 
+
+    if [[ -v results[@] ]] ; then
+        for t in "${!results[@]}"
+        do
+            echo '<testcase classname="report.'${test_name/./"_"}'" name="'$compiler' ${names[$t]}">' >> $report_file
+            if [[ ${results[$t]} == 0 ]] ; then
+                echo $report_string" test: "${names[$t]}" Passed!"
+            else
+                echo $report_string" test: "${names[$t]}" Failed!"
+                echo '<error message="Failed."> </error>' >> $report_file
+            fi
+            echo '</testcase>' >> $report_file
+        done
+    fi
+    cd $unit_test_dir && _extract_test
 }
 
 prep_test() {

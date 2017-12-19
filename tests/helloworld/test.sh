@@ -31,7 +31,8 @@ _extract() {
 
 _test() {
     cd helloworld/
-    ./a.out ; test_success="$?"
+    names[0]="basic run"
+    ./a.out ; results[0]="$?"
 }
 
 _extract_test() {

@@ -10,4 +10,5 @@ cd dep2/ ; ls ; cd ..
 cd dep3/ ; ls ; cd ..
 echo "Old PATH: "$PATH
 export PATH=$(pwd)/dep1:$(pwd)/dep2:$(pwd)/dep3:$PATH
+# This won't work on Jenkins. Must run directly from start script.
 echo "New PATH: "$PATH

@@ -33,9 +33,12 @@ _test() {
     mv peterson.pml ignore/
     mv priorities.pml ignore/
     mv wordcount.pml ignore/
+    index=0;
     for f in *.pml; do
         echo "---- testing spin on "$f
-        ../Src6.4.7/spin $f
+        names[index]="$compiler "$f
+        ../Src6.4.7/spin $f ; results[index]="$?"
+        index=$((index+1))
         process_config
         cd Spin/Examples/
         echo "---- finished testing spin on "$f
