@@ -33,6 +33,10 @@ _test() {
     cd helloworld/
     names[0]="basic run"
     ./a.out ; results[0]="$?"
+    names[1]="should fail"
+    diuhcvebvlwefofdiwn "sdinf" ; results[1]="$?"
+    names[2]="should work"
+    echo "hi there!" ; results[2]="$?"
 }
 
 _extract_test() {

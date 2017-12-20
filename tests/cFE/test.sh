@@ -35,28 +35,28 @@ _extract() {
 }
 
 _test() {
-    return
     # tests seem to run indefinitely now   
 
     #sudo /bin/sh -c "echo 100 > /proc/sys/fs/mqueue/msg_max"
     cd cFE-6.5.0-OSS-release/build/
-    ./native/osal/unit-tests/ostimer-test/osal_timer_UT
-    ./native/osal/unit-tests/osnetwork-test/osal_network_UT
-    ./native/osal/unit-tests/osloader-test/osal_loader_UT
-    ./native/osal/unit-tests/osfile-test/osal_file_UT
-    ./native/osal/unit-tests/osfilesys-test/osal_filesys_UT
-    ./native/osal/unit-tests/oscore-test/osal_core_UT
+    
+    names[0]="timer" ; ./native/osal/unit-tests/ostimer-test/osal_timer_UT ; results[0]="$?"
+    names[1]="network" ; ./native/osal/unit-tests/osnetwork-test/osal_network_UT ; results[1]="$?"
+    names[2]="loader" ; ./native/osal/unit-tests/osloader-test/osal_loader_UT ; results[2]="$?"
+    names[3]="file" ; ./native/osal/unit-tests/osfile-test/osal_file_UT ; results[3]="$?"
+    names[4]="filesys" ; ./native/osal/unit-tests/osfilesys-test/osal_filesys_UT ; results[4]="$?"
+    names[5]="core" ; ./native/osal/unit-tests/oscore-test/osal_core_UT ; results[5]="$?"
 
-    ./native/osal/tests/bin-sem-flush-test
-    ./native/osal/tests/bin-sem-test
-    ./native/osal/tests/bin-sem-timeout-test
-    ./native/osal/tests/count-sem-test
-    ./native/osal/tests/file-api-test
-    ./native/osal/tests/mutex-test
-    ./native/osal/tests/osal-core-test
-    ./native/osal/tests/queue-timeout-test
-    ./native/osal/tests/symbol-api-test
-    ./native/osal/tests/timer-test
+    names[6]="bin-sem-flush" ; ./native/osal/tests/bin-sem-flush-test ; results[6]="$?"
+    names[7]="bin-sem" ; ./native/osal/tests/bin-sem-test ; results[7]="$?"
+    names[8]="bin-sem-timeout" ; ./native/osal/tests/bin-sem-timeout-test ; results[8]="$?"
+    names[9]="count-sem" ; ./native/osal/tests/count-sem-test ; results[9]="$?"
+    names[10]="file-api" ; ./native/osal/tests/file-api-test ; results[10]="$?"
+    names[11]="mutex" ; ./native/osal/tests/mutex-test ; results[11]="$?"
+    names[12]="osal-core" ; ./native/osal/tests/osal-core-test ; results[12]="$?"
+    names[13]="queue-timeout" ; ./native/osal/tests/queue-timeout-test ; results[13]="$?"
+    names[14]="symbol-api" ; ./native/osal/tests/symbol-api-test ; results[14]="$?"
+    names[15]="timer" ; ./native/osal/tests/timer-test ; results[15]="$?"
 }
 
 _extract_test() {

@@ -39,7 +39,7 @@ _test() {
     index=0;
     for f in *.pml; do
         echo "---- testing spin on "$f
-        names[index]="$compiler "$f
+        names[index]=${f%".pml"}
         ../Src6.4.7/spin $f ; results[index]="$?"
         index=$((index+1))
         process_config
