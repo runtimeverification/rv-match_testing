@@ -145,7 +145,7 @@ prep_extract_test() {
     if [[ -v results[@] ]] ; then
         for t in "${!results[@]}"
         do
-            echo '<testcase classname="report.'${test_name/./"_"}'" name="'$compiler' ${names[$t]}">' >> $report_file
+            echo '<testcase classname="report.'${test_name/./"_"}'" name="'$compiler' '${names[$t]}'">' >> $report_file
             if [[ ${results[$t]} == 0 ]] ; then
                 echo $report_string" test: "${names[$t]}" Passed!"
             else

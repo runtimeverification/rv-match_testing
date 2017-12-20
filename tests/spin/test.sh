@@ -11,8 +11,11 @@ _download() {
 
 _build() {
     cd Spin/Src6.4.7
-    #sed -i -e "s/CC=gcc/CC=$compiler/g" makefile ; configure_success="$?"
-    sed -i -e "s/CC=gcc/CC=$compiler -frecover-all-errors/g" makefile ; configure_success="$?"
+    if [[ $compiler == "kcc" ]] ; then
+        sed -i -e "s/CC=gcc/CC=$compiler -frecover-all-errors/g" makefile ; configure_success="$?"
+    else
+        sed -i -e "s/CC=gcc/CC=$compiler/g" makefile ; configure_success="$?"
+    fi
     make ; make_success="$?"
     echo "sdufhod"
 }
@@ -36,7 +39,7 @@ _test() {
     index=0;
     for f in *.pml; do
         echo "---- testing spin on "$f
-        names[index]="$compiler "$f
+        names[index]=${f%".pml"}
         ../Src6.4.7/spin $f ; results[index]="$?"
         index=$((index+1))
         process_config
