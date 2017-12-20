@@ -1,2 +1,4 @@
 #!/bin/bash
-echo "Hello World from "$(pwd)
+echo "Hello, world from "$(pwd)
+ls
+bash tests/helloworld/test.sh
