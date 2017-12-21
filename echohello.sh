@@ -24,4 +24,4 @@ cd /root/
 echo "pwd is "$(pwd)
 echo "hrm"
 ls
-bash run_set sets/quickset.ini
+bash run_set.sh sets/quickset.ini
