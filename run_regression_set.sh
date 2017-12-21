@@ -24,7 +24,9 @@ while read line; do
     mkdir -p tests/$line/
     cp /mnt/jenkins/tests/$line/test.sh tests/$line/test.sh
   fi
-  bash tests/$line/test.sh
+  cp tests/$line/test.sh tests/$line/test_regression.sh
+  sed -i -e 's/prepare.sh/prepare_regression.sh/g' tests/$line/test_regression.sh
+  bash tests/$line/test_regression.sh
   cat "tests/$line/report.xml" >> $full_report
 done < $whitelistpath
 echo '</testsuite>
