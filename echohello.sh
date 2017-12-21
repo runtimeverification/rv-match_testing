@@ -17,3 +17,4 @@ echo " == Should be the same "
 ls /sets/
 bash libs.sh
 bash run_set.sh sets/quickset.ini
+cp results/results.xml /mnt/jenkins/results/
