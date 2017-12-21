@@ -95,7 +95,7 @@ prep_extract() {
     if [ ! -z ${make_success+x} ]; then
         echo $make_success > make_success.ini
         echo $report_string"      make:"$make_success
-        echo '<testcase classname="report.'${test_name/./"_"}'" name="'$compiler' make">' >> $report_file
+        echo '<testcase classname="regression.'${test_name/./"_"}'" name="'$compiler' make">' >> $report_file
         if [[ "$make_success" != 0 ]] ; then
             echo '<error message="Failed."> </error>' >> $report_file
         fi
@@ -192,7 +192,7 @@ init_helper() {
 }
 
 init() {
-    compiler="gcc" && init_helper
+    #compiler="gcc" && init_helper
     compiler="kcc" && init_helper
 }
 
