@@ -11,7 +11,9 @@ cd /mnt/jenkins/
 echo "pwd is "$(pwd)
 ls
 cp tests/helloworld/test.sh /root/tests/helloworld/test.sh
-cp prepare.sh /root/
+cp run_set.sh /root/run_set.sh
+cp -r /sets/ /root/sets/
+cp prepare.sh /root/prepare.sh
 ls
 echo "huh?"
 ls ../../root/
@@ -22,4 +24,4 @@ cd /root/
 echo "pwd is "$(pwd)
 echo "hrm"
 ls
-bash tests/helloworld/test.sh
+bash run_set sets/quickset.ini
