@@ -10,14 +10,14 @@ echo "pwd is "$(pwd)
 cd /mnt/jenkins/
 echo "pwd is "$(pwd)
 ls
-cp tests/helloworld/test.sh ../../tests/helloworld/test.sh
+cp tests/helloworld/test.sh /root/tests/helloworld/test.sh
 ls
 echo "huh?"
-ls ../..
+ls ../../root/
 echo "pwd is "$(pwd)
 echo "uh."
 ls
-cd ../..
+cd /root/
 echo "pwd is "$(pwd)
 echo "hrm"
 ls
