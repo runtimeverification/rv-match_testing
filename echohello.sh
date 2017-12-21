@@ -11,6 +11,7 @@ cd /mnt/jenkins/
 echo "pwd is "$(pwd)
 ls
 cp tests/helloworld/test.sh /root/tests/helloworld/test.sh
+cp prepare.sh /root/
 ls
 echo "huh?"
 ls ../../root/
