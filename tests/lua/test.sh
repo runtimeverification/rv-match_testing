@@ -18,9 +18,9 @@ _download() {
 }
 
 _build() {
-    cd lua-$VERSION/
-    make linux CC=$compiler LD=$compiler |& tee kcc_make_out.txt ; configure_success="$?"
-    $compiler -d -O2 -Wall -Wextra -DLUA_COMPAT_5_2 -DLUA_USE_LINUX -c -o src/luac.o src/luac.c |& tee kcc_out.txt ; make_success="$?"
+    cd lua-$VERSION/ && configure_success="$?"
+    make linux CC=$compiler LD=$compiler |& tee kcc_make_out.txt ; make_success="$?"
+    $compiler -d -O2 -Wall -Wextra -DLUA_COMPAT_5_2 -DLUA_USE_LINUX -c -o src/luac.o src/luac.c |& tee kcc_out.txt
 }
 
 _extract() {
