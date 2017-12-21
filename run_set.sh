@@ -29,7 +29,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 while read line; do
   if [ ! -e tests/$line/test.sh ] ; then
     mkdir -p tests/$line/
-    cp mnt/jenkins/tests/$line/test.sh tests/$line/test.sh
+    cp /mnt/jenkins/tests/$line/test.sh tests/$line/test.sh
   fi
   echo ==== $line started at $(date)
   bash tests/$line/test.sh
