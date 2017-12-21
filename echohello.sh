@@ -11,7 +11,9 @@ cp -r sets/* /root/sets/
 echo " === These are what is in the sets directory: "
 ls /root/sets/
 cp prepare.sh /root/prepare.sh
+cp libs.sh /root/libs.sh
 cd /root/
 echo " == Should be the same "
 ls /sets/
+bash libs.sh
 bash run_set.sh sets/quickset.ini
