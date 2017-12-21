@@ -1,2 +1,2 @@
 # helloworld
-sudo apt install gcc
+sudo apt --assume-yes install gcc
