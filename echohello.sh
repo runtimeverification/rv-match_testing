@@ -12,6 +12,7 @@ echo "pwd is "$(pwd)
 ls
 cp tests/helloworld/test.sh /root/tests/helloworld/test.sh
 cp run_set.sh /root/run_set.sh
+mkdir /root/sets/
 cp -r /sets/ /root/sets/
 cp prepare.sh /root/prepare.sh
 ls
