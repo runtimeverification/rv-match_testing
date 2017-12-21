@@ -19,6 +19,7 @@ if [ $blacklist_check == $blacklist_indicator ]; then
     touch $whitelistpath
     grep -f $filepath -v -F -x $allpath > $whitelistpath
 fi
+mkdir results/
 full_report=$(pwd)"/results/report.xml"
 echo "full report:"$full_report
 echo '<?xml version="1.0" encoding="UTF-8"?>
