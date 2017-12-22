@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Hello, world from "$(pwd)
 echo " === Network testing. === "
-ping www.google.com
+ping -c 1 www.google.com
 mkdir -p tests/helloworld/
 touch tests/helloworld/test.sh
 cd /mnt/jenkins/
