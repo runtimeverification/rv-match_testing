@@ -19,7 +19,7 @@ if [[ $kccgithash != $kccgithash2 ]] ; then
 else
     echo "Git hash remained the same during copy."
 fi
-echo "Found by running \"git rev-parse HEAD\" in \"$kccsource\".
+echo "Found by running \"git rev-parse HEAD\" in \"$kccsource\"."
 cd $currentdir
 cd kcc_dependency_1/ ; ls ; cd ..
 cd kcc_dependency_2/ ; ls ; cd ..
