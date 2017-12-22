@@ -120,9 +120,9 @@ prep_build() {
         set -o pipefail
         unset configure_success
         unset make_success
-        starttime=`$date +%s.%N`
+        starttime=`date +%s.%N`
         cd $build_dir && _build
-        endtime=`$date +%s.%N`
+        endtime=`date +%s.%N`
         time=`echo "$endtime - $starttime" | bc -l`
         # generate build hash - should be the last function in the build process since it indicates completion
         cd $build_dir && echo $(sha1sum <<< $buildhashinfo) > build_function_hash
