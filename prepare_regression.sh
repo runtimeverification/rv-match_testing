@@ -95,7 +95,7 @@ prep_extract() {
     if [ ! -z ${make_success+x} ]; then
         echo $make_success > make_success.ini
         echo $report_string"      make:"$make_success
-        echo '<testcase classname="regression.'${test_name/./"_"}'" name="'$compiler' make">' >> $report_file
+        echo '<testcase classname="regression.'${test_name/./"_"}'" name="'$compiler' make" time="'$time'">' >> $report_file
         if [[ "$make_success" != 0 ]] ; then
             echo '<error message="Failed."> </error>' >> $report_file
         fi
@@ -120,8 +120,10 @@ prep_build() {
         set -o pipefail
         unset configure_success
         unset make_success
+        starttime=`$date +%s.%N`
         cd $build_dir && _build
-        
+        endtime=`$date +%s.%N`
+        time=`echo "$endtime - $starttime" | bc -l`
         # generate build hash - should be the last function in the build process since it indicates completion
         cd $build_dir && echo $(sha1sum <<< $buildhashinfo) > build_function_hash
         prep_extract
