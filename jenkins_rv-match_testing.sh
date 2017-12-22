@@ -7,4 +7,4 @@ echo "kcc -version"
 kcc -version
 echo "which kcc"
 which kcc
-bash run_regression_set.sh sets/quickset.ini
+bash lxccopy.sh
