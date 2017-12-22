@@ -12,10 +12,8 @@ _build() {
     cd dhcpcd/
     ./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
     set -o pipefail
-    make
+    make |& tee kcc_make_out.txt
     [ -f src/dhcpcd ] ; make_success="$?"
-    echo "internal report make: "$make_success
-    #make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
 _export() {
