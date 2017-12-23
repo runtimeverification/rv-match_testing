@@ -25,6 +25,7 @@ ls sets/
 
 #  2b Set kcc dependencies
 export PATH=$hostspace/kcc_dependency_1:$hostspace/kcc_dependency_2:$hostspace/kcc_dependency_3:$PATH
+echo "New guest path: "$PATH
 
 # Part 3 Install Libraries (apt install etc.)
 bash libs.sh
@@ -33,5 +34,7 @@ bash libs.sh
 bash run_set.sh sets/quickset.ini
 
 # Part 5 Copy test result xml back to host
+ls
+ls results/
 cat results/results.xml
 cp results/results.xml $hostspace/results/
