@@ -25,7 +25,7 @@ echo " == Should be the same "
 ls sets/
 
 #  2b Set kcc dependencies
-export PATH=$hostspace/kcc_dependency_1:$hostspace/kcc_dependency_2:$hostspace/kcc_dependency_3:$PATH
+export PATH=$hostspace/kcc_dependency_1:$hostspace/kcc_dependency_2:$hostspace/kcc_dependency_3/bin:$PATH
 echo "New guest path: "$PATH
 
 # Part 3 Install Libraries (apt install etc.)
