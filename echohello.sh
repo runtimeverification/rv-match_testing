@@ -1,5 +1,6 @@
 #!/bin/bash
 echo "Hello, world from "$(pwd)
+find . -type d
 
 # Part 1 Network Test
 echo " === Network testing. === "
