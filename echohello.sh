@@ -36,5 +36,6 @@ bash run_set.sh sets/quickset.ini
 # Part 5 Copy test result xml back to host
 ls
 ls results/
-cat results/results.xml
-cp results/results.xml $hostspace/results/
+cat results/report.xml
+echo "Copying results here: "
+cp results/report.xml $hostspace/results/
