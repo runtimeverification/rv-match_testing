@@ -15,9 +15,10 @@ echo $printheader"bogosort"
 which cpan
 cpan String::Escape
 cpan Getopt::Declare
+cpan UUID::Tiny
 
 echo $printheader"Reptile"
-sudo apt install linux-generic
+sudo apt -y install linux-generic
 
 echo $printheader"[For any remaining apt kinks...]"
 sudo apt update
