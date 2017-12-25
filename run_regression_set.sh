@@ -20,7 +20,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 <testsuite name="ReportScriptReport" package="ReportPackage">
 <properties/>' > $full_report
 while read line; do
-  if [ ! -e tests/$line/test.sh ] ; then
+  if [ -e /mnt/jenkins/tests/$line/test.sh ] ; then
+    # Branch is meant to run iff there is containerization.
     mkdir -p tests/$line/
     cp /mnt/jenkins/tests/$line/test.sh tests/$line/test.sh
   fi
