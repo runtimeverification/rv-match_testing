@@ -14,8 +14,10 @@ _build() {
     export CC=$compiler
     if [[ $compiler == "kcc" ]] ; then
         export CFLAGS="-std=gnu11 -frecover-all-errors"
+        echo 'if [[ $compiler == "kcc" ]] ; then'" showed true"
     else
         export CFLAGS="-std=gnu11"
+        echo 'if [[ $compiler == "kcc" ]] ; then'" showed false"
     fi
     cp defconfig .config
     sed -i '/CONFIG_LIBNL32=y/s/^#//g' .config
