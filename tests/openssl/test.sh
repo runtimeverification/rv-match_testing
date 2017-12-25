@@ -6,6 +6,7 @@ _download() {
     git clone https://github.com/openssl/openssl.git
     cd openssl/
     git checkout 7a908204ed3afe1379151c6d090148edb2fcc87e
+    echo "oissdnfvd"
 }
 
 _build() {

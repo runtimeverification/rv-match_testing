@@ -190,7 +190,7 @@ init_helper() {
     prep_prepare
     prep_download
     prep_build
-    prep_test
+    #prep_test
 }
 
 init() {
