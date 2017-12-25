@@ -36,21 +36,23 @@ echo $printheader"cineform"
 #sudo apt-get update
 #sudo apt -y upgrade
 #sudo apt -y install cmake
-cmake --version
-strtatdir=$(pwd)
-version=3.10
-build=0
-mkdir ./tempun1qu5ch4ract3r2
-cd tempun1qu5ch4ract3r2/
-wget https://cmake.org/files/v$version/cmake-$version.$build.tar.gz
-tar -xzvf cmake-$version.$build.tar.gz
-cd cmake-$version.$build/
-./bootstrap
-make -j4
-sudo make install
-cmake --version
-cd $strtatdir
-rm -r tempun1qu5ch4ract3r2/
+
+# Build takes forever, commented for now
+#cmake --version
+#strtatdir=$(pwd)
+#version=3.10
+#build=0
+#mkdir ./tempun1qu5ch4ract3r2
+#cd tempun1qu5ch4ract3r2/
+#wget https://cmake.org/files/v$version/cmake-$version.$build.tar.gz
+#tar -xzvf cmake-$version.$build.tar.gz
+#cd cmake-$version.$build/
+#./bootstrap
+#make -j4
+#sudo make install
+#cmake --version
+#cd $strtatdir
+#rm -r tempun1qu5ch4ract3r2/
 
 echo $printheader"curl"
 #See bind9: sudo apt -y install libssl-dev
