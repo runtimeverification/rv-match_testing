@@ -11,7 +11,7 @@ _download() {
 _build() {
     cd coreutils-8.28/
     autoreconf
-    ./configure CC=$compiler LD=$compiler --disable-threads |& tee kcc_configure_out.txt ; configure_success="$?"
+    sudo -u abc ./configure CC=$compiler LD=$compiler --disable-threads |& tee kcc_configure_out.txt ; configure_success="$?"
     make |& tee kcc_make_out.txt ; make_success="$?"
     $compiler -d -I. -I./lib -Ilib -I./lib -Isrc -I./src -g -MT lib/parse-datetime.o -MD -MP -MF lib/.deps/parse-datetime.Tpo -c -o lib/parse-datetime.o lib/parse-datetime.c |& tee kcc_out.txt
 }

@@ -12,7 +12,11 @@ _build() {
     set -o pipefail
     cd hostap/hostapd/
     export CC=$compiler
-    export CFLAGS="-std=gnu11 -frecover-all-errors"
+    if [[ $compiler == "kcc" ]] ; then
+        export CFLAGS="-std=gnu11 -frecover-all-errors"
+    else
+        export CFLAGS="-std=gnu11"
+    fi
     cp defconfig .config
     sed -i '/CONFIG_LIBNL32=y/s/^#//g' .config
     sed -i '157iOBJS_c += ../src/utils/wpabuf.o' Makefile ; configure_success="$?"
