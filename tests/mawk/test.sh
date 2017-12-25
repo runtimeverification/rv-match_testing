@@ -4,7 +4,7 @@ base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh
 
 _download() {
     #sudo apt build-dep mawk
-    echo "MAWK DEBUG"
+    echo "MAWK DEBUG _FORCE DL"
     apt-get source mawk
     rm mawk_1.3.3-17ubuntu2.diff.gz
     rm mawk_1.3.3-17ubuntu2.dsc

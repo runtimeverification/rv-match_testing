@@ -61,7 +61,7 @@ echo $printheader"dpkg"
 sudo apt -y install autotools-dev
 sudo apt -y install dh-autoreconf
 sudo apt -y purge gettext
-sudo apt -y install gettext
+sudo apt-get -y install gettext
 gettext --version
 
 echo $printheader"FFmpeg"
@@ -99,6 +99,7 @@ sudo apt -y install zlib1g-dev
 sudo apt -y install uuid-dev
 
 echo $printheader"php-src"
+ldd --version
 # See cFE, may fix this, too "configure: error: C compiler cannot create executables": sudo apt install libc6-dev
 
 echo $printheader"Reptile"
