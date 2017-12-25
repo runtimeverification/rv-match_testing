@@ -12,6 +12,7 @@ _build() {
     set -o pipefail
     cd hostap/hostapd/
     export CC=$compiler
+    echo "HOSTAPD DEBUG"
     if [[ $compiler == "kcc" ]] ; then
         export CFLAGS="-std=gnu11 -frecover-all-errors"
         echo 'if [[ $compiler == "kcc" ]] ; then'" showed true"

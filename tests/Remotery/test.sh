@@ -15,6 +15,9 @@ _build() {
     else
         $compiler lib/Remotery.c sample/sample.c -I lib -pthread -lm |& tee kcc_make_out.txt ; make_success="$?"
     fi
+    echo "REMOTERY DEBUG"
+    cat kcc_make_out.txt
+    echo "/REMOTERY DEBUG"
 }
 
 _export() {

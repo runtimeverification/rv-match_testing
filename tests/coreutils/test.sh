@@ -12,6 +12,8 @@ _build() {
     cd coreutils-8.28/
     autoreconf
     sudo -u abc ./configure CC=$compiler LD=$compiler --disable-threads FORCE_UNSAFE_CONFIGURE=1 |& tee kcc_configure_out.txt ; configure_success="$?"
+    echo "COREUTILS DEBUG"
+    cat config.log
     make |& tee kcc_make_out.txt ; make_success="$?"
     $compiler -d -I. -I./lib -Ilib -I./lib -Isrc -I./src -g -MT lib/parse-datetime.o -MD -MP -MF lib/.deps/parse-datetime.Tpo -c -o lib/parse-datetime.o lib/parse-datetime.c |& tee kcc_out.txt
 }

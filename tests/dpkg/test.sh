@@ -16,6 +16,8 @@ _build() {
     autoreconf
     automake --add-missing
     autoreconf -vif
+    echo "DPKG DEBUG"
+    sed '5133q;d' configure
     ./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
     make |& tee kcc_make_out.txt ; make_success="$?"
     cd dpkg-split

@@ -4,7 +4,8 @@ base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh
 
 _download() {
     #sudo apt build-dep mawk
-    apt source mawk
+    echo "MAWK DEBUG"
+    apt-get source mawk
     rm mawk_1.3.3-17ubuntu2.diff.gz
     rm mawk_1.3.3-17ubuntu2.dsc
     rm mawk_1.3.3.orig.tar.gz
