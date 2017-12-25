@@ -32,8 +32,8 @@ echo "New guest path: "$PATH
 bash libs.sh
 
 # Part 4 Run Main Script
-#bash run_set.sh sets/crashless.ini
-bash tests/getty/test.sh
+bash run_set.sh sets/crashless.ini
+#bash tests/getty/test.sh
 # Part 5 Copy test result xml back to host
 ls
 ls results/
