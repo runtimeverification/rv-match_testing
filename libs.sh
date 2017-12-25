@@ -60,6 +60,7 @@ echo $printheader"curl"
 echo $printheader"dpkg"
 sudo apt -y install autotools-dev
 sudo apt -y install dh-autoreconf
+sudo apt -y purge gettext
 sudo apt -y install gettext
 gettext --version
 
@@ -68,6 +69,9 @@ sudo apt -y install yasm
 
 echo $printheader"hostapd"
 sudo apt -y install pkg-config
+sudo apt -y install libnl-3-dev
+sudo apt -y install libnl-route-3-dev
+sudo apt -y install libnl-genl-3-dev
 
 echo $printheader"libpcap"
 sudo apt -y install bison
@@ -84,6 +88,11 @@ echo $printheader"mawk"
 sudo apt -y install apt
 apt --version
 sudo apt -y dist-upgrade
+echo "BEFORE CHANGES"
+cat /etc/apt/sources.list
+sed -i -e 's/#deb-src/deb-src/g' /etc/apt/sources.list
+echo "AFTER CHANGES"
+cat /etc/apt/sources.list
 
 echo $printheader"netdata"
 sudo apt -y install zlib1g-dev

@@ -17,10 +17,10 @@ _build() {
     autoreconf
    ./buildconf CC=$compiler LD=$compiler
     #sudo apt install libxml2-dev
-    ./configure CC=kcc LD=kcc |& tee kcc_configure_out.txt ; configure_success="$?"
-    echo "PHP-SRC DEBUG"
-    cat config.log
-    make |& tee kcc_make_out.txt ; make_success="$?"
+   ./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
+   echo "PHP-SRC DEBUG"
+   cat config.log
+   make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
 init

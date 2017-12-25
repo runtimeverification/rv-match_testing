@@ -11,7 +11,7 @@ _download() {
 _build() {
     cd coreutils-8.28/
     autoreconf
-    sudo -u abc ./configure CC=$compiler LD=$compiler --disable-threads FORCE_UNSAFE_CONFIGURE=1 |& tee kcc_configure_out.txt ; configure_success="$?"
+    sudo ./configure CC=$compiler LD=$compiler --disable-threads FORCE_UNSAFE_CONFIGURE=1 |& tee kcc_configure_out.txt ; configure_success="$?"
     echo "COREUTILS DEBUG"
     cat config.log
     make |& tee kcc_make_out.txt ; make_success="$?"
