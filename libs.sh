@@ -63,6 +63,7 @@ sudo apt -y install dh-autoreconf
 sudo apt -y purge gettext
 sudo apt-get -y install gettext
 gettext --version
+apt-cache policy gettext
 
 echo $printheader"FFmpeg"
 sudo apt -y install yasm
@@ -90,7 +91,8 @@ apt --version
 sudo apt -y dist-upgrade
 echo "BEFORE CHANGES"
 cat /etc/apt/sources.list
-sed -i -e 's/#deb-src/deb-src/g' /etc/apt/sources.list
+#sed -i -e 's/#deb-src/deb-src/g' /etc/apt/sources.list
+'deb-src http://us.archive.ubuntu.com/ubuntu/ xenial main restricted' >> /etc/apt/sources.list
 echo "AFTER CHANGES"
 cat /etc/apt/sources.list
 
@@ -100,6 +102,7 @@ sudo apt -y install uuid-dev
 
 echo $printheader"php-src"
 ldd --version
+apt-cache policy libc6
 # See cFE, may fix this, too "configure: error: C compiler cannot create executables": sudo apt install libc6-dev
 
 echo $printheader"Reptile"
