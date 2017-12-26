@@ -2,6 +2,9 @@ printheader="In libs.sh section: "
 sudo apt-get update
 sudo apt -y upgrade
 
+sed -i -e "s/trusty/xenial/g" /etc/apt/sources.list
+apt-get update && apt-get -y dist-upgrade
+
 echo $printheader"helloworld"
 sudo apt -y install bash
 sudo apt -y install gcc
@@ -92,7 +95,7 @@ sudo apt -y dist-upgrade
 echo "BEFORE CHANGES"
 cat /etc/apt/sources.list
 #sed -i -e 's/#deb-src/deb-src/g' /etc/apt/sources.list
-'deb-src http://us.archive.ubuntu.com/ubuntu/ xenial main restricted' >> /etc/apt/sources.list
+sudo echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ xenial main restricted' >> /etc/apt/sources.list
 echo "AFTER CHANGES"
 cat /etc/apt/sources.list
 
@@ -104,6 +107,7 @@ echo $printheader"php-src"
 ldd --version
 apt-cache policy libc6
 # See cFE, may fix this, too "configure: error: C compiler cannot create executables": sudo apt install libc6-dev
+sudp apt -y install libxml2-dev
 
 echo $printheader"Reptile"
 sudo apt -y install linux-generic
