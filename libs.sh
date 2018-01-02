@@ -2,8 +2,8 @@ printheader="In libs.sh section: "
 sudo apt-get update
 sudo apt -y upgrade
 
-sed -i -e "s/trusty/xenial/g" /etc/apt/sources.list
-apt-get update && apt-get -y dist-upgrade
+#sed -i -e "s/trusty/xenial/g" /etc/apt/sources.list
+#apt-get update && apt-get -y dist-upgrade
 #sudo dpkg --configure -a
 
 echo $printheader"kcc"
