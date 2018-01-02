@@ -11,19 +11,16 @@ _download() {
 }
 
 _build() {
-    export echo=echo
     cd php-src/
     autoscan
     aclocal
     autoheader
     autoreconf
     ./buildconf CC=$compiler LD=$compiler
-    sudo apt install libxml2-dev
-    export echo=echo
+    #sudo apt install libxml2-dev
     ./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
     echo "PHP-SRC DEBUG"
     cat config.log
-    export echo=echo
     make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
