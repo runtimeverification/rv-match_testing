@@ -1,6 +1,8 @@
 printheader="In libs.sh section: "
 sudo apt-get update
 sudo apt -y upgrade
+sudo apt-key update
+sudo apt-get update
 
 #sed -i -e "s/trusty/xenial/g" /etc/apt/sources.list
 #apt-get update && apt-get -y dist-upgrade
