@@ -81,6 +81,7 @@ prep_download() {
         cd $download_dir && echo $(sha1sum <<< $(type _download)) > download_function_hash
     else
         echo $report_string" not downloading. Copying from there."
+        find $download_dir -maxdepth 2
     fi
 }
 
