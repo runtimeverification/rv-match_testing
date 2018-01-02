@@ -107,7 +107,7 @@ echo $printheader"php-src"
 ldd --version
 apt-cache policy libc6
 # See cFE, may fix this, too "configure: error: C compiler cannot create executables": sudo apt install libc6-dev
-sudp apt -y install libxml2-dev
+sudo apt -y install libxml2-dev
 
 echo $printheader"Reptile"
 sudo apt -y install linux-generic
