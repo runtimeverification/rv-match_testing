@@ -6,6 +6,10 @@ sed -i -e "s/trusty/xenial/g" /etc/apt/sources.list
 apt-get update && apt-get -y dist-upgrade
 #sudo dpkg --configure -a
 
+echo $printheader"kcc"
+sudo apt -y install libmpfr-dev libmpfr-doc libmpfr4 libmpfr4-dbg
+sudo apt -y install libffi-dev
+
 echo $printheader"helloworld"
 sudo apt -y install bash
 sudo apt -y install gcc
