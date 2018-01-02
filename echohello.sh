@@ -28,6 +28,11 @@ ls sets/
 export PATH=$hostspace/kcc_dependency_1:$hostspace/kcc_dependency_2:$hostspace/kcc_dependency_3/bin:$PATH
 echo "New guest path: "$PATH
 
+echo "k-bin-to-text placement test"
+which k-bin-to-text
+ls -la $hostspace/kcc_dependency_3/bin
+echo "</placement test>"
+
 # Part 3 Install Libraries (apt install etc.)
 bash libs.sh
 

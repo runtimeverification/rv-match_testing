@@ -18,7 +18,7 @@ mkdir /root/sets/
 cp -r sets/* /root/sets/
 echo " === These are what is in the sets directory: "
 ls /root/sets/
-cp prepare.sh /root/prepare.sh
+cp prepare_regression.sh /root/prepare_regression.sh
 cp libs.sh /root/libs.sh
 cd /root/
 echo " == Should be the same "
