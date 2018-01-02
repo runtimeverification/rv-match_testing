@@ -16,6 +16,7 @@ uname -a
 cat /proc/self/cgroup
 cat /proc/1/mounts
 lxc-info --name ubuntu-14.04-java
+echo "Testing container info:"
 lxc-info --name rv-match_projtesting_container
 lxc-start -n rv-match_projtesting_container
 lxc-attach -n rv-match_projtesting_container -- su -l -c /mnt/jenkins/echohello.sh
