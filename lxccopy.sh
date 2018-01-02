@@ -6,7 +6,7 @@ function stopLxc {
 unset XDG_SESSION_ID
 unset XDG_RUNTIME_DIR
 unset XDG_SESSION_COOKIE
-lxc-delete -f rv-match_projtesting_container
+lxc-destroy -f rv-match_projtesting_container
 lxc-copy -s -e -B overlay -m bind=`pwd`:/mnt/jenkins:rw -n ubuntu-14.04-java -N rv-match_projtesting_container \
 && trap stopLxc EXIT
 lxc-info --name rv-match_projtesting_container
