@@ -28,6 +28,7 @@ sudo apt -y install libssl-dev
 
 echo $printheader"bogosort"
 which cpan
+cpan YAML
 cpan String::Escape
 cpan Getopt::Declare
 cpan UUID::Tiny
