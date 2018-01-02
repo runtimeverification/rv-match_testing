@@ -65,6 +65,10 @@ prep_prepare() {
 prep_download() {
     if [ ! -d $download_dir ] || [ -z "$(ls -A $download_dir)" ] || [ ! -e $download_dir/download_function_hash ] || [ "$(echo $(sha1sum <<< $(type _download)))" != "$(head -n 1 $download_dir/download_function_hash)" ] ; then
         echo $report_string" downloading. Either this is the initial download or the download hash has changed since the last download."
+        echo "first "[ ! -d $download_dir ]
+        echo "second "[ -z "$(ls -A $download_dir)" ]
+        echo "third "[ ! -e $download_dir/download_function_hash ]
+        echo "fourth "[ "$(echo $(sha1sum <<< $(type _download)))" != "$(head -n 1 $download_dir/download_function_hash)" ]
         rm -r $download_dir
         mkdir -p $download_dir
         cd $download_dir && _download
