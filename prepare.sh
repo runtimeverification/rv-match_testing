@@ -77,8 +77,7 @@ prep_download() {
         fi
         rm -r $download_dir
         mkdir -p $download_dir
-        cd $download_dir && _download
-        cd $download_dir && echo $(sha1sum <<< $(type _download)) > download_function_hash
+        cd $download_dir && _download && cd $download_dir && echo $(sha1sum <<< $(type _download)) > download_function_hash
     else
         echo $report_string" not downloading. Copying from there."
         find $download_dir -maxdepth 2

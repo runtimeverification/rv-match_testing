@@ -6,6 +6,7 @@ _download() {
     git clone https://github.com/f0rb1dd3n/Reptile.git
     cd Reptile/
     git checkout 1bd1872315440c2c08d33f4470989b575e8293a6
+    echo "Force Reptile re-download. Somehow it got a download hash without the download."
 }
 
 _build() {

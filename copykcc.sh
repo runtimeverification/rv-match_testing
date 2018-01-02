@@ -22,11 +22,12 @@ else
 fi
 echo "Found by running \"git rev-parse HEAD\" in \"$kccsource\"."
 echo k-bin-to-text
-if [[ $(echo k-bin-to-text)  == "Error: Could not find or load main class org.kframework.main.BinaryToText" ]] ; then
+if [[ $(k-bin-to-text)  == "Error: Could not find or load main class org.kframework.main.BinaryToText" ]] ; then
     echo "Starting kserver..."
     kserver &
 else
-    echo "Looks like kserver was already started."
+    echo "Looks like kserver was already started:"
+    echo $(k-bin-to-text)
 fi
 
 cd $currentdir

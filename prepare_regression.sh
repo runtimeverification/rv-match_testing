@@ -63,7 +63,7 @@ prep_prepare() {
 }
 
 prep_download() {
-    if [ ! -d $download_dir ] || [ -z "$(ls -A $download_dir)" ] || [ ! -e $download_dir/download_function_hash ] || [ "$(echo $(sha1sum <<< $(type _download)))" != "$(head -n 1 $download_dir/download_function_hash)" ] ; then
+    if [ ! -d $download_dir ] || [ -z "$(ls -A $download_dir)" ] || [ ! -e $download_dir/download_function_hash ] || [ "$(echo $(sha1sum <<< $(type _download)))" != "$(head -n 1 $download_dir/download_function_hash)" ] || [ "0" == "0" ] ; then
         echo $report_string" downloading. Either this is the initial download or the download hash has changed since the last download."
         if [ ! -d $download_dir ] ; then
             echo "first"
@@ -79,8 +79,7 @@ prep_download() {
         fi
         rm -r $download_dir
         mkdir -p $download_dir
-        cd $download_dir && _download
-        cd $download_dir && echo $(sha1sum <<< $(type _download)) > download_function_hash
+        cd $download_dir && _download && cd $download_dir && echo $(sha1sum <<< $(type _download)) > download_function_hash
     else
         echo $report_string" not downloading. Copying from there."
         find $download_dir -maxdepth 2
