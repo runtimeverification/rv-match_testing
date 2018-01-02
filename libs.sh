@@ -4,6 +4,7 @@ sudo apt -y upgrade
 
 sed -i -e "s/trusty/xenial/g" /etc/apt/sources.list
 apt-get update && apt-get -y dist-upgrade
+sudo dpkg --configure -a
 
 echo $printheader"helloworld"
 sudo apt -y install bash

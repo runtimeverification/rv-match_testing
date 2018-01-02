@@ -12,8 +12,15 @@ _download() {
 
 _build() {
     cd curve25519/
-    sed -i -e "s/CC=gcc/CC=$compiler/g" Rules.mk ; configure_success="$?"
-    make ; make_success="$?"
+    if [[ $compiler == "kcc" ]] ; then
+        cppcompiler="k++"
+        echo !!!!!!!!!!!!!!!!!!! should replace
+    else
+        cppcompiler="g++"
+        echo !!!!!!!!!!!!!!!!!!! should not replace
+    fi
+    sed -i -e "s/GPP   = g++/GPP   = $cppcompiler/g" Rules.mk && sed -i -e "s/CC    = gcc/CC    = $compiler/g" Rules.mk ; configure_success="$?"
+    make CC=$compiler LD=$compiler ; make_success="$?"
 }
 
 _extract() {

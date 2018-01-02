@@ -192,7 +192,7 @@ init_helper() {
 
 init() {
     compiler="gcc" && init_helper
-    #compiler="kcc" && init_helper
+    compiler="kcc" && init_helper
 }
 
 # The following functions are currently unused.
