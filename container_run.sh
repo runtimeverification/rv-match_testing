@@ -35,4 +35,4 @@ lxc-info --name $source_container
 echo "Testing container's info:"
 lxc-info --name $container
 lxc-start -n $container
-lxc-attach -n $container -- su -l -c /mnt/jenkins/$guest_script
+lxc-attach -n $container -- su -l -c "/mnt/jenkins/$guest_script"
