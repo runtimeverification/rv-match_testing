@@ -34,7 +34,7 @@ ls -la $hostspace/kcc_dependency_3/bin
 echo "</placement test>"
 
 # Part 3 Install Libraries (apt install etc.)
-bash libs.sh
+#bash libs.sh
 
 # Part 4 Run Main Script
 #bash run_set.sh sets/crashless.ini
