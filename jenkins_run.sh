@@ -1,4 +1,4 @@
-sh copykcc.sh
+bash copy_kcc_dependencies.sh
 #export PATH=$(pwd)/kcc_dependency_1:$(pwd)/kcc_dependency_2:$(pwd)/kcc_dependency_3:$PATH
 #echo "PATH variable contents: "$PATH
 #echo "kcc --version"
