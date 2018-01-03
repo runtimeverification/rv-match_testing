@@ -1,57 +1,69 @@
 #!/bin/bash
-
+currentscript="guest_run.sh"
+hostspace="/mnt/jenkins"
 # This is the initial script ran from inside the lxc container.
-# Called by: copy_lxc_.sh
+# Called by: container_run.sh
 # Calls    : libs.sh, run_set.sh
 
-echo "Hello, world from "$(pwd)
-#find . -type d
+mainscript="mainscript_testing"
+exportfile="report"
+echo "========= Beginning container guest scripts."
+while getopts ":rs" opt; do
+  case ${opt} in
+    r ) echo $currentscript" regression option selected."
+        mainscript="mainscript_regression"
+        exportfile="regression"
+      ;;
+    s ) echo $currentscript" status option selected."
+        mainscript="mainscript_status"
+        exportfile="status"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s]"
+         echo " -r regression"
+         echo " -s status"
+      ;;
+  esac
+done
 
-# Part 1 Network Test
-echo " === Network testing. === "
+# Part 1: Basic container debug
+echo "Entered container at: "$(pwd)
+echo "Network test:"
 ping -c 1 www.google.com
 
 # Part 2 Configure Local Jenkins Dependencies
 #  2a Copy project scripts
-hostspace="/mnt/jenkins"
-mkdir -p tests/helloworld/
-touch tests/helloworld/test.sh
 cd $hostspace
-cp tests/helloworld/test.sh /root/tests/helloworld/test.sh
-cp run_set.sh /root/run_set.sh
+cp *.sh /root/
 mkdir /root/sets/
 cp -r sets/* /root/sets/
-echo " === These are what is in the sets directory: "
-ls /root/sets/
-cp prepare.sh /root/prepare.sh
-cp libs.sh /root/libs.sh
-cp status.sh /root/status.sh
-cd /root/
-echo " == Should be the same "
-ls sets/
 
 #  2b Set kcc dependencies
 export PATH=$hostspace/kcc_dependency_1:$hostspace/kcc_dependency_2:$hostspace/kcc_dependency_3/bin:$PATH
-echo "New guest path: "$PATH
+echo "The modified container PATH variable: "$PATH
 
-echo "k-bin-to-text placement test"
+echo "k-bin-to-text debug"
 which k-bin-to-text
 ls -la $hostspace/kcc_dependency_3/bin
-echo "</placement test>"
+echo "</placement debug>"
 
-# Part 3 Install Libraries (apt install etc.)
-#bash libs.sh
+# Part 3 Run Main Script
+mainscript_testing() {
+    bash libs.sh
+    #bash tests/getty/test.sh
+    bash run_set.sh sets/crashless.ini
+}
+mainscript_regression() {
+    bash libs.sh
+    bash run_regression_set.sh sets/regression.ini
+}
+mainscript_status() {
+    bash status.sh sets/crashless.ini
+}
+cd /root/ && $mainscript
 
-# Part 4 Run Main Script
-#bash run_set.sh sets/crashless.ini
-#bash tests/getty/test.sh
-bash status.sh sets/crashless.ini
-
-# Part 5 Copy test result xml back to host
-ls
-ls results/
-#cat results/report.xml
-cat results/status.xml
-echo "Copying results here: "
-#cp results/report.xml $hostspace/results/
-cp results/status.xml $hostspace/results/
+# Part 4 Copy test result xml back to host
+echo "Container results are in "$exportfile".xml:"
+cat results/$exportfile.xml
+echo "Copying results to host now."
+cp results/$exportfile.xml $hostspace/results/
+echo "========== Finished container guest scripts."

@@ -2,14 +2,15 @@
 currentscript="container_run.sh"
 container="rv-match_projtesting_container"
 source_container="ubuntu-14.04-java"
-guest_script="echohello.sh"
+guest_script="guest_run.sh"
 while getopts ":r" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         container="rv-match_regression_container"
-        guest_script="echohello_regression.sh"
+        guest_script=$guest_script" -r"
       ;;
     \? ) echo "Usage: cmd [-r]"
+         echo " -r regression"
       ;;
   esac
 done
