@@ -20,6 +20,7 @@ echo " === These are what is in the sets directory: "
 ls /root/sets/
 cp prepare.sh /root/prepare.sh
 cp libs.sh /root/libs.sh
+cp status.sh /root/status.sh
 cd /root/
 echo " == Should be the same "
 ls sets/
