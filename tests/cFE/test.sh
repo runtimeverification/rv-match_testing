@@ -26,7 +26,14 @@ _build() {
     #make mission-all
     #CMAKE_C_LINK_EXECUTABLE
     #CMAKE_C_FLAGS
-    cmake -DCMAKE_C_COMPILER=$compiler -DENABLE_UNIT_TESTS=TRUE --build ../cfe ; configure_success="$?"
+    compilerwithkccflags=$compiler
+    if [[ $compiler = "kcc" ]] ; then
+        compilerwithkccflags="kcc -frecover-all-errors"
+        echo "Using -frecover-all-errors"
+    else
+        echo "Not using -frecover-all-errors"
+    fi
+    cmake -DCMAKE_C_COMPILER=$compilerwithkccflags -DENABLE_UNIT_TESTS=TRUE --build ../cfe ; configure_success="$?"
     make mission-all && cd native/osal/unit-tests/ && make ; make_success="$?"
 }
 

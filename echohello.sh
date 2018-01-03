@@ -37,12 +37,15 @@ echo "</placement test>"
 bash libs.sh
 
 # Part 4 Run Main Script
-bash run_set.sh sets/crashless.ini
+#bash run_set.sh sets/crashless.ini
 #bash tests/getty/test.sh
+bash status.sh
 
 # Part 5 Copy test result xml back to host
 ls
 ls results/
-cat results/report.xml
+#cat results/report.xml
+cat results/status.xml
 echo "Copying results here: "
-cp results/report.xml $hostspace/results/
+#cp results/report.xml $hostspace/results/
+cp results/status.xml $hostspace/results/
