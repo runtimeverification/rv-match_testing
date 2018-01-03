@@ -40,7 +40,7 @@ echo "</placement test>"
 # Part 4 Run Main Script
 #bash run_set.sh sets/crashless.ini
 #bash tests/getty/test.sh
-bash status.sh
+bash status.sh sets/crashless.ini
 
 # Part 5 Copy test result xml back to host
 ls
