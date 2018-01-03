@@ -1,12 +1,18 @@
+#!/bin/bash
+exportfile="report"
+currentscript="jenkins_run.sh"
+while getopts ":r" opt; do
+  case ${opt} in
+    r ) echo $currentscript" regression option selected."
+        exportfile="regression"
+      ;;
+    \? ) echo "Usage: cmd [-r]"
+         echo " -r regression"
+      ;;
+  esac
+done
+
 bash copy_kcc_dependencies.sh
-#export PATH=$(pwd)/kcc_dependency_1:$(pwd)/kcc_dependency_2:$(pwd)/kcc_dependency_3:$PATH
-#echo "PATH variable contents: "$PATH
-#echo "kcc --version"
-#kcc --version
-#echo "kcc -version"
-#kcc -version
-#echo "which kcc"
-#which kcc
-chmod 777 results/report.xml
+chmod 777 results/$exportfile.xml
 ls -la results/
-bash lxccopy.sh
+bash container_run.sh
