@@ -9,6 +9,7 @@ rm -r kcc_dependency_2/
 rm -r kcc_dependency_3/
 cp -r $kccsource/c-semantics/dist ./kcc_dependency_1/
 cp -r $kccsource/errors/rv-error/bin ./kcc_dependency_2/
+mkdir kcc_dependency_3/
 cp -r $kccsource/k/k-distribution/target/release/k/bin ./kcc_dependency_3/bin
 cp -r $kccsource/k/k-distribution/target/release/k/lib ./kcc_dependency_3/lib
 cd $kccsource
