@@ -107,7 +107,7 @@ prep_download() {
                 fi
             fi
         fi
-        rm -r $download_dir
+        rm $download_dir/download_function_hash ; rm -r $download_dir
         mkdir -p $download_dir
         cd $download_dir && _download && cd $download_dir && echo $(sha1sum <<< $(type _download)) > download_function_hash
     else
@@ -158,7 +158,7 @@ prep_build() {
 
         # build
         echo $report_string" building. Either build hash changed or this is the first time building."
-        safe_rm=$build_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
+        rm $build_dir/build_function_hash ; safe_rm=$build_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
         cp $download_dir/* $build_dir -r
         set -o pipefail
         unset configure_success
