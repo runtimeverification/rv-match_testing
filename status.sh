@@ -54,6 +54,15 @@ get_info() {
     else
         echo '<skipped/>' >> $export
         echo $infopath" does not exist. Reporting skip."
+        echo "DEBUG 2"
+        if [[ -d $infofolder ]] ; then
+            echo $infofolder" does exist. ls -la to it..."
+            ls -la $infofolder
+        else
+            echo $infofolder" also does not exist. pwd and ls -la..."
+            pwd
+            ls -la 
+        fi
     fi
     echo '</testcase>' >> $export
 }
@@ -65,7 +74,8 @@ printresultforcompiler() {
     echo $line" "$compiler$midstring$result
 }
 #output='\n'
-
+echo "DEBUG 1"
+ls -la
 while read line; do
     string_success="passed"
     string_failed="failed"
