@@ -1,4 +1,5 @@
-#/bin/bash
+#!/bin/bash
+currentscript="prepare.sh"
 # This script should be called using the following code at the beginning of each test:
 #   [ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/prepare.sh
 #   base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh
@@ -14,6 +15,36 @@
 # _test: Set test_success. Same rules as _build for "set -o pipefail".
 # _extract_test: Same rules as _extract except for tests instead of build.
 
+exportfile="report"
+while getopts ":rs" opt; do
+  case ${opt} in
+    r ) echo $currentscript" regression option selected."
+        exportfile="regression"
+      ;;
+    s ) echo $currentscript" status option selected."
+        echo "Not implemented."
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s]"
+         echo " -r regression"
+         echo " -s status"
+      ;;
+  esac
+done
+
+enforce_common_init_in_test_files() {
+    line1='#!/bin/bash'
+    line2='[ ! -f prepare.sh ] \&\& wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/prepare.sh'
+    line3='base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"'
+    echo "Variables:"
+    echo $line1
+    echo $line2
+    echo $line3
+    echo "End variables."
+    sed -i '1s|.*|'"$line1"'|' $test_file
+    sed -i '2s|.*|'"$line2"'|' $test_file
+    sed -i '3s|.*|'"$line3"'|' $test_file
+}
+
 err(){ >&2 echo "$@"; }
 
 compiler=${1:-kcc}
@@ -22,8 +53,9 @@ test_name=$(basename $(pwd))
 
 test_dir=$(pwd)
 test_file=$test_dir/test.sh
+enforce_common_init_in_test_files
 download_dir=$test_dir/download
-report_file=$test_dir/report.xml
+report_file=$test_dir/$exportfile.xml
 rm $report_file ; touch $report_file
 
 process_kcc_config() {
@@ -106,7 +138,7 @@ prep_extract() {
     if [ ! -z ${make_success+x} ]; then
         echo $make_success > make_success.ini
         echo $report_string"      make:"$make_success
-        echo '<testcase classname="report.'${test_name/./"_"}'" name="'$compiler' make success" time="'$time'">' >> $report_file
+        echo '<testcase classname="'$exportfile'.'${test_name/./"_"}'" name="'$compiler' make success" time="'$time'">' >> $report_file
 
         if [[ "$make_success" != 0 ]] ; then
             echo '<error message="Failed."> </error>' >> $report_file
@@ -161,7 +193,7 @@ prep_extract_test() {
     if [[ -v results[@] ]] ; then
         for t in "${!results[@]}"
         do
-            echo '<testcase classname="report.'${test_name/./"_"}'" name="'$compiler' '${names[$t]}'">' >> $report_file
+            echo '<testcase classname="'$exportfile'.'${test_name/./"_"}'" name="'$compiler' '${names[$t]}'">' >> $report_file
             if [[ ${results[$t]} == 0 ]] ; then
                 echo $report_string" test: "${names[$t]}" Passed!"
             else
@@ -203,7 +235,9 @@ init_helper() {
 }
 
 init() {
-    compiler="gcc" && init_helper
+    if [[ $exportfile != "regression" ]] ; then
+        compiler="gcc" && init_helper
+    fi
     compiler="kcc" && init_helper
 }
 

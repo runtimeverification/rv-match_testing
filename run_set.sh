@@ -1,4 +1,21 @@
 #!/bin/bash
+currentscript="run_set.sh"
+exportfile="report"
+while getopts ":rs" opt; do
+  case ${opt} in
+    r ) echo $currentscript" regression option selected."
+        exportfile="regression"
+      ;;
+    s ) echo $currentscript" status option selected."
+        echo "Nothing implemented."
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s]"
+         echo " -r regression"
+         echo " -s status"
+      ;;
+  esac
+done
+
 filepath=$1
 file=$(basename $filepath)
 setfolder=$(basename $(dirname $filepath))"/"
@@ -21,7 +38,7 @@ if [ $blacklist_check == $blacklist_indicator ]; then
 fi
 mkdir results/
 ls
-full_report=$(pwd)"/results/report.xml"
+full_report=$(pwd)"/results/$exportfile.xml"
 echo "full report:"$full_report
 echo '<?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
@@ -35,7 +52,7 @@ while read line; do
   fi
   echo ==== $line started at $(date)
   bash tests/$line/test.sh
-  cat "tests/$line/report.xml" >> $full_report
+  cat "tests/$line/$exportfile.xml" >> $full_report
   echo ==== $line finished at $(date)
 done < $whitelistpath
 echo '</testsuite>
