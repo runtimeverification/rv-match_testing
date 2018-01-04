@@ -22,14 +22,14 @@ else
     echo "Git hash remained the same during copy."
 fi
 echo "Found by running \"git rev-parse HEAD\" in \"$kccsource\"."
-echo k-bin-to-text
-if [[ $(k-bin-to-text)  == "Error: Could not find or load main class org.kframework.main.BinaryToText" ]] ; then
-    echo "Starting kserver..."
-    kserver &
-else
-    echo "Looks like kserver was already started:"
-    echo $(k-bin-to-text)
-fi
+#echo k-bin-to-text
+#if [[ $(k-bin-to-text)  == "Error: Could not find or load main class org.kframework.main.BinaryToText" ]] ; then
+#    echo "Starting kserver..."
+#    kserver &
+#else
+#    echo "Looks like kserver was already started:"
+#    echo $(k-bin-to-text)
+#fi
 
 cd $currentdir
 cd kcc_dependency_1/ ; ls ; cd ..

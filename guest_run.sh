@@ -44,6 +44,15 @@ echo "The modified container PATH variable: "$PATH
 echo "k-bin-to-text debug"
 which k-bin-to-text
 ls -la $hostspace/kcc_dependency_3/bin
+echo k-bin-to-text
+errorstring="Error: Could not find or load main class org.kframework.main.BinaryToText"
+echo "Checking to see if "$(k-bin-to-text)" is equal to "$errorstring
+if [[ $(k-bin-to-text) == $errorstring ]] ; then
+    echo "It was equal, so starting kserver with \"kserver &\"..."
+    kserver &
+else
+    echo "It was not equal so we assume kserver was already started."
+fi
 echo "</placement debug>"
 
 # Part 3 Run Main Script
