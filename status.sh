@@ -53,6 +53,7 @@ get_info() {
         fi
     else
         echo '<skipped/>' >> $export
+        echo $infopath" does not exist. Reporting skip."
     fi
     echo '</testcase>' >> $export
 }
