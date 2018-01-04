@@ -1,10 +1,12 @@
 #!/bin/bash
 currentscript="run_set.sh"
 exportfile="report"
+flagsfortests=""
 while getopts ":rs" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
+        flagsfortests=" -r"
       ;;
     s ) echo $currentscript" status option selected."
         echo "Nothing implemented."
@@ -51,7 +53,7 @@ while read line; do
     cp /mnt/jenkins/tests/$line/test.sh tests/$line/test.sh
   fi
   echo ==== $line started at $(date)
-  bash tests/$line/test.sh
+  bash "tests/$line/test.sh$flagsfortests"
   cat "tests/$line/$exportfile.xml" >> $full_report
   echo ==== $line finished at $(date)
 done < $whitelistpath
