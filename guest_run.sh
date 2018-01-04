@@ -59,7 +59,7 @@ echo "</placement debug>"
 mainscript_testing() {
     bash libs.sh
     #bash tests/getty/test.sh
-    bash run_set.sh sets/quickset.ini
+    bash run_set.sh sets/interesting.ini
 }
 mainscript_regression() {
     bash libs.sh
