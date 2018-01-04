@@ -1,13 +1,18 @@
 #!/bin/bash
 currentscript="container_run.sh"
-container="rv-match_projtesting_container"
+defaultcontainer="rv-match_projtesting_container"
+container=$defaultcontainer
 source_container="ubuntu-14.04-java"
 guest_script="guest_run.sh"
-while getopts ":r" opt; do
+while getopts ":rs" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         container="rv-match_regression_container"
         guest_script=$guest_script" -r"
+      ;;
+    s ) echo $currentscript" status option selected."
+        container=$defaultcontainer
+        guest_script=$guest_script" -s"
       ;;
     \? ) echo "Usage: cmd [-r]"
          echo " -r regression"

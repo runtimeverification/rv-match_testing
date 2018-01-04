@@ -2,11 +2,15 @@
 exportfile="report"
 currentscript="jenkins_run.sh"
 containerscriptflags=""
-while getopts ":r" opt; do
+while getopts ":rs" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
         containerscriptflags=" -r"
+      ;;
+    s ) echo $currentscript" status option selected."
+        exportfile="status"
+        containerscriptflags=" -s"
       ;;
     \? ) echo "Usage: cmd [-r]"
          echo " -r regression"
