@@ -62,8 +62,8 @@ get_info() {
             echo $infofolder" also does not exist. pwd and ls -la..."
             pwd
             ls -la
-            t="./tests/$line/$compiler/log/latest/" ; [[ -d $t ]] ; echo "$t: $?"
-            t="./tests/$line/$compiler/log/" ; [[ -d $t ]] ; echo "$t: $?"
+            t="./tests/$line/$compiler/build_log/latest/" ; [[ -d $t ]] ; echo "$t: $?"
+            t="./tests/$line/$compiler/build_log/" ; [[ -d $t ]] ; echo "$t: $?"
             t="./tests/$line/" ; [[ -d $t ]] ; echo "$t: $?"
             t="./tests/" ; [[ -d $t ]] ; echo "$t: $?"
         fi
@@ -72,7 +72,7 @@ get_info() {
 }
 
 printresultforcompiler() {
-    infofolder="tests/$line/$compiler/log/latest/"
+    infofolder="tests/$line/$compiler/build_log/latest/"
     get_info
     #output+=$line'\t'$compiler$midstring$result'\n'
     echo $line" "$compiler$midstring$result
