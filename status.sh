@@ -61,7 +61,11 @@ get_info() {
         else
             echo $infofolder" also does not exist. pwd and ls -la..."
             pwd
-            ls -la 
+            ls -la
+            t="./tests/$line/$compiler/log/latest/" ; [[ -d $t ]] ; echo "$t: $?"
+            t="./tests/$line/$compiler/log/" ; [[ -d $t ]] ; echo "$t: $?"
+            t="./tests/$line/" ; [[ -d $t ]] ; echo "$t: $?"
+            t="./tests/" ; [[ -d $t ]] ; echo "$t: $?"
         fi
     fi
     echo '</testcase>' >> $export
