@@ -33,12 +33,11 @@ _build() {
     else
         echo "Not using -frecover-all-errors"
     fi
-    cmake -DCMAKE_C_COMPILER=$compilerwithkccflags -DENABLE_UNIT_TESTS=TRUE --build ../cfe ; configure_success="$?"
-    make mission-all && cd native/osal/unit-tests/ && make ; make_success="$?"
-}
-
-_extract() {
-    return
+    cmake -DCMAKE_C_COMPILER=$compilerwithkccflags -DENABLE_UNIT_TESTS=TRUE --build ../cfe |& tee kcc_configure_out.txt ; configure_success="$?"
+    make mission-all |& tee kcc_make_out.txt ; make_success="$?"
+    if [ $make_success -eq 0 ] ; then
+        cd native/osal/unit-tests/ && make |& tee kcc_make_out.txt ; make_success="$?"
+    fi
 }
 
 _test() {

@@ -61,7 +61,17 @@ rm $report_file ; touch $report_file
 internal_process_kcc_config() {
     cd $build_log_dir
     if [ -e kcc_config ] ; then
-        k-bin-to-text kcc_config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt && cat kcc_config_k_summary.txt
+        k-bin-to-text kcc_config kcc_config.txt |& tee kcc_config_k_summary.txt
+        if [ $? -eq 0 ] ; then
+            grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt
+            if [ $? -eq 0 ] ; then
+                cat kcc_config_k_summary.txt
+            else
+                echo "term <k> was not found in the parsed kcc_config" >> kcc_config_k_summary.txt
+            fi
+        else
+            echo "k-bin-to-text command failed with above error" >> kcc_config_k_summary.txt
+        fi
     fi
 }
 

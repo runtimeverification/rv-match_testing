@@ -49,7 +49,7 @@ get_info() {
             else
                 print="$infofolder$out is supposed to be in the log folder."
             fi
-            echo $print
+            printf "$print" && echo ""
             printf "'<![CDATA['$print']]>'" >> $export
             echo '</error>' >> $export
             let "$compiler$infoname""f += 1"

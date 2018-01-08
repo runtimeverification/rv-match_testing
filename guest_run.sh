@@ -60,6 +60,7 @@ mainscript_testing() {
     bash libs.sh
     #bash tests/getty/test.sh
     bash run_set.sh sets/interesting.ini
+    cp results/status.xml status/results/
 }
 mainscript_regression() {
     bash libs.sh

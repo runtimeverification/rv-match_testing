@@ -14,10 +14,5 @@ _build() {
     |& tee kcc_make_out.txt ; make_success="$?"
 }
 
-_extract() {
-    cd Open-Chargeport/ && process_kcc_config
-    cd Open-Chargeport/ && cp kcc_* $log_dir
-}
-
 init
 

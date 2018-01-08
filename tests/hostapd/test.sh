@@ -29,8 +29,4 @@ _build() {
 #sed -i '/<pattern>/s/^#//g' file
 #https://askubuntu.com/questions/617973/fatal-error-netlink-genl-genl-h-no-such-file-or-directory
 
-_extract() {
-    return
-}
-
 init

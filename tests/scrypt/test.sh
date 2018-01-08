@@ -15,13 +15,8 @@ _build() {
     aclocal ; autoheader ; autoreconf
     automake --add-missing
     autoreconf
-    ./configure CC=$compiler LD=$compiler ; configure_success="$?"
-    make ; make_success="$?"
-}
-
-_extract() {
-    cd scrypt/ && process_kcc_config
-    cd scrypt/ && cp kcc_* $log_dir
+    ./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
+    make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
 _test() {

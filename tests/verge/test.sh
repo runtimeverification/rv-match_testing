@@ -14,11 +14,6 @@ _build() {
     make ; make_success="$?"
 }
 
-_extract() {
-    cd VERGE/ && process_kcc_config
-    cd VERGE/ && cp kcc_* $log_dir
-}
-
 _test() {
     return
 }

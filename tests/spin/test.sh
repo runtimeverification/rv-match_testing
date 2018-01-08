@@ -20,10 +20,6 @@ _build() {
     echo "sdufhod"
 }
 
-_extract() {
-    return
-}
-
 _test() {
     cd Spin/Examples/
     mkdir ignore/
