@@ -23,9 +23,10 @@ _build() {
     $compiler -d -O2 -Wall -Wextra -DLUA_COMPAT_5_2 -DLUA_USE_LINUX -c -o src/luac.o src/luac.c |& tee kcc_out.txt
 }
 
-_extract() {
-    cd lua-$VERSION/ && cp kcc_* $log_dir
-}
+#_extract() {
+#    cd lua-$VERSION/ && cp kcc_* $log_dir
+#    
+#}
 
 _test() {
     cd lua-$VERSION-tests/

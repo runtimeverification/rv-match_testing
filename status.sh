@@ -57,17 +57,10 @@ get_info() {
     else
         echo '<skipped/>' >> $export
         echo $infopath" does not exist. Reporting skip."
-        echo "DEBUG 2"
         if [[ -d $infofolder ]] ; then
-            echo $infofolder" does exist. ls -la to it..."
-            ls -la $infofolder
+            echo ""$infofolder" exists."
         else
-            echo $infofolder" also does not exist. pwd and ls -la..."
-            #t="./tests/$line/$compiler/build_log/latest/" ; [[ -d $t ]] ; echo "$t: $?"
-            #t="./tests/$line/$compiler/build_log/" ; [[ -d $t ]] ; echo "$t: $?"
-            #t="./tests/$line/$compiler/" ; [[ -d $t ]] ; echo "$t: $?"
-            #t="./tests/$line/" ; [[ -d $t ]] ; echo "$t: $?"
-            #t="./tests/" ; [[ -d $t ]] ; echo "$t: $?"
+            echo ""$infofolder" does not exist."
         fi
     fi
     echo '</testcase>' >> $export
@@ -76,13 +69,8 @@ get_info() {
 printresultforcompiler() {
     infofolder="tests/$line/$compiler/build_log/latest/"
     get_info
-    #output+=$line'\t'$compiler$midstring$result'\n'
     echo $line" "$compiler$midstring$result
-    
 }
-#output='\n'
-echo "DEBUG 1"
-ls -la
 while read line; do
     string_success="passed"
     string_failed="failed"
@@ -114,8 +102,6 @@ done < $whitelistpath
 
 echo "gcc success:"$gccmakes" fails:"$gccmakef" total:"$gccmake
 echo "kcc success:"$kccmakes" fails:"$kccmakef" total:"$kccmake
-#echo -e $output
-#printf $output'\n' | column -t
 
 echo '</testsuite>
 </testsuites>
