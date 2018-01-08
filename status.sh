@@ -36,9 +36,11 @@ get_info() {
     echo '<testcase classname="status.'${line/./"_"}'" name="'$compiler' '$infoname'">' >> $export
     infopath=$infofolder$infoname"_success.ini"
     result=$string_non_exist
+    let "$compiler$infoname += 1"
     if [[ -e $infopath ]] ; then
         if [[ "$(head -n 1 $infopath)" == 0 ]] ; then
             result=$string_success
+            let "$compiler$infoname""s += 1"
         else
             echo '<error message="Failed.">' >> $export
             result=$string_failed
@@ -50,6 +52,7 @@ get_info() {
             echo $print
             printf "'<![CDATA['$print']]>'" >> $export
             echo '</error>' >> $export
+            let "$compiler$infoname""f += 1"
         fi
     else
         echo '<skipped/>' >> $export
@@ -60,12 +63,11 @@ get_info() {
             ls -la $infofolder
         else
             echo $infofolder" also does not exist. pwd and ls -la..."
-            pwd
-            ls -la
-            t="./tests/$line/$compiler/build_log/latest/" ; [[ -d $t ]] ; echo "$t: $?"
-            t="./tests/$line/$compiler/build_log/" ; [[ -d $t ]] ; echo "$t: $?"
-            t="./tests/$line/" ; [[ -d $t ]] ; echo "$t: $?"
-            t="./tests/" ; [[ -d $t ]] ; echo "$t: $?"
+            #t="./tests/$line/$compiler/build_log/latest/" ; [[ -d $t ]] ; echo "$t: $?"
+            #t="./tests/$line/$compiler/build_log/" ; [[ -d $t ]] ; echo "$t: $?"
+            #t="./tests/$line/$compiler/" ; [[ -d $t ]] ; echo "$t: $?"
+            #t="./tests/$line/" ; [[ -d $t ]] ; echo "$t: $?"
+            #t="./tests/" ; [[ -d $t ]] ; echo "$t: $?"
         fi
     fi
     echo '</testcase>' >> $export
@@ -76,6 +78,7 @@ printresultforcompiler() {
     get_info
     #output+=$line'\t'$compiler$midstring$result'\n'
     echo $line" "$compiler$midstring$result
+    
 }
 #output='\n'
 echo "DEBUG 1"
@@ -109,6 +112,8 @@ while read line; do
 
 done < $whitelistpath
 
+echo "gcc success:"$gccmakes" fails:"$gccmakef" total:"$gccmake
+echo "kcc success:"$kccmakes" fails:"$kccmakef" total:"$kccmake
 #echo -e $output
 #printf $output'\n' | column -t
 

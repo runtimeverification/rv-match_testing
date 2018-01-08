@@ -141,7 +141,7 @@ prep_extract() {
         echo '<testcase classname="'$exportfile'.'${test_name/./"_"}'" name="'$compiler' make success" time="'$time'">' >> $report_file
 
         if [[ "$make_success" != 0 ]] ; then
-            echo '<error message="Failed."> </error>' >> $report_file
+            echo '<error message="Make failed."> </error>' >> $report_file
         fi
     fi
     cd $build_dir && _extract
