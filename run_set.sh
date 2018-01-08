@@ -60,3 +60,4 @@ done < $whitelistpath
 echo '</testsuite>
 </testsuites>
 ' >> $full_report
+bash status.sh $filepath

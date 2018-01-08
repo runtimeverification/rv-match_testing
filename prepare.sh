@@ -58,11 +58,17 @@ download_dir=$test_dir/download
 report_file=$test_dir/$exportfile.xml
 rm $report_file ; touch $report_file
 
+internal_process_kcc_config() {
+    cd $build_log_dir
+    if [ -e kcc_config ] ; then
+        k-bin-to-text kcc_config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt && cat kcc_config_k_summary.txt
+    fi
+}
+
 process_kcc_config() {
     if cp kcc_config $build_log_dir
     then
-        cd $build_log_dir
-        k-bin-to-text kcc_config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt && cat kcc_config_k_summary.txt
+        internal_process_kcc_config
     else
         echo "prepare.sh did not find a kcc_config in "$(dirname $(pwd))
     fi
@@ -139,12 +145,19 @@ prep_extract() {
         echo $make_success > make_success.ini
         echo $report_string"      make:"$make_success
         echo '<testcase classname="'$exportfile'.'${test_name/./"_"}'" name="'$compiler' make success" time="'$time'">' >> $report_file
-
         if [[ "$make_success" != 0 ]] ; then
             echo '<error message="Make failed."> </error>' >> $report_file
         fi
     fi
-    cd $build_dir && _extract
+    cd $build_dir
+    if [ -n "$(type -t _extract)" ] && [ "$(type -t _extract)" = function ]; then
+        echo "Using _extract() function in test.sh"
+        _extract
+    else
+        echo "Using the default extraction function in prepare.sh."
+        cp `find . -name "kcc_*"` $build_log_dir
+        internal_process_kcc_config 
+    fi
     if [ ! -z ${make_success+x} ]; then
         echo '</testcase>' >> $report_file
     fi

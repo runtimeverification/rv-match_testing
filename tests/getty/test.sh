@@ -1,6 +1,6 @@
 #!/bin/bash
-[ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/prepare.sh
-base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh
+[ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/prepare.sh
+base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
 _download() {
     git clone https://github.com/StarchLinux/getty.git
@@ -13,7 +13,7 @@ _build() {
     make CC=$compiler LD=$compiler |& tee kcc_make_out.txt ; make_success="$?"
 }
 
-_export() {
+_extract() {
     cd getty/ && process_kcc_config
     cd getty/ && cp kcc_* $log_dir
 }
