@@ -15,7 +15,7 @@ while getopts ":rsa" opt; do
         guest_script=$guest_script" -s"
       ;;
     a ) echo $currentscript" acceptance option selected."
-        container=$defaultcontainer
+        container="rv-match_acceptance_container"
         guest_script=$guest_script" -a"
       ;;
     \? ) echo "Usage: cmd [-r] [-s] [-a]"
