@@ -69,7 +69,7 @@ mainscript_testing() {
     #bash tests/getty/test.sh
     #bash run_set.sh sets/crashless.ini
     #bash run_set.sh sets/temporary.ini
-    bash run_set.sh sets/quickset.ini
+    bash run_set.sh sets/crashless.ini
     cp results/status.xml $hostspace/results/
 }
 mainscript_regression() {
