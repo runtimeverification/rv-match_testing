@@ -74,9 +74,9 @@ mainscript_testing() {
 }
 mainscript_regression() {
     bash libs.sh
-    bash run_regression_set.sh sets/regression.ini
+    #bash run_regression_set.sh sets/regression.ini
     # The following line should be the one used after issue 14 is fixed.
-    #bash run_set.sh$runsetparams sets/regression.ini
+    bash run_set.sh$runsetparams sets/regression.ini
 }
 mainscript_status() {
     bash status.sh sets/crashless.ini

@@ -7,7 +7,7 @@ guest_script="guest_run.sh"
 while getopts ":rsa" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
-        container="rv-match_regression_container"
+        #container="rv-match_regression_container"
         guest_script=$guest_script" -r"
       ;;
     s ) echo $currentscript" status option selected."
