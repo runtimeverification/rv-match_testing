@@ -76,6 +76,8 @@ internal_process_kcc_config() {
 }
 
 process_kcc_config() {
+    echo "Inside process_kcc_config function."
+    pwd
     if cp kcc_config $build_log_dir
     then
         internal_process_kcc_config
