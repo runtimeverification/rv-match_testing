@@ -24,7 +24,7 @@ while getopts ":rsa" opt; do
 done
 
 filepath=$1
-if [ ! -e filepath ] ; then
+if [ ! -e $filepath ] ; then
     filepath=$2
 fi
 file=$(basename $filepath)
