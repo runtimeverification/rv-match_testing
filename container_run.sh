@@ -14,8 +14,14 @@ while getopts ":rs" opt; do
         container=$defaultcontainer
         guest_script=$guest_script" -s"
       ;;
-    \? ) echo "Usage: cmd [-r]"
+    a ) echo $currentscript" acceptance option selected."
+        container=$defaultcontainer
+        guest_script=$guest_script" -a"
+      ;;
+    \? ) echo "Usage: cmd [-r] [-s] [-a]"
          echo " -r regression"
+         echo " -s status"
+         echo " -a acceptance"
       ;;
   esac
 done

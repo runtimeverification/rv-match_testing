@@ -2,7 +2,7 @@
 currentscript="run_set.sh"
 exportfile="report"
 flagsfortests=""
-while getopts ":rs" opt; do
+while getopts ":rsa" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
@@ -11,9 +11,14 @@ while getopts ":rs" opt; do
     s ) echo $currentscript" status option selected."
         echo "Nothing implemented."
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s]"
+    a ) echo $currentscript" acceptance option selected."
+        exportfile="acceptance"
+        flagsfortests=" -a"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a]"
          echo " -r regression"
          echo " -s status"
+         echo " -a acceptance"
       ;;
   esac
 done

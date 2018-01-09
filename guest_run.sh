@@ -18,9 +18,14 @@ while getopts ":rs" opt; do
         mainscript="mainscript_status"
         exportfile="status"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s]"
+    a ) echo $currentscript" acceptance option selected."
+        mainscript="mainscript_acceptance"
+        exportfile="acceptance"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a]"
          echo " -r regression"
          echo " -s status"
+         echo " -a acceptance"
       ;;
   esac
 done
@@ -70,6 +75,10 @@ mainscript_regression() {
 }
 mainscript_status() {
     bash status.sh sets/crashless.ini
+}
+mainscript_acceptance() {
+    bash libs.sh
+    bash run_set.sh sets/acceptance.ini
 }
 cd /root/ && $mainscript
 

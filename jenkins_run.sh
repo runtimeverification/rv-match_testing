@@ -2,7 +2,7 @@
 exportfile="report"
 currentscript="jenkins_run.sh"
 containerscriptflags=""
-while getopts ":rs" opt; do
+while getopts ":rsa" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
@@ -12,8 +12,14 @@ while getopts ":rs" opt; do
         exportfile="status"
         containerscriptflags=" -s"
       ;;
-    \? ) echo "Usage: cmd [-r]"
+    a ) echo $currentscript" status option selected."
+        exportfile="acceptance"
+        containerscriptflags=" -a"
+      ;;
+    \? ) echo "Usage: cmd [-r] [-s] [-a]"
          echo " -r regression"
+         echo " -s status"
+         echo " -a acceptance"
       ;;
   esac
 done

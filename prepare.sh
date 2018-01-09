@@ -16,7 +16,7 @@ currentscript="prepare.sh"
 # _extract_test: Same rules as _extract except for tests instead of build.
 
 exportfile="report"
-while getopts ":rs" opt; do
+while getopts ":rsa" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
@@ -24,9 +24,13 @@ while getopts ":rs" opt; do
     s ) echo $currentscript" status option selected."
         echo "Not implemented."
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s]"
+    a ) echo $currentscript" acceptance option selected."
+        exportfile="acceptance"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a]"
          echo " -r regression"
          echo " -s status"
+         echo " -a acceptance"
       ;;
   esac
 done
@@ -59,7 +63,7 @@ report_file=$test_dir/$exportfile.xml
 rm $report_file ; touch $report_file
 
 internal_process_kcc_config() {
-    cd $build_log_dir
+    location=$(pwd) ; cd $build_log_dir
     if [ -e kcc_config ] ; then
         k-bin-to-text kcc_config kcc_config.txt |& tee kcc_config_k_summary.txt
         if [ $? -eq 0 ] ; then
@@ -72,12 +76,12 @@ internal_process_kcc_config() {
         else
             echo "k-bin-to-text command failed with above error" >> kcc_config_k_summary.txt
         fi
+        echo "The processed kcc_config was dropped in $location" >> kcc_config_k_summary.txt
     fi
 }
 
 process_kcc_config() {
     echo "Inside process_kcc_config function."
-    pwd
     if cp kcc_config $build_log_dir
     then
         internal_process_kcc_config
@@ -165,22 +169,23 @@ prep_extract() {
     if [ -n "$(type -t _extract)" ] && [ "$(type -t _extract)" = function ]; then
         echo "Using _extract() function in test.sh"
         _extract
-        some_kcc_config=$(find $build_dir -name "kcc_config" | head -n 1)
         echo "DEBUG"
-        echo '[ $some_kcc_config != "" ] is '
-        if [ $some_kcc_config != "" ] ; then
+        seeif=$(find $build_dir -name "kcc_config" | head -n 1)
+        echo '[ ! -z "$seeif" ]'
+        if [ ! -z "$seeif" ] ; then
             echo "true"
         else
             echo "false"
         fi
-        echo '[ ! -e $test_log_dir/kcc_config_k_summary.txt ]'
-        if [ ! -e $test_log_dir/kcc_config_k_summary.txt ] ; then
+        echo '[ ! -e $build_log_dir/kcc_config_k_summary.txt ]'
+        if [ ! -e $build_log_dir/kcc_config_k_summary.txt ] ; then
             echo "true"
         else
             echo "false"
         fi
-        if [ $some_kcc_config != "" ] && [ ! -e $test_log_dir/kcc_config_k_summary.txt ] ; then
-            cd $(dirname $some_kcc_config) && process_kcc_config
+        if [ ! -z "$seeif" ] && [ ! -e $build_log_dir/kcc_config_k_summary.txt ] ; then
+            
+            cd $(dirname $seeif) && process_kcc_config
             cd $build_dir
             echo "DEBUG inside find remaining kcc_config"
         else
