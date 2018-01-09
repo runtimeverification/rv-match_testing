@@ -4,7 +4,7 @@ defaultcontainer="rv-match_projtesting_container"
 container=$defaultcontainer
 source_container="ubuntu-14.04-java"
 guest_script="guest_run.sh"
-while getopts ":rs" opt; do
+while getopts ":rsa" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         container="rv-match_regression_container"

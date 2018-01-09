@@ -8,7 +8,7 @@ hostspace="/mnt/jenkins"
 mainscript="mainscript_testing"
 exportfile="report"
 echo "========= Beginning container guest scripts."
-while getopts ":rs" opt; do
+while getopts ":rsa" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         mainscript="mainscript_regression"
