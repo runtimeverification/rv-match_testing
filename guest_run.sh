@@ -7,12 +7,14 @@ hostspace="/mnt/jenkins"
 
 mainscript="mainscript_testing"
 exportfile="report"
+runsetparams=""
 echo "========= Beginning container guest scripts."
 while getopts ":rsa" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         mainscript="mainscript_regression"
         exportfile="regression"
+        runsetparams=" -r"
       ;;
     s ) echo $currentscript" status option selected."
         mainscript="mainscript_status"
@@ -21,6 +23,7 @@ while getopts ":rsa" opt; do
     a ) echo $currentscript" acceptance option selected."
         mainscript="mainscript_acceptance"
         exportfile="acceptance"
+        runsetparams=" -a"
       ;;
     \? ) echo $currentscript" usage: cmd [-r] [-s] [-a]"
          echo " -r regression"
@@ -72,13 +75,15 @@ mainscript_testing() {
 mainscript_regression() {
     bash libs.sh
     bash run_regression_set.sh sets/regression.ini
+    # The following line should be the one used after issue 14 is fixed.
+    #bash run_set.sh$runsetparams sets/regression.ini
 }
 mainscript_status() {
     bash status.sh sets/crashless.ini
 }
 mainscript_acceptance() {
     bash libs.sh
-    bash run_set.sh sets/acceptance.ini
+    bash run_set.sh$runsetparams sets/acceptance.ini
 }
 cd /root/ && $mainscript
 
