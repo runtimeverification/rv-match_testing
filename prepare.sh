@@ -165,6 +165,27 @@ prep_extract() {
     if [ -n "$(type -t _extract)" ] && [ "$(type -t _extract)" = function ]; then
         echo "Using _extract() function in test.sh"
         _extract
+        some_kcc_config=$(find $build_dir -name "kcc_config" | head -n 1)
+        echo "DEBUG"
+        echo '[ $some_kcc_config != "" ] is '
+        if [ $some_kcc_config != "" ]
+            echo "true"
+        else
+            echo "false"
+        fi
+        echo '[ ! -e $test_log_dir/kcc_config_k_summary.txt ]'
+        if [ ! -e $test_log_dir/kcc_config_k_summary.txt ]
+            echo "true"
+        else
+            echo "false"
+        fi
+        if [ $some_kcc_config != "" ] && [ ! -e $test_log_dir/kcc_config_k_summary.txt ] ; then
+            cd $(dirname $some_kcc_config) && process_kcc_config
+            cd $build_dir
+            echo "DEBUG inside find remaining kcc_config"
+        else
+            echo "DEBUG outside find remaining kcc_config"
+        fi
     else
         echo "Using the default extraction function in prepare.sh."
         cp `find . -name "kcc_*"` $build_log_dir
