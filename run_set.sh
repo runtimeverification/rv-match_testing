@@ -65,4 +65,10 @@ done < $whitelistpath
 echo '</testsuite>
 </testsuites>
 ' >> $full_report
+
+
+echo "DEBUG run_set.sh"
+cat $full_report
+echo "END DEBUG run_set.sh"
+
 bash status.sh $filepath
