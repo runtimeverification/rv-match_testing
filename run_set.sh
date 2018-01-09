@@ -6,14 +6,14 @@ while getopts ":rsa" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
-        flagsfortests=" -r"
+        flagsfortests="-r"
       ;;
     s ) echo $currentscript" status option selected."
         echo "Nothing implemented."
       ;;
     a ) echo $currentscript" acceptance option selected."
         exportfile="acceptance"
-        flagsfortests=" -a"
+        flagsfortests="-a"
       ;;
     \? ) echo $currentscript" usage: cmd [-r] [-s] [-a]"
          echo " -r regression"
@@ -61,7 +61,7 @@ while read line; do
     cp /mnt/jenkins/tests/$line/test.sh tests/$line/test.sh
   fi
   echo ==== $line started at $(date)
-  bash "tests/$line/test.sh$flagsfortests"
+  bash "tests/$line/test.sh" "$flagsfortests"
   cat "tests/$line/$exportfile.xml" >> $full_report
   echo ==== $line finished at $(date)
 done < $whitelistpath

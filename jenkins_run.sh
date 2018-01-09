@@ -25,8 +25,7 @@ while getopts ":rsa" opt; do
 done
 
 bash copy_kcc_dependencies.sh
-if [ -e results/$exportfile.xml ] ; then
-    chmod 777 results/$exportfile.xml
-fi
+touch results/$exportfile.xml
+chmod 777 results/$exportfile.xml
 ls -la results/
 bash container_run.sh$containerscriptflags
