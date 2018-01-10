@@ -159,6 +159,7 @@ prep_extract() {
     fi
     if [ ! -z ${make_success+x} ]; then
         echo $make_success > make_success.ini
+        echo "$time" > make_time.ini
         echo $report_string"      make:"$make_success
         echo '<testcase classname="'$exportfile'.'${test_name/./"_"}'" name="'$compiler' make success" time="'$time'">' >> $report_file
         if [[ "$make_success" != 0 ]] ; then

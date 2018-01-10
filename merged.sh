@@ -68,7 +68,12 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 
 get_info() {
     infofolder="tests/$line/$compiler/build_log/latest/"
-    echo '<testcase classname="'$exportfile'.'${line/./"_"}'" name="'$compiler' '$infoname'">' >> $exportpath
+    timestring=''
+    timepath=$infofolder$infoname"_time.ini"
+    if [[ -e $timepath ]] ; then
+        time="$(head -n 1 $timepath)" && timestring=' time="'$time'"'
+    fi
+    echo '<testcase classname="'$exportfile'.'${line/./"_"}'" name="'$compiler' '$infoname'"'$timestring'>' >> $exportpath
     infopath=$infofolder$infoname"_success.ini"
     result=$string_non_exist
     let "$compiler$infoname += 1"
@@ -82,7 +87,7 @@ get_info() {
             if [[ -e $infofolder$out ]]; then
                 print="$(tail -20 $infofolder$out)"
             else
-                print="$infofolder$out is supposed to be in the log folder."
+                print="$infofolder$out is supposed to be in the log folder. This error implies there is a bug in the rv-match_testing project. Report it to the appropriate party."
             fi
             printf "$print" && echo ""
             printf "'<![CDATA['$print']]>'" >> $exportpath
@@ -110,14 +115,14 @@ read_log_files() {
     infoname="configure"
     midstring=" configuration "
     out=$cout
-    compiler="gcc" ; getinfo
-    compiler="kcc" ; getinfo
+    compiler="gcc" ; get_info
+    compiler="kcc" ; get_info
     
     infoname="make"
     midstring="        making "
     out=$mout
-    compiler="gcc" ; getinfo
-    compiler="kcc" ; getinfo
+    compiler="gcc" ; get_info
+    compiler="kcc" ; get_info
 
     string_success="not generated"
     string_failed="produced"
