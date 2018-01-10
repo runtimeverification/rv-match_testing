@@ -19,6 +19,7 @@ while getopts ":rsa" opt; do
     s ) echo $currentscript" status option selected."
         mainscript="mainscript_status"
         exportfile="status"
+        runsetparams=" -s"
       ;;
     a ) echo $currentscript" acceptance option selected."
         mainscript="mainscript_acceptance"
@@ -69,21 +70,21 @@ mainscript_testing() {
     #bash tests/getty/test.sh
     #bash run_set.sh sets/crashless.ini
     #bash run_set.sh sets/temporary.ini
-    bash run_set.sh sets/crashless.ini
-    cp results/status.xml $hostspace/results/
+    bash merge.sh sets/crashless.ini
+    #cp results/status.xml $hostspace/results/
 }
 mainscript_regression() {
     bash libs.sh
     #bash run_regression_set.sh sets/regression.ini
     # The following line should be the one used after issue 14 is fixed.
-    bash run_set.sh$runsetparams sets/regression.ini
+    bash merge.sh$runsetparams sets/regression.ini
 }
 mainscript_status() {
-    bash status.sh sets/crashless.ini
+    bash status.sh$runsetparams sets/crashless.ini
 }
 mainscript_acceptance() {
     bash libs.sh
-    bash run_set.sh$runsetparams sets/acceptance.ini
+    bash merge.sh$runsetparams sets/acceptance.ini
 }
 cd /root/ && $mainscript
 

@@ -158,12 +158,12 @@ prep_extract() {
         echo $report_string" configure:"$configure_success
     fi
     if [ ! -z ${make_success+x} ]; then
-        echo $make_success > make_success.ini
+        echo "$make_success" > make_success.ini
         echo "$time" > make_time.ini
         echo $report_string"      make:"$make_success
-        echo '<testcase classname="'$exportfile'.'${test_name/./"_"}'" name="'$compiler' make success" time="'$time'">' >> $report_file
+        #echo '<testcase classname="'$exportfile'.'${test_name/./"_"}'" name="'$compiler' make success" time="'$time'">' >> $report_file
         if [[ "$make_success" != 0 ]] ; then
-            echo '<error message="Make failed."> </error>' >> $report_file
+            : #echo '<error message="Make failed."> </error>' >> $report_file
         fi
     fi
     cd $build_dir
@@ -198,7 +198,7 @@ prep_extract() {
         internal_process_kcc_config 
     fi
     if [ ! -z ${make_success+x} ]; then
-        echo '</testcase>' >> $report_file
+        : #echo '</testcase>' >> $report_file
     fi
 }
 
@@ -287,7 +287,7 @@ init_helper() {
 }
 
 init() {
-    if [[ $exportfile != "regression" ]] ; then
+    if [ ! "$exportfile" == "regression" ] ; then
         compiler="gcc" && init_helper
     fi
     compiler="kcc" && init_helper

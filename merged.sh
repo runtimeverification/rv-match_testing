@@ -73,7 +73,7 @@ get_info() {
     if [[ -e $timepath ]] ; then
         time="$(head -n 1 $timepath)" && timestring=' time="'$time'"'
     fi
-    echo '<testcase classname="'$exportfile'.'${line/./"_"}'" name="'$compiler' '$infoname'"'$timestring'>' >> $exportpath
+    echo '<testcase classname="'$exportfile'.'${line/./"_"}'" name="'$compiler' '$infoname' success"'$timestring'>' >> $exportpath
     infopath=$infofolder$infoname"_success.ini"
     result=$string_non_exist
     let "$compiler$infoname += 1"
@@ -111,32 +111,36 @@ read_log_files() {
     string_success="passed"
     string_failed="failed"
     string_non_exist="test did not occur"
-    
-    infoname="configure"
-    midstring=" configuration "
-    out=$cout
-    compiler="gcc" ; get_info
-    compiler="kcc" ; get_info
-    
+    if [ ! $exportfile == "regression" ] && [ ! $exportfile == "acceptance" ] ; then
+        infoname="configure"
+        midstring=" configuration "
+        out=$cout
+        compiler="gcc" ; get_info
+        compiler="kcc" ; get_info
+    fi
     infoname="make"
     midstring="        making "
     out=$mout
-    compiler="gcc" ; get_info
+    if [ ! $exportfile == "regression" ] ; then
+        compiler="gcc" ; get_info
+    fi
     compiler="kcc" ; get_info
-
-    string_success="not generated"
-    string_failed="produced"
-    string_non_exist="not checked for"
     
-    infoname="no_kcc_config_generated"
-    midstring="'s  kcc_config was "
-    out=$kout
-    compiler="gcc" ; get_info
-    compiler="kcc" ; get_info
+    if [ ! $exportfile == "regression" ] && [ ! $exportfile == "acceptance" ] ; then
+        string_success="not generated"
+        string_failed="produced"
+        string_non_exist="not checked for"
+    
+        infoname="no_kcc_config_generated"
+        midstring="'s  kcc_config was "
+        out=$kout
+        compiler="gcc" ; get_info
+        compiler="kcc" ; get_info
+    fi
 }
 
 while read line; do
-    if [ ! $flagsfortests == "STOP" ] ; then
+    if [ ! "$flagsfortests" == "STOP" ] ; then
         # Update container, if we're in one, with the jenkins test.sh
         if [ -e /mnt/jenkins/tests/$line/test.sh ] ; then
             # Branch is meant to run iff there is containerization.
@@ -150,7 +154,7 @@ while read line; do
         echo "Status option was selected, so the tests are not being run right now."
     fi
     read_log_files
-    cat "tests/$line/report.xml" >> $exportpath
+    cat "tests/$line/$exportfile.xml" >> $exportpath
 done < $whitelistpath
 
 # The above segment should:
