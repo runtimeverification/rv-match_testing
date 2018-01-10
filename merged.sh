@@ -1,0 +1,161 @@
+#!/bin/bash
+
+# Handle options
+currentscript="<insert scriptname here>"
+exportfile="report"
+flagsfortests=""
+while getopts ":rsa" opt; do
+  case ${opt} in
+    r ) echo $currentscript" regression option selected."
+        exportfile="regression"
+        flagsfortests="-r"
+      ;;
+    s ) echo $currentscript" status option selected."
+        echo "Nothing implemented."
+      ;;
+    a ) echo $currentscript" acceptance option selected."
+        exportfile="acceptance"
+        flagsfortests="-a"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a]"
+         echo " -r regression"
+         echo " -s status"
+         echo " -a acceptance"
+      ;;
+  esac
+done
+
+# Handle .ini argument
+filepath=$1
+if [ ! -e $filepath ] ; then
+    filepath=$2
+fi
+
+# Prepare state for proper loop
+file=$(basename $filepath)
+setfolder=$(basename $(dirname $filepath))"/"
+echo "filepath is: "$filepath
+echo "file is    : "$file
+echo "folder is  : "$setfolder
+allpath=$setfolder"_generated_all.ini"
+blacklist_indicator="BLACKLIST"
+filename=${file%.*}
+blacklist_check=$(head -n 1 $filepath)
+echo "First line of file: "$blacklist_check
+echo "Name without extension: "$filename
+echo "=============="
+whitelistpath=$filepath
+if [ $blacklist_check == $blacklist_indicator ]; then
+    bash generate_run_set.sh
+    whitelistpath=$setfolder"_generated_"$filename"_whitelist.ini"
+    touch $whitelistpath
+    grep -f $filepath -v -F -x $allpath > $whitelistpath
+fi
+
+# Text input prep
+cout="kcc_configure_out.txt"
+mout="kcc_make_out.txt"
+kout="kcc_config_k_summary.txt"
+
+# XML Prep
+suiteprefix="Report"
+exportpath=$(pwd)"/results/$exportfile.xml"
+mkdir $(dirname $exportpath) ; touch $exportpath
+echo '<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+<testsuite name="'$suiteprefix'ScriptReport" package="'$suiteprefix'Package">
+<properties/>' > $exportpath
+
+get_info() {
+    infofolder="tests/$line/$compiler/build_log/latest/"
+    echo '<testcase classname="'$exportfile'.'${line/./"_"}'" name="'$compiler' '$infoname'">' >> $exportpath
+    infopath=$infofolder$infoname"_success.ini"
+    result=$string_non_exist
+    let "$compiler$infoname += 1"
+    if [[ -e $infopath ]] ; then
+        if [[ "$(head -n 1 $infopath)" == 0 ]] ; then
+            result=$string_success
+            let "$compiler$infoname""s += 1"
+        else
+            echo '<error message="Failed.">' >> $exportpath
+            result=$string_failed
+            if [[ -e $infofolder$out ]]; then
+                print="$(tail -20 $infofolder$out)"
+            else
+                print="$infofolder$out is supposed to be in the log folder."
+            fi
+            printf "$print" && echo ""
+            printf "'<![CDATA['$print']]>'" >> $exportpath
+            echo '</error>' >> $exportpath
+            let "$compiler$infoname""f += 1"
+        fi
+    else
+        echo '<skipped/>' >> $exportpath
+        echo $infopath" does not exist. Reporting skip."
+        if [[ -d $infofolder ]] ; then
+            echo ""$infofolder" exists."
+        else
+            echo ""$infofolder" does not exist."
+        fi
+    fi
+    echo '</testcase>' >> $exportpath
+    echo $line" "$compiler$midstring$result
+}
+
+read_log_files() {
+    string_success="passed"
+    string_failed="failed"
+    string_non_exist="test did not occur"
+    
+    infoname="configure"
+    midstring=" configuration "
+    out=$cout
+    compiler="gcc" ; getinfo
+    compiler="kcc" ; getinfo
+    
+    infoname="make"
+    midstring="        making "
+    out=$mout
+    compiler="gcc" ; getinfo
+    compiler="kcc" ; getinfo
+
+    string_success="not generated"
+    string_failed="produced"
+    string_non_exist="not checked for"
+    
+    infoname="no_kcc_config_generated"
+    midstring="'s  kcc_config was "
+    out=$kout
+    compiler="gcc" ; get_info
+    compiler="kcc" ; get_info
+}
+
+while read line; do
+    # Update container, if we're in one, with the jenkins test.sh
+    if [ -e /mnt/jenkins/tests/$line/test.sh ] ; then
+        # Branch is meant to run iff there is containerization.
+        mkdir -p tests/$line/
+        cp /mnt/jenkins/tests/$line/test.sh tests/$line/test.sh
+    fi
+    echo ==== $line started at $(date)
+    bash "tests/$line/test.sh" "$flagsfortests"
+    read_log_files
+    cat "tests/$line/report.xml" >> $exportpath
+    echo ==== $line finished at $(date)
+done < $whitelistpath
+
+# The above segment should:
+# 1. Run script iff options command.
+# 2. Obtain detailed build info for xml via this script.
+# 3. Obtain unit test info for xml via prepare script.
+
+# Display sums
+echo "gcc success:"$gccmakes" fails:"$gccmakef" total:"$gccmake
+echo "kcc success:"$kccmakes" fails:"$kccmakef" total:"$kccmake
+
+# Conclude XML
+echo '</testsuite>
+</testsuites>
+' >> $exportpath
+echo "$exportpath file, produced by this script, is as follows:"
+cat $exportpath

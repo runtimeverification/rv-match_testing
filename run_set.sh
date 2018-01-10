@@ -70,8 +70,7 @@ echo '</testsuite>
 ' >> $full_report
 
 
-echo "DEBUG run_set.sh"
+echo "$full_report file, produced by run_set.sh, is as follows:"
 cat $full_report
-echo "END DEBUG run_set.sh"
 
 bash status.sh $filepath

@@ -106,3 +106,6 @@ echo "kcc success:"$kccmakes" fails:"$kccmakef" total:"$kccmake
 echo '</testsuite>
 </testsuites>
 ' >> $export
+
+echo "$export file, produced by status.sh, is as follows:"
+cat $export
