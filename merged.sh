@@ -11,7 +11,7 @@ while getopts ":rsa" opt; do
         flagsfortests="-r"
       ;;
     s ) echo $currentscript" status option selected."
-        echo "Nothing implemented."
+        flagsfortests="STOP"
       ;;
     a ) echo $currentscript" acceptance option selected."
         exportfile="acceptance"
@@ -136,17 +136,21 @@ read_log_files() {
 }
 
 while read line; do
-    # Update container, if we're in one, with the jenkins test.sh
-    if [ -e /mnt/jenkins/tests/$line/test.sh ] ; then
-        # Branch is meant to run iff there is containerization.
-        mkdir -p tests/$line/
-        cp /mnt/jenkins/tests/$line/test.sh tests/$line/test.sh
+    if [ ! $flagsfortests == "STOP" ] ; then
+        # Update container, if we're in one, with the jenkins test.sh
+        if [ -e /mnt/jenkins/tests/$line/test.sh ] ; then
+            # Branch is meant to run iff there is containerization.
+            mkdir -p tests/$line/
+            cp /mnt/jenkins/tests/$line/test.sh tests/$line/test.sh
+        fi
+        echo ==== $line started at $(date)
+        bash "tests/$line/test.sh" "$flagsfortests"
+        echo ==== $line finished at $(date)
+    else
+        echo "Status option was selected, so the tests are not being run right now."
     fi
-    echo ==== $line started at $(date)
-    bash "tests/$line/test.sh" "$flagsfortests"
     read_log_files
     cat "tests/$line/report.xml" >> $exportpath
-    echo ==== $line finished at $(date)
 done < $whitelistpath
 
 # The above segment should:
