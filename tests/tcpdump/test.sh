@@ -21,7 +21,4 @@ _test() {
     bash TESTrun.sh && test_success="$?"
 }
 
-_extract_test() {
-    return
-}
 init

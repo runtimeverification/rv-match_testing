@@ -18,8 +18,4 @@ _test() {
     return
 }
 
-_extract_test() {
-    echo "Inside the _extract_test() function now."
-}
-
 init

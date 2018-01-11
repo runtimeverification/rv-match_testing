@@ -65,8 +65,4 @@ _test() {
     names[15]="timer" ; ./native/osal/tests/timer-test ; results[15]="$?"
 }
 
-_extract_test() {
-    return
-}
-
 init

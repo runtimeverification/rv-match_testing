@@ -25,9 +25,4 @@ _test() {
     ./tests/test_scrypt ; results[0]="$?"
 }
 
-_extract_test() {
-    cd scrypt/
-    echo "Inside the _extract_test() function now."
-}
-
 init
