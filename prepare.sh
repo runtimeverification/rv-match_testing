@@ -145,7 +145,8 @@ increment_process_kcc_config() {
 # ---
     location=$(pwd) ; cd $build_log_dir
     if [ -e $copiedfile ] ; then
-        echo "Found kcc_config number $increment:" >> kcc_config_k_summary.txt
+        echo $'\n'"Found a kcc_config number $increment:" >> kcc_config_k_summary.txt
+        echo "Location: $location" >> kcc_config_k_summary.txt
         k-bin-to-text $copiedfile $copiedfile.txt &>> kcc_config_k_summary.txt
         if [ $? -eq 0 ] ; then
             grep -o "<k>.\{500\}" $copiedfile.txt &>> kcc_config_k_summary.txt
@@ -157,7 +158,6 @@ increment_process_kcc_config() {
         else
             echo "k-bin-to-text command failed with above error" >> kcc_config_k_summary.txt
         fi
-        echo "The above processed kcc_config was dropped in $location" >> kcc_config_k_summary.txt
     else
         echo "Error: report this bug in rv-match_testing. This message should have been unreachable."
         echo "===== is there a $copiedfile here?"
