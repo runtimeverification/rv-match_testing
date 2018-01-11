@@ -17,9 +17,4 @@ _build() {
     fi
 }
 
-_export() {
-    cd Remotery/ && process_kcc_config
-    cd Remotery/ && cp kcc_* $log_dir
-}
-
 init

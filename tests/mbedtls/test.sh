@@ -14,9 +14,4 @@ _build() {
     #$compiler -d -Wall -W -Wdeclaration-after-statement -I../include -D_FILE_OFFSET_BITS=64 -O2 -c net_sockets.c |& tee kcc_out.txt
 }
 
-extract() {
-    cd mbedtls-2.4.0/library/ && process_kcc_config
-    cd mbedtls-2.4.0/ && cp kcc_* $log_dir
-}
-
 init

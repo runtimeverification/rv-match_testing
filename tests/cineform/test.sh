@@ -14,9 +14,4 @@ _build() {
     make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
-_export() {
-    cd cineform-sdk/ && process_kcc_config
-    cd cineform-sdk/ && cp kcc_* $log_dir
-}
-
 init

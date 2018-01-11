@@ -16,9 +16,4 @@ _build() {
     [ -f src/dhcpcd ] ; make_success="$?"
 }
 
-_export() {
-    cd dhcpcd/dhcpcd && process_kcc_config
-    cd dhcpcd/dhcpcd && cp kcc_* $log_dir
-}
-
 init

@@ -17,9 +17,4 @@ _build() {
     CC=$flaggedcompiler LD=$flaggedcompiler make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
-_export() {
-    cd Reptile/ && process_kcc_config
-    cd Reptile/ && cp kcc_* $log_dir
-}
-
 init

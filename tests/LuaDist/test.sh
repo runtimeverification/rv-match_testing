@@ -14,9 +14,4 @@ _build() {
     CC=$compiler LD=$compiler make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
-_export() {
-    cd lua/ && process_kcc_config
-    cd lua/ && cp kcc_* $log_dir
-}
-
 init
