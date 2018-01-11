@@ -14,9 +14,4 @@ _build() {
     make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
-_export() {
-    cd vim/ && process_kcc_config
-    cd vim/ && cp kcc_* $log_dir
-}
-
 init
