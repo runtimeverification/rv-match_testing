@@ -1,14 +1,18 @@
 #!/bin/bash
 currentscript="container_run.sh"
+source_container_trusty="ubuntu-14.04-java"
+source_container_zesty="ubuntu-zesty-source-rv-match_testing"
 defaultcontainer="rv-match_projtesting_container"
+defaultcontainer="rv-match_testing_container"
 container=$defaultcontainer
-source_container="ubuntu-14.04-java"
+source_container=$source_container_zesty
 guest_script="guest_run.sh"
 while getopts ":rsa" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         container="rv-match_regression_container"
         guest_script=$guest_script" -r"
+        source_container=$source_container_trusty
       ;;
     s ) echo $currentscript" status option selected."
         container=$defaultcontainer
@@ -17,6 +21,7 @@ while getopts ":rsa" opt; do
     a ) echo $currentscript" acceptance option selected."
         container="rv-match_acceptance_container"
         guest_script=$guest_script" -a"
+        source_container=$source_container_trusty
       ;;
     \? ) echo "Usage: cmd [-r] [-s] [-a]"
          echo " -r regression"
@@ -28,25 +33,29 @@ done
 
 set -e
 function stopLxc {
-  lxc-stop -n $container
+    lxc-stop -n $container
+}
+function stopSourceLxc {
+    lxc-stop -n $source_container
 }
 unset XDG_SESSION_ID
 unset XDG_RUNTIME_DIR
 unset XDG_SESSION_COOKIE
 #lxc-destroy -f --name $container
-lxc-copy -s -e -B overlay -m bind=`pwd`:/mnt/jenkins:rw -n $source_container -N $container \
-&& trap stopLxc EXIT
-lxc-info --name $container
-lxc-start --version
-lxc-checkconfig
-uname -a
-cat /proc/self/cgroup
-cat /proc/1/mounts
-lxc-info --name $source_container ; echo "container1: $?"
-echo "Testing container's info:"
-lxc-info --name $container ; echo "container2: $?"
-lxc-info --name crazymadeupname ; echo "container3: $?"
-echo "Testing.."
-sleep 1
+lxc-create -t download -n $source_container -- -d ubuntu -r zesty -a amd64
+lxc-start -n $source_container
+lxc-attach -n $source_container -- su -l -c "/mnt/jenkins/source_guest_setup.sh"
+&& trap stopSourceLxc EXIT
+
+#lxc-copy -s -e -B overlay -m bind=`pwd`:/mnt/jenkins:rw -n $source_container -N $container \
+#&& trap stopLxc EXIT
+#lxc-info --name $container
+#lxc-start --version
+#lxc-checkconfig
+#uname -a
+#cat /proc/self/cgroup
+#cat /proc/1/mounts
+#lxc-info --name $source_container
+#lxc-info --name $container
 #lxc-start -n $container
 #lxc-attach -n $container -- su -l -c "/mnt/jenkins/$guest_script"
