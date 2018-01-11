@@ -24,8 +24,8 @@ while getopts ":rsa" opt; do
   esac
 done
 
-bash copy_kcc_dependencies.sh
-touch results/$exportfile.xml
-chmod 777 results/$exportfile.xml
-ls -la results/
+#bash copy_kcc_dependencies.sh
+#touch results/$exportfile.xml
+#chmod 777 results/$exportfile.xml
+#ls -la results/
 bash container_run.sh$containerscriptflags
