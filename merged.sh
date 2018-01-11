@@ -66,6 +66,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 <testsuite name="'$suiteprefix'ScriptReport" package="'$suiteprefix'Package">
 <properties/>' > $exportpath
 
+# Function for extracting testcase output from log files, generalized to project and compiler
 get_info() {
     infofolder="tests/$line/$compiler/build_log/latest/"
     timestring=''
@@ -89,8 +90,13 @@ get_info() {
             else
                 print="$infofolder$out is supposed to be in the log folder. This error implies there is a bug in the rv-match_testing project. Report it to the appropriate party."
             fi
+            if [ "$out" == "$mout" ] ; then
+                if [[ -e $infofolder$kout ]] ; then
+                    print=$print$(cat $infofolder$kout)
+                fi
+            fi
             printf "$print" && echo ""
-            printf "'<![CDATA['$print']]>'" >> $exportpath
+            printf "<![CDATA["${print}"]]>" >> $exportpath
             echo '</error>' >> $exportpath
             let "$compiler$infoname""f += 1"
         fi

@@ -62,34 +62,34 @@ download_dir=$test_dir/download
 report_file=$test_dir/$exportfile.xml
 rm $report_file ; touch $report_file
 
-internal_process_kcc_config() {
-    location=$(pwd) ; cd $build_log_dir
-    if [ -e kcc_config ] ; then
-        k-bin-to-text kcc_config kcc_config.txt |& tee kcc_config_k_summary.txt
-        if [ $? -eq 0 ] ; then
-            grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt
-            if [ $? -eq 0 ] ; then
-                cat kcc_config_k_summary.txt
-            else
-                echo "term <k> was not found in the parsed kcc_config" >> kcc_config_k_summary.txt
-            fi
-        else
-            echo "k-bin-to-text command failed with above error" >> kcc_config_k_summary.txt
-        fi
-        echo "The processed kcc_config was dropped in $location" >> kcc_config_k_summary.txt
-    fi
-}
+#internal_process_kcc_config() {
+#    location=$(pwd) ; cd $build_log_dir
+#    if [ -e kcc_config ] ; then
+#        k-bin-to-text kcc_config kcc_config.txt |& tee kcc_config_k_summary.txt
+#        if [ $? -eq 0 ] ; then
+#            grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt
+#            if [ $? -eq 0 ] ; then
+#                cat kcc_config_k_summary.txt
+#            else
+#                echo "term <k> was not found in the parsed kcc_config" >> kcc_config_k_summary.txt
+#            fi
+#        else
+#            echo "k-bin-to-text command failed with above error" >> kcc_config_k_summary.txt
+#        fi
+#        echo "The processed kcc_config was dropped in $location" >> kcc_config_k_summary.txt
+#    fi
+#}
 
-process_kcc_config() {
-    echo "Inside process_kcc_config function."
-    if cp kcc_config $build_log_dir
-    then
-        internal_process_kcc_config
-    else
-        echo "prepare.sh did not find a kcc_config in "$(dirname $(pwd))
-    fi
-    cd $build_dir
-}
+#process_kcc_config() {
+#    echo "Inside process_kcc_config function."
+#    if cp kcc_config $build_log_dir
+#    then
+#        internal_process_kcc_config
+#    else
+#        echo "prepare.sh did not find a kcc_config in "$(dirname $(pwd))
+#    fi
+#    cd $build_dir
+#}
 
 process_config() {
     if cp config $test_log_dir
@@ -138,6 +138,35 @@ prep_download() {
     fi
 }
 
+increment_process_kcc_config() {
+    copiedfile=kcc_config_no_$increment
+    cp kcc_config $build_log_dir/$copiedfile
+    let "increment += 1"
+# ---
+    location=$(pwd) ; cd $build_log_dir
+    if [ -e $copiedfile ] ; then
+        echo "Found kcc_config number $increment:" >> kcc_config_k_summary.txt
+        k-bin-to-text $copiedfile $copiedfile.txt |& tee -a kcc_config_k_summary.txt
+        if [ $? -eq 0 ] ; then
+            grep -o "<k>.\{500\}" $copiedfile.txt &>> kcc_config_k_summary.txt
+            if [ $? -eq 0 ] ; then
+                cat kcc_config_k_summary.txt
+            else
+                echo "term <k> was not found in the parsed kcc_config" >> kcc_config_k_summary.txt
+            fi
+        else
+            echo "k-bin-to-text command failed with above error" >> kcc_config_k_summary.txt
+        fi
+        echo "The above processed kcc_config was dropped in $location" >> kcc_config_k_summary.txt
+    else
+        echo "Error: report this bug in rv-match_testing. This message should have been unreachable."
+        echo "===== is there a $copiedfile here?"
+        pwd
+        ls
+        echo "====="
+    fi
+}
+
 prep_extract() {
     
     build_log_dir=$test_dir/$compiler/build_log/$(date +%Y-%m-%d.%H:%M:%S)
@@ -147,7 +176,7 @@ prep_extract() {
     log_dir=$build_log_dir #until scripts are updated
 
     # extract build results
-    [ ""$(find $build_dir -name "kcc_config") == "" ] ; no_kcc_config_generated_success="$?"
+    [ "$(find $build_dir -name "kcc_config")" == "" ] ; no_kcc_config_generated_success="$?"
     cd $build_log_dir
     echo $no_kcc_config_generated_success > no_kcc_config_generated_success.ini
     echo $report_string" kcc_config prevention status reported:"$no_kcc_config_generated_success
@@ -194,6 +223,12 @@ prep_extract() {
         fi
     else
         echo "Using the default extraction function in prepare.sh."
+        increment=0
+        find . -type f -iname "kcc_config" -print0 | while IFS= read -r -d $'\0' line; do
+            return_dir=$(pwd)
+            cd $(dirname $line) && increment_process_kcc_config
+            cd $return_dir
+        done
         cp `find . -name "kcc_*"` $build_log_dir
         internal_process_kcc_config 
     fi
