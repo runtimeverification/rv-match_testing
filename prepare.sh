@@ -192,7 +192,6 @@ prep_extract() {
         echo $report_string"      make:"$make_success
     fi
     cd $build_dir
-    echo "Using the default extraction function in prepare.sh."
     
     # Extract log details step 1: process the kcc_config files.
     increment=0
@@ -202,7 +201,7 @@ prep_extract() {
         cd $return_dir
     done
     if [ -e "${build_log_dir}/kcc_config_k_summary.txt" ] ; then
-        echo echo $report_string"kcc_config:"
+        echo $report_string"kcc_config:"
         cat "${build_log_dir}/kcc_config_k_summary.txt"
     fi
     # Extract log details step 2: copy the other log files.
