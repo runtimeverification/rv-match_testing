@@ -175,7 +175,7 @@ prep_extract() {
     echo $build_log_dir    
     log_dir=$build_log_dir #until scripts are updated
 
-    # extract build results
+    # Extract build results
     [ "$(find $build_dir -name "kcc_config")" == "" ] ; no_kcc_config_generated_success="$?"
     cd $build_log_dir
     echo $no_kcc_config_generated_success > no_kcc_config_generated_success.ini
@@ -190,51 +190,21 @@ prep_extract() {
         echo "$make_success" > make_success.ini
         echo "$time" > make_time.ini
         echo $report_string"      make:"$make_success
-        #echo '<testcase classname="'$exportfile'.'${test_name/./"_"}'" name="'$compiler' make success" time="'$time'">' >> $report_file
-        if [[ "$make_success" != 0 ]] ; then
-            : #echo '<error message="Make failed."> </error>' >> $report_file
-        fi
     fi
     cd $build_dir
-    if [ -n "$(type -t _extract)" ] && [ "$(type -t _extract)" = function ]; then
-        echo "Using _extract() function in test.sh"
-        _extract
-        echo "DEBUG"
-        seeif=$(find $build_dir -name "kcc_config" | head -n 1)
-        echo '[ ! -z "$seeif" ]'
-        if [ ! -z "$seeif" ] ; then
-            echo "true"
-        else
-            echo "false"
-        fi
-        echo '[ ! -e $build_log_dir/kcc_config_k_summary.txt ]'
-        if [ ! -e $build_log_dir/kcc_config_k_summary.txt ] ; then
-            echo "true"
-        else
-            echo "false"
-        fi
-        if [ ! -z "$seeif" ] && [ ! -e $build_log_dir/kcc_config_k_summary.txt ] ; then
-            
-            cd $(dirname $seeif) && process_kcc_config
-            cd $build_dir
-            echo "DEBUG inside find remaining kcc_config"
-        else
-            echo "DEBUG outside find remaining kcc_config"
-        fi
-    else
-        echo "Using the default extraction function in prepare.sh."
-        increment=0
-        find . -type f -iname "kcc_config" -print0 | while IFS= read -r -d $'\0' line; do
-            return_dir=$(pwd)
-            cd $(dirname $line) && increment_process_kcc_config
-            cd $return_dir
-        done
-        cp `find . -name "kcc_*"` $build_log_dir
-        internal_process_kcc_config 
-    fi
-    if [ ! -z ${make_success+x} ]; then
-        : #echo '</testcase>' >> $report_file
-    fi
+    echo "Using the default extraction function in prepare.sh."
+    
+    # Extract log details step 1: process the kcc_config files.
+    increment=0
+    find . -type f -iname "kcc_config" -print0 | while IFS= read -r -d $'\0' line; do
+        return_dir=$(pwd)
+        cd $(dirname $line) && increment_process_kcc_config
+        cd $return_dir
+    done
+    
+    # Extract log details step 2: copy the other log files.
+    find . -name "kcc_*" -not -name "kcc_config" -exec cp {} $build_log_dir \;
+    
 }
 
 prep_build() {
