@@ -68,9 +68,9 @@ echo "</placement debug>"
 mainscript_testing() {
     bash libs.sh
     #bash tests/getty/test.sh
-    #bash run_set.sh sets/crashless.ini
-    #bash run_set.sh sets/temporary.ini
-    bash merged.sh sets/crashless.ini
+    #bash merged.sh sets/crashless.ini
+    #bash merged.sh sets/temporary.ini
+    bash merged.sh sets/interesting.ini
     #cp results/status.xml $hostspace/results/
 }
 mainscript_regression() {
