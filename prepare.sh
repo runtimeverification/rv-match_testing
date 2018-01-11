@@ -146,11 +146,11 @@ increment_process_kcc_config() {
     location=$(pwd) ; cd $build_log_dir
     if [ -e $copiedfile ] ; then
         echo "Found kcc_config number $increment:" >> kcc_config_k_summary.txt
-        k-bin-to-text $copiedfile $copiedfile.txt |& tee -a kcc_config_k_summary.txt
+        k-bin-to-text $copiedfile $copiedfile.txt &>> kcc_config_k_summary.txt
         if [ $? -eq 0 ] ; then
             grep -o "<k>.\{500\}" $copiedfile.txt &>> kcc_config_k_summary.txt
             if [ $? -eq 0 ] ; then
-                cat kcc_config_k_summary.txt
+                echo "Cats are cool. 8)" ; cat kcc_config_k_summary.txt
             else
                 echo "term <k> was not found in the parsed kcc_config" >> kcc_config_k_summary.txt
             fi
@@ -201,7 +201,10 @@ prep_extract() {
         cd $(dirname $line) && increment_process_kcc_config
         cd $return_dir
     done
-    
+    if [ -e "${build_log_dir}/kcc_config_k_summary.txt" ] ; then
+        echo echo $report_string"kcc_config:"
+        cat "${build_log_dir}/kcc_config_k_summary.txt"
+    fi
     # Extract log details step 2: copy the other log files.
     find . -name "kcc_*" -not -name "kcc_config" -exec cp {} $build_log_dir \;
     

@@ -92,7 +92,8 @@ get_info() {
             fi
             if [ "$out" == "$mout" ] ; then
                 if [[ -e $infofolder$kout ]] ; then
-                    print=$print$(cat $infofolder$kout)
+                    
+                    print=$print$'\nprocessed kcc_configs:\n'$(cat $infofolder$kout)
                 fi
             fi
             echo '=====-- printf of $print'
