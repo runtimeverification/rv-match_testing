@@ -46,5 +46,7 @@ lxc-info --name $source_container ; echo "container1: $?"
 echo "Testing container's info:"
 lxc-info --name $container ; echo "container2: $?"
 lxc-info --name crazymadeupname ; echo "container3: $?"
+echo "Testing.."
+sleep 1
 #lxc-start -n $container
 #lxc-attach -n $container -- su -l -c "/mnt/jenkins/$guest_script"
