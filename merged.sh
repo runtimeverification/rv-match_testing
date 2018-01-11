@@ -98,7 +98,7 @@ get_info() {
             echo '=====-- printf of $print'
             printf "$print" && echo ""
             echo '=====-- end printf'
-            printf "<![CDATA[${print}]]>" >> $exportpath
+            printf "<![CDATA[%s]]>" "$print" >> $exportpath
             echo '</error>' >> $exportpath
             let "$compiler$infoname""f += 1"
         fi
