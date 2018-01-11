@@ -18,9 +18,4 @@ _build() {
     $compiler -d -I. -I./lib -Ilib -I./lib -Isrc -I./src -g -MT lib/parse-datetime.o -MD -MP -MF lib/.deps/parse-datetime.Tpo -c -o lib/parse-datetime.o lib/parse-datetime.c |& tee kcc_out.txt
 }
 
-_extract() {
-    cd coreutils-8.28/ && process_kcc_config
-    cd coreutils-8.28/ && cp kcc_* $log_dir
-}
-
 init

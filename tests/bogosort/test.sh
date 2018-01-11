@@ -81,18 +81,9 @@ _build() {
     $compiler bogosort.c ; make_success="$?"
 }
 
-_extract() {
-    cd bogosort/ && process_kcc_config
-    cd bogosort/ && cp kcc_* $log_dir
-}
-
 _test() {
     cd bogosort/
     echo "9 43 27 12 5 9 3" | ./a.out ; test_success="$?"
-}
-
-_extract_test() {
-    return
 }
 
 init

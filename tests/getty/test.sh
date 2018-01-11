@@ -13,9 +13,4 @@ _build() {
     make CC=$compiler LD=$compiler |& tee kcc_make_out.txt ; make_success="$?"
 }
 
-_extract() {
-    cd getty/ && process_kcc_config
-    cd getty/ && cp kcc_* $log_dir
-}
-
 init

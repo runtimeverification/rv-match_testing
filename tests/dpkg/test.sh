@@ -24,10 +24,4 @@ _build() {
     $compiler -d -g -O1 -o dpkg-split info.o join.o main.o queue.o split.o ../lib/dpkg/.libs/libdpkg.a |& tee kcc_out.txt
 }
 
-_extract() {
-    cd dpkg/dpkg-split && process_kcc_config
-    #cd dpkg/ && process_kcc_config
-    cd dpkg/ && cp kcc_* $log_dir
-}
-
 init

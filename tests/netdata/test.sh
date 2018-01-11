@@ -23,13 +23,4 @@ _build() {
     kcc -d -g -pthread -o apps.plugin apps_plugin.o avl.o clocks.o common.o log.o procfile.o web_buffer.o -lm |& tee kcc_out.txt
 }
 
-_extract() {
-    echo "Inside netdata's extract function. Pre"
-    pwd
-    cd netdata/src/ && process_kcc_config
-    echo "Inside netdata's extract function. Post"
-    pwd
-    cd netdata/ && cp kcc_* $log_dir
-}
-
 init

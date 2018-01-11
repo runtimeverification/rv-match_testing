@@ -16,9 +16,4 @@ _build() {
     $compiler -d -I. -I./ -D_ISOC99_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_POSIX_C_SOURCE=200112 -D_XOPEN_SOURCE=600 -D__BSD_VISIBLE -D__XSI_VISIBLE -I./compat/atomics/gcc -DHAVE_AV_CONFIG_H -std=c11 -fomit-frame-pointer -pthread -g -Wdeclaration-after-statement -Wall -Wdisabled-optimization -Wpointer-arith -Wredundant-decls -Wwrite-strings -Wtype-limits -Wundef -Wmissing-prototypes -Wno-pointer-to-int-cast -Wstrict-prototypes -Wempty-body -Wno-parentheses -Wno-switch -Wno-format-zero-length -Wno-pointer-sign -Wno-unused-const-variable -Wno-bool-operation -c -o libavdevice/alldevices.o libavdevice/alldevices.c |& tee kcc_out.txt
 }
 
-_extract() {
-    cd FFmpeg/ && process_kcc_config
-    cd FFmpeg/ && cp kcc_* $log_dir
-}
-
 init

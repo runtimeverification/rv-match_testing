@@ -15,9 +15,4 @@ _build() {
     make ; make_success="$?"
 }
 
-_extract() {
-    cd hashcat/ && process_kcc_config
-    cd hashcat/ && cp kcc_* $log_dir
-}
-
 init

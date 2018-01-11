@@ -24,11 +24,6 @@ _build() {
     $compiler helloworld.c ; make_success="$?"
 }
 
-_extract() {
-    cd helloworld/ && process_kcc_config
-    cd helloworld/ && cp kcc_* $log_dir
-}
-
 _test() {
     return
     cd helloworld/
@@ -38,11 +33,6 @@ _test() {
     diuhcvebvlwefofdiwn "sdinf" ; results[1]="$?"
     names[2]="should work"
     echo "hi there!" ; results[2]="$?"
-}
-
-_extract_test() {
-    cd helloworld/
-    echo "Inside the _extract_test() function now."
 }
 
 init
