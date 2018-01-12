@@ -40,12 +40,16 @@ unset XDG_RUNTIME_DIR
 unset XDG_SESSION_COOKIE
 echo "source_container: $source_container"
 echo "container: $container"
-#lxc-destroy -f --name $container
+if [[ `lxc-ls` == *"rv-match_testing_container"* ]] ; then
+    lxc-destroy -f -n rv-match_testing_container
+fi
 #lxc-destroy -f --name "ubuntu-zesty-source-rv-match_testing"
 #lxc-create -t download -n $source_container -- -d ubuntu -r zesty -a amd64
 lxc-copy -s -e -B overlay -m bind=`pwd`:/mnt/jenkins:rw -n $source_container -N $container \
 && trap stopLxc EXIT
 lxc-checkconfig
+uname -a
+lxc-info --name $container
 lxc-start -n $container
 lxc-attach -n $container -- su -l -c "/mnt/jenkins/source_guest_setup.sh"
 
