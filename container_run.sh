@@ -38,7 +38,7 @@ function stopLxc {
 unset XDG_SESSION_ID
 unset XDG_RUNTIME_DIR
 unset XDG_SESSION_COOKIE
-#lxc-destroy -f --name $container
+lxc-destroy -f --name $container
 #lxc-destroy -f --name "ubuntu-zesty-source-rv-match_testing"
 #lxc-create -t download -n $source_container -- -d ubuntu -r zesty -a amd64
 echo "source_container: $source_container"
