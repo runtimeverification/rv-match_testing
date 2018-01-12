@@ -45,6 +45,7 @@ echo "source_container: $source_container"
 echo "container: $container"
 lxc-copy -s -e -B overlay -m bind=`pwd`:/mnt/jenkins:rw -n $source_container -N $container \
 && trap stopLxc EXIT
+lxc-checkconfig
 lxc-start -n $container
 lxc-attach -n $container -- su -l -c "/mnt/jenkins/source_guest_setup.sh"
 
