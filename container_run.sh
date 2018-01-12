@@ -1,11 +1,12 @@
 #!/bin/bash
 currentscript="container_run.sh"
 source_container_trusty="ubuntu-14.04-java"
+source_container_temp_trusty="ubuntu-temp-trusty-source-rv-match_testing"
 source_container_zesty="ubuntu-zesty-source-rv-match_testing"
 defaultcontainer="rv-match_projtesting_container"
 defaultcontainer="rv-match_testing_container"
 container=$defaultcontainer
-source_container=$source_container_zesty
+source_container=$source_container_temp_trusty
 guest_script="guest_run.sh"
 while getopts ":rsa" opt; do
   case ${opt} in
@@ -41,10 +42,10 @@ unset XDG_SESSION_COOKIE
 echo "source_container: $source_container"
 echo "container: $container"
 
-#if [[ `lxc-ls` == *"rv-match_testing_container"* ]] ; then
-#    echo "Temporary container destroying."
-#    lxc-destroy -f -n rv-match_testing_container
-#fi
+if [[ `lxc-ls` == *"rv-match_testing_container"* ]] ; then
+    echo "Temporary container destroying."
+    lxc-destroy -f -n rv-match_testing_container
+fi
 
 #ls ~/.config/lxc
 # mkdir -p ~/.config/lxc
@@ -59,9 +60,9 @@ echo "container: $container"
 #fi
 
 lxc-checkconfig
-#lxc-create -t download -n $source_container -- -d ubuntu -r zesty -a amd64
-#lxc-copy -s -e -B overlay -m bind=`pwd`:/mnt/jenkins:rw -n $source_container -N $container \
-#&& trap stopLxc EXIT
+lxc-create -t download -n $source_container -- -d ubuntu -r trusty -a amd64
+lxc-copy -s -e -B overlay -m bind=`pwd`:/mnt/jenkins:rw -n $source_container -N $container \
+&& trap stopLxc EXIT
 lxc-checkconfig
 uname -a
 cat /proc/self/cgroup
