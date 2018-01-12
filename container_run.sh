@@ -35,18 +35,14 @@ set -e
 function stopLxc {
     lxc-stop -n $container
 }
-function stopSourceLxc {
-    lxc-stop -n $source_container
-}
 unset XDG_SESSION_ID
 unset XDG_RUNTIME_DIR
 unset XDG_SESSION_COOKIE
 #lxc-destroy -f --name $container
 lxc-destroy -f --name "ubuntu-zesty-source-rv-match_testing"
-lxc-create -t download -m bind=`pwd`:/mnt/jenkins:rw -n $source_container -- -d ubuntu -r zesty -a amd64
+lxc-create -e -D -t download -m bind=`pwd`:/mnt/jenkins:rw -n $source_container -- -d ubuntu -r zesty -a amd64
 lxc-start -n $source_container
 lxc-attach -n $source_container -- su -l -c "/mnt/jenkins/source_guest_setup.sh"
-&& trap stopSourceLxc EXIT
 
 #lxc-copy -s -e -B overlay -m bind=`pwd`:/mnt/jenkins:rw -n $source_container -N $container \
 #&& trap stopLxc EXIT
