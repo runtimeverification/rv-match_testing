@@ -43,12 +43,12 @@ echo "container: $container"
 if [[ `lxc-ls` == *"rv-match_testing_container"* ]] ; then
     lxc-destroy -f -n rv-match_testing_container
 fi
-ls ~/.config/lxc
- mkdir -p ~/.config/lxc
- echo "lxc.id_map = u 0 1214112 65536" > ~/.config/lxc/default.conf
- echo "lxc.id_map = g 0 1214112 65536" >> ~/.config/lxc/default.conf
- echo "lxc.network.type = veth" >> ~/.config/lxc/default.conf
- echo "lxc.network.link = lxcbr0" >> ~/.config/lxc/default.conf
+#ls ~/.config/lxc
+# mkdir -p ~/.config/lxc
+# echo "lxc.id_map = u 0 494216 65536" > ~/.config/lxc/default.conf
+# echo "lxc.id_map = g 0 494216 65536" >> ~/.config/lxc/default.conf
+# echo "lxc.network.type = veth" >> ~/.config/lxc/default.conf
+# echo "lxc.network.link = lxcbr0" >> ~/.config/lxc/default.conf
 lxc-destroy -f --name "ubuntu-zesty-source-rv-match_testing"
 lxc-checkconfig
 lxc-create -t download -n $source_container -- -d ubuntu -r zesty -a amd64

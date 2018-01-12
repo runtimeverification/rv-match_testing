@@ -3,8 +3,9 @@
 # Handle options
 currentscript="<insert scriptname here>"
 exportfile="report"
+testsfolder="tests"
 flagsfortests=""
-while getopts ":rsa" opt; do
+while getopts ":rsau" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
@@ -17,10 +18,14 @@ while getopts ":rsa" opt; do
         exportfile="acceptance"
         flagsfortests="-a"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a]"
+    u ) echo $currentscript" unit-test-self option selected."
+        testsfolder="selftest"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-u]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
+         echo " -u unit-test-self"
       ;;
   esac
 done
@@ -68,7 +73,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 
 # Function for extracting testcase output from log files, generalized to project and compiler
 get_info() {
-    infofolder="tests/$line/$compiler/build_log/latest/"
+    infofolder="$testsfolder/$line/$compiler/build_log/latest/"
     timestring=''
     timepath=$infofolder$infoname"_time.ini"
     if [[ -e $timepath ]] ; then
@@ -88,7 +93,7 @@ get_info() {
             if [[ -e $infofolder$out ]]; then
                 print="$(tail -20 $infofolder$out)"
             else
-                print="$infofolder$out is supposed to be in the log folder. This error implies there is a bug in the rv-match_testing project. Report it to the appropriate party."
+                print="$infofolder$out is supposed to be in the log folder."
             fi
             if [ "$out" == "$mout" ] ; then
                 if [[ -e $infofolder$kout ]] ; then
@@ -151,19 +156,19 @@ read_log_files() {
 while read line; do
     if [ ! "$flagsfortests" == "STOP" ] ; then
         # Update container, if we're in one, with the jenkins test.sh
-        if [ -e /mnt/jenkins/tests/$line/test.sh ] ; then
+        if [ -e /mnt/jenkins/$testsfolder/$line/test.sh ] ; then
             # Branch is meant to run iff there is containerization.
-            mkdir -p tests/$line/
-            cp /mnt/jenkins/tests/$line/test.sh tests/$line/test.sh
+            mkdir -p $testsfolder/$line/
+            cp /mnt/jenkins/$testsfolder/$line/test.sh $testsfolder/$line/test.sh
         fi
         echo ==== $line started at $(date)
-        bash "tests/$line/test.sh" "$flagsfortests"
+        bash "$testsfolder/$line/test.sh" "$flagsfortests"
         echo ==== $line finished at $(date)
     else
         echo "Status option was selected, so the tests are not being run right now."
     fi
     read_log_files
-    cat "tests/$line/$exportfile.xml" >> $exportpath
+    cat "$testsfolder/$line/$exportfile.xml" >> $exportpath
 done < $whitelistpath
 
 # The above segment should:
