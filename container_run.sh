@@ -38,11 +38,11 @@ function stopLxc {
 unset XDG_SESSION_ID
 unset XDG_RUNTIME_DIR
 unset XDG_SESSION_COOKIE
-lxc-destroy -f --name $container
-#lxc-destroy -f --name "ubuntu-zesty-source-rv-match_testing"
-#lxc-create -t download -n $source_container -- -d ubuntu -r zesty -a amd64
 echo "source_container: $source_container"
 echo "container: $container"
+#lxc-destroy -f --name $container
+#lxc-destroy -f --name "ubuntu-zesty-source-rv-match_testing"
+#lxc-create -t download -n $source_container -- -d ubuntu -r zesty -a amd64
 lxc-copy -s -e -B overlay -m bind=`pwd`:/mnt/jenkins:rw -n $source_container -N $container \
 && trap stopLxc EXIT
 lxc-checkconfig
