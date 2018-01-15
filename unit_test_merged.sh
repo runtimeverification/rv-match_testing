@@ -1,5 +1,5 @@
 #!/bin/bash
-#bash merged.sh -u sets/selftest.ini
+bash merged.sh -u sets/selftest.ini
 echo $'\n\nTest results: '
 xmlfile="results/report.xml"
 tempfile="results/temporary"
@@ -60,3 +60,6 @@ else
     echo "\"no_kcc_config\" test  : fails."
     echo "  - xml is supposed to contain no kcc_config results when no kcc_config is there."
 fi
+
+rm $tempfile
+rm $tempfile2
