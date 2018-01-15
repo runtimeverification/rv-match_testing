@@ -16,8 +16,7 @@ _build() {
 }
 
 _test() {
-    return     
-
+    return
 }
 
 init
