@@ -3,10 +3,11 @@ currentscript="container_run.sh"
 source_container_trusty="ubuntu-14.04-java"
 source_container_temp_trusty="ubuntu-temp-trusty-source-rv-match_testing"
 source_container_zesty="ubuntu-zesty-source-rv-match_testing"
+source_container_bionic="ubuntu-bionic-source-rv-match_testing"
 defaultcontainer="rv-match_projtesting_container"
 defaultcontainer="rv-match_testing_container"
 container=$defaultcontainer
-source_container=$source_container_temp_trusty
+source_container=$source_container_bionic
 guest_script="guest_run.sh"
 while getopts ":rsa" opt; do
   case ${opt} in
@@ -54,13 +55,13 @@ fi
 # echo "lxc.network.type = veth" >> ~/.config/lxc/default.conf
 # echo "lxc.network.link = lxcbr0" >> ~/.config/lxc/default.conf
 
-#if [[ `lxc-ls` == *"ubuntu-zesty-source-rv-match_testing"* ]] ; then 
-#    echo "Source container destroying."
-#    lxc-destroy -f -n ubuntu-zesty-source-rv-match_testing
-#fi
+if [[ `lxc-ls` == *"ubuntu-zesty-source-rv-match_testing"* ]] ; then 
+    echo "Source container destroying."
+    lxc-destroy -f -n ubuntu-zesty-source-rv-match_testing
+fi
 
 lxc-checkconfig
-lxc-create -t download -n $source_container -- -d ubuntu -r trusty -a amd64
+lxc-create -t download -n $source_container -- -d ubuntu -r bionic -a amd64
 lxc-copy -s -e -B overlay -m bind=`pwd`:/mnt/jenkins:rw -n $source_container -N $container \
 && trap stopLxc EXIT
 lxc-checkconfig
@@ -69,6 +70,7 @@ cat /proc/self/cgroup
 cat /proc/1/mounts
 lxc-info --name $container
 lxc-start -n $container
+lxc-ls
 lxc-attach -n $container -- su -l -c "/mnt/jenkins/source_guest_setup.sh"
 
 #lxc-copy -s -e -B overlay -m bind=`pwd`:/mnt/jenkins:rw -n $source_container -N $container \
