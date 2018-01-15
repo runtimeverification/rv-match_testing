@@ -257,7 +257,8 @@ prep_extract_test() {
                 echo $report_string" test: "${names[$t]}" Passed!"
             else
                 echo $report_string" test: "${names[$t]}" Failed!"
-                echo '<error message="Failed."> </error>' >> $report_file
+                echo '<error message="Failed.">' >> $report_file
+                echo '</error>' >> $report_file
             fi
             echo '</testcase>' >> $report_file
         done
@@ -290,7 +291,9 @@ init_helper() {
     prep_prepare
     prep_download
     prep_build
-    #prep_test
+    if [ $exportfile == "report" ] ; then
+        prep_test
+    fi
 }
 
 init() {
