@@ -56,6 +56,11 @@ fi
 # echo "lxc.network.type = veth" >> ~/.config/lxc/default.conf
 # echo "lxc.network.link = lxcbr0" >> ~/.config/lxc/default.conf
 
+if [[ `lxc-ls` == *"ubuntu-temp-trusty-source-rv-match_testing"* ]] ; then
+    echo "Source container temp-trusty destroying."
+    lxc-destroy -f -n ubuntu-temp-trusty-source-rv-match_testing
+fi
+
 if [[ `lxc-ls` == *"ubuntu-xenial-source-rv-match_testing"* ]] ; then
     echo "Source container xenial destroying."
     lxc-destroy -f -n ubuntu-xenial-source-rv-match_testing
