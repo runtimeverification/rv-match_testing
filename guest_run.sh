@@ -42,6 +42,9 @@ ping -c 1 www.google.com
 # Part 2 Configure Local Jenkins Dependencies
 #  2a Copy project scripts
 cd /root/
+git clone https://github.com/runtimeverification/rv-match_testing.git
+cd rv-match_testing/
+echo "Wanting to use git sha: ""$(head -n 1 $hostspace/githash.ini)"
 git checkout "$(head -n 1 $hostspace/githash.ini)"
 #cp *.sh /root/
 #mkdir /root/sets/
@@ -68,8 +71,7 @@ echo "</placement debug>"
 
 # Part 3 Run Main Script
 mainscript_testing() {
-    ls -la
-    #bash unit_test_merged.sh
+    bash unit_test_merged.sh
     #bash libs.sh
     #bash tests/getty/test.sh
     #bash merged.sh sets/crashless.ini
@@ -90,7 +92,7 @@ mainscript_acceptance() {
     bash libs.sh
     bash merged.sh$runsetparams sets/acceptance.ini
 }
-cd /root/ && $mainscript
+cd /root/rv-match_testing/ && $mainscript
 
 # Part 4 Copy test result xml back to host
 echo "Container results are in "$exportfile".xml:"
