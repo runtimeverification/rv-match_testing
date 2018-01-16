@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+<testsuite name="ReportScriptReport" package="ReportPackage">
+<properties/>
+<testcase classname="regression.make_fail" name="kcc make success" time=".000883892">
+<error message="Failed.">
+<![CDATA[selftest/make_fail/kcc/build_log/latest/kcc_make_out.txt is supposed to be in the log folder.]]></error>
+</testcase>
+<testcase classname="regression.make_log_tail" name="kcc make success" time=".003174629">
+<error message="Failed.">
+<![CDATA[Important debug output produced by make. Umbrella satire.]]></error>
+</testcase>
+<testcase classname="regression.make_pass" name="kcc make success" time=".000834526">
+</testcase>
+<testcase classname="regression.many_kcc_config" name="kcc make success" time=".002312948">
+<error message="Failed.">
+<![CDATA[selftest/many_kcc_config/kcc/build_log/latest/kcc_make_out.txt is supposed to be in the log folder.
+=========================
+List of the processed kcc_configs:
+
+
+Found a kcc_config number 1:
+Location: /home/timothy/Desktop/matchTesting/runall_testing/selftest/many_kcc_config/kcc/build/directory_one/sub_directory_one_B
+java.nio.BufferUnderflowException
+	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
+	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
+	at java.nio.ByteBuffer.get(ByteBuffer.java:715)
+	at org.kframework.parser.binary.BinaryParser.parse(BinaryParser.java:188)
+	at org.kframework.main.BinaryToText.nailMain(BinaryToText.java:29)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.martiansoftware.nailgun.NGSession.run(NGSession.java:331)
+k-bin-to-text command failed with above error
+
+Found a kcc_config number 2:
+Location: /home/timothy/Desktop/matchTesting/runall_testing/selftest/many_kcc_config/kcc/build/directory_two
+java.nio.BufferUnderflowException
+	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
+	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
+	at java.nio.ByteBuffer.get(ByteBuffer.java:715)
+	at org.kframework.parser.binary.BinaryParser.parse(BinaryParser.java:188)
+	at org.kframework.main.BinaryToText.nailMain(BinaryToText.java:29)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.martiansoftware.nailgun.NGSession.run(NGSession.java:331)
+k-bin-to-text command failed with above error]]></error>
+</testcase>
+<testcase classname="regression.no_kcc_config" name="kcc make success" time=".000858845">
+<error message="Failed.">
+<![CDATA[selftest/no_kcc_config/kcc/build_log/latest/kcc_make_out.txt is supposed to be in the log folder.]]></error>
+</testcase>
+<testcase classname="regression.one_kcc_config" name="kcc make success" time=".001838144">
+<error message="Failed.">
+<![CDATA[selftest/one_kcc_config/kcc/build_log/latest/kcc_make_out.txt is supposed to be in the log folder.
+=========================
+List of the processed kcc_configs:
+
+
+Found a kcc_config number 1:
+Location: /home/timothy/Desktop/matchTesting/runall_testing/selftest/one_kcc_config/kcc/build/directory_one/sub_directory_one_B
+java.nio.BufferUnderflowException
+	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
+	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
+	at java.nio.ByteBuffer.get(ByteBuffer.java:715)
+	at org.kframework.parser.binary.BinaryParser.parse(BinaryParser.java:188)
+	at org.kframework.main.BinaryToText.nailMain(BinaryToText.java:29)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.martiansoftware.nailgun.NGSession.run(NGSession.java:331)
+k-bin-to-text command failed with above error]]></error>
+</testcase>
+<testcase classname="regression.unit_test_single_pass" name="kcc make success" time=".000836085">
+</testcase>
+<testcase classname="regression.unit_test_single_fail" name="kcc make success" time=".000913545">
+</testcase>
+<testcase classname="regression.unit_test_pass_then_fail" name="kcc make success" time=".000864314">
+</testcase>
+<testcase classname="regression.unit_test_k_term" name="kcc make success" time=".000954777">
+</testcase>
+<testcase classname="regression.unit_test_location_term" name="kcc make success" time=".000768552">
+</testcase>
+<testcase classname="regression.unit_test_log" name="kcc make success" time=".000886604">
+</testcase>
+</testsuite>
+</testsuites>
+

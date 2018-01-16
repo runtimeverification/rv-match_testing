@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+<testsuite name="ReportScriptReport" package="ReportPackage">
+<properties/>
+<testcase classname="acceptance.make_fail" name="gcc make success" time=".002378406">
+<error message="Failed.">
+<![CDATA[selftest/make_fail/gcc/build_log/latest/kcc_make_out.txt is supposed to be in the log folder.]]></error>
+</testcase>
+<testcase classname="acceptance.make_fail" name="kcc make success" time=".000856383">
+<error message="Failed.">
+<![CDATA[selftest/make_fail/kcc/build_log/latest/kcc_make_out.txt is supposed to be in the log folder.]]></error>
+</testcase>
+<testcase classname="acceptance.make_log_tail" name="gcc make success" time=".003246664">
+<error message="Failed.">
+<![CDATA[Important debug output produced by make. Umbrella satire.]]></error>
+</testcase>
+<testcase classname="acceptance.make_log_tail" name="kcc make success" time=".001981637">
+<error message="Failed.">
+<![CDATA[Important debug output produced by make. Umbrella satire.]]></error>
+</testcase>
+<testcase classname="acceptance.make_pass" name="gcc make success" time=".001883820">
+</testcase>
+<testcase classname="acceptance.make_pass" name="kcc make success" time=".000919931">
+</testcase>
+<testcase classname="acceptance.many_kcc_config" name="gcc make success" time=".005857898">
+<error message="Failed.">
+<![CDATA[selftest/many_kcc_config/gcc/build_log/latest/kcc_make_out.txt is supposed to be in the log folder.
+=========================
+List of the processed kcc_configs:
+
+
+Found a kcc_config number 1:
+Location: /home/timothy/Desktop/matchTesting/runall_testing/selftest/many_kcc_config/gcc/build/directory_one/sub_directory_one_B
+java.nio.BufferUnderflowException
+	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
+	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
+	at java.nio.ByteBuffer.get(ByteBuffer.java:715)
+	at org.kframework.parser.binary.BinaryParser.parse(BinaryParser.java:188)
+	at org.kframework.main.BinaryToText.nailMain(BinaryToText.java:29)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.martiansoftware.nailgun.NGSession.run(NGSession.java:331)
+k-bin-to-text command failed with above error
+
+Found a kcc_config number 2:
+Location: /home/timothy/Desktop/matchTesting/runall_testing/selftest/many_kcc_config/gcc/build/directory_two
+java.nio.BufferUnderflowException
+	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
+	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
+	at java.nio.ByteBuffer.get(ByteBuffer.java:715)
+	at org.kframework.parser.binary.BinaryParser.parse(BinaryParser.java:188)
+	at org.kframework.main.BinaryToText.nailMain(BinaryToText.java:29)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.martiansoftware.nailgun.NGSession.run(NGSession.java:331)
+k-bin-to-text command failed with above error]]></error>
+</testcase>
+<testcase classname="acceptance.many_kcc_config" name="kcc make success" time=".002418004">
+<error message="Failed.">
+<![CDATA[selftest/many_kcc_config/kcc/build_log/latest/kcc_make_out.txt is supposed to be in the log folder.
+=========================
+List of the processed kcc_configs:
+
+
+Found a kcc_config number 1:
+Location: /home/timothy/Desktop/matchTesting/runall_testing/selftest/many_kcc_config/kcc/build/directory_one/sub_directory_one_B
+java.nio.BufferUnderflowException
+	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
+	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
+	at java.nio.ByteBuffer.get(ByteBuffer.java:715)
+	at org.kframework.parser.binary.BinaryParser.parse(BinaryParser.java:188)
+	at org.kframework.main.BinaryToText.nailMain(BinaryToText.java:29)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.martiansoftware.nailgun.NGSession.run(NGSession.java:331)
+k-bin-to-text command failed with above error
+
+Found a kcc_config number 2:
+Location: /home/timothy/Desktop/matchTesting/runall_testing/selftest/many_kcc_config/kcc/build/directory_two
+java.nio.BufferUnderflowException
+	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
+	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
+	at java.nio.ByteBuffer.get(ByteBuffer.java:715)
+	at org.kframework.parser.binary.BinaryParser.parse(BinaryParser.java:188)
+	at org.kframework.main.BinaryToText.nailMain(BinaryToText.java:29)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.martiansoftware.nailgun.NGSession.run(NGSession.java:331)
+k-bin-to-text command failed with above error]]></error>
+</testcase>
+<testcase classname="acceptance.no_kcc_config" name="gcc make success" time=".001340581">
+<error message="Failed.">
+<![CDATA[selftest/no_kcc_config/gcc/build_log/latest/kcc_make_out.txt is supposed to be in the log folder.]]></error>
+</testcase>
+<testcase classname="acceptance.no_kcc_config" name="kcc make success" time=".001747974">
+<error message="Failed.">
+<![CDATA[selftest/no_kcc_config/kcc/build_log/latest/kcc_make_out.txt is supposed to be in the log folder.]]></error>
+</testcase>
+<testcase classname="acceptance.one_kcc_config" name="gcc make success" time=".006102134">
+<error message="Failed.">
+<![CDATA[selftest/one_kcc_config/gcc/build_log/latest/kcc_make_out.txt is supposed to be in the log folder.
+=========================
+List of the processed kcc_configs:
+
+
+Found a kcc_config number 1:
+Location: /home/timothy/Desktop/matchTesting/runall_testing/selftest/one_kcc_config/gcc/build/directory_one/sub_directory_one_B
+java.nio.BufferUnderflowException
+	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
+	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
+	at java.nio.ByteBuffer.get(ByteBuffer.java:715)
+	at org.kframework.parser.binary.BinaryParser.parse(BinaryParser.java:188)
+	at org.kframework.main.BinaryToText.nailMain(BinaryToText.java:29)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.martiansoftware.nailgun.NGSession.run(NGSession.java:331)
+k-bin-to-text command failed with above error]]></error>
+</testcase>
+<testcase classname="acceptance.one_kcc_config" name="kcc make success" time=".001692436">
+<error message="Failed.">
+<![CDATA[selftest/one_kcc_config/kcc/build_log/latest/kcc_make_out.txt is supposed to be in the log folder.
+=========================
+List of the processed kcc_configs:
+
+
+Found a kcc_config number 1:
+Location: /home/timothy/Desktop/matchTesting/runall_testing/selftest/one_kcc_config/kcc/build/directory_one/sub_directory_one_B
+java.nio.BufferUnderflowException
+	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
+	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
+	at java.nio.ByteBuffer.get(ByteBuffer.java:715)
+	at org.kframework.parser.binary.BinaryParser.parse(BinaryParser.java:188)
+	at org.kframework.main.BinaryToText.nailMain(BinaryToText.java:29)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.martiansoftware.nailgun.NGSession.run(NGSession.java:331)
+k-bin-to-text command failed with above error]]></error>
+</testcase>
+<testcase classname="acceptance.unit_test_single_pass" name="gcc make success" time=".001478120">
+</testcase>
+<testcase classname="acceptance.unit_test_single_pass" name="kcc make success" time=".001095997">
+</testcase>
+<testcase classname="acceptance.unit_test_single_fail" name="gcc make success" time=".001649884">
+</testcase>
+<testcase classname="acceptance.unit_test_single_fail" name="kcc make success" time=".000801872">
+</testcase>
+<testcase classname="acceptance.unit_test_pass_then_fail" name="gcc make success" time=".001196804">
+</testcase>
+<testcase classname="acceptance.unit_test_pass_then_fail" name="kcc make success" time=".000822984">
+</testcase>
+<testcase classname="acceptance.unit_test_k_term" name="gcc make success" time=".002170153">
+</testcase>
+<testcase classname="acceptance.unit_test_k_term" name="kcc make success" time=".000816548">
+</testcase>
+<testcase classname="acceptance.unit_test_location_term" name="gcc make success" time=".001397223">
+</testcase>
+<testcase classname="acceptance.unit_test_location_term" name="kcc make success" time=".000872534">
+</testcase>
+<testcase classname="acceptance.unit_test_log" name="gcc make success" time=".001429521">
+</testcase>
+<testcase classname="acceptance.unit_test_log" name="kcc make success" time=".000932194">
+</testcase>
+</testsuite>
+</testsuites>
+

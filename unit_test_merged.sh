@@ -1,9 +1,12 @@
 #!/bin/bash
 bash merged.sh -u sets/selftest.ini
+bash merged.sh -ur sets/selftest.ini
+bash merged.sh -ua sets/selftest.ini
 echo $'\n\nTest results: '
 xmlfile="results/report.xml"
 tempfile="results/temporary"
 tempfile2="results/temporary2"
+tempfile3="results/temporary3"
 failelement='<error message="Failed.">'
 
 if [ "`grep -A1 'make_fail.*make success' $xmlfile | tail -n 1`" == "$failelement" ] ; then
@@ -122,5 +125,76 @@ else
     echo "  - xml is supposed to contain the tail of kcc_out_0.txt."
 fi
 
+# Regression xml similarity test
+xmlfile="results/regression.xml"
+samplefile="selftest/regression_sample.xml"
+cp $xmlfile $tempfile
+cp $samplefile $tempfile2
+rightTypes="1"
+similar="0"
+while [ "$(grep "<testcase classname=" $tempfile)" ] || [ "$(grep "<testcase classname=" $tempfile2)" ] && [ "$similar" == "0" ] ;
+do
+    rightTypes="0"
+    tail -n +`grep -n -m 1 '<testcase classname=' $tempfile |cut -f1 -d:` $tempfile > $tempfile3
+    one="$(head -n 1 $tempfile3)"
+    one=${one%time*}
+    tail -n +2 "$tempfile3" > $tempfile
+    tail -n +`grep -n -m 1 '<testcase classname=' $tempfile2 |cut -f1 -d:` $tempfile2 > $tempfile3
+    two="$(head -n 1 $tempfile3)"
+    two=${two%time*}
+    tail -n +2 "$tempfile3" > $tempfile2
+    if [ ! "$one" == "$two" ] ; then
+        similar="1"
+    fi
+done
+if [ "$rightTypes" == "0" ] && [ $similar == "0" ] ; then
+    echo "\"regression similarity\" test   : passes."
+else
+    echo "\"regression similarity\" test   : fails."
+    echo "  - the xml is supposed to be similar in structure to the past sample."
+    if [ ! "$rightTypes" == "0" ] ; then
+        echo "  - the xml files were not formatted properly."
+    fi
+    if [ ! "$similar" == "0" ] ; then
+        echo "  - xml is not similar to past regression structure."
+    fi
+fi
+
+# Acceptance xml similarity test (similar code to regression test)
+xmlfile="results/acceptance.xml"
+samplefile="selftest/acceptance_sample.xml"
+cp $xmlfile $tempfile
+cp $samplefile $tempfile2
+rightTypes="1"
+similar="0"
+while [ "$(grep "<testcase classname=" $tempfile)" ] || [ "$(grep "<testcase classname=" $tempfile2)" ] && [ "$similar" == "0" ] ;
+do
+    rightTypes="0"
+    tail -n +`grep -n -m 1 '<testcase classname=' $tempfile |cut -f1 -d:` $tempfile > $tempfile3
+    one="$(head -n 1 $tempfile3)"
+    one=${one%time*}
+    tail -n +2 "$tempfile3" > $tempfile
+    tail -n +`grep -n -m 1 '<testcase classname=' $tempfile2 |cut -f1 -d:` $tempfile2 > $tempfile3
+    two="$(head -n 1 $tempfile3)"
+    two=${two%time*}
+    tail -n +2 "$tempfile3" > $tempfile2
+    if [ ! "$one" == "$two" ] ; then
+        similar="1"
+    fi
+done
+if [ "$rightTypes" == "0" ] && [ $similar == "0" ] ; then
+    echo "\"acceptance similarity\" test   : passes."
+else
+    echo "\"acceptance similarity\" test   : fails."
+    echo "  - the xml is supposed to be similar in structure to the past sample."
+    if [ ! "$rightTypes" == "0" ] ; then
+        echo "  - the xml files were not formatted properly."
+    fi
+    if [ ! "$similar" == "0" ] ; then
+        echo "  - xml is not similar to past regression structure."
+    fi
+fi
+
 rm $tempfile
 rm $tempfile2
+rm $tempfile3
