@@ -10,7 +10,7 @@ _download() {
 
 _build() {
     cd vim/
-    ./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
+    ./configure CC=$compiler CFLAGS="-std=gnu11" LD=$compiler LDFLAGS="-ldl" |& tee kcc_configure_out.txt ; configure_success="$?"
     make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
