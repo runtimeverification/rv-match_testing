@@ -91,19 +91,6 @@ rm $report_file ; touch $report_file
 #    cd $build_dir
 #}
 
-process_config() {
-    if cp config $test_log_dir
-    then
-        cd $test_log_dir
-        #k-bin-to-text config kcc_config.txt && grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt && echo kcc_config_k_summary.txt
-        grep -o "<k>.\{500\}" config &> kcc_config_k_summary.txt && cat kcc_config_k_summary.txt
-        grep -o "<curr-program-loc>.\{500\}" config &> kcc_config_loc_summary.txt && cat kcc_config_loc_summary.txt
-    else
-        echo "prepare.sh did not find a config in "$(dirname $(pwd))
-    fi
-    cd $build_dir
-}
-
 prep_prepare() {
     report_string=" ===> "$test_name" "$compiler" "
 
@@ -140,16 +127,17 @@ prep_download() {
 
 increment_process_kcc_config() {
     copiedfile=kcc_config_no_$increment
-    cp kcc_config $build_log_dir/$copiedfile
+    cp kcc_config $log_dir/$copiedfile
     let "increment += 1"
 # ---
-    location=$(pwd) ; cd $build_log_dir
+    location=$(pwd) ; cd $log_dir
     if [ -e $copiedfile ] ; then
         echo $'\n'"Found a kcc_config number $increment:" >> kcc_config_k_summary.txt
         echo "Location: $location" >> kcc_config_k_summary.txt
         k-bin-to-text $copiedfile $copiedfile.txt &>> kcc_config_k_summary.txt
         if [ $? -eq 0 ] ; then
-            grep -o "<k>.\{500\}" $copiedfile.txt &>> kcc_config_k_summary.txt
+            grep -o "<k>.\{0,500\}" $copiedfile.txt &>> kcc_config_k_summary.txt
+            #grep -o "<curr-program-loc>.\{500\}" config &> kcc_config_loc_summary.txt && cat kcc_config_loc_summary.txt
             if [ $? -eq 0 ] ; then
                 echo "Cats are cool. 8)" ; cat kcc_config_k_summary.txt
             else
@@ -165,6 +153,17 @@ increment_process_kcc_config() {
         ls
         echo "====="
     fi
+}
+
+process_config() { # Called by _test in test.sh which is called by prep_test() here
+    returnspot=$(pwd)
+    copiedfile=config_$increment
+    cp config $test_log_dir/$copiedfile
+    cd $test_log_dir
+    grep -o "<k>.\{0,500\}" $copiedfile &> "config_k_summary$increment.txt"
+    grep -o "<curr-program-loc>.\{0,500\}" $copiedfile &> "config_loc_summary$increment.txt"
+    let "increment += 1"
+    cd $returnspot
 }
 
 prep_extract() {
@@ -197,7 +196,7 @@ prep_extract() {
     increment=0
     find . -type f -iname "kcc_config" -print0 | while IFS= read -r -d $'\0' line; do
         return_dir=$(pwd)
-        cd $(dirname $line) && increment_process_kcc_config
+        cd $(dirname $line) && log_dir=$build_log_dir && increment_process_kcc_config
         cd $return_dir
     done
     if [ -e "${build_log_dir}/kcc_config_k_summary.txt" ] ; then
@@ -235,20 +234,22 @@ prep_build() {
 }
 
 prep_extract_test() {
-    test_log_dir=$test_dir/$compiler/test_log/$(date +%Y-%m-%d.%H:%M:%S)
-    mkdir -p $test_log_dir
-    ln -sfn $test_log_dir $test_dir/$compiler/test_log/latest
-    echo $test_log_dir
-    log_dir=$test_log_dir #until scripts are updated
-
-    # extract test results
+    # Save test successes into .ini
     cd $test_log_dir
+    echo "Suppsoed to be in log directory..."
+    pwd
+    echo "/supposed"
     if [ ! -z ${test_success+x} ]; then
         echo $report_string"      test:"$test_success
         echo $test_success > test_success.ini
     fi
 
+    # Copy output logs (kcc_out_#.txt)
+    cd $unit_test_dir
+    find . -name "kcc_*" -not -name "kcc_config" -exec cp {} $test_log_dir \;
+    cd $test_log_dir
 
+    # Generate xml
     if [[ -v results[@] ]] ; then
         for t in "${!results[@]}"
         do
@@ -258,15 +259,33 @@ prep_extract_test() {
             else
                 echo $report_string" test: "${names[$t]}" Failed!"
                 echo '<error message="Failed.">' >> $report_file
+                print=$'\nTest '"$t"$', '"\"${names[$t]}\""$': {'
+                if [[ -e "config_k_summary$t.txt" ]]; then
+                    print=$print$'\n<k> term: \n'$(cat config_k_summary$t.txt)
+                fi
+                if [[ -e "config_loc_summary$t.txt" ]]; then
+                    print=$print$'\nProgram location term: \n'$(cat config_loc_summary$t.txt)
+                fi
+                if [[ -e "kcc_out_$t.txt" ]]; then
+                    print=$print$'\nTest log tail: \n'$(tail -20 kcc_out_$t.txt)
+                fi
+                print=$print$'\n}'
+                printf "<![CDATA[%s]]>" "$print" >> $report_file
                 echo '</error>' >> $report_file
             fi
             echo '</testcase>' >> $report_file
         done
     fi
-    cd $unit_test_dir && _extract_test
 }
 
 prep_test() {
+    # Need to prep log directory here instead of extract test since test.sh calls process_config which depends on the log directory existing
+    test_log_dir=$test_dir/$compiler/test_log/$(date +%Y-%m-%d.%H:%M:%S)
+    mkdir -p $test_log_dir
+    ln -sfn $test_log_dir $test_dir/$compiler/test_log/latest
+    echo $test_log_dir
+    log_dir=$test_log_dir #until scripts are updated
+
     # Test hash is dependent on 3 things: {_test() function definition, $compiler --version, build hash}.
     testhashinfo=$(type _test)$($compiler --version)$(head -n 1 $build_dir/build_function_hash)
     if [ ! -e $unit_test_dir/test_function_hash ] || [ "$(echo $(sha1sum <<< $testhashinfo))" != "$(head -n 1 $unit_test_dir/test_function_hash)" ]  || [ "0" == "0" ] ; then
@@ -277,7 +296,7 @@ prep_test() {
         cp $build_dir/* $unit_test_dir -r
         set -o pipefail
         unset test_success
-        cd $unit_test_dir && _test
+        cd $unit_test_dir && increment="0" && _test
 
         # generate test hash - should be the last function in the testing process since it indicates completion
         cd $unit_test_dir && echo $(sha1sum <<< $testhashinfo) > test_function_hash

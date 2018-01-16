@@ -87,5 +87,40 @@ else
     echo "  - xml is supposed to produce string: $failelement iff that unit test fails."
 fi
 
+# Unit test k term
+tail -n +`grep -n -m 1 'unit_test_k_term.*test1' $xmlfile |cut -f1 -d:` $xmlfile > $tempfile
+head -n `grep -n -m 1 '</testcase>' $tempfile |cut -f1 -d:` $tempfile > $tempfile2
+grep -q 'pre k term sample' $tempfile2 ; one="$?"
+grep -q 'post k term sample' $tempfile2 ; two="$?"
+if [ "$one" == "1" ] && [ "$two" == "0" ] ; then
+    echo "\"unit_test_k_term\" test        : passes."
+else
+    echo "\"unit_test_k_term\" test        : fails."
+    echo "  - xml is supposed to contain characters after <k> term in config."
+fi
+
+# Unit test location term
+tail -n +`grep -n -m 1 'unit_test_location_term.*test1' $xmlfile |cut -f1 -d:` $xmlfile > $tempfile
+head -n `grep -n -m 1 '</testcase>' $tempfile |cut -f1 -d:` $tempfile > $tempfile2
+grep -q 'pre location term sample' $tempfile2 ; one="$?"
+grep -q 'post location term sample' $tempfile2 ; two="$?"
+if [ "$one" == "1" ] && [ "$two" == "0" ] ; then
+    echo "\"unit_test_location_term\" test : passes."
+else
+    echo "\"unit_test_location_term\" test : fails."
+    echo "  - xml is supposed to contain characters after <curr-program-loc> term in config."
+fi
+
+# Unit test log
+tail -n +`grep -n -m 1 'unit_test_log.*test1' $xmlfile |cut -f1 -d:` $xmlfile > $tempfile
+head -n `grep -n -m 1 '</testcase>' $tempfile |cut -f1 -d:` $tempfile > $tempfile2
+grep -q 'sample output log' $tempfile2 ; one="$?"
+if [ "$one" == "0" ] ; then
+    echo "\"unit_test_log\" test           : passes."
+else
+    echo "\"unit_test_log\" test           : fails."
+    echo "  - xml is supposed to contain the tail of kcc_out_0.txt."
+fi
+
 rm $tempfile
 rm $tempfile2

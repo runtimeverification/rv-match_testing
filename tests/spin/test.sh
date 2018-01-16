@@ -36,7 +36,7 @@ _test() {
     for f in *.pml; do
         echo "---- testing spin on "$f
         names[index]=${f%".pml"}
-        ../Src6.4.7/spin $f ; results[index]="$?"
+        ../Src6.4.7/spin $f |& tee "kcc_out_$index.txt" ; results[index]="$?"
         index=$((index+1))
         process_config
         cd Spin/Examples/
