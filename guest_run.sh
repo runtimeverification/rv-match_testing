@@ -66,7 +66,8 @@ echo "</placement debug>"
 
 # Part 3 Run Main Script
 mainscript_testing() {
-    bash unit_test_merged.sh
+    ls -la
+    #bash unit_test_merged.sh
     #bash libs.sh
     #bash tests/getty/test.sh
     #bash merged.sh sets/crashless.ini
