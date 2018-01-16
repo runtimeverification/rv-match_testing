@@ -25,6 +25,7 @@ while getopts ":rsa" opt; do
       ;;
   esac
 done
+`git rev-parse --verify HEAD` > githash.ini
 
 set -e
 function stopLxc {

@@ -41,12 +41,14 @@ ping -c 1 www.google.com
 
 # Part 2 Configure Local Jenkins Dependencies
 #  2a Copy project scripts
-cd $hostspace
-cp *.sh /root/
-mkdir /root/sets/
-cp -r sets/* /root/sets/
+cd /root/
+git checkout "$(head -n 1 $hostspace/githash.ini)"
+#cp *.sh /root/
+#mkdir /root/sets/
+#cp -r sets/* /root/sets/
 
 #  2b Set kcc dependencies
+cd $hostspace
 export PATH=$hostspace/kcc_dependency_1:$hostspace/kcc_dependency_2:$hostspace/kcc_dependency_3/bin:$PATH
 echo "The modified container PATH variable: "$PATH
 
