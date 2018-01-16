@@ -10,6 +10,7 @@ _download() {
 
 _build() {
     cd getty/ ; configure_success="$?"
+    sed -i "/strip/d" Makefile
     make CC=$compiler LD=$compiler |& tee kcc_make_out.txt ; make_success="$?"
 }
 
