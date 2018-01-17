@@ -17,10 +17,13 @@ _build() {
     automake --add-missing
     autoreconf
     set -o pipefail
-    ./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
+    if [[ $compiler == "kcc" ]]; then
+        ./configure CC=kcc CFLAGS="-std=gnu11 -frecover-all-errors -no-pedantic" LD=kcc |& tee kcc_configure_out.txt ; configure_success="$?"
+    else
+        ./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
+    fi
     make |& tee kcc_make_out.txt ; make_success="$?"
     cd ./src/
-    kcc -d -g -pthread -o apps.plugin apps_plugin.o avl.o clocks.o common.o log.o procfile.o web_buffer.o -lm |& tee kcc_out.txt
 }
 
 init

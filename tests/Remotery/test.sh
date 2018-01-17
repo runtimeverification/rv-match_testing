@@ -10,11 +10,9 @@ _download() {
 
 _build() {
     cd Remotery/ ; configure_success="$?"
-    if [[ $compiler == "kcc" ]] ; then
-        $compiler -d lib/Remotery.c sample/sample.c -I lib -pthread -lm |& tee kcc_make_out.txt ; make_success="$?"
-    else
-        $compiler lib/Remotery.c sample/sample.c -I lib -pthread -lm |& tee kcc_make_out.txt ; make_success="$?"
-    fi
+    kcc -profile x86_64-linux-gcc-glibc-gnuc
+    $compiler -std=gnu11 lib/Remotery.c sample/sample.c -I lib -pthread -lm |& tee kcc_make_out.txt ; make_success="$?"
+    kcc -profile x86_64-linux-gcc-glibc
 }
 
 init

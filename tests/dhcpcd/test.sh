@@ -10,7 +10,12 @@ _download() {
 
 _build() {
     cd dhcpcd/
-    ./configure CC=$compiler CFLAGS="-D__packed='__attribute__((packed))' -frecover-all-errors" LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
+    if [[ $compiler == "kcc" ]]; then
+        kcc -profile x86_64-linux-gcc-glibc
+        ./configure CC=kcc CFLAGS="-D__packed='__attribute__((packed))' -frecover-all-errors" LD=kcc |& tee kcc_configure_out.txt ; configure_success="$?"
+    else
+        ./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
+    fi
     set -o pipefail
     make |& tee kcc_make_out.txt
     [ -f src/dhcpcd ] ; make_success="$?"
