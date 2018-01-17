@@ -26,10 +26,16 @@ while getopts ":rsa" opt; do
         exportfile="acceptance"
         runsetparams=" -a"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a]"
+    t ) echo $currentscript" unit test option selected."
+        mainscript="mainscript_unittest"
+        exportfile="unittest"
+        runsetparams=" -t"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
+         echo " -t unit tests"
       ;;
   esac
 done
@@ -97,6 +103,10 @@ mainscript_status() {
 mainscript_acceptance() {
     bash libs.sh
     bash merged.sh$runsetparams sets/acceptance.ini
+}
+mainscript_unittest() {
+    bash libs.sh
+    bash merged.sh$runsetparams sets/unittest.ini
 }
 cd /root/rv-match_testing/ && $mainscript
 
