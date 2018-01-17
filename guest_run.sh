@@ -47,6 +47,7 @@ cd rv-match_testing/
 echo "Wanting to use git sha: ""$(head -n 1 $hostspace/githash.ini)"
 #git checkout "$(head -n 1 $hostspace/githash.ini)"
 git checkout master
+git pull
 #cp *.sh /root/
 #mkdir /root/sets/
 #cp -r sets/* /root/sets/
