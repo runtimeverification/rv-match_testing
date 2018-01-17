@@ -42,10 +42,13 @@ ping -c 1 www.google.com
 # Part 2 Configure Local Jenkins Dependencies
 #  2a Copy project scripts
 cd /root/
+rm -rf rv-match_testing/
 git clone https://github.com/runtimeverification/rv-match_testing.git
 cd rv-match_testing/
-echo "Wanting to use git sha: ""$(head -n 1 $hostspace/githash.ini)"
+#echo "Wanting to use git sha: ""$(head -n 1 $hostspace/githash.ini)"
 #git checkout "$(head -n 1 $hostspace/githash.ini)"
+git checkout master
+git reset --hard origin/master
 git checkout master
 git pull
 #cp *.sh /root/
