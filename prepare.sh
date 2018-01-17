@@ -16,7 +16,7 @@ currentscript="prepare.sh"
 # _extract_test: Same rules as _extract except for tests instead of build.
 
 exportfile="report"
-while getopts ":rsa" opt; do
+while getopts ":rsat" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
@@ -27,10 +27,14 @@ while getopts ":rsa" opt; do
     a ) echo $currentscript" acceptance option selected."
         exportfile="acceptance"
       ;;
+    t ) echo $currentscript" unit test option selected."
+        exportfile="unittest"
+      ;;
     \? ) echo $currentscript" usage: cmd [-r] [-s] [-a]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
+         echo " -t unit tests"
       ;;
   esac
 done
@@ -311,7 +315,7 @@ init_helper() {
     prep_prepare
     prep_download
     prep_build
-    if [ $exportfile == "report" ] ; then
+    if [ $exportfile == "report" ] || [ $exportfile == "unittest" ] ; then
         prep_test
     fi
 }

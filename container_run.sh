@@ -4,7 +4,7 @@ defaultcontainer="rv-match_projtesting_container"
 container=$defaultcontainer
 source_container="ubuntu-14.04-java"
 guest_script="guest_run.sh"
-while getopts ":rsa" opt; do
+while getopts ":rsat" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         container="rv-match_regression_container"
@@ -18,10 +18,15 @@ while getopts ":rsa" opt; do
         container="rv-match_acceptance_container"
         guest_script=$guest_script" -a"
       ;;
-    \? ) echo "Usage: cmd [-r] [-s] [-a]"
+    t ) echo $currentscript" unit test option selected."
+        #container="rv-match_unittest_container"
+        guest_script=$guest_script" -t"
+      ;;
+    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
+         echo " -t unit tests"
       ;;
   esac
 done

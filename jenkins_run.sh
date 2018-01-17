@@ -16,10 +16,15 @@ while getopts ":rsa" opt; do
         exportfile="acceptance"
         containerscriptflags=" -a"
       ;;
-    \? ) echo "Usage: cmd [-r] [-s] [-a]"
+    t ) echo $currentscript" status option selected."
+        exportfile="unittest"
+        containerscriptflags=" -t"
+      ;;
+    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
+         echo " -t unit tests"
       ;;
   esac
 done

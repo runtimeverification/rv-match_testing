@@ -5,7 +5,7 @@ currentscript="<insert scriptname here>"
 exportfile="report"
 testsfolder="tests"
 flagsfortests=""
-while getopts ":rsau" opt; do
+while getopts ":rsatu" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
@@ -18,6 +18,10 @@ while getopts ":rsau" opt; do
         exportfile="acceptance"
         flagsfortests="-a"
       ;;
+    t ) echo $currentscript" unit testing option selected."
+        exportfile="unittest"
+        flagsfortests="-t"
+      ;;
     u ) echo $currentscript" unit-test-self option selected."
         testsfolder="selftest"
       ;;
@@ -25,6 +29,7 @@ while getopts ":rsau" opt; do
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
+         echo " -t unit tests"
          echo " -u unit-test-self"
       ;;
   esac
