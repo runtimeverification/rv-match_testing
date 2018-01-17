@@ -4,28 +4,27 @@
 currentscript="<insert scriptname here>"
 exportfile="report"
 testsfolder="tests"
-flagsfortests=""
+flagsfortests=" -"
 while getopts ":rsatu" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
-        flagsfortests="-r"
+        flagsfortests=$flagsfortests"r"
       ;;
     s ) echo $currentscript" status option selected."
         flagsfortests="STOP"
       ;;
     a ) echo $currentscript" acceptance option selected."
         exportfile="acceptance"
-        flagsfortests="-a"
+        flagsfortests=$flagsfortests"a"
       ;;
     t ) echo $currentscript" unit testing option selected."
-        exportfile="unittest"
-        flagsfortests="-t"
+        flagsfortests=$flagsfortests"t"
       ;;
     u ) echo $currentscript" unit-test-self option selected."
         testsfolder="selftest"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-u]"
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-u]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -34,6 +33,9 @@ while getopts ":rsatu" opt; do
       ;;
   esac
 done
+if [ $flagsfortests == " -" ] ; then
+    flagsfortests=""
+fi
 
 # Handle .ini argument
 filepath=$1

@@ -4,23 +4,23 @@ defaultcontainer="rv-match_projtesting_container"
 container=$defaultcontainer
 source_container="ubuntu-14.04-java"
 guest_script="guest_run.sh"
+guest_script_flags=" -"
 while getopts ":rsat" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         container="rv-match_regression_container"
-        guest_script=$guest_script" -r"
+        guest_script_flags=$guest_script_flags"r"
       ;;
     s ) echo $currentscript" status option selected."
         container=$defaultcontainer
-        guest_script=$guest_script" -s"
+        guest_script_flags=$guest_script_flags"s"
       ;;
     a ) echo $currentscript" acceptance option selected."
         container="rv-match_acceptance_container"
-        guest_script=$guest_script" -a"
+        guest_script_flags=$guest_script_flags"a"
       ;;
     t ) echo $currentscript" unit test option selected."
-        #container="rv-match_unittest_container"
-        guest_script=$guest_script" -t"
+        guest_script_flags=$guest_script_flags"t"
       ;;
     \? ) echo "Usage: cmd [-r] [-s] [-a] [-t]"
          echo " -r regression"
@@ -30,6 +30,10 @@ while getopts ":rsat" opt; do
       ;;
   esac
 done
+if [ $guest_script_flags == " -" ] ; then
+    guest_script_flags=""
+fi
+guest_script=$guest_script$guest_script_flags
 echo "`git rev-parse --verify HEAD`" > githash.ini
 
 set -e

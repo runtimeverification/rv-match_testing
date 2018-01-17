@@ -1,24 +1,23 @@
 #!/bin/bash
 exportfile="report"
 currentscript="jenkins_run.sh"
-containerscriptflags=""
-while getopts ":rsa" opt; do
+containerscriptflags=" -"
+while getopts ":rsat" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
-        containerscriptflags=" -r"
+        containerscriptflags=$containerscriptflags"r"
       ;;
     s ) echo $currentscript" status option selected."
         exportfile="status"
-        containerscriptflags=" -s"
+        containerscriptflags=$containerscriptflags"s"
       ;;
-    a ) echo $currentscript" status option selected."
+    a ) echo $currentscript" acceptance option selected."
         exportfile="acceptance"
-        containerscriptflags=" -a"
+        containerscriptflags=$containerscriptflags"a"
       ;;
-    t ) echo $currentscript" status option selected."
-        exportfile="unittest"
-        containerscriptflags=" -t"
+    t ) echo $currentscript" unittest option selected."
+        containerscriptflags=$containerscriptflags"t"
       ;;
     \? ) echo "Usage: cmd [-r] [-s] [-a] [-t]"
          echo " -r regression"
@@ -28,6 +27,9 @@ while getopts ":rsa" opt; do
       ;;
   esac
 done
+if [ $containerscriptflags == " -" ] ; then
+    containerscriptflags=""
+fi
 
 bash copy_kcc_from_rv-match-master_to_jenkins_workspace.sh
 #touch results/$exportfile.xml

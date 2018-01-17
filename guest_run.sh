@@ -7,29 +7,27 @@ hostspace="/mnt/jenkins"
 
 mainscript="mainscript_testing"
 exportfile="report"
-runsetparams=""
+runsetparams=" -"
 echo "========= Beginning container guest scripts."
 while getopts ":rsa" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         mainscript="mainscript_regression"
         exportfile="regression"
-        runsetparams=" -r"
+        runsetparams=$runsetparams"r"
       ;;
     s ) echo $currentscript" status option selected."
         mainscript="mainscript_status"
         exportfile="status"
-        runsetparams=" -s"
+        runsetparams=$runsetparams"s"
       ;;
     a ) echo $currentscript" acceptance option selected."
         mainscript="mainscript_acceptance"
         exportfile="acceptance"
-        runsetparams=" -a"
+        runsetparams=$runsetparams"a"
       ;;
     t ) echo $currentscript" unit test option selected."
-        mainscript="mainscript_unittest"
-        exportfile="unittest"
-        runsetparams=" -t"
+        runsetparams=$runsetparams"t"
       ;;
     \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t]"
          echo " -r regression"
@@ -39,6 +37,9 @@ while getopts ":rsa" opt; do
       ;;
   esac
 done
+if [ $runsetparams == " -" ] ; then
+    runsetparams=""
+fi
 
 # Part 1: Basic container debug
 echo "Entered container at: "$(pwd)
@@ -110,10 +111,6 @@ mainscript_status() {
 mainscript_acceptance() {
     bash libs.sh
     bash merged.sh$runsetparams sets/acceptance.ini
-}
-mainscript_unittest() {
-    bash libs.sh
-    bash merged.sh$runsetparams sets/unittest.ini
 }
 cd /root/rv-match_testing/ && $mainscript
 
