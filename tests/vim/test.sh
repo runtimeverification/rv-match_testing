@@ -10,6 +10,7 @@ _download() {
 
 _build() {
     cd vim/
+    kcc -profile x86_64-linux-gcc-glibc
     ./configure CC=$compiler CFLAGS="-std=gnu11" LD=$compiler LDFLAGS="-ldl" |& tee kcc_configure_out.txt ; configure_success="$?"
     make |& tee kcc_make_out.txt ; make_success="$?"
 }
