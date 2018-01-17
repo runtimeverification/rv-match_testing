@@ -209,10 +209,10 @@ prep_extract() {
 }
 
 prep_build() {
-    
+   
     # Build hash is dependent on 3 things: {_build() function definition, $compiler --version, download hash}.
     buildhashinfo=$(type _build)$($compiler --version)$(head -n 1 $download_dir/download_function_hash)
-    if [ ! -e $build_dir/build_function_hash ] || [ "$(echo $(sha1sum <<< $buildhashinfo))" != "$(head -n 1 $build_dir/build_function_hash)" ] ; then
+    if [ ! -e $build_dir/build_function_hash ] || [ "$(echo $(sha1sum <<< $buildhashinfo))" != "$(head -n 1 $build_dir/build_function_hash)" ] || [ "0" == "0" ] ; then
 
         # build
         echo $report_string" building. Either build hash changed or this is the first time building."
@@ -222,6 +222,7 @@ prep_build() {
         unset configure_success
         unset make_success
         starttime=`date +%s.%N`
+        kcc -profile x86_64-linux-gcc-glibc
         cd $build_dir && _build
         endtime=`date +%s.%N`
         time=`echo "$endtime - $starttime" | bc -l`
