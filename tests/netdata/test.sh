@@ -18,7 +18,7 @@ _build() {
     autoreconf
     set -o pipefail
     if [[ $compiler == "kcc" ]]; then
-        ./configure CC=kcc CFLAGS="-std=gnu11 -frecover-all-errors" LD=kcc |& tee kcc_configure_out.txt ; configure_success="$?"
+        ./configure CC=kcc CFLAGS="-std=gnu11 -frecover-all-errors -no-pedantic" LD=kcc |& tee kcc_configure_out.txt ; configure_success="$?"
     else
         ./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
     fi
