@@ -62,13 +62,20 @@ git pull
 #cp -r sets/* /root/sets/
 
 #  2b Set kcc dependencies
-cd $hostspace
-export PATH=$hostspace/kcc_dependency_1:$hostspace/kcc_dependency_2:$hostspace/kcc_dependency_3/bin:$PATH
+# Here we copy kcc dependencies from jenkins workspace to the container
+cd /root/
+rm -r kcc_dependency_1/
+rm -r kcc_dependency_2/
+rm -r kcc_dependency_3/bin/
+cp -r $hostspace/kcc_dependency_1/ kcc_dependency_1/
+cp -r $hostspace/kcc_dependency_2/ kcc_dependency_2/
+cp -r $hostspace/kcc_dependency_3/ kcc_dependency_3/
+export PATH=/root/kcc_dependency_1:/root/kcc_dependency_2:/root/kcc_dependency_3/bin:$PATH
 echo "The modified container PATH variable: "$PATH
 
 echo "k-bin-to-text debug"
 which k-bin-to-text
-ls -la $hostspace/kcc_dependency_3/bin
+ls -la /root/kcc_dependency_3/bin
 echo k-bin-to-text
 errorstring="Error: Could not find or load main class org.kframework.main.BinaryToText"
 echo "Checking to see if "$(k-bin-to-text)" is equal to "$errorstring

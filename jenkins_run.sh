@@ -29,7 +29,7 @@ while getopts ":rsa" opt; do
   esac
 done
 
-#bash copy_kcc_dependencies.sh
+bash copy_kcc_from_rv-match-master_to_jenkins_workspace.sh
 #touch results/$exportfile.xml
 #chmod 777 results/$exportfile.xml
 #ls -la results/
