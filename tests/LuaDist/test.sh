@@ -10,8 +10,8 @@ _download() {
 
 _build() {
     cd lua/
-    CC=$compiler LD=$compiler cmake . |& tee kcc_configure_out.txt ; configure_success="$?"
-    CC=$compiler LD=$compiler make |& tee kcc_make_out.txt ; make_success="$?"
+    CC=$compiler CFLAGS="-std=gnu11" LD=$compiler LDFLAGS="-lm -ldl" cmake . |& tee kcc_configure_out.txt ; configure_success="$?"
+    CC=$compiler CFLAGS="-std=gnu11" LD=$compiler LDFLAGS="-lm -ldl" make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
 init
