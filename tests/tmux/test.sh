@@ -14,7 +14,7 @@ _build() {
     if [[ $compiler == "kcc" ]]; then
         ./configure CC=kcc CFLAGS="-no-pedantic" LD=kcc |& tee kcc_configure_out.txt ; configure_success="$?"
     else
-        ./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
+        ./configure CC=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
     fi
     make |& tee kcc_make_out.txt ; make_success="$?"
 }
