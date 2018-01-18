@@ -14,7 +14,7 @@ _build() {
     if [[ $compiler == "kcc" ]]; then
         ./configure --cc=kcc --ld=kcc --disable-stripping --disable-asm --disable-inline-asm --disable-x86asm --extra-cflags="-std=gnu11 -frecover-all-errors" |& tee kcc_configure_out.txt ; configure_success="$?"
     else
-        ./configure --cc=$compiler --ld=$compiler --disable-stripping --disable-asm --disable-inline-asm --disable-x86asm |& tee kcc_configure_out.txt ; configure_success="$?"
+        ./configure --cc=$compiler --disable-stripping --disable-asm --disable-inline-asm --disable-x86asm |& tee kcc_configure_out.txt ; configure_success="$?"
     fi
     make examples |& tee kcc_make_out.txt ; make_success="$?"
 }
