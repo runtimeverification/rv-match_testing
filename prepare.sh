@@ -17,6 +17,7 @@ currentscript="prepare.sh"
 
 exportfile="report"
 unittesting="1"
+echo $currentscript" selecting options.."
 while getopts ":rsat" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -316,8 +317,11 @@ init_helper() {
     prep_prepare
     prep_download
     prep_build
-    if [ $unittesting == "0" ] ; then
+    if [ "$unittesting" == "0" ] ; then
+        echo $currentscript": Unit testing."
         prep_test
+    else
+        echo $currentscript": Not unit testing."
     fi
 }
 
