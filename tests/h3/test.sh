@@ -10,8 +10,8 @@ _download() {
 
 _build() {
     cd h3/
-    CC=$compiler LD=$compiler cmake . ; configure_success="$?"
-    make ; make_success="$?"
+    CC=$compiler LD=$compiler cmake . |& tee kcc_configure_out.txt ; configure_success="$?"
+    make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
 _test() {

@@ -10,7 +10,7 @@ _download() {
 
 _build() {
     cd luna/ ; configure_success="$?"
-    make CC=$compiler LD=$compiler ; make_success="$?"
+    make CC=$compiler LD=$compiler |& tee kcc_make_out.txt ; make_success="$?"
 }
 
 _test() {
