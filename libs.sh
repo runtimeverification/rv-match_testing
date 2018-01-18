@@ -82,6 +82,7 @@ sudo apt -y install yasm
 echo $printheader"git"
 sudo apt -y install curl
 sudo apt -y install libcurl4-gnutls-dev
+sudo apt -y install libexpat1-dev
 
 echo $printheader"hostapd"
 sudo apt -y install pkg-config
