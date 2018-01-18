@@ -8,7 +8,7 @@ guest_script_flags=" -"
 while getopts ":rsat" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
-        container="rv-match_regression_container"
+        #container="rv-match_regression_container"
         guest_script_flags=$guest_script_flags"r"
       ;;
     s ) echo $currentscript" status option selected."
@@ -16,7 +16,7 @@ while getopts ":rsat" opt; do
         guest_script_flags=$guest_script_flags"s"
       ;;
     a ) echo $currentscript" acceptance option selected."
-        container="rv-match_acceptance_container"
+        #container="rv-match_acceptance_container"
         guest_script_flags=$guest_script_flags"a"
       ;;
     t ) echo $currentscript" unit test option selected."
