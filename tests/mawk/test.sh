@@ -14,12 +14,11 @@ _download() {
 
 _build() {
     cd mawk-1.3.3/
-    #./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
-    echo "MATHLIB='/lib/x86_64-linux-gnu/libm.so.6'" >> config.user
-    echo "CC=$compiler" >> config.user
-    echo "LD=$compiler" >> config.user
-    ./configure |& tee kcc_configure_out.txt ; configure_success="$?"
-    #./configure MATHLIB='/lib/x86_64-linux-gnu/libm.so.6' |& tee kcc_configure_out.txt ; configure_success="$?"
+    if [[ $compiler == "kcc" ]]; then
+        ./configure CC=kcc LD=kcc |& tee kcc_configure_out.txt ; configure_success="$?"
+    else
+        ./configure CC=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
+    fi
     make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
