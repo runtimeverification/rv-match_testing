@@ -79,6 +79,9 @@ apt-cache policy gettext
 echo $printheader"FFmpeg"
 sudo apt -y install yasm
 
+echo $printheader"git"
+sudo apt -y install curl
+
 echo $printheader"hostapd"
 sudo apt -y install pkg-config
 sudo apt -y install libnl-3-dev
