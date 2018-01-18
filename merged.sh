@@ -33,7 +33,7 @@ while getopts ":rsatu" opt; do
       ;;
   esac
 done
-if [ $flagsfortests == " -" ] ; then
+if [ "$flagsfortests" == " -" ] ; then
     flagsfortests=""
 fi
 
@@ -169,7 +169,8 @@ while read line; do
             cp /mnt/jenkins/$testsfolder/$line/test.sh $testsfolder/$line/test.sh
         fi
         echo ==== $line started at $(date)
-        bash "$testsfolder/$line/test.sh" "$flagsfortests"
+        echo "$testsfolder/$line/test.sh$flagsfortests"
+        bash "$testsfolder/$line/test.sh$flagsfortests"
         echo ==== $line finished at $(date)
     else
         echo "Status option was selected, so the tests are not being run right now."
