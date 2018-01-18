@@ -10,8 +10,11 @@ _download() {
 
 _build() {
     cd curl/
-    #Try "kcc -d" in place of "kcc" to get more information
-    CC=$compiler LD=$compiler cmake . |& tee kcc_configure_out.txt ; configure_success="$?"
+    if [[ $compiler == "kcc" ]]; then
+        CC=kcc CFLAGS="-std=gnu11 -no-pedantic -frecover-all-errors" LD=kcc cmake -DCURL_STATICLIB=ON . |& tee kcc_configure_out.txt ; configure_success="$?"
+    else
+        CC=$compiler LD=$compiler cmake -DCURL_STATICLIB=ON . |& tee kcc_configure_out.txt ; configure_success="$?"
+    fi
     make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
