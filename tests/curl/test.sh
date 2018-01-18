@@ -13,7 +13,7 @@ _build() {
     if [[ $compiler == "kcc" ]]; then
         CC=kcc CFLAGS="-std=gnu11 -no-pedantic -frecover-all-errors" LD=kcc cmake -DCURL_STATICLIB=ON . |& tee kcc_configure_out.txt ; configure_success="$?"
     else
-        CC=$compiler LD=$compiler cmake -DCURL_STATICLIB=ON . |& tee kcc_configure_out.txt ; configure_success="$?"
+        CC=$compiler cmake -DCURL_STATICLIB=ON . |& tee kcc_configure_out.txt ; configure_success="$?"
     fi
     make |& tee kcc_make_out.txt ; make_success="$?"
 }
