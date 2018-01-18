@@ -35,6 +35,7 @@ _test() {
     if [ "$exportfile" == "regression" ] ; then
         mv sat.pml ignore/
         mv for_select_example.pml ignore/
+    else
         if [ "$exportfile" == "acceptance" ] ; then
             mv sat.pml ignore/
         else
@@ -44,7 +45,6 @@ _test() {
                 mv for_select_example.pml ignore/
             fi
         fi
-    else
     fi
     index=0;
     for f in *.pml; do
