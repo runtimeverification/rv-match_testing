@@ -22,7 +22,6 @@ _build() {
         ./configure CC=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
     fi
     make |& tee kcc_make_out.txt ; make_success="$?"
-    cd dpkg-split
 }
 
 init
