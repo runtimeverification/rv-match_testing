@@ -9,7 +9,7 @@ mainscript="mainscript_testing"
 exportfile="report"
 runsetparams=" -"
 echo "========= Beginning container guest scripts."
-while getopts ":rsa" opt; do
+while getopts ":rsat" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         mainscript="mainscript_regression"
