@@ -54,9 +54,9 @@ git clone https://github.com/runtimeverification/rv-match_testing.git
 cd rv-match_testing/
 #echo "Wanting to use git sha: ""$(head -n 1 $hostspace/githash.ini)"
 #git checkout "$(head -n 1 $hostspace/githash.ini)"
-git checkout master
-git reset --hard origin/master
-git checkout master
+git checkout development
+git reset --hard origin/development
+git checkout development
 git pull
 #cp *.sh /root/
 #mkdir /root/sets/
