@@ -14,13 +14,14 @@ _build() {
     cd curve25519/
     if [[ $compiler == "kcc" ]] ; then
         cppcompiler="k++"
-        echo !!!!!!!!!!!!!!!!!!! should replace
+        sed -i -e "s/GPP   = g++/GPP   = $cppcompiler/g" Rules.mk
+        sed -i -e "s/LD    = ld/LD    = kcc/g" Rules.mk
+        sed -i -e "s/CC    = gcc/CFLAGS += -std=gnu11 -frecover-all-errors\nCC    = kcc/g" Rules.mk |& tee kcc_configure_out.txt ; configure_success="$?"
     else
         cppcompiler="g++"
-        echo !!!!!!!!!!!!!!!!!!! should not replace
+        sed -i -e "s/GPP   = g++/GPP   = $cppcompiler/g" Rules.mk && sed -i -e "s/CC    = gcc/CC    = $compiler/g" Rules.mk |& tee kcc_configure_out.txt ; configure_success="$?"
     fi
-    sed -i -e "s/GPP   = g++/GPP   = $cppcompiler/g" Rules.mk && sed -i -e "s/CC    = gcc/CC    = $compiler/g" Rules.mk |& tee kcc_configure_out.txt ; configure_success="$?"
-    make CC=$compiler LD=$compiler |& tee kcc_make_out.txt ; make_success="$?"
+    make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
 init
