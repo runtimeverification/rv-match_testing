@@ -11,7 +11,6 @@ _download() {
 
 _build() {
     cd wget/
-    kcc -profile x86_64-linux-gcc-glibc
     ./configure --disable-threads CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
     make |& tee kcc_make_out.txt ; make_success="$?"
 }
