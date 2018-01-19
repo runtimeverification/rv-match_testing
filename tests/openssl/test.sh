@@ -13,9 +13,9 @@ _build() {
     cd openssl/
     set -o pipefail
     if [[ $compiler == "kcc" ]]; then
-        CC=kcc CXX=k++ CFLAGS="-D__STDC_NO_ATOMICS__ -std=gnu11 -no-pedantic -frecover-all-errors" LD=kcc ./config no-asm no-threads no-hw no-zlib no-shared |& tee kcc_configure_out.txt ; configure_success="$?"
+        CC="kcc -std=gnu11 -no-pedantic -frecover-all-errors" CXX=k++ LD=kcc ./config no-asm no-threads no-hw no-zlib no-shared |& tee kcc_configure_out.txt ; configure_success="$?"
     else
-        CC=$compiler CFLAGS="-D__STDC_NO_ATOMICS__" ./config no-asm no-threads no-hw no-zlib no-shared |& tee kcc_configure_out.txt ; configure_success="$?"
+        CC=$compiler ./config no-asm no-threads no-hw no-zlib no-shared |& tee kcc_configure_out.txt ; configure_success="$?"
     fi
     make |& tee kcc_make_out.txt ; make_success="$?"
 }
