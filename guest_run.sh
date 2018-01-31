@@ -8,8 +8,9 @@ hostspace="/mnt/jenkins"
 mainscript="mainscript_testing"
 exportfile="report"
 runsetparams=" -"
+development_checkout_check="0"
 echo "========= Beginning container guest scripts."
-while getopts ":rsat" opt; do
+while getopts ":rsatd" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         mainscript="mainscript_regression"
@@ -29,11 +30,15 @@ while getopts ":rsat" opt; do
     t ) echo $currentscript" unit test option selected."
         runsetparams=$runsetparams"t"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t]"
+    d ) echo $currentscript" development option selected."
+        development_checkout_check="1"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-d]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
          echo " -t unit tests"
+         echo " -d development"
       ;;
   esac
 done
@@ -54,9 +59,13 @@ git clone https://github.com/runtimeverification/rv-match_testing.git
 cd rv-match_testing/
 #echo "Wanting to use git sha: ""$(head -n 1 $hostspace/githash.ini)"
 #git checkout "$(head -n 1 $hostspace/githash.ini)"
-git checkout development
-git reset --hard origin/development
-git checkout development
+gitbranch="master"
+if [ "$development_checkout_check" == "1" ] ; then
+    gitbranch="development"
+fi
+git checkout $gitbranch
+git reset --hard origin/$gitbranch
+git checkout $gitbranch
 git pull
 #cp *.sh /root/
 #mkdir /root/sets/
