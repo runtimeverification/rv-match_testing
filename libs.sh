@@ -8,6 +8,9 @@ sudo apt-get update
 #apt-get update && apt-get -y dist-upgrade
 sudo dpkg --configure -a
 
+echo $printheader"merged.sh"
+sudo apt -y install html-xml-utils
+
 echo $printheader"kcc"
 sudo apt -y install libmpfr-dev libmpfr-doc libmpfr4 libmpfr4-dbg
 sudo apt -y install libffi-dev
