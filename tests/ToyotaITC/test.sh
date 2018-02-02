@@ -3,6 +3,9 @@
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
 _download() {
+    # https://github.com/runtimeverification/toyota-itc-benchmarks
+    # https://github.com/regehr/itc-benchmarks
+    # https://github.com/Toyota-ITC-SSD/Software-Analysis-Benchmark
     git clone https://github.com/Toyota-ITC-SSD/Software-Analysis-Benchmark.git
     cd Software-Analysis-Benchmark/
     git checkout c146ccab82e401b2dfeef85b8e1e9368ae5dd8fd
