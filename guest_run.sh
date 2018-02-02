@@ -110,8 +110,8 @@ mainscript_status() {
 }
 mainscript_acceptance() {
     bash libs.sh
-    #bash merged.sh$runsetparams sets/acceptance.ini
-    bash merged.sh$runsetparams sets/acceptance_and_regression.ini
+    bash merged.sh$runsetparams sets/acceptance.ini
+    #bash merged.sh$runsetparams sets/acceptance_and_regression.ini
 }
 mainscript_unittest() {
     bash libs.sh
