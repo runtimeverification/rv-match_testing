@@ -93,6 +93,9 @@ sudo apt -y install libnl-3-dev
 sudo apt -y install libnl-route-3-dev
 sudo apt -y install libnl-genl-3-dev
 
+echo $printheader"JulietTestSuite"
+sudo apt -y install zip
+
 echo $printheader"libpcap"
 sudo apt -y install bison
 sudo apt -y install flex
