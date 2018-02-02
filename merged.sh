@@ -189,5 +189,13 @@ echo "kcc success:"$kccmakes" fails:"$kccmakef" total:"$kccmake
 echo '</testsuite>
 </testsuites>
 ' >> $exportpath
+# The following perl script one liner was provided by users at URL:
+# https://unix.stackexchange.com/questions/421286/how-to-printf-literal-characters-from-to-file-in-bash
+# perl -C -pe 'tr/\x09\x0a\x0d\x20-\x{d7ff}\x{e000}-\x{fffd}\x{10000}-\x{10ffff}//cd' < $exportpath > $exportpath".tmp"
+perl -C -pe 'tr/\x{9}-\x{A}\x{D}-\x{D}\x{20}-\x{D7FF}\x{E000}-\x{FDCF}\x{FE00}-\x{FFFD}\x{10000}-\x{1FFFD}\x{20000}-\x{2FFFD}\x{30000}-\x{3FFFD}\x{40000}-\x{4FFFD}\x{50000}-\x{5FFFD}\x{60000}-\x{6FFFD}\x{70000}-\x{7FFFD}\x{80000}-\x{8FFFD}\x{90000}-\x{9FFFD}\x{A0000}-\x{AFFFD}\x{B0000}-\x{BFFFD}\x{C0000}-\x{CFFFD}\x{D0000}-\x{DFFFD}\x{E0000}-\x{EFFFD}\x{F0000}-\x{FFFFD}\x{100000}-\x{10FFFD}//cd' < $exportpath > $exportpath".tmp"
+cp $exportpath".tmp" $exportpath
+echo "The following invalid XML characters were removed from the results:"
+diff $exportpath".tmp" $exportpath
+rm $exportpath".tmp"
 echo "$exportpath file, produced by this script, is as follows:"
 cat $exportpath
