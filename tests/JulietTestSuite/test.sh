@@ -7,9 +7,9 @@ _download() {
 }
 
 _build() {
-    tar -zxf ; configure_success="$?"
+    unzip Juliet_Test_Suite_v1.3_for_C_Cpp.zip |& tee kcc_configure_out.txt ; configure_success="$?"
     rm Juliet_Test_Suite_v1.3_for_C_Cpp.zip
-    cd C/ && make ; make_success="$?"
+    cd C/ && make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
 _test() {
