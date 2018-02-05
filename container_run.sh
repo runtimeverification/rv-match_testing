@@ -57,7 +57,7 @@ pwd
 echo "=== Mounting:"
 lxc config device add match-testing shared-folder-device disk source=`pwd` path=/mnt/jenkins
 echo "=== Exec:"
-lxc exec match-testing -- bash sayhi.sh
+lxc exec match-testing -- bash "/mnt/jenkins/sayhi.sh"
 echo "=== End Exec"
 
 
