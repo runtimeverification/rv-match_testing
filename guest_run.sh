@@ -93,9 +93,7 @@ git pull
 # Switching soon to using installer instead of direct file copies.
 # https://github.com/runtimeverification/rv-match/blob/master/installer-linux/scripts/install-in-container
 
-sudo add-apt-repository ppa:webupd8team/java
-sudo apt-get update
-sudo apt-get -y install oracle-java8-installer
+sudo apt-get -y install default-jre
 wget https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT.jar
 java -jar /mnt/jenkins/installer-linux/target/rv-match-linux-64*.jar -console
 
