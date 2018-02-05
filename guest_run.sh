@@ -78,24 +78,26 @@ git pull
 #mkdir /root/sets/
 #cp -r sets/* /root/sets/
 
+#  2b Set kcc dependencies
+# Here we copy kcc dependencies from jenkins workspace to the container
+#cd /root/
+#rm -r kcc_dependency_1/
+#rm -r kcc_dependency_2/
+#rm -r kcc_dependency_3/bin/
+#cp -r $hostspace/kcc_dependency_1/ kcc_dependency_1/
+#cp -r $hostspace/kcc_dependency_2/ kcc_dependency_2/
+#cp -r $hostspace/kcc_dependency_3/ kcc_dependency_3/
+#export PATH=/root/kcc_dependency_1:/root/kcc_dependency_2:/root/kcc_dependency_3/bin:$PATH
+#echo "The modified container PATH variable: "$PATH
+
 # Switching soon to using installer instead of direct file copies.
 # https://github.com/runtimeverification/rv-match/blob/master/installer-linux/scripts/install-in-container
 
-#  2b Set kcc dependencies
-# Here we copy kcc dependencies from jenkins workspace to the container
-cd /root/
-rm -r kcc_dependency_1/
-rm -r kcc_dependency_2/
-rm -r kcc_dependency_3/bin/
-cp -r $hostspace/kcc_dependency_1/ kcc_dependency_1/
-cp -r $hostspace/kcc_dependency_2/ kcc_dependency_2/
-cp -r $hostspace/kcc_dependency_3/ kcc_dependency_3/
-export PATH=/root/kcc_dependency_1:/root/kcc_dependency_2:/root/kcc_dependency_3/bin:$PATH
-echo "The modified container PATH variable: "$PATH
+wget https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT.jar
+java -jar /mnt/jenkins/installer-linux/target/rv-match-linux-64*.jar -console
 
-echo "k-bin-to-text debug"
+echo "<k-bin-to-text prep>"
 which k-bin-to-text
-ls -la /root/kcc_dependency_3/bin
 echo k-bin-to-text
 errorstring="Error: Could not find or load main class org.kframework.main.BinaryToText"
 echo "Checking to see if "$(k-bin-to-text)" is equal to "$errorstring
@@ -105,7 +107,7 @@ if [[ $(k-bin-to-text) == $errorstring ]] ; then
 else
     echo "It was not equal so we assume kserver was already started."
 fi
-echo "</placement debug>"
+echo "</k-bin-to-text prep>"
 
 # Part 3 Run Main Script
 mainscript_testing() {
