@@ -10,7 +10,7 @@ exportfile="report"
 runsetparams=" -"
 development_checkout_check="0"
 echo "========= Beginning container guest scripts."
-while getopts ":rsatd" opt; do
+while getopts ":rsatdg" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         mainscript="mainscript_regression"
@@ -33,12 +33,16 @@ while getopts ":rsatd" opt; do
     d ) echo $currentscript" development option selected."
         development_checkout_check="1"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-d]"
+    g ) echo $currentscript" gcc only option selected."
+        runsetparams=$runsetparams"g"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-d] [-g]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
          echo " -t unit tests"
          echo " -d development"
+         echo " -g gcc only"
       ;;
   esac
 done
@@ -73,6 +77,9 @@ git pull
 #cp *.sh /root/
 #mkdir /root/sets/
 #cp -r sets/* /root/sets/
+
+# Switching soon to using installer instead of direct file copies.
+# https://github.com/runtimeverification/rv-match/blob/master/installer-linux/scripts/install-in-container
 
 #  2b Set kcc dependencies
 # Here we copy kcc dependencies from jenkins workspace to the container

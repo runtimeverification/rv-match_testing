@@ -5,7 +5,7 @@ currentscript="container_run.sh"
 #source_container="ubuntu-14.04-java"
 guest_script="guest_run.sh"
 guest_script_flags=" -"
-while getopts ":rsatd" opt; do
+while getopts ":rsatdg" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         #container="rv-match_regression_container"
@@ -25,12 +25,16 @@ while getopts ":rsatd" opt; do
     d ) echo $currentscript" development option selected."
         guest_script_flags=$guest_script_flags"d"
       ;;
-    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d]"
+    g ) echo $currentscript" gcc only option selected."
+        guest_script_flags=$guest_script_flags"g"
+      ;;
+    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
          echo " -t unit tests"
          echo " -d development"
+         echo " -g gcc only"
       ;;
   esac
 done
