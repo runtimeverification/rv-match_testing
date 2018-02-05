@@ -145,7 +145,10 @@ mainscript_acceptance() {
     bash libs.sh
     bash merged.sh$runsetparams sets/acceptance.ini
 }
-cd /root/ && $mainscript
+echo "Debug location."
+pwd
+ls
+cd /root/rv-match_testing && ls && $mainscript
 
 # Part 4 Copy test result xml back to host
 echo "Container results are in "$exportfile".xml:"
