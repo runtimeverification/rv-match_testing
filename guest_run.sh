@@ -97,7 +97,7 @@ bash libs.sh
 sudo rm /var/lib/dpkg/lock
 sudo apt-get -y install default-jre
 wget https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT.jar
-java -jar /mnt/jenkins/installer-linux/target/rv-match-linux-64*.jar -console
+java -jar rv-match-linux-64*.jar -console
 
 echo "<k-bin-to-text prep>"
 which k-bin-to-text
