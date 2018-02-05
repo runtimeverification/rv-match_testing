@@ -24,6 +24,7 @@ while getopts ":rsatd" opt; do
       ;;
     d ) echo $currentscript" development option selected."
         guest_script_flags=$guest_script_flags"d"
+      ;;
     \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d]"
          echo " -r regression"
          echo " -s status"
