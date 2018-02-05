@@ -97,7 +97,15 @@ bash libs.sh
 sudo rm /var/lib/dpkg/lock
 sudo apt-get -y install default-jre
 wget https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT.jar
-java -jar rv-match-linux-64*.jar -console
+"
+1
+
+
+1
+y
+1
+" > stdinfile.txt
+cat stdinfile.txt | java -jar rv-match-linux-64*.jar -console ; rm stdinfile.txt
 
 echo "<k-bin-to-text prep>"
 which k-bin-to-text
