@@ -21,6 +21,7 @@ while getopts ":rsatd" opt; do
       ;;
     d ) echo $currentscript" git development checkout option selected."
         containerscriptflags=$containerscriptflags"d"
+      ;;
     \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d]"
          echo " -r regression"
          echo " -s status"
