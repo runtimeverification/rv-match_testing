@@ -93,6 +93,7 @@ git pull
 # Switching soon to using installer instead of direct file copies.
 # https://github.com/runtimeverification/rv-match/blob/master/installer-linux/scripts/install-in-container
 
+bash libs.sh
 sudo rm /var/lib/dpkg/lock
 sudo apt-get -y install default-jre
 wget https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT.jar
