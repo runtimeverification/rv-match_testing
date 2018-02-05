@@ -61,7 +61,10 @@ cd rv-match_testing/
 #git checkout "$(head -n 1 $hostspace/githash.ini)"
 gitbranch="master"
 if [ "$development_checkout_check" == "1" ] ; then
+    echo "Git branch development checked out."
     gitbranch="development"
+else
+    echo "Git branch master checked out."
 fi
 git checkout $gitbranch
 git reset --hard origin/$gitbranch
