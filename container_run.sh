@@ -44,7 +44,7 @@ fi
 guest_script=$guest_script$guest_script_flags
 echo "`git rev-parse --verify HEAD`" > githash.ini
 
-lxc network list
+#lxc network list
 
 lxc stop match-testing
 echo "=== First listing:"
@@ -56,7 +56,7 @@ lxc list
 echo "=== Setting permissions:"
 chmod +x sayhi.sh
 echo "=== Attach network:"
-lxc network attach testbr0 match-testing eth0
+#lxc network attach testbr0 match-testing eth0
 echo "=== Starting:"
 lxc start match-testing
 echo "=== Third listing:"
@@ -68,7 +68,9 @@ lxc config device add match-testing shared-folder-device disk source=`pwd` path=
 echo "=== Exec:"
 lxc exec match-testing -- bash -c "/mnt/jenkins/$guest_script"
 echo "=== End Exec"
-
+echo "Sleeping.."
+sleep 100
+lxc list
 
 #set -e
 #function stopLxc {
