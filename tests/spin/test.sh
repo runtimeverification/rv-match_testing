@@ -3,6 +3,10 @@
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 # http://spinroot.com/spin/whatispin.html
 
+_dependencies() {
+    sudo apt -y install bison
+}
+
 _download() {
     wget http://spinroot.com/spin/Src/spin647.tar.gz
     tar -xvzf spin647.tar.gz

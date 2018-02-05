@@ -2,6 +2,13 @@
 [ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/prepare.sh
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
+_dependencies() {
+    sudo apt -y install pkg-config
+    sudo apt -y install libnl-3-dev
+    sudo apt -y install libnl-route-3-dev
+    sudo apt -y install libnl-genl-3-dev
+}
+
 _download() {
     git clone git://w1.fi/hostap.git
     cd hostap/

@@ -105,6 +105,8 @@ prep_prepare() {
 
     unit_test_dir=$test_dir/$compiler/unit_test
     mkdir -p $unit_test_dir
+
+    _dependencies
 }
 
 prep_download() {

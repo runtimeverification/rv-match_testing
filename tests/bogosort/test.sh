@@ -2,6 +2,14 @@
 [ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/prepare.sh
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
+_dependencies() {
+    which cpan
+    cpan YAML
+    cpan String::Escape
+    cpan Getopt::Declare
+    cpan UUID::Tiny
+}
+
 _download() {
     mkdir bogosort/
     cd bogosort/

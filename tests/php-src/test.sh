@@ -2,7 +2,13 @@
 [ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/prepare.sh
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
-# TODO
+_dependencies() {
+    ldd --version
+    apt-cache policy libc6
+    # See cFE, may fix this, too "configure: error: C compiler cannot create executables": sudo apt install libc6-dev
+    sudo apt -y install libxml2-dev
+}
+
 _download() {
     git clone https://github.com/php/php-src.git
     cd php-src/
