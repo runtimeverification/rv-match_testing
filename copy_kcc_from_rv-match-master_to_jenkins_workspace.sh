@@ -1,6 +1,6 @@
 #!/bin/bash
 currentdir=$(pwd)
-kccsource="/var/lib/jenkins/jobs/rv-match-master/workspace"
+kccsource="/var/lib/jenkins/jobs/rv-match-master/ws"
 cd $kccsource
 kccgithash=$(git rev-parse HEAD)
 cd $currentdir
