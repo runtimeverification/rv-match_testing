@@ -122,6 +122,7 @@ echo "</k-bin-to-text prep>"
 
 # Part 3 Run Main Script
 mainscript_testing() {
+
     bash unit_test_merged.sh
     bash libs.sh
     #bash tests/getty/test.sh
@@ -145,6 +146,7 @@ mainscript_status() {
 mainscript_acceptance() {
     bash libs.sh
     bash merged.sh$runsetparams sets/acceptance.ini
+    #bash merged.sh$runsetparams sets/acceptance_and_regression.ini
 }
 echo "Debug location."
 pwd

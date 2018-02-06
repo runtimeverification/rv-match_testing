@@ -25,12 +25,12 @@ _build() {
     autoreconf
     automake --add-missing
     autoreconf -vif
-    echo "DPKG DEBUG"
-    sed '5133q;d' configure
-    ./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
+    if [[ $compiler == "kcc" ]]; then
+        ./configure CC=kcc LD=kcc LDFLAGS="-lz" |& tee kcc_configure_out.txt ; configure_success="$?"
+    else
+        ./configure CC=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
+    fi
     make |& tee kcc_make_out.txt ; make_success="$?"
-    cd dpkg-split
-    $compiler -d -g -O1 -o dpkg-split info.o join.o main.o queue.o split.o ../lib/dpkg/.libs/libdpkg.a |& tee kcc_out.txt
 }
 
 init

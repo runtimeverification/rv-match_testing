@@ -11,11 +11,14 @@ _download() {
 _build() {
     cd coreutils-8.28/
     autoreconf
-    sudo ./configure CC=$compiler LD=$compiler --disable-threads FORCE_UNSAFE_CONFIGURE=1 |& tee kcc_configure_out.txt ; configure_success="$?"
+    if [[ $compiler == "kcc" ]]; then
+        ./configure CC=kcc CFLAGS="-std=gnu11 -frecover-all-errors -no-pedantic" LD=kcc --disable-threads FORCE_UNSAFE_CONFIGURE=1 |& tee kcc_configure_out.txt ; configure_success="$?"
+    else
+        ./configure CC=$compiler --disable-threads FORCE_UNSAFE_CONFIGURE=1 |& tee kcc_configure_out.txt ; configure_success="$?"
+    fi
     echo "COREUTILS DEBUG"
     cat config.log
     make |& tee kcc_make_out.txt ; make_success="$?"
-    $compiler -d -I. -I./lib -Ilib -I./lib -Isrc -I./src -g -MT lib/parse-datetime.o -MD -MP -MF lib/.deps/parse-datetime.Tpo -c -o lib/parse-datetime.o lib/parse-datetime.c |& tee kcc_out.txt
 }
 
 init

@@ -17,9 +17,13 @@ _build() {
     cd bind9/
     autoreconf
     set -o pipefail
-    ./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
+    if [[ $compiler == "kcc" ]]; then
+        ./configure CC=kcc CFLAGS="-std=gnu11 -no-pedantic -frecover-all-errors" LD=kcc --disable-threads --disable-atomic --disable-shared |& tee kcc_configure_out.txt ; configure_success="$?"
+    else
+        ./configure CC=$compiler --disable-threads --disable-atomic --disable-shared |& tee kcc_configure_out.txt ; configure_success="$?"
+    fi
+    gcc -Ilib/isc/include -o lib/dns/gen lib/dns/gen.c
     make |& tee kcc_make_out.txt ; make_success="$?"
-    #kcc -d -I/home/timothy/Desktop/bind9 -I../.. -I. -I../../lib/dns -Iinclude -I/home/timothy/Desktop/bind9/lib/dns/include -I../../lib/dns/include -I/home/timothy/Desktop/bind9/lib/isc/include -I../../lib/isc -I../../lib/isc/include -I../../lib/isc/unix/include -I../../lib/isc/pthreads/include -I../../lib/isc/noatomic/include -D_REENTRANT -DUSE_MD5 -DOPENSSL -D_GNU_SOURCE -g -fPIC -c adb.c |& tee kcc_out.txt
 }
 
 init

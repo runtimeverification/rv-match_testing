@@ -10,8 +10,11 @@ _download() {
 
 _build() {
     cd mbedtls-2.4.0/ && configure_success="$?"
-    CC=$compiler LD=$compiler make |& tee kcc_make_out.txt ; make_success="$?"
-    #$compiler -d -Wall -W -Wdeclaration-after-statement -I../include -D_FILE_OFFSET_BITS=64 -O2 -c net_sockets.c |& tee kcc_out.txt
+    if [[ $compiler == "kcc" ]]; then
+        CC=kcc CFLAGS="-std=gnu11 -frecover-all-errors -no-pedantic" LD=kcc make |& tee kcc_make_out.txt ; make_success="$?"
+    else
+        CC=$compiler make |& tee kcc_make_out.txt ; make_success="$?"
+    fi
 }
 
 init
