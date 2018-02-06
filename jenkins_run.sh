@@ -1,36 +1,46 @@
 #!/bin/bash
 exportfile="report"
 currentscript="jenkins_run.sh"
-containerscriptflags=""
-while getopts ":rsa" opt; do
+containerscriptflags=" -"
+while getopts ":rsatdg" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
-        containerscriptflags=" -r"
+        containerscriptflags=$containerscriptflags"r"
       ;;
     s ) echo $currentscript" status option selected."
         exportfile="status"
-        containerscriptflags=" -s"
+        containerscriptflags=$containerscriptflags"s"
       ;;
-    a ) echo $currentscript" status option selected."
+    a ) echo $currentscript" acceptance option selected."
         exportfile="acceptance"
-        containerscriptflags=" -a"
+        containerscriptflags=$containerscriptflags"a"
       ;;
-    t ) echo $currentscript" status option selected."
-        exportfile="unittest"
-        containerscriptflags=" -t"
+    t ) echo $currentscript" unittest option selected."
+        containerscriptflags=$containerscriptflags"t"
       ;;
-    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t]"
+    d ) echo $currentscript" git development checkout option selected."
+        containerscriptflags=$containerscriptflags"d"
+      ;;
+    g ) echo $currentscript" gcc option selected."
+        containerscriptflags=$containerscriptflags"g"
+      ;;
+    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
          echo " -t unit tests"
+         echo " -d container uses development"
+         echo " -g gcc only"
       ;;
   esac
 done
+if [ $containerscriptflags == " -" ] ; then
+    containerscriptflags=""
+fi
 
-bash copy_kcc_from_rv-match-master_to_jenkins_workspace.sh
-#touch results/$exportfile.xml
-#chmod 777 results/$exportfile.xml
+#bash copy_kcc_from_rv-match-master_to_jenkins_workspace.sh
+touch results/$exportfile.xml
+chmod a+rw results/$exportfile.xml
 #ls -la results/
 bash container_run.sh$containerscriptflags

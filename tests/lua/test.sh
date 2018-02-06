@@ -3,6 +3,10 @@
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 VERSION=5.3.4
 
+_dependencies() {
+    sudo apt -y install libreadline-dev
+}
+
 _download() {
     # For building
     tar=lua-$VERSION.tar.gz

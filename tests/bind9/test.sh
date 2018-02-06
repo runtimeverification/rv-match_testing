@@ -2,6 +2,11 @@
 [ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/prepare.sh
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
+_dependencies() {
+    sudo apt -y install openssl
+    sudo apt -y install libssl-dev
+}
+
 _download() {
     git clone https://source.isc.org/git/bind9.git
     cd bind9/

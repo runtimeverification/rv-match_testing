@@ -2,6 +2,13 @@
 [ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/prepare.sh
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
+_dependencies() {
+    sudo apt -y install ncurses-dev
+    sudo apt -y install libncurses5-dev
+    sudo apt -y install libncursesw5-dev
+    sudo apt -y build-dep vim
+}
+
 _download() {
     git clone https://github.com/vim/vim
     cd vim/

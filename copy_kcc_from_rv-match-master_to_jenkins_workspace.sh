@@ -1,7 +1,11 @@
 #!/bin/bash
 currentdir=$(pwd)
-kccsource="/var/lib/jenkins/jobs/rv-match-master/workspace"
+#kccsource="/var/lib/jenkins/jobs/rv-match-master-copy/workspace"
+kccsource="/var/jenkins/workspace/rv-match-master-copy"
 cd $kccsource
+echo "Should be inside the proper jenkins folder to get kcc from..."
+pwd
+ls
 kccgithash=$(git rev-parse HEAD)
 cd $currentdir
 rm -r kcc_dependency_1/

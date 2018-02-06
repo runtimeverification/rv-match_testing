@@ -2,6 +2,11 @@
 [ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/prepare.sh
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
+_dependencies() {
+    sudo apt -y install bison
+    sudo apt -y install flex
+}
+
 _download() {
     git clone https://github.com/the-tcpdump-group/libpcap.git
     cd libpcap/

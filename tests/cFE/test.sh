@@ -2,6 +2,15 @@
 [ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/prepare.sh
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
+_dependencies() {
+    sudo apt -y install cmake
+    cmake --version
+    sudo apt -y install libc6
+    sudo apt -y install libc6-dev
+    sudo apt -y install libc6-dev-i386
+    sudo apt -y install g++-multilib
+}
+
 _download() {
     wget "https://sourceforge.net/projects/coreflightexec/files/cFE-6.5.0a-OSS-release.tar.gz"
     tar -xvzf cFE-6.5.0a-OSS-release.tar.gz

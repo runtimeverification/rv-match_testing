@@ -1,5 +1,5 @@
 #!/bin/bash
-bash merged.sh -u sets/selftest.ini
+bash merged.sh -ut sets/selftest.ini
 bash merged.sh -ur sets/selftest.ini
 bash merged.sh -ua sets/selftest.ini
 echo $'\n\nTest results: '
@@ -192,6 +192,29 @@ else
     fi
     if [ ! "$similar" == "0" ] ; then
         echo "  - xml is not similar to past regression structure."
+    fi
+fi
+
+# k-bin-to-text test
+kbinin="selftest/k-bin-to-text_runs/kcc_config"
+kbinout="selftest/k-bin-to-text_runs/kcc_config.txt"
+rm $kbinout 2> /dev/null
+k-bin-to-text $kbinin $kbinout 2> /dev/null ; one="$?"
+if [ "$one" == "0" ] ; then
+    [ -e $kbinout ] && grep -q "generatedTop" $kbinout ; two="$?"
+    if [ "$two" == "0" ] ; then
+        echo "\"k-bin-to-text\" test           : passes."
+    else
+        echo "\"k-bin-to-text\" test           : fails."
+        echo "  - command succeeded but generated file does exist or does not contain substring \"generatedTop\"."
+    fi
+else
+    if [ "$one" == "1" ] ; then
+        echo "\"k-bin-to-text\" test           : fails."
+        echo "  - command recognized but returned 1 so you may first need to run \"kserver &\"."
+    else
+        echo "\"k-bin-to-text\" test           : fails."
+        echo "  - command returned ""$one."
     fi
 fi
 

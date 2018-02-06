@@ -2,6 +2,11 @@
 [ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/prepare.sh
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
+_dependencies() {
+    sudo apt -y install linux-generic
+    sudo apt -y install linux-headers-`uname -r`
+}
+
 _download() {
     git clone https://github.com/f0rb1dd3n/Reptile.git
     cd Reptile/

@@ -4,36 +4,42 @@
 currentscript="<insert scriptname here>"
 exportfile="report"
 testsfolder="tests"
-flagsfortests=""
-while getopts ":rsatu" opt; do
+flagsfortests="-"
+while getopts ":rsatug" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
-        flagsfortests="-r"
+        flagsfortests=$flagsfortests"r"
       ;;
     s ) echo $currentscript" status option selected."
         flagsfortests="STOP"
       ;;
     a ) echo $currentscript" acceptance option selected."
         exportfile="acceptance"
-        flagsfortests="-a"
+        flagsfortests=$flagsfortests"a"
       ;;
     t ) echo $currentscript" unit testing option selected."
-        exportfile="unittest"
-        flagsfortests="-t"
+        flagsfortests=$flagsfortests"t"
       ;;
     u ) echo $currentscript" unit-test-self option selected."
         testsfolder="selftest"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-u]"
+    g ) echo $currentscript" gcc only option selected."
+        flagsfortests=$flagsfortests"g"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-u] [-g]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
          echo " -t unit tests"
          echo " -u unit-test-self"
+         echo " -g gcc only"
       ;;
   esac
 done
+if [ "$flagsfortests" == "-" ] ; then
+    flagsfortests=""
+fi
 
 # Handle .ini argument
 filepath=$1
@@ -158,6 +164,9 @@ read_log_files() {
     fi
 }
 
+echo "DEBUG merged.sh"
+cat $whitelistpath
+echo "/DEBUG merged.sh"
 while read line; do
     if [ ! "$flagsfortests" == "STOP" ] ; then
         # Update container, if we're in one, with the jenkins test.sh
@@ -167,6 +176,7 @@ while read line; do
             cp /mnt/jenkins/$testsfolder/$line/test.sh $testsfolder/$line/test.sh
         fi
         echo ==== $line started at $(date)
+        echo "bashing \"$testsfolder/$line/test.sh\" followed by \"$flagsfortests\""
         bash "$testsfolder/$line/test.sh" "$flagsfortests"
         echo ==== $line finished at $(date)
     else

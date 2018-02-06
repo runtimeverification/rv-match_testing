@@ -2,6 +2,13 @@
 [ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/prepare.sh
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
+_dependencies() {
+    sudo apt -y install autopoint
+    sudo apt -y install texinfo
+    sudo apt -y install gperf
+    sudo apt -y install libgnutls-dev
+}
+
 _download() {
     git clone https://github.com/mirror/wget.git
     cd wget/

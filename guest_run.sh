@@ -7,38 +7,48 @@ hostspace="/mnt/jenkins"
 
 mainscript="mainscript_testing"
 exportfile="report"
-runsetparams=""
+runsetparams=" -"
+development_checkout_check="0"
 echo "========= Beginning container guest scripts."
-while getopts ":rsa" opt; do
+while getopts ":rsatdg" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         mainscript="mainscript_regression"
         exportfile="regression"
-        runsetparams=" -r"
+        runsetparams=$runsetparams"r"
       ;;
     s ) echo $currentscript" status option selected."
         mainscript="mainscript_status"
         exportfile="status"
-        runsetparams=" -s"
+        runsetparams=$runsetparams"s"
       ;;
     a ) echo $currentscript" acceptance option selected."
         mainscript="mainscript_acceptance"
         exportfile="acceptance"
-        runsetparams=" -a"
+        runsetparams=$runsetparams"a"
       ;;
     t ) echo $currentscript" unit test option selected."
-        mainscript="mainscript_unittest"
-        exportfile="unittest"
-        runsetparams=" -t"
+        runsetparams=$runsetparams"t"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t]"
+    d ) echo $currentscript" development option selected."
+        development_checkout_check="1"
+      ;;
+    g ) echo $currentscript" gcc only option selected."
+        runsetparams=$runsetparams"g"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-d] [-g]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
          echo " -t unit tests"
+         echo " -d development"
+         echo " -g gcc only"
       ;;
   esac
 done
+if [ $runsetparams == " -" ] ; then
+    runsetparams=""
+fi
 
 # Part 1: Basic container debug
 echo "Entered container at: "$(pwd)
@@ -53,9 +63,16 @@ git clone https://github.com/runtimeverification/rv-match_testing.git
 cd rv-match_testing/
 #echo "Wanting to use git sha: ""$(head -n 1 $hostspace/githash.ini)"
 #git checkout "$(head -n 1 $hostspace/githash.ini)"
-git checkout master
-git reset --hard origin/master
-git checkout master
+gitbranch="master"
+if [ "$development_checkout_check" == "1" ] ; then
+    echo "Git branch development checked out."
+    gitbranch="development"
+else
+    echo "Git branch master checked out."
+fi
+git checkout $gitbranch
+git reset --hard origin/$gitbranch
+git checkout $gitbranch
 git pull
 #cp *.sh /root/
 #mkdir /root/sets/
@@ -63,19 +80,35 @@ git pull
 
 #  2b Set kcc dependencies
 # Here we copy kcc dependencies from jenkins workspace to the container
-cd /root/
-rm -r kcc_dependency_1/
-rm -r kcc_dependency_2/
-rm -r kcc_dependency_3/bin/
-cp -r $hostspace/kcc_dependency_1/ kcc_dependency_1/
-cp -r $hostspace/kcc_dependency_2/ kcc_dependency_2/
-cp -r $hostspace/kcc_dependency_3/ kcc_dependency_3/
-export PATH=/root/kcc_dependency_1:/root/kcc_dependency_2:/root/kcc_dependency_3/bin:$PATH
-echo "The modified container PATH variable: "$PATH
+#cd /root/
+#rm -r kcc_dependency_1/
+#rm -r kcc_dependency_2/
+#rm -r kcc_dependency_3/bin/
+#cp -r $hostspace/kcc_dependency_1/ kcc_dependency_1/
+#cp -r $hostspace/kcc_dependency_2/ kcc_dependency_2/
+#cp -r $hostspace/kcc_dependency_3/ kcc_dependency_3/
+#export PATH=/root/kcc_dependency_1:/root/kcc_dependency_2:/root/kcc_dependency_3/bin:$PATH
+#echo "The modified container PATH variable: "$PATH
 
-echo "k-bin-to-text debug"
+# Switching soon to using installer instead of direct file copies.
+# https://github.com/runtimeverification/rv-match/blob/master/installer-linux/scripts/install-in-container
+
+bash libs.sh
+sudo rm /var/lib/dpkg/lock
+sudo apt-get -y install default-jre
+wget https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT.jar
+printf "
+1
+
+
+1
+y
+1
+" > stdinfile.txt
+cat stdinfile.txt | java -jar rv-match-linux-64*.jar -console ; rm stdinfile.txt
+
+echo "<k-bin-to-text prep>"
 which k-bin-to-text
-ls -la /root/kcc_dependency_3/bin
 echo k-bin-to-text
 errorstring="Error: Could not find or load main class org.kframework.main.BinaryToText"
 echo "Checking to see if "$(k-bin-to-text)" is equal to "$errorstring
@@ -85,25 +118,27 @@ if [[ $(k-bin-to-text) == $errorstring ]] ; then
 else
     echo "It was not equal so we assume kserver was already started."
 fi
-echo "</placement debug>"
+echo "</k-bin-to-text prep>"
 
 # Part 3 Run Main Script
 mainscript_testing() {
-    #bash unit_test_merged.sh
+
+    bash unit_test_merged.sh
     bash libs.sh
     #bash tests/getty/test.sh
     #bash merged.sh sets/crashless.ini
-    bash merged.sh sets/temporary.ini
+    #bash merged.sh sets/temporary.ini
     #bash merged.sh sets/interesting.ini
     #bash merged.sh sets/quickset.ini
     #cp results/status.xml $hostspace/results/
-    #cp normalized.xml $hostspace/results/acceptance.xml
+    bash merged.sh sets/minuteset.ini
 }
 mainscript_regression() {
     bash libs.sh
     #bash run_regression_set.sh sets/regression.ini
     # The following line should be the one used after issue 14 is fixed.
-    bash merged.sh$runsetparams sets/regression.ini
+    #bash merged.sh$runsetparams sets/regression.ini
+    bash merged.sh$runsetparams sets/temporary.ini
 }
 mainscript_status() {
     bash merged.sh$runsetparams sets/crashless.ini
@@ -113,11 +148,10 @@ mainscript_acceptance() {
     bash merged.sh$runsetparams sets/acceptance.ini
     #bash merged.sh$runsetparams sets/acceptance_and_regression.ini
 }
-mainscript_unittest() {
-    bash libs.sh
-    bash merged.sh$runsetparams sets/unittest.ini
-}
-cd /root/rv-match_testing/ && $mainscript
+echo "Debug location."
+pwd
+ls
+cd /root/rv-match_testing && ls && $mainscript
 
 # Part 4 Copy test result xml back to host
 echo "Container results are in "$exportfile".xml:"

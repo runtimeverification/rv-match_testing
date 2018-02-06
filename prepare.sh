@@ -16,6 +16,8 @@ currentscript="prepare.sh"
 # _extract_test: Same rules as _extract except for tests instead of build.
 
 exportfile="report"
+unittesting="1"
+echo $currentscript" selecting options.."
 while getopts ":rsat" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -28,9 +30,9 @@ while getopts ":rsat" opt; do
         exportfile="acceptance"
       ;;
     t ) echo $currentscript" unit test option selected."
-        exportfile="unittest"
+        unittesting="0"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a]"
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -103,6 +105,8 @@ prep_prepare() {
 
     unit_test_dir=$test_dir/$compiler/unit_test
     mkdir -p $unit_test_dir
+
+    _dependencies
 }
 
 prep_download() {
@@ -315,8 +319,11 @@ init_helper() {
     prep_prepare
     prep_download
     prep_build
-    if [ $exportfile == "report" ] || [ $exportfile == "unittest" ] ; then
+    if [ "$unittesting" == "0" ] ; then
+        echo $currentscript": Unit testing."
         prep_test
+    else
+        echo $currentscript": Not unit testing."
     fi
 }
 

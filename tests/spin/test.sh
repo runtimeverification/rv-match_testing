@@ -3,6 +3,10 @@
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 # http://spinroot.com/spin/whatispin.html
 
+_dependencies() {
+    sudo apt -y install bison
+}
+
 _download() {
     wget http://spinroot.com/spin/Src/spin647.tar.gz
     tar -xvzf spin647.tar.gz
@@ -32,6 +36,20 @@ _test() {
     mv peterson.pml ignore/
     mv priorities.pml ignore/
     mv wordcount.pml ignore/
+    if [ "$exportfile" == "regression" ] ; then
+        mv sat.pml ignore/
+        mv for_select_example.pml ignore/
+    else
+        if [ "$exportfile" == "acceptance" ] ; then
+            mv sat.pml ignore/
+        else
+            if [ ! "$exportfile" == "report" ] ; then
+                echo "Warning! Unknown testing options detected in spin/test.sh"
+                mv sat.pml ignore/
+                mv for_select_example.pml ignore/
+            fi
+        fi
+    fi
     index=0;
     for f in *.pml; do
         echo "---- testing spin on "$f
