@@ -66,7 +66,7 @@ pwd
 echo "=== Mounting:"
 lxc config device add match-testing shared-folder-device disk source=`pwd` path=/mnt/jenkins
 echo "Sleeping.."
-sleep 2
+sleep 5
 lxc list
 echo "=== Exec:"
 lxc exec match-testing -- bash -c "/mnt/jenkins/$guest_script"
