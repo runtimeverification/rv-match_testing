@@ -104,6 +104,7 @@ printf "
 1
 y
 1
+
 " > stdinfile.txt
 cat stdinfile.txt | java -jar rv-match-linux-64*.jar -console ; rm stdinfile.txt
 
@@ -122,8 +123,8 @@ echo "</k-bin-to-text prep>"
 
 # Part 3 Run Main Script
 mainscript_testing() {
-    echo "Running self unit tests now:"
-    bash unit_test_merged.sh
+    #echo "Running self unit tests now:"
+    #bash unit_test_merged.sh
     bash libs.sh
     #bash tests/getty/test.sh
     #bash merged.sh sets/crashless.ini
