@@ -164,6 +164,9 @@ read_log_files() {
     fi
 }
 
+echo "DEBUG merged.sh"
+cat $whitelistpath
+echo "/DEBUG merged.sh"
 while read line; do
     if [ ! "$flagsfortests" == "STOP" ] ; then
         # Update container, if we're in one, with the jenkins test.sh
