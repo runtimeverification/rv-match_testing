@@ -104,7 +104,7 @@ printf "
 1
 y
 1
-
+1
 " > stdinfile.txt
 cat stdinfile.txt | java -jar rv-match-linux-64*.jar -console ; rm stdinfile.txt
 
