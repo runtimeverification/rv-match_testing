@@ -222,6 +222,6 @@ rm $tempfile
 rm $tempfile2
 rm $tempfile3
 
-#rm "results/report.xml"
-#rm "results/acceptance.xml"
-#rm "results/regression.xml"
+rm "results/report.xml"
+rm "results/acceptance.xml"
+rm "results/regression.xml"
