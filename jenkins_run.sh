@@ -39,8 +39,8 @@ if [ $containerscriptflags == " -" ] ; then
     containerscriptflags=""
 fi
 
-bash copy_kcc_from_rv-match-master_to_jenkins_workspace.sh
-#touch results/$exportfile.xml
-#chmod 777 results/$exportfile.xml
+#bash copy_kcc_from_rv-match-master_to_jenkins_workspace.sh
+touch results/$exportfile.xml
+chmod a+rw results/$exportfile.xml
 #ls -la results/
 bash container_run.sh$containerscriptflags
