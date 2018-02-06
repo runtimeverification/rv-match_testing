@@ -122,15 +122,15 @@ echo "</k-bin-to-text prep>"
 
 # Part 3 Run Main Script
 mainscript_testing() {
-    #bash unit_test_merged.sh
-     #bash libs.sh
+    bash unit_test_merged.sh
+    bash libs.sh
     #bash tests/getty/test.sh
     #bash merged.sh sets/crashless.ini
-     #bash merged.sh sets/temporary.ini
+    #bash merged.sh sets/temporary.ini
     #bash merged.sh sets/interesting.ini
     #bash merged.sh sets/quickset.ini
     #cp results/status.xml $hostspace/results/
-    bash unit_test_merged.sh
+    bash merged.sh sets/minuteset.ini
 }
 mainscript_regression() {
     bash libs.sh
