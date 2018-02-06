@@ -214,7 +214,7 @@ else
         echo "  - command recognized but returned 1 so you may first need to run \"kserver &\"."
     else
         echo "\"k-bin-to-text\" test           : fails."
-        echo "  - command likely was not recognized."
+        echo "  - command returned ""$one."
     fi
 fi
 
