@@ -2,9 +2,9 @@
 [ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/prepare.sh
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
-_dependencies() {
-    return
-}
+#_dependencies() {
+#    return
+#}
 
 _download() {
     mkdir helloworld/
@@ -24,7 +24,7 @@ int main()
 }
 
 _build() {
-    cd helloworld/ |& tee kcc_configure_out.txt ; configure_success="$?"
+    cd helloworld/ ; echo "$?" |& tee kcc_configure_out.txt ; configure_success="$?"
     $compiler helloworld.c |& tee kcc_make_out.txt ; make_success="$?"
 }
 
