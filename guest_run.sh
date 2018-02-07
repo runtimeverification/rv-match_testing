@@ -173,5 +173,5 @@ cd /root/rv-match_testing && ls && $mainscript
 echo "Container results are in "$exportfile".xml:"
 cat results/$exportfile.xml
 echo "Copying results to host now."
-cp results/$exportfile.xml $hostspace/results/
+cp results/$exportfile.xml $hostspace/results/ && rm results/$exportfile.xml
 echo "========== Finished container guest scripts."
