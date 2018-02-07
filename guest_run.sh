@@ -123,27 +123,21 @@ y
 " > stdinfile.txt
     cat stdinfile.txt | java -jar rv-match-linux-64*.jar -console ; rm stdinfile.txt
 fi
-echo "<k-bin-to-text prep>"
+echo "<Checking for proper rv-match installation and starting kserver>"
 which k-bin-to-text
-echo k-bin-to-text
-errorstring="Error: Could not find or load main class org.kframework.main.BinaryToText"
-echo "Checking to see if "$(k-bin-to-text)" is equal to "$errorstring
-if [[ $(k-bin-to-text) == $errorstring ]] ; then
-    echo "It was equal, so starting kserver with \"kserver &\"..."
-    kserver &
-else
-    echo "It was not equal so we assume kserver was already started."
-fi
-echo "</k-bin-to-text prep>"
+which kserver
+which kcc
+kserver &
+echo "</Checking for proper rv-match installation and starting kserver>"
 
 # Part 3 Run Main Script
 mainscript_testing() {
     #echo "Running self unit tests now:"
     #bash unit_test_merged.sh
-    bash libs.sh
+    #bash libs.sh
     #bash tests/getty/test.sh
     #bash merged.sh sets/crashless.ini
-    bash merged.sh sets/temporary.ini
+    #bash merged.sh sets/temporary.ini
     #bash merged.sh sets/interesting.ini
     #bash merged.sh sets/quickset.ini
     #cp results/status.xml $hostspace/results/
