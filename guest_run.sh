@@ -96,8 +96,23 @@ git pull
 bash libs.sh
 sudo rm /var/lib/dpkg/lock
 sudo apt-get -y install default-jre
+mv rv-match-linux-64-1.0-SNAPSHOT.jar rv-match-linux-64-1.0-SNAPSHOT.jar.old
 wget https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT.jar
-printf "
+diff rv-match-linux-64-1.0-SNAPSHOT.jar rv-match-linux-64-1.0-SNAPSHOT.jar.old ; checknew="$?"
+kcc -v ; checkinstalled="$?"
+if [ "$checknew" == "0" ] && [ "$checkinstalled" == "0" ] ; then
+    echo "Not installing rv-match since two criterion hold:"
+    echo "1. Already downloaded .jar matches the new."
+    echo "2. \"kcc -v\" functions."
+    echo "We are assuming based on that that rv-match is already installed and updated to the latest version."
+else
+    if [ "$checknew" == 0 ] ; then
+        echo "\"kcc -v\" doesn't function, even though the new version matches the old."
+        echo "Therefore, we will attempt install of rv-match."
+    else
+        echo "The new rv-match differs from the old, so we will install it."
+    fi
+    printf "
 1
 
 
@@ -106,8 +121,8 @@ y
 1
 1
 " > stdinfile.txt
-cat stdinfile.txt | java -jar rv-match-linux-64*.jar -console ; rm stdinfile.txt
-
+    cat stdinfile.txt | java -jar rv-match-linux-64*.jar -console ; rm stdinfile.txt
+fi
 echo "<k-bin-to-text prep>"
 which k-bin-to-text
 echo k-bin-to-text
