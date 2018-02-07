@@ -1,22 +1,19 @@
 #!/bin/bash
 currentscript="container_run.sh"
-#defaultcontainer="rv-match_projtesting_container"
-#container=$defaultcontainer
-#source_container="ubuntu-14.04-java"
+container="match-testing"
 guest_script="guest_run.sh"
 guest_script_flags=" -"
 while getopts ":rsatdg" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
-        #container="rv-match_regression_container"
+        container="match-regression"
         guest_script_flags=$guest_script_flags"r"
       ;;
     s ) echo $currentscript" status option selected."
-        #container=$defaultcontainer
         guest_script_flags=$guest_script_flags"s"
       ;;
     a ) echo $currentscript" acceptance option selected."
-        #container="rv-match_acceptance_container"
+        container="match-acceptance"
         guest_script_flags=$guest_script_flags"a"
       ;;
     t ) echo $currentscript" unit test option selected."
@@ -45,11 +42,11 @@ guest_script=$guest_script$guest_script_flags
 echo "`git rev-parse --verify HEAD`" > githash.ini
 
 echo "=== Stopping (destroying) old container:"
-lxc stop match-testing
+lxc stop $container
 echo "=== First listing:"
 lxc list
 echo "=== Copying:"
-lxc copy match-testing-source match-testing -e
+lxc copy match-testing-source $container -e
 echo "=== Second listing:"
 lxc list
 echo "=== Setting permissions:"
@@ -57,18 +54,18 @@ chmod +x sayhi.sh
 echo "=== Attach network:"
 #lxc network attach testbr0 match-testing eth0
 echo "=== Starting:"
-lxc start match-testing
+lxc start $container
 echo "=== Third listing:"
 lxc list
 echo "=== Source path:"
 pwd
 echo "=== Mounting:"
-lxc config device add match-testing shared-folder-device disk source=`pwd` path=/mnt/jenkins
+lxc config device add $container shared-folder-device disk source=`pwd` path=/mnt/jenkins
 echo "Sleeping.."
 sleep 5
 lxc list
 echo "=== Exec:"
-lxc exec match-testing -- bash -c "/mnt/jenkins/$guest_script"
+lxc exec $container -- bash -c "/mnt/jenkins/$guest_script"
 echo "=== End Exec"
 
 #set -e
