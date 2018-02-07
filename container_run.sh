@@ -2,7 +2,12 @@
 currentscript="container_run.sh"
 jenkins_folder_name="$(basename `pwd`)"
 hyphen='-'
-container="${original_string//_/$hyphen}"
+container="${jenkins_folder_name//_/$hyphen}"
+echo "DEBUG 1"
+echo $jenkins_folder_name
+echo "DEBUG 2"
+echo $container
+
 guest_script="guest_run.sh"
 guest_script_flags=" -"
 while getopts ":rsatdg" opt; do
