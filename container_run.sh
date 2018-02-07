@@ -44,8 +44,8 @@ fi
 guest_script=$guest_script$guest_script_flags
 echo "`git rev-parse --verify HEAD`" > githash.ini
 
-#echo "=== Stopping (destroying) old container:"
-#lxc stop match-testing
+echo "=== Stopping (destroying) old container:"
+lxc stop match-testing
 echo "=== First listing:"
 lxc list
 echo "=== Copying:"

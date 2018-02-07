@@ -110,7 +110,7 @@ else
         echo "\"kcc -v\" doesn't function, even though the new version matches the old."
         echo "Therefore, we will attempt install of rv-match."
     else
-        echo "The new rv-match differs from the old, so we will install it."
+        echo "Either the new rv-match differs from the old or the old doesn't exist, so we will install it."
     fi
     printf "
 1
