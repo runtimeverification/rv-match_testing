@@ -127,8 +127,12 @@ echo "<Checking for proper rv-match installation and starting kserver>"
 which k-bin-to-text
 which kserver
 which kcc
+which start-kserver
 kserver &
 ps aux | grep kserver
+start-kserver
+ls /opt/rv-match/c-semantics
+/opt/rv-match/c-semantics/start-kserver
 echo "</Checking for proper rv-match installation and starting kserver>"
 
 # Part 3 Run Main Script
@@ -169,5 +173,5 @@ cd /root/rv-match_testing && ls && $mainscript
 echo "Container results are in "$exportfile".xml:"
 cat results/$exportfile.xml
 echo "Copying results to host now."
-cp results/$exportfile.xml $hostspace/results/ && rm results/$exportfile.xml
+#cp results/$exportfile.xml $hostspace/results/ && rm results/$exportfile.xml
 echo "========== Finished container guest scripts."
