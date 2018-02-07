@@ -128,10 +128,12 @@ which k-bin-to-text
 which kserver
 which kcc
 kserver &
+ps aux | grep kserver
 echo "</Checking for proper rv-match installation and starting kserver>"
 
 # Part 3 Run Main Script
 mainscript_testing() {
+    :
     #echo "Running self unit tests now:"
     #bash unit_test_merged.sh
     #bash libs.sh
