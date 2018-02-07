@@ -123,6 +123,18 @@ y
 " > stdinfile.txt
     cat stdinfile.txt | java -jar rv-match-linux-64*.jar -console ; rm stdinfile.txt
 fi
+
+echo "<setting up k-bin-to-text>"
+sudo apt-get install build-essential m4 openjdk-8-jdk libgmp-dev libmpfr-dev pkg-config flex z3 maven opam
+git clone https://github.com/runtimeverification/rv-match/tree/master/k
+cd k/ && mvn package
+pwd
+ls -la
+ls k-distribution/target/release/k/bin
+echo "exporting PATH variable here"
+export PATH=$(pwd)/k-distribution/target/release/k/bin:$PATH
+echo "</setting up k-bin-to-text>"
+
 echo "<Checking for proper rv-match installation and starting kserver>"
 which k-bin-to-text
 which kserver
@@ -132,7 +144,7 @@ kserver &
 ps aux | grep kserver
 start-kserver
 ls /opt/rv-match/c-semantics
-/opt/rv-match/c-semantics/start-kserver
+/opt/rv-match/c-semantics/start-kserver 0
 echo "</Checking for proper rv-match installation and starting kserver>"
 
 # Part 3 Run Main Script
