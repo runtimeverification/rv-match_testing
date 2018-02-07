@@ -97,7 +97,7 @@ bash libs.sh
 sudo rm /var/lib/dpkg/lock
 sudo apt-get -y install default-jre
 mv rv-match-linux-64-1.0-SNAPSHOT.jar rv-match-linux-64-1.0-SNAPSHOT.jar.old
-wget https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT.jar
+wget -q https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT.jar
 diff rv-match-linux-64-1.0-SNAPSHOT.jar rv-match-linux-64-1.0-SNAPSHOT.jar.old ; checknew="$?"
 kcc -v ; checkinstalled="$?"
 if [ "$checknew" == "0" ] && [ "$checkinstalled" == "0" ] ; then
@@ -125,7 +125,7 @@ y
 fi
 
 echo "<setting up k-bin-to-text>"
-sudo apt-get install build-essential m4 openjdk-8-jdk libgmp-dev libmpfr-dev pkg-config flex z3 maven opam
+sudo apt-get -y install build-essential m4 openjdk-8-jdk libgmp-dev libmpfr-dev pkg-config flex z3 maven opam
 git clone https://github.com/runtimeverification/rv-match/tree/master/k
 cd k/ && mvn package
 pwd
@@ -185,5 +185,5 @@ cd /root/rv-match_testing && ls && $mainscript
 echo "Container results are in "$exportfile".xml:"
 cat results/$exportfile.xml
 echo "Copying results to host now."
-#cp results/$exportfile.xml $hostspace/results/ && rm results/$exportfile.xml
+cp results/$exportfile.xml $hostspace/results/ && rm results/$exportfile.xml
 echo "========== Finished container guest scripts."

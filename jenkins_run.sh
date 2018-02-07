@@ -40,7 +40,9 @@ if [ $containerscriptflags == " -" ] ; then
 fi
 
 #bash copy_kcc_from_rv-match-master_to_jenkins_workspace.sh
-touch results/$exportfile.xml
+if [ ! -f results/$exportfile.xml ] ; then
+    touch results/$exportfile.xml
+fi
 chmod a+rw results/$exportfile.xml
 #ls -la results/
 bash container_run.sh$containerscriptflags
