@@ -1,19 +1,19 @@
 #!/bin/bash
 currentscript="container_run.sh"
-container="match-testing"
+container="$(basename `pwd`)"
 guest_script="guest_run.sh"
 guest_script_flags=" -"
 while getopts ":rsatdg" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
-        container="match-regression"
+        #container="match-regression"
         guest_script_flags=$guest_script_flags"r"
       ;;
     s ) echo $currentscript" status option selected."
         guest_script_flags=$guest_script_flags"s"
       ;;
     a ) echo $currentscript" acceptance option selected."
-        container="match-acceptance"
+        #container="match-acceptance"
         guest_script_flags=$guest_script_flags"a"
       ;;
     t ) echo $currentscript" unit test option selected."
