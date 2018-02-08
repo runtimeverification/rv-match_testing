@@ -29,6 +29,7 @@ ls
 
 printf "\nInstalling maven."
 sudo apt update
+sudo apt -y build-dep maven
 sudo apt -y install maven
 
 printf "\nBuilding rv-match/k with maven for using k-bin-to-text."
