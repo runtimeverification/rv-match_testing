@@ -18,10 +18,10 @@ ping -c 1 www.google.com
 
 echo "Copying rv-match from jenkins space to /root/ folder here."
 cd /root/
-cp -r "$hostspace/rv-match" .
+cp -r "$hostspace/" .
 
 echo "Entering rv-match/k folder:"
-cd rv-match/k/ && ls
+cd /k/ && ls
 
 echo "Installing maven."
 sudo apt -y install maven
