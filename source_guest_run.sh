@@ -19,6 +19,8 @@ ping -c 1 www.google.com
 
 printf "\nCopying rv-match from jenkins space to /root/ folder here."
 cd /root/
+ls "$hostspace"
+ls "$hostspace/*"
 cp -r "$hostspace/*" .
 
 printf "\nContents of local folder $(pwd):"
