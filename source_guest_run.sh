@@ -2,34 +2,39 @@
 hostspace="/mnt/jenkins-source"
 
 # Part 1: Basic container debug
-echo "Entered container at: "$(pwd)
+printf "\nEntered container at: "$(pwd)
 echo "Contents of this current folder:"
 ls
 
-echo "Host folder seen from: $hostspace"
+printf "\nHost folder seen from: $hostspace"
 echo "Host folder contents:"
 ls "$hostspace"
 
-echo "Contents of /root folder here:"
+printf "\nContents of /root folder here:"
 ls /root
 
-echo "Basic network test, not that we need it here in the source container, but to debug container networking since it should be working here."
+printf "\nBasic network test, not that we need it here in the source container, but to debug container networking since it should be working here."
 ping -c 1 www.google.com
 
-echo "Copying rv-match from jenkins space to /root/ folder here."
+printf "\nCopying rv-match from jenkins space to /root/ folder here."
 cd /root/
 cp -r "$hostspace/" .
 
-echo "Entering rv-match/k folder:"
-cd /k/ && ls
+printf "\nContents of local folder $(pwd):"
+ls
 
-echo "Installing maven."
+printf "\nEntering rv-match/k folder:"
+cd /k/
+ls
+
+printf "\nInstalling maven."
+sudo apt update
 sudo apt -y install maven
 
-echo "Building rv-match/k with maven for using k-bin-to-text."
+printf "\nBuilding rv-match/k with maven for using k-bin-to-text."
 mvn package
 
-echo "Installing basic libraries to be used by rv-match_testing in copied containers."
+printf "\nInstalling basic libraries to be used by rv-match_testing in copied containers."
 bash libs.sh
 
-echo "If all went well, source container is now considered ready for copying."
+printf "\nIf all went well, source container is now considered ready for copying."
