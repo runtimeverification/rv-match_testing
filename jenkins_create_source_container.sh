@@ -3,7 +3,9 @@
 # Code to put into jenkins job 'rv-match_prepare_source_container' which auto-checks-out rv-match:
 # Last updated 8 February 2018
 # #git clone https://github.com/runtimeverification/rv-match_testing.git
-# cd rv-match_testing/ ; git pull ; cd ..
+# cd rv-match_testing/ ; git pull
+# chmod a+x source_guest_run.sh
+# cd ..
 # bash rv-match_testing/jenkins_create_source_container.sh
 
 name="match-testing-source"
