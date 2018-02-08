@@ -31,7 +31,7 @@ cd rv-match/k/
 ls
 
 printf "\nInstalling maven.\n"
-sudo apt -y install build-essential m4 openjdk-8-jdk libgmp-dev libmpfr-dev pkg-config flex z3 maven opam
+sudo apt-get -y install build-essential m4 openjdk-8-jdk libgmp-dev libmpfr-dev pkg-config flex z3 maven opam
 
 printf "\nBuilding rv-match/k with maven for using k-bin-to-text.\n"
 mvn package -DskipTests
