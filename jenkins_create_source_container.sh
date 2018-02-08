@@ -7,8 +7,12 @@ topfolder=$(pwd)
 echo "Initial lxc state:"
 lxc list
 
+echo "Stopping old $name:"
+lxc stop "$name"
+sleep 5
+
 echo "Deleting old $name:"
-lxc delete "$name"
+lxc delete --force "$name"
 lxc list
 
 echo "Creating new $name:"
