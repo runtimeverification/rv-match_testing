@@ -38,9 +38,11 @@ printf "\nBuilding rv-match/k with maven for using k-bin-to-text.\n"
 mvn package -DskipTests
 
 printf "\nMaking sure that k-bin-to-text works.\n"
+set +e
 which k-bin-to-text
 ls k-distribution/target/release/k/bin
 echo "exporting PATH variable here"
+set -e
 export PATH=$(pwd)/k-distribution/target/release/k/bin:$PATH
 which k-bin-to-text
 
