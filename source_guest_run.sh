@@ -19,15 +19,15 @@ ping -c 1 www.google.com
 
 printf "\nCopying rv-match from jenkins space to /root/ folder here."
 cd /root/
-ls "$hostspace"
-ls "$hostspace/*"
-cp -r "$hostspace/*" .
+cp -r "$hostspace" .
+mv jenkins-source/ rv-match/
+mv rv-match/rv-match_testing/ ./rv-match_testing
 
 printf "\nContents of local folder $(pwd):"
 ls
 
 printf "\nEntering rv-match/k folder:"
-cd /k/
+cd rv-match/k/
 ls
 
 printf "\nInstalling maven."
