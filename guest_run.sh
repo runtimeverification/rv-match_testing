@@ -60,8 +60,29 @@ set +e
 echo "</$currentscript assert network>"
 
 printf "\n<$currentscript assert k-bin-to-text>\n"
+echo "DEBUG"
+echo "0"
+ls /
+echo "1"
+ls /root/
+echo "2"
+ls /root/rv-match
+echo "3"
+ls /root/rv-match/k
+echo "4"
+ls /root/rv-match/k/k-distribution/
+echo "5"
+ls /root/rv-match/k/k-distribution/target/
+echo "6"
+ls /root/rv-match/k/k-distribution/target/release/
+echo "7"
+ls /root/rv-match/k/k-distribution/target/release/k/
+echo "8"
+ls /root/rv-match/k/k-distribution/target/release/k/bin
+echo "9"
+echo "END DEBUG"
 echo "PATH before setting: $PATH"
-export PATH=$(pwd)/k-distribution/target/release/k/bin:$PATH
+export PATH=/root/rv-match/k/k-distribution/target/release/k/bin:$PATH
 echo " PATH after setting: $PATH"
 k-bin-to-text ; testout=$(echo "$?")
 set -e
