@@ -4,11 +4,8 @@ guest_script="rv-match_testing/source_guest_run.sh"
 # Top folder is expected to contain both rv-match and rv-match_testing projects inside it.
 
 echo "Initial container and contents:"
+initialfolder=$(pwd)
 pwd ; ls
-
-echo "Parent folder and contents:"
-topfolder=$(dirname `pwd`)
-echo "$topfolder" ; ls "$topfolder"
 
 echo "Initial lxc state:"
 lxc list
@@ -30,7 +27,7 @@ sleep 5
 lxc list
 
 echo "Mounting $name:"
-lxc config device add $name shared-folder-device-source disk source="$topfolder" path=/mnt/jenkins-source
+lxc config device add $name shared-folder-device-source disk source="$initialfolder" path=/mnt/jenkins-source
 lxc list
 
 echo "Running script on $name"
