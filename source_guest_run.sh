@@ -49,6 +49,7 @@ printf "\n  return value test:\n"
 printf "\nPassed! k-bin-to-text works in source container.\n"
 
 printf "\nInstalling basic libraries to be used by rv-match_testing in copied containers.\n"
+cd /root/rv-match_testing/
 bash libs.sh
 
 printf "\nIf all went well, source container is now considered ready for copying.\n"
