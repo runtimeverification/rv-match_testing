@@ -2,7 +2,13 @@
 name="match-testing-source"
 guest_script="rv-match_testing/source_guest_run.sh"
 # Top folder is expected to contain both rv-match and rv-match_testing projects inside it.
-topfolder=$(pwd)
+
+echo "Initial container and contents:"
+pwd ; ls
+
+echo "Parent folder and contents:"
+topfolder=$(dirname `pwd`)
+echo "$topfolder" ; ls "$topfolder"
 
 echo "Initial lxc state:"
 lxc list
