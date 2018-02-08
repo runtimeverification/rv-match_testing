@@ -39,6 +39,8 @@ if [ $containerscriptflags == " -" ] ; then
     containerscriptflags=""
 fi
 
+git clone https://github.com/runtimeverification/rv-match.git
+backdir=$(pwd) ; cd $backdir/rv-match/ ; git pull ; cd $backdir
 #bash copy_kcc_from_rv-match-master_to_jenkins_workspace.sh
 if [ ! -f results/$exportfile.xml ] ; then
     touch results/$exportfile.xml
