@@ -39,7 +39,9 @@ if [ $containerscriptflags == " -" ] ; then
     containerscriptflags=""
 fi
 
-back_dir="$(pwd)" ; cd rv-match/k/ ; mvn package ; cd "$backdir"
+cd .. ; back_dir="$(pwd)"
+cd "$back_dir/rv-match/k/" ; mvn package
+cd "$backdir/rv-match_testing/"
 
 #bash copy_kcc_from_rv-match-master_to_jenkins_workspace.sh
 if [ ! -f results/$exportfile.xml ] ; then
