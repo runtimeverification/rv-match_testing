@@ -43,15 +43,12 @@ which k-bin-to-text
 ls k-distribution/target/release/k/bin
 echo "exporting PATH variable here"
 export PATH=$(pwd)/k-distribution/target/release/k/bin:$PATH
-which kcc
-which kserver
 which k-bin-to-text
-bash /opt/rv-match/c-semantics/start-kserver 0
+bash /opt/rv-match/c-semantics/reset-kserver 0
 
 printf "\nFinal tests to ensure tools are set up properly.\n"
 set -e
-which kcc
-which kserver
+printf "\nk-bin-to-text works?\n"
 which k-bin-to-text
 
 printf "\nInstalling basic libraries to be used by rv-match_testing in copied containers."
