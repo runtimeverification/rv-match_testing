@@ -52,8 +52,26 @@ fi
 
 # Part 1: Basic container debug
 echo "Entered container at: "$(pwd)
-echo "Network test:"
+
+printf "\n<$currentscript assert network>\n"
+set -e
 ping -c 1 www.google.com
+set +e
+echo "</$currentscript assert network>"
+
+printf "\n<$currentscript assert k-bin-to-text>\n"
+echo "PATH before setting: $PATH"
+export PATH=$(pwd)/k-distribution/target/release/k/bin:$PATH
+echo " PATH after setting: $PATH"
+k-bin-to-text ; testout=$(echo "$?")
+set -e
+printf "\n  'which' test:\n"
+which k-bin-to-text
+printf "\n  'return value with empty arguments is 1' test:\n"
+[ "$testout" == "1" ]
+set +e
+echo "</$currentscript assert k-bin-to-text>"
+# /Part 1: Basic container debug
 
 # Part 2 Configure Local Jenkins Dependencies
 #  2a Copy project scripts
@@ -61,8 +79,6 @@ cd /root/
 rm -rf rv-match_testing/
 git clone https://github.com/runtimeverification/rv-match_testing.git
 cd rv-match_testing/
-#echo "Wanting to use git sha: ""$(head -n 1 $hostspace/githash.ini)"
-#git checkout "$(head -n 1 $hostspace/githash.ini)"
 gitbranch="master"
 if [ "$development_checkout_check" == "1" ] ; then
     echo "Git branch development checked out."
@@ -74,25 +90,8 @@ git checkout $gitbranch
 git reset --hard origin/$gitbranch
 git checkout $gitbranch
 git pull
-#cp *.sh /root/
-#mkdir /root/sets/
-#cp -r sets/* /root/sets/
 
-#  2b Set kcc dependencies
-# Here we copy kcc dependencies from jenkins workspace to the container
-#cd /root/
-#rm -r kcc_dependency_1/
-#rm -r kcc_dependency_2/
-#rm -r kcc_dependency_3/bin/
-#cp -r $hostspace/kcc_dependency_1/ kcc_dependency_1/
-#cp -r $hostspace/kcc_dependency_2/ kcc_dependency_2/
-#cp -r $hostspace/kcc_dependency_3/ kcc_dependency_3/
-#export PATH=/root/kcc_dependency_1:/root/kcc_dependency_2:/root/kcc_dependency_3/bin:$PATH
-#echo "The modified container PATH variable: "$PATH
-
-# Switching soon to using installer instead of direct file copies.
 # https://github.com/runtimeverification/rv-match/blob/master/installer-linux/scripts/install-in-container
-
 bash libs.sh
 sudo rm /var/lib/dpkg/lock
 sudo apt-get -y install default-jre
@@ -124,16 +123,9 @@ y
     cat stdinfile.txt | java -jar rv-match-linux-64*.jar -console ; rm stdinfile.txt
 fi
 
-echo "<setting up k-bin-to-text>"
-sudo apt-get -y install build-essential m4 openjdk-8-jdk libgmp-dev libmpfr-dev pkg-config flex z3 maven opam
-git clone https://github.com/runtimeverification/rv-match/tree/master/k
-cd k/ && mvn package
-pwd
-ls -la
-ls k-distribution/target/release/k/bin
-echo "exporting PATH variable here"
-export PATH=$(pwd)/k-distribution/target/release/k/bin:$PATH
-echo "</setting up k-bin-to-text>"
+echo "<Self unit tests prior to kserver>"
+bash unit_test_merged.sh
+echo "</Self unit tests priot to kserver>"
 
 echo "<Checking for proper rv-match installation and starting kserver>"
 which k-bin-to-text
@@ -149,9 +141,9 @@ echo "</Checking for proper rv-match installation and starting kserver>"
 
 # Part 3 Run Main Script
 mainscript_testing() {
-    :
+    #:
     #echo "Running self unit tests now:"
-    #bash unit_test_merged.sh
+    bash unit_test_merged.sh
     #bash libs.sh
     #bash tests/getty/test.sh
     #bash merged.sh sets/crashless.ini
