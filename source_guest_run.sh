@@ -18,8 +18,10 @@ ping -c 1 www.google.com
 
 echo "Copying rv-match from jenkins space to /root/ folder here."
 cd /root/
-cp "$hostspace/rv-match/" .
-cd rv-match/k/
+cp -r "$hostspace/rv-match" .
+
+echo "Entering rv-match/k folder:"
+cd rv-match/k/ && ls
 
 echo "Installing maven."
 sudo apt -y install maven
@@ -29,3 +31,5 @@ mvn package
 
 echo "Installing basic libraries to be used by rv-match_testing in copied containers."
 bash libs.sh
+
+echo "If all went well, source container is now considered ready for copying."
