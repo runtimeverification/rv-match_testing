@@ -1,5 +1,6 @@
 #!/bin/bash
 hostspace="/mnt/jenkins-source"
+set -e
 
 # Part 1: Basic container debug
 printf "\nEntered container at: "$(pwd)
@@ -18,7 +19,7 @@ ping -c 1 www.google.com
 
 printf "\nCopying rv-match from jenkins space to /root/ folder here."
 cd /root/
-cp -r "$hostspace/" .
+cp -r "$hostspace/*" .
 
 printf "\nContents of local folder $(pwd):"
 ls
