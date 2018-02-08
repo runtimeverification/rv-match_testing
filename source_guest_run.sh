@@ -30,13 +30,18 @@ printf "\nEntering rv-match/k folder:"
 cd rv-match/k/
 ls
 
-printf "\nInstalling maven."
-sudo apt update
-sudo apt -y build-dep maven
-sudo apt -y install maven
+printf "\nInstalling maven.\n"
+sudo apt -y install build-essential m4 openjdk-8-jdk libgmp-dev libmpfr-dev pkg-config flex z3 maven opam
 
-printf "\nBuilding rv-match/k with maven for using k-bin-to-text."
-mvn package
+printf "\nBuilding rv-match/k with maven for using k-bin-to-text.\n"
+mvn package -DskipTests
+
+printf "\nMaking sure that k-bin-to-text works.\n"
+which k-bin-to-text
+ls k-distribution/target/release/k/bin
+echo "exporting PATH variable here"
+export PATH=$(pwd)/k-distribution/target/release/k/bin:$PATH
+which k-bin-to-text
 
 printf "\nInstalling basic libraries to be used by rv-match_testing in copied containers."
 bash libs.sh
