@@ -42,7 +42,7 @@ while getopts ":rsatdge" opt; do
       ;;
   esac
 done
-if [ $guest_script_flags == " -" ] ; then
+if [ "$guest_script_flags" == " -" ] ; then
     guest_script_flags=""
 fi
 echo "$currentscript 1: '$1' 2: '$2'"

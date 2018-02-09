@@ -51,7 +51,7 @@ while getopts ":rsatdg" opt; do
       ;;
   esac
 done
-if [ $runsetparams == " -" ] ; then
+if [ "$runsetparams" == " -" ] ; then
     runsetparams=""
 fi
 echo "$currentscript 1: '$1' 2: '$2'"
