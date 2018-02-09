@@ -181,9 +181,9 @@ mainscript_testing() {
     #bash libs.sh
     #bash tests/getty/test.sh
     #bash merged.sh sets/crashless.ini
-    #bash merged.sh sets/temporary.ini
+    bash merged.sh sets/temporary.ini
     #bash merged.sh sets/interesting.ini
-    bash merged.sh$runsetparams sets/unit_general.ini
+    #bash merged.sh$runsetparams sets/unit_general.ini
     #cp results/status.xml $hostspace/results/
     #bash merged.sh sets/minuteset.ini
 }
