@@ -54,4 +54,7 @@ if [ ! -f results/$exportfile.xml ] ; then
     touch results/$exportfile.xml
 fi
 chmod a+rw results/$exportfile.xml
+ls -la
+chmod -R 777 logs/
+ls -la
 bash container_run.sh$containerscriptflags
