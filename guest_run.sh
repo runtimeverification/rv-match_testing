@@ -125,7 +125,7 @@ y
 fi
 
 echo "<$currentscript assert self-unit-tests>"
-bash unit_test_merged.sh &>/dev/null ; testout=$(echo "$?")
+bash unit_test_merged.sh &> selfunittest.log ; testout=$(echo "$?")
 if [ "$testout" == "0" ] ; then
     echo "  self-unit-tests all passed."
 else
@@ -134,6 +134,7 @@ else
     else
         echo "  self-unit-tests did not process properly."
     fi
+    cat selfunittest.log
 fi
 set -e
 [ "$testout" == "0" ]

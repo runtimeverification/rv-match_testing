@@ -49,7 +49,7 @@ printf "\n  return value test:\n"
 printf "\nPassed! k-bin-to-text works in source container.\n"
 
 printf "\nInstalling the latest rv-match so copied containers can at least use some version of kcc without an install.\n"
-wget -q https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT.jar
+cd /root/ ; wget -q https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT.jar
 printf "
 1
 
