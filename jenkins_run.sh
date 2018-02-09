@@ -41,6 +41,7 @@ fi
 
 #bash copy_kcc_from_rv-match-master_to_jenkins_workspace.sh
 if [ ! -f results/$exportfile.xml ] ; then
+    mkdir -p results/
     touch results/$exportfile.xml
 fi
 chmod a+rw results/$exportfile.xml
