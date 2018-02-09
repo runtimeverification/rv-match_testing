@@ -44,10 +44,13 @@ done
 if [ $containerscriptflags == " -" ] ; then
     containerscriptflags=""
 fi
+echo "$currentscript 1: '$1' 2: '$2'"
 if [ "$hadflag" == "0" ] ; then
     containerscriptflags="$containerscriptflags $2"
+    echo "choosing 2"
 else
     containerscriptflags="$containerscriptflags $1"
+    echo "choosing 1"
 fi
 
 #bash copy_kcc_from_rv-match-master_to_jenkins_workspace.sh
@@ -57,4 +60,5 @@ if [ ! -f results/$exportfile.xml ] ; then
 fi
 chmod a+rw results/$exportfile.xml
 #ls -la results/
+echo "$currentscript calling 'bash container_run.sh$containerscriptflags'"
 bash container_run.sh$containerscriptflags

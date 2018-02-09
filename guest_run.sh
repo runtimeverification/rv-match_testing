@@ -54,10 +54,13 @@ done
 if [ $runsetparams == " -" ] ; then
     runsetparams=""
 fi
+echo "$currentscript 1: '$1' 2: '$2'"
 if [ "$hadflag" == "0" ] ; then
     runsetparams="$runsetparams $2"
+    echo "choosing 2"
 else
     runsetparams="$runsetparams $1"
+    echo "choosing 1"
 fi
 
 # Part 1: Basic container debug

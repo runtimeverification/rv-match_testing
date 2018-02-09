@@ -45,10 +45,13 @@ done
 if [ $guest_script_flags == " -" ] ; then
     guest_script_flags=""
 fi
+echo "$currentscript 1: '$1' 2: '$2'"
 if [ "$hadflag" == "0" ] ; then
     guest_script_flags="$guest_script_flags $2"
+    echo "choosing 2"
 else
     guest_script_flags="$guest_script_flags $1"
+    echo "choosing 1"
 fi
 guest_script=$guest_script$guest_script_flags
 echo "`git rev-parse --verify HEAD`" > githash.ini
@@ -76,5 +79,6 @@ echo "Sleeping.."
 sleep 5
 lxc list
 echo "=== Exec:"
+echo "$currentscript calling '$guest_script'"
 lxc exec $container -- bash -c "/mnt/jenkins/$guest_script"
 echo "=== End Exec"
