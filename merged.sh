@@ -182,10 +182,8 @@ read_log_files() {
         fi
     fi
 }
-
-echo "DEBUG merged.sh"
-cat $whitelistpath
-echo "/DEBUG merged.sh"
+logdate=$(date +%Y-%m-%d.%H:%M:%S)
+mkdir -p logs/$logdate
 while read line; do
     if [ ! "$flagsfortests" == "STOP" ] ; then
         # Update container, if we're in one, with the jenkins test.sh
@@ -196,7 +194,7 @@ while read line; do
         fi
         echo ==== $line started at $(date)
         echo "bashing \"$testsfolder/$line/test.sh\" followed by \"$flagsfortests\""
-        bash "$testsfolder/$line/test.sh" "$flagsfortests"
+        bash "$testsfolder/$line/test.sh" "$flagsfortests" &> logs/$logdate/$line.log
         echo ==== $line finished at $(date)
     else
         echo "Status option was selected, so the tests are not being run right now."
