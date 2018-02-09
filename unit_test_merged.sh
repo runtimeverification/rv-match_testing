@@ -1,7 +1,7 @@
 #!/bin/bash
-bash merged.sh -ut sets/selftest.ini
-bash merged.sh -ur sets/selftest.ini
-bash merged.sh -ua sets/selftest.ini
+bash merged.sh -ut selftest
+bash merged.sh -ur selftest
+bash merged.sh -ua selftest
 returnvalue=0
 echo $'\n\nTest results: '
 xmlfile="results/report.xml"
