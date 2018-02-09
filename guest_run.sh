@@ -34,6 +34,7 @@ while getopts ":rsatdg" opt; do
         development_checkout_check="1"
       ;;
     g ) echo $currentscript" gcc only option selected."
+        mainscript="mainscript_gcconly"
         runsetparams=$runsetparams"g"
       ;;
     \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-d] [-g]"
@@ -184,6 +185,12 @@ mainscript_testing() {
     #cp results/status.xml $hostspace/results/
     #bash merged.sh sets/minuteset.ini
 }
+
+mainscript_gcconly() {
+    bash libs.sh
+    bash merged.sh$runsetparams sets/gcconly.ini
+}
+
 mainscript_regression() {
     bash libs.sh
     #bash run_regression_set.sh sets/regression.ini
