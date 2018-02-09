@@ -5,28 +5,26 @@ hostspace="/mnt/jenkins"
 # Called by: container_run.sh
 # Calls    : libs.sh, run_set.sh
 
-mainscript="mainscript_testing"
 exportfile="report"
 runsetparams=" -"
 development_checkout_check="0"
 unittestsetprefix=""
 hadflag="1"
+processlibs="0"
 echo "========= Beginning container guest scripts."
 while getopts ":rsatdg" opt; do
   hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
-        mainscript="mainscript_regression"
         exportfile="regression"
         runsetparams=$runsetparams"r"
       ;;
     s ) echo $currentscript" status option selected."
-        mainscript="mainscript_status"
         exportfile="status"
         runsetparams=$runsetparams"s"
+        processlibs="1"
       ;;
     a ) echo $currentscript" acceptance option selected."
-        mainscript="mainscript_acceptance"
         exportfile="acceptance"
         runsetparams=$runsetparams"a"
       ;;
@@ -38,7 +36,6 @@ while getopts ":rsatdg" opt; do
         development_checkout_check="1"
       ;;
     g ) echo $currentscript" gcc only option selected."
-        mainscript="mainscript_gcconly"
         runsetparams=$runsetparams"g"
       ;;
     \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-d] [-g]"
@@ -184,46 +181,13 @@ which kcc
 echo "</Checking for proper rv-match installation and starting kserver>"
 
 # Part 3 Run Main Script
-mainscript_testing() {
-    #:
-    #echo "Running self unit tests now:"
-    #bash unit_test_merged.sh
-    bash libs.sh
-    bash merged.sh$runsetparams
-    #bash tests/getty/test.sh
-    #bash merged.sh sets/crashless.ini
-    #bash merged.sh sets/temporary.ini
-    #bash merged.sh sets/interesting.ini
-    #bash merged.sh$runsetparams sets/unit_general.ini
-    #cp results/status.xml $hostspace/results/
-    #bash merged.sh sets/minuteset.ini
-}
-
-mainscript_gcconly() {
-    bash libs.sh
-    #bash merged.sh$runsetparams sets/gcconly.ini
-    bash merged.sh$runsetparams sets/temporary.ini
-}
-
-mainscript_regression() {
-    bash libs.sh
-    #bash run_regression_set.sh sets/regression.ini
-    # The following line should be the one used after issue 14 is fixed.
-    #bash merged.sh$runsetparams sets/${unittestsetprefix}regression.ini
-    bash merged.sh$runsetparams
-}
-mainscript_status() {
-    bash merged.sh$runsetparams sets/crashless.ini
-}
-mainscript_acceptance() {
-    bash libs.sh
-    bash merged.sh$runsetparams sets/${unittestsetprefix}acceptance.ini
-    #bash merged.sh$runsetparams sets/acceptance_and_regression.ini
-}
 echo "Debug location."
 pwd
 ls
-cd /root/rv-match_testing && ls && $mainscript
+if [ "$processlibs" == "0" ] ; then
+    bash libs.sh
+fi
+cd /root/rv-match_testing && ls && bash merged.sh$runsetparams
 
 # Part 4 Copy test result xml back to host
 echo "Container results are in "$exportfile".xml:"

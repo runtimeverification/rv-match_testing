@@ -30,7 +30,7 @@ while getopts ":rsatdge" opt; do
     e ) echo $currentscript" use existing container option selected."
         containerscriptflags=$containerscriptflags"e"
       ;;
-    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-e]"
+    \? ) echo "Usage: $currentscript [-r] [-s] [-a] [-t] [-d] [-g] [-e]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -42,26 +42,16 @@ while getopts ":rsatdge" opt; do
   esac
 done
 if [ "$containerscriptflags" == " -" ] ; then
-    echo "Should be empty '$containerscriptflags'"
     containerscriptflags=""
-else
-    echo "should be flags '$containerscriptflags'"
 fi
-echo "$currentscript 1: '$1' 2: '$2'"
 if [ "$hadflag" == "0" ] ; then
     containerscriptflags="$containerscriptflags $2"
-    echo "choosing 2"
 else
     containerscriptflags="$containerscriptflags $1"
-    echo "choosing 1"
 fi
-
-#bash copy_kcc_from_rv-match-master_to_jenkins_workspace.sh
 if [ ! -f results/$exportfile.xml ] ; then
     mkdir -p results/
     touch results/$exportfile.xml
 fi
 chmod a+rw results/$exportfile.xml
-#ls -la results/
-echo "$currentscript calling 'bash container_run.sh$containerscriptflags'"
 bash container_run.sh$containerscriptflags
