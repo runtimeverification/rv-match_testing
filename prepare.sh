@@ -17,8 +17,9 @@ currentscript="prepare.sh"
 
 exportfile="report"
 unittesting="1"
+gcconly="1"
 echo $currentscript" selecting options.."
-while getopts ":rsat" opt; do
+while getopts ":rsatg" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
@@ -32,11 +33,15 @@ while getopts ":rsat" opt; do
     t ) echo $currentscript" unit test option selected."
         unittesting="0"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t]"
+    g ) echo $currentscript" gcc only option selected."
+        gcconly="0"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-g]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
          echo " -t unit tests"
+         echo " -g gcc only"
       ;;
   esac
 done
@@ -331,7 +336,9 @@ init() {
     if [ ! "$exportfile" == "regression" ] ; then
         compiler="gcc" && init_helper
     fi
-    compiler="kcc" && init_helper
+    if [ ! "$gcconly" == "0" ] ; then
+        compiler="kcc" && init_helper
+    fi
 }
 
 # The following functions are currently unused.

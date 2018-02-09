@@ -5,6 +5,7 @@ currentscript="<insert scriptname here>"
 exportfile="report"
 testsfolder="tests"
 flagsfortests="-"
+gcconly="1"
 while getopts ":rsatug" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -25,6 +26,7 @@ while getopts ":rsatug" opt; do
         testsfolder="selftest"
       ;;
     g ) echo $currentscript" gcc only option selected."
+        gcconly="0"
         flagsfortests=$flagsfortests"g"
       ;;
     \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-u] [-g]"
@@ -141,7 +143,9 @@ read_log_files() {
         midstring=" configuration "
         out=$cout
         compiler="gcc" ; get_info
-        compiler="kcc" ; get_info
+        if [ ! "$gcconly" == "0" ] ; then
+            compiler="kcc" ; get_info
+        fi
     fi
     infoname="make"
     midstring="        making "
@@ -149,8 +153,9 @@ read_log_files() {
     if [ ! $exportfile == "regression" ] ; then
         compiler="gcc" ; get_info
     fi
-    compiler="kcc" ; get_info
-    
+    if [ ! "$gcconly" == "0" ] ; then
+        compiler="kcc" ; get_info
+    fi
     if [ ! $exportfile == "regression" ] && [ ! $exportfile == "acceptance" ] ; then
         string_success="not generated"
         string_failed="produced"
@@ -159,8 +164,11 @@ read_log_files() {
         infoname="no_kcc_config_generated"
         midstring="'s  kcc_config was "
         out=$kout
-        compiler="gcc" ; get_info
-        compiler="kcc" ; get_info
+        # If I am not mistaken, the following commented line is unnecessary.
+        #compiler="gcc" ; get_info
+        if [ ! "$gcconly" == "0" ] ; then
+            compiler="kcc" ; get_info
+        fi
     fi
 }
 
