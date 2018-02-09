@@ -10,8 +10,9 @@ runsetparams=" -"
 development_checkout_check="0"
 unittestsetprefix=""
 hadflag="1"
+reinstallmatch="0"
 echo "========= Beginning container guest scripts."
-while getopts ":rsatdg" opt; do
+while getopts ":rsatdgq" opt; do
   hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -36,13 +37,17 @@ while getopts ":rsatdg" opt; do
     g ) echo $currentscript" gcc only option selected."
         runsetparams=$runsetparams"g"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-d] [-g]"
+    q ) echo $currentscript" quick (don't update rv-match) option selected."
+        reinstallmatch="1"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-q]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
          echo " -t unit tests"
          echo " -d development"
          echo " -g gcc only"
+         echo " -q don't update rv-match"
       ;;
   esac
 done
@@ -101,10 +106,14 @@ wget -q https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT
 diff rv-match-linux-64-1.0-SNAPSHOT.jar rv-match-linux-64-1.0-SNAPSHOT.jar.old ; checknew="$?"
 kcc -v ; checkinstalled="$?"
 if [ "$checknew" == "0" ] && [ "$checkinstalled" == "0" ] ; then
-    echo "Not installing rv-match since two criterion hold:"
+    reinstallmatch="2"
+fi
+if [ ! "$reinstallmatch" == "0" ] ; then
+    echo "Not installing rv-match since either these two criterion hold:"
     echo "1. Already downloaded .jar matches the new."
     echo "2. \"kcc -v\" functions."
-    echo "We are assuming based on that that rv-match is already installed and updated to the latest version."
+    echo "And we are assuming based on that that rv-match is already installed and updated to the latest version."
+    echo "Or the -q option was used."
 else
     if [ "$checknew" == 0 ] ; then
         echo "\"kcc -v\" doesn't function, even though the new version matches the old."
