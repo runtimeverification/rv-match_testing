@@ -125,6 +125,7 @@ y
 fi
 
 echo "<$currentscript assert self-unit-tests>"
+cd /root/rv-match_testing
 bash unit_test_merged.sh &> selfunittest.log ; testout=$(echo "$?")
 if [ "$testout" == "0" ] ; then
     echo "  self-unit-tests all passed."
