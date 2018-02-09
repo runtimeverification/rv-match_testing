@@ -23,6 +23,10 @@ pwd ; ls
 echo "Initial lxc state:"
 lxc list
 
+echo "Shutting down old $name:"
+lxc exec $name -- poweroff
+sleep 5
+
 echo "Stopping old $name:"
 lxc stop "$name"
 sleep 5
