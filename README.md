@@ -2,8 +2,8 @@
 
 ## Instructions
 
- - Example of how to use on your local machine:
- - bash merged.sh sets/interesting.ini
+ - To run hello world with unit tests, simply run:
+ - wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/helloworld/test.sh && bash test.sh -t
 
- - This project now has its own unit tests:
- - bash unit_test_merged.sh
+ - On jenkins, run:
+ - bash -ex jenkins_run.sh helloworld
