@@ -41,8 +41,11 @@ while getopts ":rsatdge" opt; do
       ;;
   esac
 done
-if [ $containerscriptflags == " -" ] ; then
+if [ "$containerscriptflags" == " -" ] ; then
+    echo "Should be empty '$containerscriptflags'"
     containerscriptflags=""
+else
+    echo "should be flags '$containerscriptflags'"
 fi
 echo "$currentscript 1: '$1' 2: '$2'"
 if [ "$hadflag" == "0" ] ; then
