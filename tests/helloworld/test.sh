@@ -29,14 +29,9 @@ _build() {
 }
 
 _test() {
-    return
     cd helloworld/
     names[0]="basic run"
     ./a.out |& tee "kcc_out_0.txt" ; results[0]="$?"
-    names[1]="should fail"
-    diuhcvebvlwefofdiwn "sdinf" |& tee "kcc_out_1.txt" ; results[1]="$?"
-    names[2]="should work"
-    echo "hi there!" |& tee "kcc_out_2.txt" ; results[2]="$?"
 }
 
 init

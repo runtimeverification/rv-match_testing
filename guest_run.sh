@@ -9,6 +9,7 @@ mainscript="mainscript_testing"
 exportfile="report"
 runsetparams=" -"
 development_checkout_check="0"
+unittestsetprefix=""
 echo "========= Beginning container guest scripts."
 while getopts ":rsatdg" opt; do
   case ${opt} in
@@ -29,6 +30,7 @@ while getopts ":rsatdg" opt; do
       ;;
     t ) echo $currentscript" unit test option selected."
         runsetparams=$runsetparams"t"
+        unittestsetprefix="unit_"
       ;;
     d ) echo $currentscript" development option selected."
         development_checkout_check="1"
@@ -195,7 +197,7 @@ mainscript_regression() {
     bash libs.sh
     #bash run_regression_set.sh sets/regression.ini
     # The following line should be the one used after issue 14 is fixed.
-    bash merged.sh$runsetparams sets/regression.ini
+    bash merged.sh$runsetparams sets/${unittestsetprefix}regression.ini
     #bash merged.sh$runsetparams sets/temporary.ini
 }
 mainscript_status() {
@@ -203,7 +205,7 @@ mainscript_status() {
 }
 mainscript_acceptance() {
     bash libs.sh
-    bash merged.sh$runsetparams sets/acceptance.ini
+    bash merged.sh$runsetparams sets/${unittestsetprefix}acceptance.ini
     #bash merged.sh$runsetparams sets/acceptance_and_regression.ini
 }
 echo "Debug location."
