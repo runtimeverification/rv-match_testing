@@ -183,7 +183,7 @@ mainscript_testing() {
     #bash merged.sh sets/crashless.ini
     #bash merged.sh sets/temporary.ini
     #bash merged.sh sets/interesting.ini
-    bash merged.sh sets/unit_general.ini
+    bash merged.sh$runsetparams sets/unit_general.ini
     #cp results/status.xml $hostspace/results/
     #bash merged.sh sets/minuteset.ini
 }
