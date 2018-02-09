@@ -190,7 +190,8 @@ mainscript_testing() {
 
 mainscript_gcconly() {
     bash libs.sh
-    bash merged.sh$runsetparams sets/gcconly.ini
+    #bash merged.sh$runsetparams sets/gcconly.ini
+    bash merged.sh$runsetparams sets/temporary.ini
 }
 
 mainscript_regression() {
