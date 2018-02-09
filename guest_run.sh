@@ -10,8 +10,10 @@ exportfile="report"
 runsetparams=" -"
 development_checkout_check="0"
 unittestsetprefix=""
+hadflag="1"
 echo "========= Beginning container guest scripts."
 while getopts ":rsatdg" opt; do
+  hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         mainscript="mainscript_regression"
@@ -51,6 +53,11 @@ while getopts ":rsatdg" opt; do
 done
 if [ $runsetparams == " -" ] ; then
     runsetparams=""
+fi
+if [ "$hadflag" == "0" ] ; then
+    runsetparams="$runsetparams $2"
+else
+    runsetparams="$runsetparams $1"
 fi
 
 # Part 1: Basic container debug
@@ -178,10 +185,11 @@ mainscript_testing() {
     #:
     #echo "Running self unit tests now:"
     #bash unit_test_merged.sh
-    #bash libs.sh
+    bash libs.sh
+    bash merged.sh$runsetparams
     #bash tests/getty/test.sh
     #bash merged.sh sets/crashless.ini
-    bash merged.sh sets/temporary.ini
+    #bash merged.sh sets/temporary.ini
     #bash merged.sh sets/interesting.ini
     #bash merged.sh$runsetparams sets/unit_general.ini
     #cp results/status.xml $hostspace/results/
@@ -198,8 +206,8 @@ mainscript_regression() {
     bash libs.sh
     #bash run_regression_set.sh sets/regression.ini
     # The following line should be the one used after issue 14 is fixed.
-    bash merged.sh$runsetparams sets/${unittestsetprefix}regression.ini
-    #bash merged.sh$runsetparams sets/temporary.ini
+    #bash merged.sh$runsetparams sets/${unittestsetprefix}regression.ini
+    bash merged.sh$runsetparams
 }
 mainscript_status() {
     bash merged.sh$runsetparams sets/crashless.ini

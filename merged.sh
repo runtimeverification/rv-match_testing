@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Handle options
-currentscript="<insert scriptname here>"
+currentscript="merged.sh"
 exportfile="report"
 testsfolder="tests"
 flagsfortests="-"
@@ -44,9 +44,20 @@ if [ "$flagsfortests" == "-" ] ; then
 fi
 
 # Handle .ini argument
-filepath=$1
-if [ ! -e $filepath ] ; then
-    filepath=$2
+testname=$1
+if [ ! -e "sets/$testname.ini" ] && [ ! -e "tests/$testname/test.sh" ] ; then
+    testname=$2
+fi
+if [ -e "sets/$testname.ini" ] ; then
+    filepath="sets/$testname.ini"
+else
+    if [ -e "tests/$testname/test.sh" ] ; then
+        filepath="sets/_generated_single.ini"
+        echo "$testname" > $filepath
+    else
+        echo "$testname is neither a set or test."
+        exit 1
+    fi
 fi
 
 # Prepare state for proper loop

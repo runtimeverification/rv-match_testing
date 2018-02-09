@@ -6,7 +6,9 @@ container="${jenkins_folder_name//_/$hyphen}"
 guest_script="guest_run.sh"
 guest_script_flags=" -"
 use_existing_container="1"
+hadflag="1"
 while getopts ":rsatdge" opt; do
+  hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         guest_script_flags=$guest_script_flags"r"
@@ -42,6 +44,11 @@ while getopts ":rsatdge" opt; do
 done
 if [ $guest_script_flags == " -" ] ; then
     guest_script_flags=""
+fi
+if [ "$hadflag" == "0" ] ; then
+    guest_script_flags="$guest_script_flags $2"
+else
+    guest_script_flags="$guest_script_flags $1"
 fi
 guest_script=$guest_script$guest_script_flags
 echo "`git rev-parse --verify HEAD`" > githash.ini

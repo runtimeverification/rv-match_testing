@@ -2,7 +2,9 @@
 exportfile="report"
 currentscript="jenkins_run.sh"
 containerscriptflags=" -"
+hadflag="1"
 while getopts ":rsatdge" opt; do
+  hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
@@ -41,6 +43,11 @@ while getopts ":rsatdge" opt; do
 done
 if [ $containerscriptflags == " -" ] ; then
     containerscriptflags=""
+fi
+if [ "$hadflag" == "0" ] ; then
+    containerscriptflags="$containerscriptflags $2"
+else
+    containerscriptflags="$containerscriptflags $1"
 fi
 
 #bash copy_kcc_from_rv-match-master_to_jenkins_workspace.sh
