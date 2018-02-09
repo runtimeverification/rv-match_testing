@@ -149,28 +149,26 @@ bash unit_test_merged.sh
 echo "</Self unit tests priot to kserver>"
 
 echo "<Checking for proper rv-match installation and starting kserver>"
+echo "  which k-bin-to-text"
 which k-bin-to-text
+echo "  which kserver"
 which kserver
+echo "  which kcc"
 which kcc
-which start-kserver
-kserver &
-ps aux | grep kserver
-start-kserver
-ls /opt/rv-match/c-semantics
-/opt/rv-match/c-semantics/start-kserver 0
+/opt/rv-match/c-semantics/restart-kserver 0
 echo "</Checking for proper rv-match installation and starting kserver>"
 
 # Part 3 Run Main Script
 mainscript_testing() {
     #:
     #echo "Running self unit tests now:"
-    bash unit_test_merged.sh
+    #bash unit_test_merged.sh
     #bash libs.sh
     #bash tests/getty/test.sh
     #bash merged.sh sets/crashless.ini
     #bash merged.sh sets/temporary.ini
     #bash merged.sh sets/interesting.ini
-    #bash merged.sh sets/quickset.ini
+    bash merged.sh sets/quickset.ini
     #cp results/status.xml $hostspace/results/
     #bash merged.sh sets/minuteset.ini
 }
