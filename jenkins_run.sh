@@ -2,7 +2,7 @@
 exportfile="report"
 currentscript="jenkins_run.sh"
 containerscriptflags=" -"
-while getopts ":rsatdg" opt; do
+while getopts ":rsatdge" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
@@ -25,13 +25,17 @@ while getopts ":rsatdg" opt; do
     g ) echo $currentscript" gcc option selected."
         containerscriptflags=$containerscriptflags"g"
       ;;
-    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g]"
+    e ) echo $currentscript" use existing container option selected."
+        containerscriptflags=$containerscriptflags"e"
+      ;;
+    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-e]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
          echo " -t unit tests"
          echo " -d container uses development"
          echo " -g gcc only"
+         echo " -e use existing container"
       ;;
   esac
 done

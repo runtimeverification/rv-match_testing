@@ -5,7 +5,8 @@ hyphen='-'
 container="${jenkins_folder_name//_/$hyphen}"
 guest_script="guest_run.sh"
 guest_script_flags=" -"
-while getopts ":rsatdg" opt; do
+use_existing_container="1"
+while getopts ":rsatdge" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         guest_script_flags=$guest_script_flags"r"
@@ -25,13 +26,17 @@ while getopts ":rsatdg" opt; do
     g ) echo $currentscript" gcc only option selected."
         guest_script_flags=$guest_script_flags"g"
       ;;
-    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g]"
+    e ) echo $currentscript" use existing container option selected."
+        use_existing_container="0"
+      ;;
+    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-e]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
          echo " -t unit tests"
          echo " -d development"
          echo " -g gcc only"
+         echo " -e use existing container"
       ;;
   esac
 done
@@ -40,22 +45,21 @@ if [ $guest_script_flags == " -" ] ; then
 fi
 guest_script=$guest_script$guest_script_flags
 echo "`git rev-parse --verify HEAD`" > githash.ini
-
-echo "=== Stopping (destroying) old container:"
-lxc stop $container
-echo "=== First listing:"
-lxc list
-echo "=== Copying:"
-lxc copy match-testing-source $container -e
-echo "=== Second listing:"
-lxc list
-echo "=== Setting permissions:"
-chmod +x sayhi.sh
-echo "=== Attach network:"
-#lxc network attach testbr0 match-testing eth0
-echo "=== Starting:"
-lxc start $container
-echo "=== Third listing:"
+if [ ! "$use_existing_container" == "0" ] ; then
+    echo "=== Stopping (destroying) old container:"
+    lxc stop $container
+    echo "=== First listing:"
+    lxc list
+    echo "=== Copying:"
+    lxc copy match-testing-source $container -e
+    echo "=== Second listing:"
+    lxc list
+    echo "=== Starting:"
+    lxc start $container
+    echo "=== Third listing:"
+else
+    echo "Attaching to the existing container, $container, in:"
+fi
 lxc list
 echo "=== Source path:"
 pwd

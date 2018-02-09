@@ -2,6 +2,10 @@
 [ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/prepare.sh
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
+_dependencies() {
+    sudo apt -y install libncursesw5-dev
+}
+
 _download() {
     git clone https://github.com/hishamhm/htop.git
     cd htop/
