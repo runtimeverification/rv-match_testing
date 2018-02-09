@@ -3,12 +3,12 @@
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
 _dependencies() {
-    sudo apt -y install autotools-dev
-    sudo apt -y install dh-autoreconf
     sudo apt -y purge gettext
     sudo apt-get -y install gettext
     gettext --version
     apt-cache policy gettext
+    sudo apt update
+    sudo apt -y upgrade
 }
 
 _download() {
