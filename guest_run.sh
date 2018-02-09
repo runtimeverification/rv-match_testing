@@ -144,9 +144,21 @@ y
     cat stdinfile.txt | java -jar rv-match-linux-64*.jar -console ; rm stdinfile.txt
 fi
 
-echo "<Self unit tests prior to kserver>"
-bash unit_test_merged.sh
-echo "</Self unit tests priot to kserver>"
+echo "<$currentscript assert self-unit-tests>"
+bash unit_test_merged.sh &>/dev/null ; testout=$(echo "$?")
+if [ "$testout" == "0" ] ; then
+    echo "  self-unit-tests all passed."
+else
+    if [ "$testout" == "1" ] ; then
+        echo "  self-unit-test(s) failed."
+    else
+        echo "  self-unit-tests did not process properly."
+    fi
+fi
+set -e
+[ "$testout" == "0" ]
+set +e
+echo "</$currentscript assert self-unit-tests>"
 
 echo "<Checking for proper rv-match installation and starting kserver>"
 echo "  which k-bin-to-text"

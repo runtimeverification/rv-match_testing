@@ -2,6 +2,7 @@
 bash merged.sh -ut sets/selftest.ini
 bash merged.sh -ur sets/selftest.ini
 bash merged.sh -ua sets/selftest.ini
+returnvalue=0
 echo $'\n\nTest results: '
 xmlfile="results/report.xml"
 tempfile="results/temporary"
@@ -12,19 +13,19 @@ failelement='<error message="Failed.">'
 if [ "`grep -A1 'make_fail.*make success' $xmlfile | tail -n 1`" == "$failelement" ] ; then
     echo "\"make fail\" test               : passes."
 else
-    echo "\"make fail\" test               : fails."
+    echo "\"make fail\" test               : fails." ; returnvalue=1
     echo "  - xml is supposed to produce string: $failelement when make fails."
 fi
 if [ ! "`grep -A1 'make_pass.*make success' $xmlfile | tail -n 1`" == "$failelement" ] ; then
     echo "\"make pass\" test               : passes."
 else
-    echo "\"make pass\" test               : fails."
+    echo "\"make pass\" test               : fails." ; returnvalue=1
     echo "  - xml is not supposed to produce string: $failelement when make passes."
 fi
 if [[ "`grep -A2 'make_log_tail.*make success' $xmlfile | tail -n 1`" == *"Umbrella"* ]] ; then
     echo "\"make log tail\" test           : passes."
 else
-    echo "\"make log tail\" test           : fails."
+    echo "\"make log tail\" test           : fails." ; returnvalue=1
     echo "  - xml is supposed to embed kcc_make_out.txt when make fails."
 fi
 
@@ -36,7 +37,7 @@ grep -q 'Found a kcc_config number.*2' $tempfile2 ; two="$?"
 if [ "$one" == "0" ] && [ "$two" == "0" ] ; then
     echo "\"many_kcc_config\" test         : passes."
 else
-    echo "\"many_kcc_config\" test         : fails."
+    echo "\"many_kcc_config\" test         : fails." ; returnvalue=1
     echo "  - xml is supposed to contain both kcc_config results."
 fi
 
@@ -48,7 +49,7 @@ grep -q 'Found a kcc_config number.*2' $tempfile2 ; two="$?"
 if [ "$one" == "0" ] && [ "$two" == "1" ] ; then
     echo "\"one_kcc_config\" test          : passes."
 else
-    echo "\"one_kcc_config\" test : fails."
+    echo "\"one_kcc_config\" test : fails." ; returnvalue=1
     echo "  - xml is supposed to contain one kcc_config result."
 fi
 
@@ -60,7 +61,7 @@ grep -q 'Found a kcc_config number.*2' $tempfile2 ; two="$?"
 if [ "$one" == "1" ] && [ "$two" == "1" ] ; then
     echo "\"no_kcc_config\" test           : passes."
 else
-    echo "\"no_kcc_config\" test  : fails."
+    echo "\"no_kcc_config\" test  : fails." ; returnvalue=1
     echo "  - xml is supposed to contain no kcc_config results when no kcc_config is there."
 fi
 
@@ -68,7 +69,7 @@ fi
 if [ ! "`grep -A1 'unit_test_single_pass.*test1' $xmlfile | tail -n 1`" == "$failelement" ] ; then
     echo "\"unit test single pass\" test   : passes."
 else
-    echo "\"unit test single pass\" test   : fails."
+    echo "\"unit test single pass\" test   : fails." ; returnvalue=1
     echo "  - xml is not supposed to produce string: $failelement when a unit test passes."
     echo "  - instead it gave "`grep -A1 'unit_test_single_pass.*test1' $xmlfile | tail -n 1`
 fi
@@ -77,7 +78,7 @@ fi
 if [ "`grep -A1 'unit_test_single_fail.*test1' $xmlfile | tail -n 1`" == "$failelement" ] ; then
     echo "\"unit test single fail\" test   : passes."
 else
-    echo "\"unit test single fail\" test   : fails."
+    echo "\"unit test single fail\" test   : fails." ; returnvalue=1
     echo "  - xml is supposed to produce string: $failelement when a unit test fails."
     echo "  - instead it gave "`grep -A1 'unit_test_single_fail.*test1' $xmlfile | tail -n 1`
 fi
@@ -86,7 +87,7 @@ fi
 if [ ! "`grep -A1 'unit_test_pass_then_fail.*test1' $xmlfile | tail -n 1`" == "$failelement" ] && [ "`grep -A1 'unit_test_pass_then_fail.*test2' $xmlfile | tail -n 1`" == "$failelement" ] ; then
     echo "\"unit test pass then fail\" test: passes."
 else
-    echo "\"unit test pass then fail\" test: fails."
+    echo "\"unit test pass then fail\" test: fails." ; returnvalue=1
     echo "  - xml is supposed to produce string: $failelement iff that unit test fails."
 fi
 
@@ -98,7 +99,7 @@ grep -q 'post k term sample' $tempfile2 ; two="$?"
 if [ "$one" == "1" ] && [ "$two" == "0" ] ; then
     echo "\"unit_test_k_term\" test        : passes."
 else
-    echo "\"unit_test_k_term\" test        : fails."
+    echo "\"unit_test_k_term\" test        : fails." ; returnvalue=1
     echo "  - xml is supposed to contain characters after <k> term in config."
 fi
 
@@ -110,7 +111,7 @@ grep -q 'post location term sample' $tempfile2 ; two="$?"
 if [ "$one" == "1" ] && [ "$two" == "0" ] ; then
     echo "\"unit_test_location_term\" test : passes."
 else
-    echo "\"unit_test_location_term\" test : fails."
+    echo "\"unit_test_location_term\" test : fails." ; returnvalue=1
     echo "  - xml is supposed to contain characters after <curr-program-loc> term in config."
 fi
 
@@ -121,7 +122,7 @@ grep -q 'sample output log' $tempfile2 ; one="$?"
 if [ "$one" == "0" ] ; then
     echo "\"unit_test_log\" test           : passes."
 else
-    echo "\"unit_test_log\" test           : fails."
+    echo "\"unit_test_log\" test           : fails." ; returnvalue=1
     echo "  - xml is supposed to contain the tail of kcc_out_0.txt."
 fi
 
@@ -150,7 +151,7 @@ done
 if [ "$rightTypes" == "0" ] && [ $similar == "0" ] ; then
     echo "\"regression similarity\" test   : passes."
 else
-    echo "\"regression similarity\" test   : fails."
+    echo "\"regression similarity\" test   : fails." ; returnvalue=1
     echo "  - the xml is supposed to be similar in structure to the past sample."
     if [ ! "$rightTypes" == "0" ] ; then
         echo "  - the xml files were not formatted properly."
@@ -185,7 +186,7 @@ done
 if [ "$rightTypes" == "0" ] && [ $similar == "0" ] ; then
     echo "\"acceptance similarity\" test   : passes."
 else
-    echo "\"acceptance similarity\" test   : fails."
+    echo "\"acceptance similarity\" test   : fails." ; returnvalue=1
     echo "  - the xml is supposed to be similar in structure to the past sample."
     if [ ! "$rightTypes" == "0" ] ; then
         echo "  - the xml files were not formatted properly."
@@ -205,15 +206,15 @@ if [ "$one" == "0" ] ; then
     if [ "$two" == "0" ] ; then
         echo "\"k-bin-to-text\" test           : passes."
     else
-        echo "\"k-bin-to-text\" test           : fails."
+        echo "\"k-bin-to-text\" test           : fails." ; returnvalue=1
         echo "  - command succeeded but generated file does exist or does not contain substring \"generatedTop\"."
     fi
 else
     if [ "$one" == "1" ] ; then
-        echo "\"k-bin-to-text\" test           : fails."
+        echo "\"k-bin-to-text\" test           : fails." ; returnvalue=1
         echo "  - command recognized but returned 1 so you may first need to run \"kserver &\"."
     else
-        echo "\"k-bin-to-text\" test           : fails."
+        echo "\"k-bin-to-text\" test           : fails." ; returnvalue=1
         echo "  - command returned ""$one."
     fi
 fi
@@ -225,3 +226,5 @@ rm $tempfile3
 rm "results/report.xml"
 rm "results/acceptance.xml"
 rm "results/regression.xml"
+
+exit $returnvalue
