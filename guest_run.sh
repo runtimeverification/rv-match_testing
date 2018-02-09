@@ -10,7 +10,6 @@ runsetparams=" -"
 development_checkout_check="0"
 unittestsetprefix=""
 hadflag="1"
-processlibs="0"
 echo "========= Beginning container guest scripts."
 while getopts ":rsatdg" opt; do
   hadflag="0"
@@ -22,7 +21,6 @@ while getopts ":rsatdg" opt; do
     s ) echo $currentscript" status option selected."
         exportfile="status"
         runsetparams=$runsetparams"s"
-        processlibs="1"
       ;;
     a ) echo $currentscript" acceptance option selected."
         exportfile="acceptance"
@@ -51,13 +49,10 @@ done
 if [ "$runsetparams" == " -" ] ; then
     runsetparams=""
 fi
-echo "$currentscript 1: '$1' 2: '$2'"
 if [ "$hadflag" == "0" ] ; then
     runsetparams="$runsetparams $2"
-    echo "choosing 2"
 else
     runsetparams="$runsetparams $1"
-    echo "choosing 1"
 fi
 
 # Part 1: Basic container debug
@@ -70,30 +65,7 @@ set +e
 echo "</$currentscript assert network>"
 
 printf "\n<$currentscript assert k-bin-to-text>\n"
-echo "DEBUG"
-echo "0"
-ls /
-echo "1"
-ls /root/
-echo "2"
-ls /root/rv-match
-echo "3"
-ls /root/rv-match/k
-echo "4"
-ls /root/rv-match/k/k-distribution/
-echo "5"
-ls /root/rv-match/k/k-distribution/target/
-echo "6"
-ls /root/rv-match/k/k-distribution/target/release/
-echo "7"
-ls /root/rv-match/k/k-distribution/target/release/k/
-echo "8"
-ls /root/rv-match/k/k-distribution/target/release/k/bin
-echo "9"
-echo "END DEBUG"
-echo "PATH before setting: $PATH"
 export PATH=/root/rv-match/k/k-distribution/target/release/k/bin:$PATH
-echo " PATH after setting: $PATH"
 k-bin-to-text ; testout=$(echo "$?")
 set -e
 printf "\n  'which' test:\n"
@@ -123,9 +95,7 @@ git checkout $gitbranch
 git pull
 
 # https://github.com/runtimeverification/rv-match/blob/master/installer-linux/scripts/install-in-container
-bash libs.sh
-sudo rm /var/lib/dpkg/lock
-sudo apt-get -y install default-jre
+cd /root/
 mv rv-match-linux-64-1.0-SNAPSHOT.jar rv-match-linux-64-1.0-SNAPSHOT.jar.old
 wget -q https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT.jar
 diff rv-match-linux-64-1.0-SNAPSHOT.jar rv-match-linux-64-1.0-SNAPSHOT.jar.old ; checknew="$?"
@@ -170,23 +140,10 @@ set -e
 set +e
 echo "</$currentscript assert self-unit-tests>"
 
-echo "<Checking for proper rv-match installation and starting kserver>"
-echo "  which k-bin-to-text"
-which k-bin-to-text
-echo "  which kserver"
-which kserver
-echo "  which kcc"
-which kcc
-/opt/rv-match/c-semantics/restart-kserver 0
-echo "</Checking for proper rv-match installation and starting kserver>"
-
 # Part 3 Run Main Script
 echo "Debug location."
 pwd
 ls
-if [ "$processlibs" == "0" ] ; then
-    bash libs.sh
-fi
 cd /root/rv-match_testing && ls && bash merged.sh$runsetparams
 
 # Part 4 Copy test result xml back to host

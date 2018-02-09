@@ -9,7 +9,13 @@ tempfile="results/temporary"
 tempfile2="results/temporary2"
 tempfile3="results/temporary3"
 failelement='<error message="Failed.">'
-
+ping -c 1 www.google.com ; network_works="$?"
+if [ "$network_works" == "0" ] ; then
+    echo "\"network\" test                 : passes."
+else
+    echo "\"network\" test                 : fails." ; returnvalue=1
+    echo "  - ping to google.com failed."
+fi
 if [ "`grep -A1 'make_fail.*make success' $xmlfile | tail -n 1`" == "$failelement" ] ; then
     echo "\"make fail\" test               : passes."
 else
