@@ -184,17 +184,17 @@ read_log_files() {
 }
 logdate=$(date +%Y-%m-%d.%H:%M:%S)
 mkdir -p logs/$logdate
+if [ -d /mnt/jenkins/logs ] ; then
+    mkdir -p /mnt/jenkins/logs/$logdate
+fi
 while read line; do
     if [ ! "$flagsfortests" == "STOP" ] ; then
-        # Update container, if we're in one, with the jenkins test.sh
-        if [ -e /mnt/jenkins/$testsfolder/$line/test.sh ] ; then
-            # Branch is meant to run iff there is containerization.
-            mkdir -p $testsfolder/$line/
-            cp /mnt/jenkins/$testsfolder/$line/test.sh $testsfolder/$line/test.sh
-        fi
         echo ==== $line started at $(date)
         echo "bashing \"$testsfolder/$line/test.sh\" followed by \"$flagsfortests\""
         bash "$testsfolder/$line/test.sh" "$flagsfortests" &> logs/$logdate/$line.log
+        if [ -d /mnt/jenkins/logs/$logdate ] ; then
+            cp logs/$logdate/$line.log /mnt/jenkins/logs/$logdate/$line.log
+        fi
         echo ==== $line finished at $(date)
     else
         echo "Status option was selected, so the tests are not being run right now."
