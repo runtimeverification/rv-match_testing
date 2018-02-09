@@ -3,11 +3,6 @@
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
 _dependencies() {
-    which cpan
-    cpan YAML
-    cpan String::Escape
-    cpan Getopt::Declare
-    cpan UUID::Tiny
 }
 
 _download() {
