@@ -3,7 +3,6 @@
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
 _dependencies() {
-    sudo apt -y install openssl
     sudo apt -y install libssl-dev
 }
 
