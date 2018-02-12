@@ -186,6 +186,7 @@ logdate=$(date +%Y-%m-%d.%H:%M:%S)
 mkdir -p logs/$logdate
 if [ -d /mnt/jenkins/logs ] ; then
     mkdir -p /mnt/jenkins/logs/$logdate
+    chmod -R a+rw /mnt/jenkins/logs/$logdate
 fi
 while read line; do
     if [ ! "$flagsfortests" == "STOP" ] ; then
@@ -194,6 +195,7 @@ while read line; do
         bash "$testsfolder/$line/test.sh" "$flagsfortests" &> logs/$logdate/$line.log
         if [ -d /mnt/jenkins/logs/$logdate ] ; then
             cp logs/$logdate/$line.log /mnt/jenkins/logs/$logdate/$line.log
+            chmod a+rw /mnt/jenkins/logs/$logdate/$line.log
         fi
         echo ==== $line finished at $(date)
     else
