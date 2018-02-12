@@ -20,7 +20,7 @@ _build() {
     else
         ./configure --cc=$compiler --disable-stripping --disable-asm --disable-inline-asm --disable-x86asm |& tee kcc_configure_out.txt ; configure_success="$?"
     fi
-    make examples |& tee kcc_make_out.txt ; make_success="$?"
+    bash $base_dir/timeout.sh -t 30000 make examples |& tee kcc_make_out.txt ; make_success="$?"
 }
 
 init
