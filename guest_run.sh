@@ -121,6 +121,8 @@ else
     else
         echo "Either the new rv-match differs from the old or the old doesn't exist, so we will install it."
     fi
+    (echo "" | /opt/rv-match/uninstall 2> /dev/null) 2> /dev/null
+    sudo rm -f /usr/bin/rv-match
     printf "
 1
 
