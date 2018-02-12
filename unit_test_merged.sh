@@ -35,6 +35,28 @@ else
     echo "  - xml is supposed to embed kcc_make_out.txt when make fails."
 fi
 
+## Timeout pass
+#tail -n +`grep -n -m 1 'timeout_pass.*make success' $xmlfile |cut -f1 -d:` $xmlfile > $tempfile
+#head -n `grep -n -m 1 '</testcase>' $tempfile |cut -f1 -d:` $tempfile > $tempfile2
+#grep -q 'sample output log' $tempfile2 ; one="$?"
+#if [ "$one" == "0" ] ; then
+#    echo "\"timeout_pass\" test            : passes."
+#else
+#    echo "\"timeout_pass\" test            : fails." ; returnvalue=1
+#    echo "  - xml is supposed to contain the tail of kcc_out_0.txt."
+#fi 
+
+# Timeout fail
+#tail -n +`grep -n -m 1 'unit_test_log.*test1' $xmlfile |cut -f1 -d:` $xmlfile > $tempfile
+#head -n `grep -n -m 1 '</testcase>' $tempfile |cut -f1 -d:` $tempfile > $tempfile2
+#grep -q 'sample output log' $tempfile2 ; one="$?"
+#if [ "$one" == "0" ] ; then
+#    echo "\"timeout_fail\" test            : passes."
+#else
+#    echo "\"timeout_fail\" test            : fails." ; returnvalue=1
+#    echo "  - xml is supposed to contain the tail of kcc_out_0.txt."
+#fi
+
 # Many kcc_config
 tail -n +`grep -n -m 1 'many_kcc_config.*make success' $xmlfile |cut -f1 -d:` $xmlfile > $tempfile
 head -n `grep -n -m 1 '</testcase>' $tempfile |cut -f1 -d:` $tempfile > $tempfile2

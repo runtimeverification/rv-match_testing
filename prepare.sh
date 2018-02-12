@@ -1,8 +1,10 @@
 #!/bin/bash
 currentscript="prepare.sh"
 # This script should be called using the following code at the beginning of each test:
-#   [ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/prepare.sh
-#   base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh
+# #!/bin/bash
+# [ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/prepare.sh
+# base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
+#
 # That way this can be automatically downloaded if it's missing.
 # 
 # All functions called in this script that start with an underscore should be
@@ -333,6 +335,16 @@ init_helper() {
 }
 
 init() {
+    echo "pwd:"
+    pwd
+    echo "base_dir:"
+    echo "$base_dir"
+    if [ ! -f $base_dir/timeout.sh ] ; then
+        echo "prepare.sh $currentscript there is NOT timeout file."
+        wget -P $base_dir https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/timeout.sh
+    else
+        echo "prepare.sh $currentscript timeout is NOT missing"
+    fi
     if [ ! "$exportfile" == "regression" ] ; then
         compiler="gcc" && init_helper
     fi
