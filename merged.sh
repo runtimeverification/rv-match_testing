@@ -192,11 +192,13 @@ while read line; do
     if [ ! "$flagsfortests" == "STOP" ] ; then
         echo ==== $line started at $(date)
         echo "bashing \"$testsfolder/$line/test.sh\" followed by \"$flagsfortests\""
-        bash "$testsfolder/$line/test.sh" "$flagsfortests" &> logs/$logdate/$line.log
         if [ -d /mnt/jenkins/logs/$logdate ] ; then
-            cp logs/$logdate/$line.log /mnt/jenkins/logs/$logdate/$line.log
-            chmod a+rw /mnt/jenkins/logs/$logdate/$line.log
+            log_output="/mnt/jenkins/logs/$logdate/$line.log"
+            chmod a+rw $log_output
+        else
+            log_output="logs/$logdate/$line.log"
         fi
+        bash "$testsfolder/$line/test.sh" "$flagsfortests" &> $log_output
         echo ==== $line finished at $(date)
     else
         echo "Status option was selected, so the tests are not being run right now."
