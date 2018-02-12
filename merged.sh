@@ -194,6 +194,7 @@ while read line; do
         echo "bashing \"$testsfolder/$line/test.sh\" followed by \"$flagsfortests\""
         if [ -d /mnt/jenkins/logs/$logdate ] ; then
             log_output="/mnt/jenkins/logs/$logdate/$line.log"
+            touch $log_output
             chmod a+rw $log_output
         else
             log_output="logs/$logdate/$line.log"
