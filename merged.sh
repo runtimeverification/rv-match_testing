@@ -6,7 +6,7 @@ exportfile="report"
 testsfolder="tests"
 flagsfortests="-"
 gcconly="1"
-while getopts ":rsatug" opt; do
+while getopts ":rsatugp" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
@@ -29,13 +29,17 @@ while getopts ":rsatug" opt; do
         gcconly="0"
         flagsfortests=$flagsfortests"g"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-u] [-g]"
+    p ) echo $currentscript" prepare option selected."
+        flagsfortests=$flagsfortests"p"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-u] [-g] [-p]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
          echo " -t unit tests"
          echo " -u unit-test-self"
          echo " -g gcc only"
+         echo " -p prepare only"
       ;;
   esac
 done

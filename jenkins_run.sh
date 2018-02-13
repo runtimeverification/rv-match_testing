@@ -3,7 +3,7 @@ exportfile="report"
 currentscript="jenkins_run.sh"
 containerscriptflags=" -"
 hadflag="1"
-while getopts ":rsatdgeq" opt; do
+while getopts ":rsatdgeqp" opt; do
   hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -33,7 +33,10 @@ while getopts ":rsatdgeq" opt; do
     q ) echo $currentscript" quick (don't update rv-match) option selected."
         containerscriptflags=$containerscriptflags"q"
       ;;
-    \? ) echo "Usage: $currentscript [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-q]"
+    p ) echo $currentscript" prep option selected."
+        containerscriptflags=$containerscriptflags"p"
+      ;;
+    \? ) echo "Usage: $currentscript [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-q] [-p]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -42,6 +45,7 @@ while getopts ":rsatdgeq" opt; do
          echo " -g gcc only"
          echo " -e use existing container"
          echo " -q don't update rv-match"
+         echo " -p prepare only"
       ;;
   esac
 done

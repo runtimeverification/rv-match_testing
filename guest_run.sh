@@ -12,7 +12,7 @@ unittestsetprefix=""
 hadflag="1"
 reinstallmatch="0"
 echo "========= Beginning container guest scripts."
-while getopts ":rsatdgq" opt; do
+while getopts ":rsatdgqp" opt; do
   hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -40,7 +40,10 @@ while getopts ":rsatdgq" opt; do
     q ) echo $currentscript" quick (don't update rv-match) option selected."
         reinstallmatch="1"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-q]"
+    p ) echo $currentscript" prepare option selected."
+        runsetparams=$runsetparams"p"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-q] [-p]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -48,6 +51,7 @@ while getopts ":rsatdgq" opt; do
          echo " -d development"
          echo " -g gcc only"
          echo " -q don't update rv-match"
+         echo " -p prepare only"
       ;;
   esac
 done

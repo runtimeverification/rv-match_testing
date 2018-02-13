@@ -20,8 +20,9 @@ currentscript="prepare.sh"
 exportfile="report"
 unittesting="1"
 gcconly="1"
+prepareonly="1"
 echo $currentscript" selecting options.."
-while getopts ":rsatg" opt; do
+while getopts ":rsatgp" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
@@ -38,12 +39,16 @@ while getopts ":rsatg" opt; do
     g ) echo $currentscript" gcc only option selected."
         gcconly="0"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-g]"
+    p ) echo $currentscript" prepare option selected."
+        prepareonly="0"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-g] [-p]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
          echo " -t unit tests"
          echo " -g gcc only"
+         echo " -p prepare only"
       ;;
   esac
 done
@@ -325,12 +330,14 @@ prep_test() {
 init_helper() {
     prep_prepare
     prep_download
-    prep_build
-    if [ "$unittesting" == "0" ] ; then
-        echo $currentscript": Unit testing."
-        prep_test
-    else
-        echo $currentscript": Not unit testing."
+    if [ ! "$prepareonly" == "0" ] ; then
+        prep_build
+        if [ "$unittesting" == "0" ] ; then
+            echo $currentscript": Unit testing."
+            prep_test
+        else
+            echo $currentscript": Not unit testing."
+        fi
     fi
 }
 
