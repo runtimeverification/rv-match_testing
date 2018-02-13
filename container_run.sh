@@ -82,6 +82,6 @@ echo "Sleeping.."
 sleep 5
 lxc list
 echo "=== Exec:"
-echo "$currentscript calling '$guest_script'"
+echo "$currentscript: '$guest_script'"
 lxc exec $container -- bash -c "/mnt/jenkins/$guest_script"
 echo "=== End Exec"
