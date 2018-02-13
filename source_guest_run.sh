@@ -82,4 +82,11 @@ bash libs.sh
 bash libs.sh
 bash libs.sh
 
+printf "\nIterating through all projects, installing their dependencies and downloading their source.\n"
+bash generate_run_set.sh
+bash merged.sh -p _generated_all
+
+printf "\nFlush apt through the basic libraries after project specific dependencies were installed.\n"
+bash libs.sh
+
 printf "\nIf all went well, source container is now considered ready for copying.\n"
