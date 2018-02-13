@@ -85,3 +85,4 @@ echo "=== Exec:"
 echo "$currentscript: '$guest_script'"
 lxc exec $container -- bash -c "/mnt/jenkins/$guest_script"
 echo "=== End Exec"
+lxc stop $container
