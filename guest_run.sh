@@ -121,11 +121,14 @@ printf "
 1
 1
 " > stdinfile.txt
-cat stdinfile.txt | sudo java -jar predict.jar -console
-which rvpc
-echo "rvpc works?"
-rvpc -help &> /dev/null ; echo "$?"
-echo "<uninstall rv-predict>"
+cat stdinfile.txt | sudo java -jar predict.jar -console 2> /dev/null
+echo "  <assert rvpc>"
+set -e
+which rvpc &> /dev/null
+rvpc -help &> /dev/null
+set +e
+echo "  </assert rvpc>"
+echo "</install rv-predict>"
 
 # https://github.com/runtimeverification/rv-match/blob/master/installer-linux/scripts/install-in-container
 cd /root/
@@ -160,7 +163,7 @@ y
 1
 1
 " > stdinfile.txt
-    cat stdinfile.txt | java -jar rv-match-linux-64*.jar -console ; rm stdinfile.txt
+    cat stdinfile.txt | java -jar rv-match-linux-64*.jar -console 2> /dev/null ; rm stdinfile.txt
 fi
 
 echo "<$currentscript assert self-unit-tests>"

@@ -60,6 +60,10 @@ printf "
 " > stdinfile.txt
 cat stdinfile.txt | sudo java -jar predict.jar -console ; rm stdinfile.txt
 
+printf "\nAsserting rvpc functions.\n"
+which rvpc &> /dev/null
+rvpc -help &> /dev/null
+
 printf "\nInstalling the latest rv-match so copied containers can at least use some version of kcc without an install.\n"
 cd /root/ ; wget -q https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT.jar
 printf "
