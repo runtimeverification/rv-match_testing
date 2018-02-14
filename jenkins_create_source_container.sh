@@ -52,3 +52,6 @@ echo "  Purpose of script:"
 echo "    1. To prep apt installs"
 echo "    2. To prep k-bin-to-text"
 lxc exec $name -- bash -c "/mnt/jenkins-source/$guest_script"
+
+echo "Stopping $name. ($name should be persistent.)"
+lxc stop $name

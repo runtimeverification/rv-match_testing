@@ -186,7 +186,7 @@ read_log_files() {
         fi
     fi
 }
-logdate=$(date +%Y-%m-%d.%H:%M:%S)
+logdate="$(date +%Y-%m-%d.%H:%M:%S)-$testname"
 mkdir -p logs/$logdate
 if [ -d /mnt/jenkins/logs ] ; then
     mkdir -p /mnt/jenkins/logs/$logdate
