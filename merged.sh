@@ -6,7 +6,8 @@ exportfile="report"
 testsfolder="tests"
 flagsfortests="-"
 gcconly="1"
-while getopts ":rsatugp" opt; do
+rvpredict="1"
+while getopts ":rsatugpP" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
@@ -32,7 +33,11 @@ while getopts ":rsatugp" opt; do
     p ) echo $currentscript" prepare option selected."
         flagsfortests=$flagsfortests"p"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-u] [-g] [-p]"
+    P ) echo $currentscript" rv-predict option selected."
+        rvpredict="0"
+        flagsfortests=$flagsfortests"P"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-u] [-g] [-p] [-P]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -40,6 +45,7 @@ while getopts ":rsatugp" opt; do
          echo " -u unit-test-self"
          echo " -g gcc only"
          echo " -p prepare only"
+         echo " -P rv-predict"
       ;;
   esac
 done
@@ -158,8 +164,11 @@ read_log_files() {
         midstring=" configuration "
         out=$cout
         compiler="gcc" ; get_info
-        if [ ! "$gcconly" == "0" ] ; then
+        if [ ! "$gcconly" == "0" ] && [ ! "$rvpredict" == "0" ] ; then
             compiler="kcc" ; get_info
+        fi
+        if [ ! "$gcconly" == "0" ] && [ "$rvpredict" == "0" ] ; then
+            compiler="rvpc" ; get_info
         fi
     fi
     infoname="make"
@@ -168,8 +177,11 @@ read_log_files() {
     if [ ! $exportfile == "regression" ] ; then
         compiler="gcc" ; get_info
     fi
-    if [ ! "$gcconly" == "0" ] ; then
+    if [ ! "$gcconly" == "0" ] && [ ! "$rvpredict" == "0" ] ; then
         compiler="kcc" ; get_info
+    fi
+    if [ ! "$gcconly" == "0" ] && [ "$rvpredict" == "0" ] ; then
+        compiler="rvpc" ; get_info
     fi
     if [ ! $exportfile == "regression" ] && [ ! $exportfile == "acceptance" ] ; then
         string_success="not generated"
@@ -181,7 +193,7 @@ read_log_files() {
         out=$kout
         # If I am not mistaken, the following commented line is unnecessary.
         #compiler="gcc" ; get_info
-        if [ ! "$gcconly" == "0" ] ; then
+        if [ ! "$gcconly" == "0" ] && [ ! "$rvpredict" == "0" ] ; then
             compiler="kcc" ; get_info
         fi
     fi

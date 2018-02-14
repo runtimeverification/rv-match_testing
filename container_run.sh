@@ -7,7 +7,7 @@ guest_script="guest_run.sh"
 guest_script_flags=" -"
 use_existing_container="1"
 hadflag="1"
-while getopts ":rsatdgeqp" opt; do
+while getopts ":rsatdgeqpP" opt; do
   hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -37,7 +37,10 @@ while getopts ":rsatdgeqp" opt; do
     p ) echo $currentscript" prepare option selected."
         guest_script_flags=$guest_script_flags"p"
       ;;
-    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-q] [-p]"
+    P ) echo $currentscript" rv-predict option selected."
+        guest_script_flags=$guest_script_flags"P"
+      ;;
+    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-q] [-p] [-P]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -47,6 +50,7 @@ while getopts ":rsatdgeqp" opt; do
          echo " -e use existing container"
          echo " -q don't update rv-match"
          echo " -p prepare only"
+         echo " -P rv-predict"
       ;;
   esac
 done

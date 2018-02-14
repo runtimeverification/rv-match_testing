@@ -11,8 +11,9 @@ development_checkout_check="0"
 unittestsetprefix=""
 hadflag="1"
 reinstallmatch="0"
+rvpredict="1"
 echo "========= Beginning container guest scripts."
-while getopts ":rsatdgqp" opt; do
+while getopts ":rsatdgqpP" opt; do
   hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -43,7 +44,11 @@ while getopts ":rsatdgqp" opt; do
     p ) echo $currentscript" prepare option selected."
         runsetparams=$runsetparams"p"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-q] [-p]"
+    P ) echo $currentscript" rv-predict option selected."
+        runsetparams=$runsetparams"P"
+        rvpredict="0"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-q] [-p] [-P]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -52,6 +57,7 @@ while getopts ":rsatdgqp" opt; do
          echo " -g gcc only"
          echo " -q don't update rv-match"
          echo " -p prepare only"
+         echo " -P rv-predict"
       ;;
   esac
 done
@@ -102,6 +108,24 @@ git checkout $gitbranch
 git reset --hard origin/$gitbranch
 git checkout $gitbranch
 git pull
+
+echo "<install rv-predict>"
+# to uninstall: "sudo dpkg -r rv-predict-c"
+cd /root/
+wget -q https://runtimeverification.com/predict/download/c?v=1.9
+mv c\?v\=1.9 predict.jar
+printf "
+
+
+1
+1
+1
+" > stdinfile.txt
+cat stdinfile.txt | sudo java -jar predict.jar -console
+which rvpc
+echo "rvpc works?"
+rvpc -help &> /dev/null ; echo "$?"
+echo "<uninstall rv-predict>"
 
 # https://github.com/runtimeverification/rv-match/blob/master/installer-linux/scripts/install-in-container
 cd /root/

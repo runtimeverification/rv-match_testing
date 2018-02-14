@@ -21,8 +21,9 @@ exportfile="report"
 unittesting="1"
 gcconly="1"
 prepareonly="1"
+rvpredict="1"
 echo $currentscript" selecting options.."
-while getopts ":rsatgp" opt; do
+while getopts ":rsatgpP" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
@@ -42,13 +43,17 @@ while getopts ":rsatgp" opt; do
     p ) echo $currentscript" prepare option selected."
         prepareonly="0"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-g] [-p]"
+    P ) echo $currentscript" rv-predict option selected."
+        rvpredict="0"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-g] [-p] [-P]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
          echo " -t unit tests"
          echo " -g gcc only"
          echo " -p prepare only"
+         echo " -P rv-predict"
       ;;
   esac
 done
@@ -355,8 +360,11 @@ init() {
     if [ ! "$exportfile" == "regression" ] ; then
         compiler="gcc" && init_helper
     fi
-    if [ ! "$gcconly" == "0" ] ; then
+    if [ ! "$gcconly" == "0" ] && [ ! "$rvpredict" == "0" ] ; then
         compiler="kcc" && init_helper
+    fi
+    if [ ! "$gcconly" == "0" ] && [ "$rvpredict" == "0" ] ; then
+        compiler="rvpc" && init_helper
     fi
 }
 

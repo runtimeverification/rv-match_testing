@@ -48,6 +48,18 @@ printf "\n  return value test:\n"
 [ "$testout" == "1" ]
 printf "\nPassed! k-bin-to-text works in source container.\n"
 
+printf "\nInstalling rv-predict\n" # uninstall "sudo dpkg -r rv-predict-c"
+wget -q https://runtimeverification.com/predict/download/c?v=1.9
+mv c\?v\=1.9 predict.jar
+printf "
+
+
+1
+1
+1
+" > stdinfile.txt
+cat stdinfile.txt | sudo java -jar predict.jar -console ; rm stdinfile.txt
+
 printf "\nInstalling the latest rv-match so copied containers can at least use some version of kcc without an install.\n"
 cd /root/ ; wget -q https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT.jar
 printf "
