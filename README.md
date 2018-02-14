@@ -1,19 +1,23 @@
 # rv-match_testing
 
-## Instructions
+## Standalone
 
- - To run hello world with unit tests, simply run:
- - wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/helloworld/test.sh && bash test.sh -t
+ - To run a project as a standalone, run tests/\<project\>/test.sh [standalone-options]
+ - Example:
+```
+wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/helloworld/test.sh && bash test.sh -t
+```
+    - will run the helloworld project with unit tests
 
 ## Jenkins
 
  - Usage: bash jenkins_run.sh [options] (project | set)
-    - tests/<project>/test.sh are projects
-    - sets/<set>.ini are sets
+    - tests/\<project\>/test.sh are projects
+    - sets/\<set\>.ini are sets
 
- - bash -ex jenkins_run.sh helloworld
+ - Example: `bash -ex jenkins_run.sh helloworld`
     - runs helloworld projects
- - bash -ex jenkins_run.sh -r regression
+ - Example: `bash -ex jenkins_run.sh -r regression`
     - runs all projects in regression set
     - format test to -r flag
 
@@ -43,3 +47,4 @@
        - only installs dependencies and downloads, not build
  - P - rv-predict
        - runs and reports gcc and rvpc, not kcc
+ - standalone options are limited to `rsatgpP`
