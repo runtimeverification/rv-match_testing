@@ -161,15 +161,22 @@ increment_process_kcc_config() {
         echo "Location: $location" >> kcc_config_k_summary.txt
         k-bin-to-text $copiedfile $copiedfile.txt &>> kcc_config_k_summary.txt
         if [ $? -eq 0 ] ; then
-            grep -o "<k>.\{0,500\}" $copiedfile.txt &>> kcc_config_k_summary.txt
-            grep -o "<curr-program-loc>.\{500\}" config &> kcc_config_loc_summary.txt && cat kcc_config_loc_summary.txt
+            grep -o "<k>.\{0,500\}" $copiedfile.txt &> kcc_config_k_term.txt
             if [ $? -eq 0 ] ; then
-                echo "Cats are cool. 8)" ; cat kcc_config_k_summary.txt
+                echo "<k> found:"         >> kcc_config_k_summary.txt
+                cat kcc_config_k_term.txt >> kcc_config_k_summary.txt
             else
-                echo "term <k> was not found in the parsed kcc_config" >> kcc_config_k_summary.txt
+                echo "<k> not found."     >> kcc_config_k_summary.txt
+            fi
+            grep -o "<curr-program-loc>.\{500\}" $copiedfile.txt &> kcc_config_loc_term.txt
+            if [ $? -eq 0 ] ; then
+                echo "<curr-program-loc> found:"     >> kcc_config_k_summary.txt
+                cat kcc_config_loc_term.txt          >> kcc_config_k_summary.txt
+            else
+                echo "<curr-program-loc> not found." >> kcc_config_k_summary.txt
             fi
         else
-            echo "k-bin-to-text command failed with above error" >> kcc_config_k_summary.txt
+            echo "k-bin-to-text command failed with above error." >> kcc_config_k_summary.txt
         fi
     else
         echo "Error: report this bug in rv-match_testing. This message should have been unreachable."
@@ -186,7 +193,7 @@ process_config() { # Called by _test in test.sh which is called by prep_test() h
     cp config $test_log_dir/$copiedfile
     cd $test_log_dir
     grep -o "<k>.\{0,500\}" $copiedfile &> "config_k_summary$increment.txt"
-    grep -o "<curr-program-loc>.\{0,500\}" $copiedfile &> "config_loc_summary$increment.txt"
+    grep -o "<curr-program-loc>.\{0,500\}" $copiedfile &> "config_loc_term$increment.txt"
     let "increment += 1"
     cd $returnspot
 }
@@ -289,8 +296,8 @@ prep_extract_test() {
                 if [[ -e "config_k_summary$t.txt" ]]; then
                     print=$print$'\n<k> term: \n'$(cat config_k_summary$t.txt)
                 fi
-                if [[ -e "config_loc_summary$t.txt" ]]; then
-                    print=$print$'\nProgram location term: \n'$(cat config_loc_summary$t.txt)
+                if [[ -e "config_loc_term$t.txt" ]]; then
+                    print=$print$'\nProgram location term: \n'$(cat config_loc_term$t.txt)
                 fi
                 if [[ -e "kcc_out_$t.txt" ]]; then
                     print=$print$'\nTest log tail: \n'$(tail -20 kcc_out_$t.txt)
