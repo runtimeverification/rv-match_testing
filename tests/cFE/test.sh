@@ -24,7 +24,6 @@ _download() {
     cp -a cfe/cmake/sample_defs/ .
     rm -r build/
     mkdir build/
-    # sudo apt install libc6-dev-i386
     # Refer to the other files for getting rvpc to work
 }
 

@@ -38,7 +38,6 @@ _test() {
     mv wordcount.pml ignore/
     if [ "$exportfile" == "regression" ] ; then
         mv sat.pml ignore/
-        mv for_select_example.pml ignore/
     else
         if [ "$exportfile" == "acceptance" ] ; then
             mv sat.pml ignore/
@@ -46,7 +45,6 @@ _test() {
             if [ ! "$exportfile" == "report" ] ; then
                 echo "Warning! Unknown testing options detected in spin/test.sh"
                 mv sat.pml ignore/
-                mv for_select_example.pml ignore/
             fi
         fi
     fi

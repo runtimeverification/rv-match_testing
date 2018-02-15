@@ -23,6 +23,9 @@ sudo apt -y install gcc
 sudo apt -y install build-essential
 sudo apt -y install perl
 sudo apt -y install git-all
+sudo apt -y install autotools-dev
+sudo apt -y install dh-autoreconf
+sudo apt -y install cmake
 
 echo $printheader"prepare.sh"
 sudo apt -y install bc
@@ -30,3 +33,9 @@ sudo apt -y install bc
 echo $printheader"post-flushing apt"
 sudo apt update
 sudo apt -y upgrade
+
+#    which cpan
+#    cpan YAML
+#    cpan String::Escape
+#    cpan Getopt::Declare
+#    cpan UUID::Tiny

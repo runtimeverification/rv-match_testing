@@ -1,11 +1,13 @@
 #!/bin/bash
 
 # Handle options
-currentscript="<insert scriptname here>"
+currentscript="merged.sh"
 exportfile="report"
 testsfolder="tests"
 flagsfortests="-"
-while getopts ":rsatug" opt; do
+gcconly="1"
+rvpredict="1"
+while getopts ":rsatugpP" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
@@ -25,15 +27,25 @@ while getopts ":rsatug" opt; do
         testsfolder="selftest"
       ;;
     g ) echo $currentscript" gcc only option selected."
+        gcconly="0"
         flagsfortests=$flagsfortests"g"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-u] [-g]"
+    p ) echo $currentscript" prepare option selected."
+        flagsfortests=$flagsfortests"p"
+      ;;
+    P ) echo $currentscript" rv-predict option selected."
+        rvpredict="0"
+        flagsfortests=$flagsfortests"P"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-u] [-g] [-p] [-P]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
          echo " -t unit tests"
          echo " -u unit-test-self"
          echo " -g gcc only"
+         echo " -p prepare only"
+         echo " -P rv-predict"
       ;;
   esac
 done
@@ -42,9 +54,20 @@ if [ "$flagsfortests" == "-" ] ; then
 fi
 
 # Handle .ini argument
-filepath=$1
-if [ ! -e $filepath ] ; then
-    filepath=$2
+testname=$1
+if [ ! -e "sets/$testname.ini" ] && [ ! -e "tests/$testname/test.sh" ] ; then
+    testname=$2
+fi
+if [ -e "sets/$testname.ini" ] ; then
+    filepath="sets/$testname.ini"
+else
+    if [ -e "tests/$testname/test.sh" ] ; then
+        filepath="sets/_generated_single.ini"
+        echo "$testname" > $filepath
+    else
+        echo "$testname is neither a set or test."
+        exit 1
+    fi
 fi
 
 # Prepare state for proper loop
@@ -141,7 +164,12 @@ read_log_files() {
         midstring=" configuration "
         out=$cout
         compiler="gcc" ; get_info
-        compiler="kcc" ; get_info
+        if [ ! "$gcconly" == "0" ] && [ ! "$rvpredict" == "0" ] ; then
+            compiler="kcc" ; get_info
+        fi
+        if [ ! "$gcconly" == "0" ] && [ "$rvpredict" == "0" ] ; then
+            compiler="rvpc" ; get_info
+        fi
     fi
     infoname="make"
     midstring="        making "
@@ -149,8 +177,12 @@ read_log_files() {
     if [ ! $exportfile == "regression" ] ; then
         compiler="gcc" ; get_info
     fi
-    compiler="kcc" ; get_info
-    
+    if [ ! "$gcconly" == "0" ] && [ ! "$rvpredict" == "0" ] ; then
+        compiler="kcc" ; get_info
+    fi
+    if [ ! "$gcconly" == "0" ] && [ "$rvpredict" == "0" ] ; then
+        compiler="rvpc" ; get_info
+    fi
     if [ ! $exportfile == "regression" ] && [ ! $exportfile == "acceptance" ] ; then
         string_success="not generated"
         string_failed="produced"
@@ -159,25 +191,31 @@ read_log_files() {
         infoname="no_kcc_config_generated"
         midstring="'s  kcc_config was "
         out=$kout
-        compiler="gcc" ; get_info
-        compiler="kcc" ; get_info
+        # If I am not mistaken, the following commented line is unnecessary.
+        #compiler="gcc" ; get_info
+        if [ ! "$gcconly" == "0" ] && [ ! "$rvpredict" == "0" ] ; then
+            compiler="kcc" ; get_info
+        fi
     fi
 }
-
-echo "DEBUG merged.sh"
-cat $whitelistpath
-echo "/DEBUG merged.sh"
+logdate="$(date +%Y-%m-%d.%H:%M:%S)-$testname"
+mkdir -p logs/$logdate
+if [ -d /mnt/jenkins/logs ] ; then
+    mkdir -p /mnt/jenkins/logs/$logdate
+    chmod -R a+rw /mnt/jenkins/logs/$logdate
+fi
 while read line; do
     if [ ! "$flagsfortests" == "STOP" ] ; then
-        # Update container, if we're in one, with the jenkins test.sh
-        if [ -e /mnt/jenkins/$testsfolder/$line/test.sh ] ; then
-            # Branch is meant to run iff there is containerization.
-            mkdir -p $testsfolder/$line/
-            cp /mnt/jenkins/$testsfolder/$line/test.sh $testsfolder/$line/test.sh
-        fi
         echo ==== $line started at $(date)
         echo "bashing \"$testsfolder/$line/test.sh\" followed by \"$flagsfortests\""
-        bash "$testsfolder/$line/test.sh" "$flagsfortests"
+        if [ -d /mnt/jenkins/logs/$logdate ] ; then
+            log_output="/mnt/jenkins/logs/$logdate/$line.log"
+            touch $log_output
+            chmod a+rw $log_output
+        else
+            log_output="logs/$logdate/$line.log"
+        fi
+        bash "$testsfolder/$line/test.sh" "$flagsfortests" &> $log_output
         echo ==== $line finished at $(date)
     else
         echo "Status option was selected, so the tests are not being run right now."

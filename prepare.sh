@@ -1,8 +1,10 @@
 #!/bin/bash
 currentscript="prepare.sh"
 # This script should be called using the following code at the beginning of each test:
-#   [ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/TimJSwan89/rv-match_testing/master/prepare.sh
-#   base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh
+# #!/bin/bash
+# [ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/prepare.sh
+# base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
+#
 # That way this can be automatically downloaded if it's missing.
 # 
 # All functions called in this script that start with an underscore should be
@@ -17,8 +19,11 @@ currentscript="prepare.sh"
 
 exportfile="report"
 unittesting="1"
+gcconly="1"
+prepareonly="1"
+rvpredict="1"
 echo $currentscript" selecting options.."
-while getopts ":rsat" opt; do
+while getopts ":rsatgpP" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
@@ -32,11 +37,23 @@ while getopts ":rsat" opt; do
     t ) echo $currentscript" unit test option selected."
         unittesting="0"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t]"
+    g ) echo $currentscript" gcc only option selected."
+        gcconly="0"
+      ;;
+    p ) echo $currentscript" prepare option selected."
+        prepareonly="0"
+      ;;
+    P ) echo $currentscript" rv-predict option selected."
+        rvpredict="0"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-g] [-p] [-P]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
          echo " -t unit tests"
+         echo " -g gcc only"
+         echo " -p prepare only"
+         echo " -P rv-predict"
       ;;
   esac
 done
@@ -144,15 +161,22 @@ increment_process_kcc_config() {
         echo "Location: $location" >> kcc_config_k_summary.txt
         k-bin-to-text $copiedfile $copiedfile.txt &>> kcc_config_k_summary.txt
         if [ $? -eq 0 ] ; then
-            grep -o "<k>.\{0,500\}" $copiedfile.txt &>> kcc_config_k_summary.txt
-            #grep -o "<curr-program-loc>.\{500\}" config &> kcc_config_loc_summary.txt && cat kcc_config_loc_summary.txt
+            grep -o "<k>.\{0,500\}" $copiedfile.txt &> kcc_config_k_term.txt
             if [ $? -eq 0 ] ; then
-                echo "Cats are cool. 8)" ; cat kcc_config_k_summary.txt
+                echo "<k> found:"         >> kcc_config_k_summary.txt
+                cat kcc_config_k_term.txt >> kcc_config_k_summary.txt
             else
-                echo "term <k> was not found in the parsed kcc_config" >> kcc_config_k_summary.txt
+                echo "<k> not found."     >> kcc_config_k_summary.txt
+            fi
+            grep -o "<curr-program-loc>.\{500\}" $copiedfile.txt &> kcc_config_loc_term.txt
+            if [ $? -eq 0 ] ; then
+                echo "<curr-program-loc> found:"     >> kcc_config_k_summary.txt
+                cat kcc_config_loc_term.txt          >> kcc_config_k_summary.txt
+            else
+                echo "<curr-program-loc> not found." >> kcc_config_k_summary.txt
             fi
         else
-            echo "k-bin-to-text command failed with above error" >> kcc_config_k_summary.txt
+            echo "k-bin-to-text command failed with above error." >> kcc_config_k_summary.txt
         fi
     else
         echo "Error: report this bug in rv-match_testing. This message should have been unreachable."
@@ -169,7 +193,7 @@ process_config() { # Called by _test in test.sh which is called by prep_test() h
     cp config $test_log_dir/$copiedfile
     cd $test_log_dir
     grep -o "<k>.\{0,500\}" $copiedfile &> "config_k_summary$increment.txt"
-    grep -o "<curr-program-loc>.\{0,500\}" $copiedfile &> "config_loc_summary$increment.txt"
+    grep -o "<curr-program-loc>.\{0,500\}" $copiedfile &> "config_loc_term$increment.txt"
     let "increment += 1"
     cd $returnspot
 }
@@ -220,7 +244,7 @@ prep_build() {
    
     # Build hash is dependent on 3 things: {_build() function definition, $compiler --version, download hash}.
     buildhashinfo=$(type _build)$($compiler --version)$(head -n 1 $download_dir/download_function_hash)
-    if [ ! -e $build_dir/build_function_hash ] || [ "$(echo $(sha1sum <<< $buildhashinfo))" != "$(head -n 1 $build_dir/build_function_hash)" ] || [ "0" == "0" ] ; then
+    if [ ! -e $build_dir/build_function_hash ] || [ "$(echo $(sha1sum <<< $buildhashinfo))" != "$(head -n 1 $build_dir/build_function_hash)" ] ; then
 
         # build
         echo $report_string" building. Either build hash changed or this is the first time building."
@@ -272,8 +296,8 @@ prep_extract_test() {
                 if [[ -e "config_k_summary$t.txt" ]]; then
                     print=$print$'\n<k> term: \n'$(cat config_k_summary$t.txt)
                 fi
-                if [[ -e "config_loc_summary$t.txt" ]]; then
-                    print=$print$'\nProgram location term: \n'$(cat config_loc_summary$t.txt)
+                if [[ -e "config_loc_term$t.txt" ]]; then
+                    print=$print$'\nProgram location term: \n'$(cat config_loc_term$t.txt)
                 fi
                 if [[ -e "kcc_out_$t.txt" ]]; then
                     print=$print$'\nTest log tail: \n'$(tail -20 kcc_out_$t.txt)
@@ -318,20 +342,37 @@ prep_test() {
 init_helper() {
     prep_prepare
     prep_download
-    prep_build
-    if [ "$unittesting" == "0" ] ; then
-        echo $currentscript": Unit testing."
-        prep_test
-    else
-        echo $currentscript": Not unit testing."
+    if [ ! "$prepareonly" == "0" ] ; then
+        prep_build
+        if [ "$unittesting" == "0" ] ; then
+            echo $currentscript": Unit testing."
+            prep_test
+        else
+            echo $currentscript": Not unit testing."
+        fi
     fi
 }
 
 init() {
+    echo "pwd:"
+    pwd
+    echo "base_dir:"
+    echo "$base_dir"
+    if [ ! -f $base_dir/timeout.sh ] ; then
+        echo "prepare.sh $currentscript there is NOT timeout file."
+        wget -P $base_dir https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/timeout.sh
+    else
+        echo "prepare.sh $currentscript timeout is NOT missing"
+    fi
     if [ ! "$exportfile" == "regression" ] ; then
         compiler="gcc" && init_helper
     fi
-    compiler="kcc" && init_helper
+    if [ ! "$gcconly" == "0" ] && [ ! "$rvpredict" == "0" ] ; then
+        compiler="kcc" && init_helper
+    fi
+    if [ ! "$gcconly" == "0" ] && [ "$rvpredict" == "0" ] ; then
+        compiler="rvpc" && init_helper
+    fi
 }
 
 # The following functions are currently unused.

@@ -2,6 +2,11 @@
 [ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/prepare.sh
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
+_dependencies() {
+    sudo apt -y install gperf
+    sudo apt -y install bison
+}
+
 _download() {
     wget http://ftp.gnu.org/gnu/coreutils/coreutils-8.28.tar.xz
     tar xf coreutils-8.28.tar.xz
