@@ -100,4 +100,9 @@ lxc exec $container -- bash -c "/mnt/jenkins/$guest_script"
 echo "=== End Exec"
 if [ "$stop_container" == "0" ] ; then
     lxc stop $container
+else
+    echo "$container was left running because of the -E option."
+    echo "You can access it with:"
+    echo "\"lxc exec $container -- bash\""
+    echo "Or stop it with: \"lxc stop $container\""
 fi
