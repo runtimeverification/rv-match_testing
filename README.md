@@ -39,7 +39,7 @@ wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/mast
        - skip kcc, skip rvpc even if -P
  - e - reuse container
        - uses the old container if it exists
-       - (may update to retain container too)
+ - E - leave container alive
  - q - quick
        - skip updating rv-match
        - (will update to skip more)

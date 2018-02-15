@@ -7,7 +7,8 @@ guest_script="guest_run.sh"
 guest_script_flags=" -"
 use_existing_container="1"
 hadflag="1"
-while getopts ":rsatdgeqpP" opt; do
+stop_container="0"
+while getopts ":rsatdgeEqpP" opt; do
   hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -31,6 +32,9 @@ while getopts ":rsatdgeqpP" opt; do
     e ) echo $currentscript" use existing container option selected."
         use_existing_container="0"
       ;;
+    E ) echo $currentscript" leave container alive option selected."
+        stop_container="1"
+      ;;
     q ) echo $currentscript" quick (don't update rv-match) option selected."
         guest_script_flags=$guest_script_flags"q"
       ;;
@@ -40,7 +44,7 @@ while getopts ":rsatdgeqpP" opt; do
     P ) echo $currentscript" rv-predict option selected."
         guest_script_flags=$guest_script_flags"P"
       ;;
-    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-q] [-p] [-P]"
+    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-E] [-q] [-p] [-P]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -48,6 +52,7 @@ while getopts ":rsatdgeqpP" opt; do
          echo " -d development"
          echo " -g gcc only"
          echo " -e use existing container"
+         echo " -E leave container alive"
          echo " -q don't update rv-match"
          echo " -p prepare only"
          echo " -P rv-predict"
@@ -93,4 +98,6 @@ echo "=== Exec:"
 echo "$currentscript: '$guest_script'"
 lxc exec $container -- bash -c "/mnt/jenkins/$guest_script"
 echo "=== End Exec"
-lxc stop $container
+if [ "$stop_container" == "0" ] ; then
+    lxc stop $container
+fi

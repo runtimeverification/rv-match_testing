@@ -3,7 +3,7 @@ exportfile="report"
 currentscript="jenkins_run.sh"
 containerscriptflags=" -"
 hadflag="1"
-while getopts ":rsatdgeqpP" opt; do
+while getopts ":rsatdgeEqpP" opt; do
   hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -30,6 +30,9 @@ while getopts ":rsatdgeqpP" opt; do
     e ) echo $currentscript" use existing container option selected."
         containerscriptflags=$containerscriptflags"e"
       ;;
+    E ) echo $currentscript" leave container alive option selected."
+        containerscriptflags=$containerscriptflags"E"
+      ;;
     q ) echo $currentscript" quick (don't update rv-match) option selected."
         containerscriptflags=$containerscriptflags"q"
       ;;
@@ -39,7 +42,7 @@ while getopts ":rsatdgeqpP" opt; do
     P ) echo $currentscript" rv-predict option selected. (uppercase 'P')"
         containerscriptflags=$containerscriptflags"P"
       ;;
-    \? ) echo "Usage: $currentscript [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-q] [-p] [-P]"
+    \? ) echo "Usage: $currentscript [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-E] [-q] [-p] [-P]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -47,6 +50,7 @@ while getopts ":rsatdgeqpP" opt; do
          echo " -d container uses development"
          echo " -g gcc only"
          echo " -e use existing container"
+         echo " -E leave container alive"
          echo " -q don't update rv-match"
          echo " -p prepare only"
          echo " -P rv-predict option selected"
