@@ -2,6 +2,11 @@
 [ ! -f prepare.sh ] && wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/prepare.sh
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
+_dependencies() {
+    git submodule update --init
+    sudo apt -y install opencl-headers ocl-icd-libopencl1
+}
+
 _download() {
     git clone https://github.com/hashcat/hashcat.git
     cd hashcat/
@@ -9,10 +14,13 @@ _download() {
 }
 
 _build() {
+    echo "hi"
     cd hashcat/
-    git submodule update --init
-    sed -i -e "s/gcc/$compiler/g" ./src/Makefile ; configure_success="$?"
-    make ; make_success="$?"
+    echo "Running special command:"
+    kcc -d -c -pipe -std=gnu99 -Iinclude/ -Iinclude/lzma_sdk/ -IOpenCL/ -W -Wall -Wextra -Wfloat-equal -Wundef -Wshadow -Wmissing-declarations -Wmissing-prototypes -Wpointer-arith -Wstrict-prototypes -Waggregate-return -Wswitch-enum -Winit-self -Werror-implicit-function-declaration -Wformat -ftrapv -Wwrite-strings -Wno-cast-align -Wno-cast-qual -Wno-conversion -Wno-padded -Wno-pedantic -Wno-sizeof-pointer-memaccess -O2 -Ideps/OpenCL-Headers/ -DWITH_HWMON src/rp_kernel_on_cpu_optimized.c -o obj/rp_kernel_on_cpu_optimized.NATIVE.STATIC.o
+    echo "/Running special command."
+    sed -i -e "s/gcc/$compiler/g" ./src/Makefile |& tee kcc_configure_out.txt ; configure_success="$?"
+    make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
 init

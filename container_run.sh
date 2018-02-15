@@ -69,6 +69,10 @@ else
 fi
 guest_script=$guest_script$guest_script_flags
 echo "`git rev-parse --verify HEAD`" > githash.ini
+lxc info $container &> /dev/null ; container_exists="$?"
+if [ ! "$container_exists" == "0" ] ; then
+    use_existing_container="2"
+fi
 if [ ! "$use_existing_container" == "0" ] ; then
     echo "=== Stopping (destroying) old container:"
     lxc exec $container -- poweroff

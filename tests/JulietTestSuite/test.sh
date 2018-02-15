@@ -13,7 +13,7 @@ _build() {
 }
 
 _test() {
-    return
+    :
 }
 
 init
