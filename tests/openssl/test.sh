@@ -20,4 +20,11 @@ _build() {
     make |& tee kcc_make_out.txt ; make_success="$?"
 }
 
+_test() {
+    cd openssl/
+    names[0]="ecdsatest"
+    ./test/ecdsatest |& tee "kcc_out_0.txt" ; results[0]="$?"
+}
+
+
 init
