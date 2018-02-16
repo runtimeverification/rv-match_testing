@@ -18,6 +18,7 @@ _build() {
         CC=$compiler ./config no-asm no-threads no-hw no-zlib no-shared |& tee kcc_configure_out.txt ; configure_success="$?"
     fi
     make |& tee kcc_make_out.txt ; make_success="$?"
+    kcc -d -std=gnu11 -no-pedantic -frecover-all-errors -DDSO_DLFCN -DHAVE_DLFCN_H -DNDEBUG -DOPENSSL_NO_DYNAMIC_ENGINE -DOPENSSL_PIC -DOPENSSLDIR="/usr/local/ssl" -DENGINESDIR="/usr/local/lib/engines-1.1" -Wall -O3 -m64 -DL_ENDIAN -o apps/openssl apps/app_rand.o apps/apps.o apps/asn1pars.o apps/ca.o apps/ciphers.o apps/cms.o apps/crl.o apps/crl2p7.o apps/dgst.o apps/dhparam.o apps/dsa.o apps/dsaparam.o apps/ec.o apps/ecparam.o apps/enc.o apps/engine.o apps/errstr.o apps/gendsa.o apps/genpkey.o apps/genrsa.o apps/nseq.o apps/ocsp.o apps/openssl.o apps/opt.o apps/passwd.o apps/pkcs12.o apps/pkcs7.o apps/pkcs8.o apps/pkey.o apps/pkeyparam.o apps/pkeyutl.o apps/prime.o apps/rand.o apps/rehash.o apps/req.o apps/rsa.o apps/rsautl.o apps/s_cb.o apps/s_client.o apps/s_server.o apps/s_socket.o apps/s_time.o apps/sess_id.o apps/smime.o apps/speed.o apps/spkac.o apps/srp.o apps/storeutl.o apps/ts.o apps/verify.o apps/version.o apps/x509.o -L. -lssl -L. -lcrypto -ldl |& tee -a kcc_make_out.txt
 }
 
 _test() {
