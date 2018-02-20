@@ -1,10 +1,9 @@
-// temporaryobjectarrays.c
-// issue #415
-int main(void) {
-      union u2 {
-            int x;
-            char ca[2];
-      };
-      union u2 o2 = { .ca = "a" };
-      return (0, o2).ca == o2.ca;
+// testing.c
+// https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html
+int main() {
+	_Complex double x;
+	__complex__ double y;
+	double a = __real__ y;
+	double b = __imag__ x;
+	return 0;
 }
