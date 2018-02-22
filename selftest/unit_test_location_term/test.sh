@@ -7,8 +7,8 @@ _download() {
 }
 
 _build() {
-    configure_success="0"
-    make_success="0"
+    results[0]="0"
+    results[1]="0"
 }
 
 _test() {

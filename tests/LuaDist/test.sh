@@ -14,12 +14,12 @@ _download() {
 
 _build() {
     cd lua/
-    CC=$compiler CFLAGS="-std=gnu11" LD=$compiler LDFLAGS="-lm -ldl" cmake . |& tee kcc_configure_out.txt ; configure_success="$?"
-    make_success="2"
-    if [ "$configure_success" == "0" ] ; then
-        CC=$compiler CFLAGS="-std=gnu11" LD=$compiler LDFLAGS="-lm -ldl" make |& tee kcc_make_out.txt ; temp_success="$?"
+    CC=$compiler CFLAGS="-std=gnu11" LD=$compiler LDFLAGS="-lm -ldl" cmake . |& tee kcc_build_0.txt ; results[0]="$?"
+    results[1]="2"
+    if [ "$results[0]" == "0" ] ; then
+        CC=$compiler CFLAGS="-std=gnu11" LD=$compiler LDFLAGS="-lm -ldl" make |& tee kcc_build_1.txt ; temp_success="$?"
         if [ "$temp_success" == "0" ] && [ -f lua ] ; then
-            make_success="0"
+            results[1]="0"
         fi
     fi
 }

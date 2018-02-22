@@ -10,8 +10,8 @@ _download() {
 
 _build() {
     cd fio/
-    CC=$compiler LD=$compiler ./configure --cc=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
-    make |& tee kcc_make_out.txt ; make_success="$?"
+    CC=$compiler LD=$compiler ./configure --cc=$compiler |& tee kcc_build_0.txt ; results[0]="$?"
+    make |& tee kcc_build_1.txt ; results[1]="$?"
 }
 
 _test() {

@@ -16,11 +16,11 @@ _build() {
     cd FFmpeg/
     set -o pipefail
     if [[ $compiler == "kcc" ]]; then
-        ./configure --cc=kcc --ld=kcc --disable-stripping --disable-asm --disable-inline-asm --disable-x86asm --extra-cflags="-std=gnu11 -frecover-all-errors" |& tee kcc_configure_out.txt ; configure_success="$?"
+        ./configure --cc=kcc --ld=kcc --disable-stripping --disable-asm --disable-inline-asm --disable-x86asm --extra-cflags="-std=gnu11 -frecover-all-errors" |& tee kcc_build_0.txt ; results[0]="$?"
     else
-        ./configure --cc=$compiler --disable-stripping --disable-asm --disable-inline-asm --disable-x86asm |& tee kcc_configure_out.txt ; configure_success="$?"
+        ./configure --cc=$compiler --disable-stripping --disable-asm --disable-inline-asm --disable-x86asm |& tee kcc_build_0.txt ; results[0]="$?"
     fi
-    bash $base_dir/timeout.sh -t 30000 make examples |& tee kcc_make_out.txt ; make_success="$?"
+    bash $base_dir/timeout.sh -t 30000 make examples |& tee kcc_build_1.txt ; results[1]="$?"
 }
 
 init

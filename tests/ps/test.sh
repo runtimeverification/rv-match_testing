@@ -10,8 +10,8 @@ _download() {
 
 _build() {
     cd ps/
-    ./configure linux x86_64 |& tee kcc_configure_out.txt ; configure_success="$?"
-    make CC=$compiler LD=$compiler |& tee kcc_make_out.txt ; make_success="$?"
+    ./configure linux x86_64 |& tee kcc_build_0.txt ; results[0]="$?"
+    make CC=$compiler LD=$compiler |& tee kcc_build_1.txt ; results[1]="$?"
 }
 
 _test() {

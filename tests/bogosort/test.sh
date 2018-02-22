@@ -81,8 +81,8 @@ _download() {
 }
 
 _build() {
-    cd bogosort/ ; configure_success="$?"
-    $compiler bogosort.c ; make_success="$?"
+    cd bogosort/ ; results[0]="$?"
+    $compiler bogosort.c ; results[1]="$?"
 }
 
 _test() {

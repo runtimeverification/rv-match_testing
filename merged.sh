@@ -206,8 +206,8 @@ if [ -d /mnt/jenkins/logs ] ; then
 fi
 while read line; do
     if [ ! "$flagsfortests" == "STOP" ] ; then
-        echo ==== $line started at $(date)
-        echo "bashing \"$testsfolder/$line/test.sh\" followed by \"$flagsfortests\""
+        echo ""
+        echo "==== $line  started at $(date)"
         if [ -d /mnt/jenkins/logs/$logdate ] ; then
             log_output="/mnt/jenkins/logs/$logdate/$line.log"
             touch $log_output
@@ -215,12 +215,13 @@ while read line; do
         else
             log_output="logs/$logdate/$line.log"
         fi
+        echo "     writing to log at $log_output"
         bash "$testsfolder/$line/test.sh" "$flagsfortests" &> $log_output
-        echo ==== $line finished at $(date)
+        echo "==== $line finished at $(date)"
     else
         echo "Status option was selected, so the tests are not being run right now."
     fi
-    read_log_files
+    #read_log_files
     cat "$testsfolder/$line/$exportfile.xml" >> $exportpath
 done < $whitelistpath
 

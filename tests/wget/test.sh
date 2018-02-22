@@ -18,8 +18,8 @@ _download() {
 
 _build() {
     cd wget/
-    ./configure --disable-threads CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
-    bash $base_dir/timeout.sh -t 2000 make |& tee kcc_make_out.txt ; make_success="$?"
+    ./configure --disable-threads CC=$compiler LD=$compiler |& tee kcc_build_0.txt ; results[0]="$?"
+    bash $base_dir/timeout.sh -t 2000 make |& tee kcc_build_1.txt ; results[1]="$?"
 }
 
 init

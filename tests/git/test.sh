@@ -14,8 +14,8 @@ _download() {
 }
 
 _build() {
-    cd git/ ; configure_success="$?"
-    make CC=$compiler LD=$compiler |& tee kcc_make_out.txt ; make_success="$?"
+    cd git/ ; results[0]="$?"
+    make CC=$compiler LD=$compiler |& tee kcc_build_1.txt ; results[1]="$?"
 }
 
 _test() {

@@ -9,11 +9,11 @@ _download() {
 }
 
 _build() {
-    cd mbedtls-2.4.0/ && configure_success="$?"
+    cd mbedtls-2.4.0/ && results[0]="$?"
     if [[ $compiler == "kcc" ]]; then
-        CC=kcc CFLAGS="-std=gnu11 -frecover-all-errors -no-pedantic" LD=kcc make |& tee kcc_make_out.txt ; make_success="$?"
+        CC=kcc CFLAGS="-std=gnu11 -frecover-all-errors -no-pedantic" LD=kcc make |& tee kcc_build_1.txt ; results[1]="$?"
     else
-        CC=$compiler make |& tee kcc_make_out.txt ; make_success="$?"
+        CC=$compiler make |& tee kcc_build_1.txt ; results[1]="$?"
     fi
 }
 

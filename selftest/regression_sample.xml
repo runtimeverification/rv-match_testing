@@ -2,81 +2,122 @@
 <testsuites>
 <testsuite name="ReportScriptReport" package="ReportPackage">
 <properties/>
-<testcase classname="regression.make_fail" name="kcc make success" time=".109115942">
+<testcase classname="regression.make_fail" name="kcc configure success">
+</testcase>
+<testcase classname="regression.make_fail" name="kcc make success">
 <error message="Failed.">
-<![CDATA[selftest/make_fail/kcc/build_log/latest/kcc_make_out.txt is supposed to be in the log folder.]]></error>
+<![CDATA[
+Build step 1, "make success": {
+}]]></error>
 </testcase>
-<testcase classname="regression.make_log_tail" name="kcc make success" time=".108098643">
+<testcase classname="regression.make_log_tail" name="kcc configure success">
+</testcase>
+<testcase classname="regression.make_log_tail" name="kcc make success">
 <error message="Failed.">
-<![CDATA[Important debug output produced by make. Umbrella satire.]]></error>
+<![CDATA[
+Build step 1, "make success": {
+Build step log tail: 
+Important debug output produced by make. Umbrella satire.
+}]]></error>
 </testcase>
-<testcase classname="regression.make_pass" name="kcc make success" time=".125245132">
+<testcase classname="regression.make_pass" name="kcc configure success">
 </testcase>
-<testcase classname="regression.timeout_pass" name="kcc make success" time="1.122425589">
+<testcase classname="regression.make_pass" name="kcc make success">
 </testcase>
-<testcase classname="regression.timeout_fail" name="kcc make success" time="1.121219306">
+<testcase classname="regression.timeout_pass" name="kcc configure success">
+</testcase>
+<testcase classname="regression.timeout_pass" name="kcc make success">
+</testcase>
+<testcase classname="regression.timeout_fail" name="kcc configure success">
+</testcase>
+<testcase classname="regression.timeout_fail" name="kcc make success">
 <error message="Failed.">
-<![CDATA[]]></error>
-</testcase>
-<testcase classname="regression.many_kcc_config" name="kcc make success" time=".117428440">
-<error message="Failed.">
-<![CDATA[selftest/many_kcc_config/kcc/build_log/latest/kcc_make_out.txt is supposed to be in the log folder.
-=========================
-List of the processed kcc_configs:
+<![CDATA[
+Build step 1, "make success": {
+Build step log tail: 
 
+}]]></error>
+</testcase>
+<testcase classname="regression.many_kcc_config" name="kcc configure success">
+</testcase>
+<testcase classname="regression.many_kcc_config" name="kcc make success">
+<error message="Failed.">
+<![CDATA[
+Build step 1, "make success": {
+kcc_config info: 
 
-Found a kcc_config number 1:
-Location: /home/timothy/Desktop/matchTesting/runall_testing/selftest/many_kcc_config/kcc/build/directory_one/sub_directory_one_B
+Found a kcc_config number 1-0:
+Location: /home/timothy/Desktop/matchTesting/devel-testing/selftest/many_kcc_config/kcc/build/directory_one/sub_directory_one_B
 Exception in thread "main" java.nio.BufferUnderflowException
 	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
 	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
 	at java.nio.ByteBuffer.get(ByteBuffer.java:715)
 	at org.kframework.parser.binary.BinaryParser.parse(BinaryParser.java:188)
 	at org.kframework.main.BinaryToText.main(BinaryToText.java:37)
-k-bin-to-text command failed with above error
+k-bin-to-text command failed with above error.
+kcc_config info: 
 
-Found a kcc_config number 2:
-Location: /home/timothy/Desktop/matchTesting/runall_testing/selftest/many_kcc_config/kcc/build/directory_two
+Found a kcc_config number 1-1:
+Location: /home/timothy/Desktop/matchTesting/devel-testing/selftest/many_kcc_config/kcc/build/directory_two
 Exception in thread "main" java.nio.BufferUnderflowException
 	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
 	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
 	at java.nio.ByteBuffer.get(ByteBuffer.java:715)
 	at org.kframework.parser.binary.BinaryParser.parse(BinaryParser.java:188)
 	at org.kframework.main.BinaryToText.main(BinaryToText.java:37)
-k-bin-to-text command failed with above error]]></error>
+k-bin-to-text command failed with above error.
+}]]></error>
 </testcase>
-<testcase classname="regression.no_kcc_config" name="kcc make success" time=".115916625">
-<error message="Failed.">
-<![CDATA[selftest/no_kcc_config/kcc/build_log/latest/kcc_make_out.txt is supposed to be in the log folder.]]></error>
+<testcase classname="regression.no_kcc_config" name="kcc configure success">
 </testcase>
-<testcase classname="regression.one_kcc_config" name="kcc make success" time=".116796215">
+<testcase classname="regression.no_kcc_config" name="kcc make success">
 <error message="Failed.">
-<![CDATA[selftest/one_kcc_config/kcc/build_log/latest/kcc_make_out.txt is supposed to be in the log folder.
-=========================
-List of the processed kcc_configs:
+<![CDATA[
+Build step 1, "make success": {
+}]]></error>
+</testcase>
+<testcase classname="regression.one_kcc_config" name="kcc configure success">
+</testcase>
+<testcase classname="regression.one_kcc_config" name="kcc make success">
+<error message="Failed.">
+<![CDATA[
+Build step 1, "make success": {
+kcc_config info: 
 
-
-Found a kcc_config number 1:
-Location: /home/timothy/Desktop/matchTesting/runall_testing/selftest/one_kcc_config/kcc/build/directory_one/sub_directory_one_B
+Found a kcc_config number 1-0:
+Location: /home/timothy/Desktop/matchTesting/devel-testing/selftest/one_kcc_config/kcc/build/directory_one/sub_directory_one_B
 Exception in thread "main" java.nio.BufferUnderflowException
 	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
 	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
 	at java.nio.ByteBuffer.get(ByteBuffer.java:715)
 	at org.kframework.parser.binary.BinaryParser.parse(BinaryParser.java:188)
 	at org.kframework.main.BinaryToText.main(BinaryToText.java:37)
-k-bin-to-text command failed with above error]]></error>
+k-bin-to-text command failed with above error.
+}]]></error>
 </testcase>
-<testcase classname="regression.unit_test_single_pass" name="kcc make success" time=".111175292">
+<testcase classname="regression.unit_test_single_pass" name="kcc configure success">
 </testcase>
-<testcase classname="regression.unit_test_single_fail" name="kcc make success" time=".116695480">
+<testcase classname="regression.unit_test_single_pass" name="kcc make success">
 </testcase>
-<testcase classname="regression.unit_test_pass_then_fail" name="kcc make success" time=".113913106">
+<testcase classname="regression.unit_test_single_fail" name="kcc configure success">
 </testcase>
-<testcase classname="regression.unit_test_k_term" name="kcc make success" time=".116497048">
+<testcase classname="regression.unit_test_single_fail" name="kcc make success">
 </testcase>
-<testcase classname="regression.unit_test_location_term" name="kcc make success" time=".126251607">
+<testcase classname="regression.unit_test_pass_then_fail" name="kcc configure success">
 </testcase>
-<testcase classname="regression.unit_test_log" name="kcc make success" time=".110010911">
+<testcase classname="regression.unit_test_pass_then_fail" name="kcc make success">
+</testcase>
+<testcase classname="regression.unit_test_k_term" name="kcc configure success">
+</testcase>
+<testcase classname="regression.unit_test_k_term" name="kcc make success">
+</testcase>
+<testcase classname="regression.unit_test_location_term" name="kcc configure success">
+</testcase>
+<testcase classname="regression.unit_test_location_term" name="kcc make success">
+</testcase>
+<testcase classname="regression.unit_test_log" name="kcc configure success">
+</testcase>
+<testcase classname="regression.unit_test_log" name="kcc make success">
 </testcase>
 </testsuite>
 </testsuites>

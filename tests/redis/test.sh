@@ -9,10 +9,10 @@ _download() {
 }
 
 _build() {
-    cd redis/ ; configure_success="$?"
-    make CC=$compiler LD=$compiler |& tee kcc_make_out.txt ; make_success="$?"
-    if [ "$make_success" == "0" ] ; then
-        make test CC=$compiler LD=$compiler |& tee kcc_make_out.txt ; make_success="$?"
+    cd redis/ ; results[0]="$?"
+    make CC=$compiler LD=$compiler |& tee kcc_build_1.txt ; results[1]="$?"
+    if [ "$results[1]" == "0" ] ; then
+        make test CC=$compiler LD=$compiler |& tee kcc_build_1.txt ; results[1]="$?"
     fi
 }
 

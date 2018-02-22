@@ -151,32 +151,23 @@ prep_download() {
 }
 
 increment_process_kcc_config() {
+    increment="$index"-"$counter"
     copiedfile=kcc_config_no_$increment
-    cp kcc_config $log_dir/$copiedfile
-    let "increment += 1"
+    cp kcc_config $log_dir/$copiedfile ; rm kcc_config
 # ---
     location=$(pwd) ; cd $log_dir
+    echo "location $location"
+    echo "log_dir $log_dir"
+    echo "build_log_dir $build_log_dir"
     if [ -e $copiedfile ] ; then
-        echo $'\n'"Found a kcc_config number $increment:" >> kcc_config_k_summary.txt
-        echo "Location: $location" >> kcc_config_k_summary.txt
-        k-bin-to-text $copiedfile $copiedfile.txt &>> kcc_config_k_summary.txt
+        echo $'\n'"Found a kcc_config number $increment:" >> kcc_config_k_summary$increment.txt
+        echo "Location: $location" >> kcc_config_k_summary$increment.txt
+        k-bin-to-text $copiedfile $copiedfile.txt &>> kcc_config_k_summary$increment.txt
         if [ $? -eq 0 ] ; then
-            grep -o "<k>.\{0,500\}" $copiedfile.txt &> kcc_config_k_term.txt
-            if [ $? -eq 0 ] ; then
-                echo "<k> found:"         >> kcc_config_k_summary.txt
-                cat kcc_config_k_term.txt >> kcc_config_k_summary.txt
-            else
-                echo "<k> not found."     >> kcc_config_k_summary.txt
-            fi
-            grep -o "<curr-program-loc>.\{500\}" $copiedfile.txt &> kcc_config_loc_term.txt
-            if [ $? -eq 0 ] ; then
-                echo "<curr-program-loc> found:"     >> kcc_config_k_summary.txt
-                cat kcc_config_loc_term.txt          >> kcc_config_k_summary.txt
-            else
-                echo "<curr-program-loc> not found." >> kcc_config_k_summary.txt
-            fi
+            grep -o "<k>.\{0,500\}" $copiedfile.txt &> kcc_config_k_term$increment.txt
+            grep -o "<curr-program-loc>.\{500\}" $copiedfile.txt &> kcc_config_loc_term$increment.txt
         else
-            echo "k-bin-to-text command failed with above error." >> kcc_config_k_summary.txt
+            echo "k-bin-to-text command failed with above error." >> kcc_config_k_summary$increment.txt
         fi
     else
         echo "Error: report this bug in rv-match_testing. This message should have been unreachable."
@@ -185,6 +176,27 @@ increment_process_kcc_config() {
         ls
         echo "====="
     fi
+    echo "$counter" > $index.ini
+    let "counter += 1"
+}
+
+process_kcc_config() { # Called by _build in test.sh which is called by prep_build() here
+    returnspot=$(pwd)
+    re='^[0-9]+$'
+    if ! [[ $1 =~ $re ]] ; then
+        echo "rv-match_testing error in prepare.sh: the argument to \"process_kcc_config\" should be an integer, not \"$1\"" |& tee -a kcc_config_k_summary$increment.txt
+        index="0"
+    else
+        index="$1"
+    fi
+    cd $build_dir
+    counter=0
+    while IFS= read -r -d $'\0' line; do
+        return_dir=$(pwd)
+        cd $(dirname $line) && log_dir=$build_log_dir && increment_process_kcc_config
+        cd $return_dir
+    done < <(find . -type f -iname "kcc_config" -print0)
+    cd $returnspot
 }
 
 process_config() { # Called by _test in test.sh which is called by prep_test() here
@@ -199,12 +211,6 @@ process_config() { # Called by _test in test.sh which is called by prep_test() h
 }
 
 prep_extract() {
-    
-    build_log_dir=$test_dir/$compiler/build_log/$(date +%Y-%m-%d.%H:%M:%S)
-    mkdir -p $build_log_dir
-    ln -sfn $build_log_dir $test_dir/$compiler/build_log/latest
-    echo $build_log_dir    
-    log_dir=$build_log_dir #until scripts are updated
 
     # Extract build results
     [ "$(find $build_dir -name "kcc_config")" == "" ] ; no_kcc_config_generated_success="$?"
@@ -222,39 +228,77 @@ prep_extract() {
         echo "$time" > make_time.ini
         echo $report_string"      make:"$make_success
     fi
-    cd $build_dir
-    
-    # Extract log details step 1: process the kcc_config files.
-    increment=0
-    find . -type f -iname "kcc_config" -print0 | while IFS= read -r -d $'\0' line; do
-        return_dir=$(pwd)
-        cd $(dirname $line) && log_dir=$build_log_dir && increment_process_kcc_config
-        cd $return_dir
-    done
-    if [ -e "${build_log_dir}/kcc_config_k_summary.txt" ] ; then
-        echo $report_string"kcc_config:"
-        cat "${build_log_dir}/kcc_config_k_summary.txt"
+    i=${#results[@]}
+    process_kcc_config "$i"
+    if [ ! "$counter" == "0" ] ; then
+        results[$i]="1"
+        names[$i]="AUTO GENERATED TEST for reporting kcc_configs"
     fi
-    # Extract log details step 2: copy the other log files.
-    find . -name "kcc_*" -not -name "kcc_config" -exec cp {} $build_log_dir \;
-    
+    # Extract log details: copy the non-kcc_config log files.
+    find $build_dir -name "kcc_*" -not -name "kcc_config" -exec cp {} $build_log_dir \;
+    # New: Generate XML just like in extract_test()
+    cd $build_log_dir
+    if [[ -v results[@] ]] ; then
+        for t in "${!results[@]}"
+        do
+            echo '<testcase classname="'$exportfile'.'${test_name/./"_"}'" name="'$compiler' '${names[$t]}'">' >> $report_file
+            if [[ ${results[$t]} == 0 ]] ; then
+                echo $report_string" build step: "${names[$t]}" Passed!"
+            else
+                echo $report_string" build step: "${names[$t]}" Failed!"
+                echo '<error message="Failed.">' >> $report_file
+                print=$'\nBuild step '"$t"$', '"\"${names[$t]}\""$': {'
+                if [[ -e "$t.ini" ]] ; then
+                    for s in `seq 0 "$(head -n 1 $t.ini)"`
+                    do
+                        i="$t-$s"
+                        if [[ -e "kcc_config_k_summary$i.txt" ]] ; then
+                            print=$print$'\nkcc_config info: \n'$(cat kcc_config_k_summary$i.txt)
+                        fi
+                        if [[ -e "kcc_config_k_term$i.txt" ]] ; then
+                            print=$print$'\n<k> term: \n'$(cat kcc_config_k_term$i.txt)
+                        fi
+                        if [[ -e "kcc_config_loc_term$i.txt" ]] ; then
+                            print=$print$'\nProgram location term: \n'$(cat kcc_config_loc_term$i.txt)
+                        fi
+                    done
+                fi
+                echo "DEBUG: $t"
+                pwd ; ls ; echo "kcc_build_$t.txt ??"
+                if [[ -e "kcc_build_$t.txt" ]] ; then
+                        print=$print$'\nBuild step log tail: \n'$(tail -20 kcc_build_$t.txt)
+                fi
+                print=$print$'\n}'
+                printf "<![CDATA[%s]]>" "$print" >> $report_file
+                echo '</error>' >> $report_file
+            fi
+            echo '</testcase>' >> $report_file
+        done
+    fi
 }
 
 prep_build() {
-   
+    build_log_dir=$test_dir/$compiler/build_log/$(date +%Y-%m-%d.%H:%M:%S)
+    mkdir -p $build_log_dir
+    ln -sfn $build_log_dir $test_dir/$compiler/build_log/latest
+    echo $build_log_dir    
+    log_dir=$build_log_dir #until scripts are updated
+
     # Build hash is dependent on 3 things: {_build() function definition, $compiler --version, download hash}.
     buildhashinfo=$(type _build)$($compiler --version)$(head -n 1 $download_dir/download_function_hash)
-    if [ ! -e $build_dir/build_function_hash ] || [ "$(echo $(sha1sum <<< $buildhashinfo))" != "$(head -n 1 $build_dir/build_function_hash)" ] ; then
+    if [ ! -e $build_dir/build_function_hash ] || [ "$(echo $(sha1sum <<< $buildhashinfo))" != "$(head -n 1 $build_dir/build_function_hash)" ] || [ "0" == "0" ] ; then
 
         # build
         echo $report_string" building. Either build hash changed or this is the first time building."
         rm $build_dir/build_function_hash ; safe_rm=$build_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
         cp $download_dir/* $build_dir -r
         set -o pipefail
-        unset configure_success
-        unset make_success
+        unset results
+        unset names
         starttime=`date +%s.%N`
         kcc -profile x86_64-linux-gcc-glibc
+        names[0]="configure success"
+        names[1]="make success"
         cd $build_dir && _build
         endtime=`date +%s.%N`
         time=`echo "$endtime - $starttime" | bc -l`
@@ -293,13 +337,13 @@ prep_extract_test() {
                 echo $report_string" test: "${names[$t]}" Failed!"
                 echo '<error message="Failed.">' >> $report_file
                 print=$'\nTest '"$t"$', '"\"${names[$t]}\""$': {'
-                if [[ -e "config_k_summary$t.txt" ]]; then
+                if [[ -e "config_k_summary$t.txt" ]] ; then
                     print=$print$'\n<k> term: \n'$(cat config_k_summary$t.txt)
                 fi
-                if [[ -e "config_loc_term$t.txt" ]]; then
+                if [[ -e "config_loc_term$t.txt" ]] ; then
                     print=$print$'\nProgram location term: \n'$(cat config_loc_term$t.txt)
                 fi
-                if [[ -e "kcc_out_$t.txt" ]]; then
+                if [[ -e "kcc_out_$t.txt" ]] ; then
                     print=$print$'\nTest log tail: \n'$(tail -20 kcc_out_$t.txt)
                 fi
                 print=$print$'\n}'
@@ -312,6 +356,8 @@ prep_extract_test() {
 }
 
 prep_test() {
+    unset results
+    unset names
     # Need to prep log directory here instead of extract test since test.sh calls process_config which depends on the log directory existing
     test_log_dir=$test_dir/$compiler/test_log/$(date +%Y-%m-%d.%H:%M:%S)
     mkdir -p $test_log_dir
@@ -373,34 +419,4 @@ init() {
     if [ ! "$gcconly" == "0" ] && [ "$rvpredict" == "0" ] ; then
         compiler="rvpc" && init_helper
     fi
-}
-
-# The following functions are currently unused.
-call_compiler() {
-    case "$compiler" in
-        gcc)
-            call_gcc "$@"
-            ;;
-        kcc)
-            call_kcc "$@"
-            ;;
-        rvpc)
-            call_rvpc "$@"
-            ;;
-        *)
-            err "Unknown compiler: $compiler; Valid compilers are: gcc, kcc, rvpc"
-            exit 1
-    esac
-}
-
-call_gcc() {
-return
-}
-
-call_kcc() {
-return
-}
-
-call_rvpc() {
-return
 }

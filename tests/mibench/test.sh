@@ -15,9 +15,9 @@ _download() {
 _build() {
     cd mibench/
     top=$(pwd)
-    out=$top/kcc_make_out.txt
-    configure_success="0"
-    _build_helper ; make_success="$?"
+    out=$top/kcc_build_1.txt
+    results[0]="0"
+    _build_helper ; results[1]="$?"
 }
 
 _build_helper() {
