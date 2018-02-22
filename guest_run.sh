@@ -86,16 +86,18 @@ ping -c 1 www.google.com
 set +e
 echo "</$currentscript assert network>"
 
-printf "\n<$currentscript assert k-bin-to-text>\n"
-export PATH=/root/rv-match/k/k-distribution/target/release/k/bin:$PATH
-k-bin-to-text ; testout=$(echo "$?")
-set -e
-printf "\n  'which' test:\n"
-which k-bin-to-text
-printf "\n  'return value with empty arguments is 1' test:\n"
-[ "$testout" == "1" ]
-set +e
-echo "</$currentscript assert k-bin-to-text>"
+if [ ! "$othermachine" == "0" ] ; then
+    printf "\n<$currentscript assert k-bin-to-text>\n"
+    export PATH=/root/rv-match/k/k-distribution/target/release/k/bin:$PATH
+    k-bin-to-text ; testout=$(echo "$?")
+    set -e
+    printf "\n  'which' test:\n"
+    which k-bin-to-text
+    printf "\n  'return value with empty arguments is 1' test:\n"
+    [ "$testout" == "1" ]
+    set +e
+    echo "</$currentscript assert k-bin-to-text>"
+fi
 # /Part 1: Basic container debug
 
 # Part 2 Configure Local Jenkins Dependencies
@@ -150,6 +152,7 @@ if [ "$othermachine" == "0" ] ; then
     cp -r /mnt/jenkins/kcc_dependency_3/bin/ ./kcc_dependency_3/
     cp -r /mnt/jenkins/kcc_dependency_3/lib/ ./kcc_dependency_3/
     export PATH=/root/kcc_dependency_1:/root/kcc_dependency_2:/root/kcc_dependency_3/bin:$PATH
+    #mvn package # in k folder
     set -e
     which kcc
     kcc -v
