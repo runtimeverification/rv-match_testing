@@ -87,6 +87,7 @@ set +e
 echo "</$currentscript assert network>"
 
 if [ "$othermachine" == "0" ] ; then
+    cp /mnt/jenkins/libs.sh .
     bash libs.sh
 else
     printf "\n<$currentscript assert k-bin-to-text>\n"
