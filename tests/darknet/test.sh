@@ -9,8 +9,8 @@ _download() {
 }
 
 _build() {
-    cd darknet/ && sed -i -e "s/gcc/$compiler/g" Makefile ; configure_success="$?"
-    make |& tee kcc_make_out.txt ; make_success="$?"
+    cd darknet/ && sed -i -e "s/gcc/$compiler/g" Makefile ; results[0]="$?" ; process_kcc_config 0
+    make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 }
 
 _test() {

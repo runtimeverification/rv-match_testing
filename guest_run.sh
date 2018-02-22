@@ -188,10 +188,7 @@ set +e
 echo "</$currentscript assert self-unit-tests>"
 
 # Part 3 Run Main Script
-echo "Debug location."
-pwd
-ls
-cd /root/rv-match_testing && ls && bash merged.sh$runsetparams
+cd /root/rv-match_testing && bash merged.sh$runsetparams
 
 # Part 4 Copy test result xml back to host
 echo "Container results are in "$exportfile".xml:"

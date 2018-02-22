@@ -24,15 +24,14 @@ int main()
 }
 
 _build() {
-    cd helloworld/ ; echo "$?" |& tee kcc_configure_out.txt ; configure_success="$?"
-    #bash $base_dir/timeout.sh -t 5 ls -R / |& tee kcc_make_out.txt ; make_success="$?"
-    $compiler helloworld.c |& tee kcc_make_out.txt ; make_success="$?"
+    cd helloworld/ ; echo "$?" |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0 ; process_kcc_config 0
+    $compiler helloworld.c |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1 ; process_kcc_config 1
 }
 
 _test() {
     cd helloworld/
     names[0]="basic run"
-    ./a.out |& tee "kcc_out_0.txt" ; results[0]="$?"
+    ./a.out |& tee "kcc_out_0.txt" ; results[0]="$?" ; process_kcc_config 0
 }
 
 init

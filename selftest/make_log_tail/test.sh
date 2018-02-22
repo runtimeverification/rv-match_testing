@@ -7,9 +7,9 @@ _download() {
 }
 
 _build() {
-    configure_success="0"
-    echo "Important debug output produced by make. Umbrella satire." |& tee kcc_make_out.txt
-    make_success="2" # instead of "$?" to imply failure
+    results[0]="0"
+    echo "Important debug output produced by make. Umbrella satire." |& tee kcc_build_1.txt
+    results[1]="2" # instead of "$?" to imply failure
 }
 
 _test() {

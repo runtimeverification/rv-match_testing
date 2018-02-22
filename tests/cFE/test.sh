@@ -41,10 +41,10 @@ _build() {
     else
         echo "Not using -frecover-all-errors"
     fi
-    cmake -DCMAKE_C_COMPILER=$compilerwithkccflags -DENABLE_UNIT_TESTS=TRUE --build ../cfe |& tee kcc_configure_out.txt ; configure_success="$?"
-    make mission-all |& tee kcc_make_out.txt ; make_success="$?"
-    if [ $make_success -eq 0 ] ; then
-        cd native/osal/unit-tests/ && make |& tee kcc_make_out.txt ; make_success="$?"
+    cmake -DCMAKE_C_COMPILER=$compilerwithkccflags -DENABLE_UNIT_TESTS=TRUE --build ../cfe |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+    make mission-all |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    if [ $results[1] -eq 0 ] ; then
+        cd native/osal/unit-tests/ && make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
     fi
 }
 
@@ -54,8 +54,8 @@ _test() {
     #sudo /bin/sh -c "echo 100 > /proc/sys/fs/mqueue/msg_max"
     cd cFE-6.5.0-OSS-release/build/
     
-    names[0]="timer" ; ./native/osal/unit-tests/ostimer-test/osal_timer_UT ; results[0]="$?"
-    names[1]="network" ; ./native/osal/unit-tests/osnetwork-test/osal_network_UT ; results[1]="$?"
+    names[0]="timer" ; ./native/osal/unit-tests/ostimer-test/osal_timer_UT ; results[0]="$?" ; process_kcc_config 0
+    names[1]="network" ; ./native/osal/unit-tests/osnetwork-test/osal_network_UT ; results[1]="$?" ; process_kcc_config 1
     names[2]="loader" ; ./native/osal/unit-tests/osloader-test/osal_loader_UT ; results[2]="$?"
     names[3]="file" ; ./native/osal/unit-tests/osfile-test/osal_file_UT ; results[3]="$?"
     names[4]="filesys" ; ./native/osal/unit-tests/osfilesys-test/osal_filesys_UT ; results[4]="$?"

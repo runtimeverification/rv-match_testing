@@ -9,8 +9,8 @@ _download() {
 }
 
 _build() {
-    cd linux/ && configure_success="$?"
-    make mrproper CC=$compiler LD=$compiler |& tee kcc_make_out.txt && make_success="$?"
+    cd linux/ && results[0]="$?" ; process_kcc_config 0
+    make mrproper CC=$compiler LD=$compiler |& tee kcc_build_1.txt && results[1]="$?" ; process_kcc_config 1
 }
 
 init

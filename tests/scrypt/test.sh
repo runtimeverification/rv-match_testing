@@ -19,14 +19,14 @@ _build() {
     aclocal ; autoheader ; autoreconf
     automake --add-missing
     autoreconf
-    ./configure CC=$compiler LD=$compiler |& tee kcc_configure_out.txt ; configure_success="$?"
-    make |& tee kcc_make_out.txt ; make_success="$?"
+    ./configure CC=$compiler LD=$compiler |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+    make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 }
 
 _test() {
     cd scrypt/
     names[0]="basic test"
-    ./tests/test_scrypt ; results[0]="$?"
+    ./tests/test_scrypt ; results[0]="$?" ; process_kcc_config 0
 }
 
 init

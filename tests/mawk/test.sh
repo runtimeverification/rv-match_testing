@@ -29,11 +29,11 @@ _build() {
     cd mawk-1.3.3/
     
     if [[ $compiler == "kcc" ]]; then
-        MATHLIB='/lib/x86_64-linux-gnu/libm.so.6' CC="kcc -frecover-all-errors" LD="kcc -frecover-all-errors" ./configure |& tee kcc_configure_out.txt ; configure_success="$?"
+        MATHLIB='/lib/x86_64-linux-gnu/libm.so.6' CC="kcc -frecover-all-errors" LD="kcc -frecover-all-errors" ./configure |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     else
-        MATHLIB='/lib/x86_64-linux-gnu/libm.so.6' CC=$compiler LD=$compiler ./configure |& tee kcc_configure_out.txt ; configure_success="$?"
+        MATHLIB='/lib/x86_64-linux-gnu/libm.so.6' CC=$compiler LD=$compiler ./configure |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     fi
-    make |& tee kcc_make_out.txt ; make_success="$?"
+    make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 }
 
 init

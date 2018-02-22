@@ -28,11 +28,11 @@ else
     echo "\"make pass\" test               : fails." ; returnvalue=1
     echo "  - xml is not supposed to produce string: $failelement when make passes."
 fi
-if [[ "`grep -A2 'make_log_tail.*make success' $xmlfile | tail -n 1`" == *"Umbrella"* ]] ; then
+if [[ "`grep -A5 'make_log_tail.*make success' $xmlfile | tail -n 1`" == *"Umbrella"* ]] ; then
     echo "\"make log tail\" test           : passes."
 else
     echo "\"make log tail\" test           : fails." ; returnvalue=1
-    echo "  - xml is supposed to embed kcc_make_out.txt when make fails."
+    echo "  - xml is supposed to embed kcc_build_1.txt when make fails."
 fi
 
 # Timeout pass
@@ -54,8 +54,8 @@ fi
 # Many kcc_config
 tail -n +`grep -n -m 1 'many_kcc_config.*make success' $xmlfile |cut -f1 -d:` $xmlfile > $tempfile
 head -n `grep -n -m 1 '</testcase>' $tempfile |cut -f1 -d:` $tempfile > $tempfile2
-grep -q 'Found a kcc_config number.*1' $tempfile2 ; one="$?"
-grep -q 'Found a kcc_config number.*2' $tempfile2 ; two="$?"
+grep -q 'Found a kcc_config number.*-0' $tempfile2 ; one="$?"
+grep -q 'Found a kcc_config number.*-1' $tempfile2 ; two="$?"
 if [ "$one" == "0" ] && [ "$two" == "0" ] ; then
     echo "\"many_kcc_config\" test         : passes."
 else
@@ -66,8 +66,8 @@ fi
 # One kcc_config
 tail -n +`grep -n -m 1 'one_kcc_config.*make success' $xmlfile |cut -f1 -d:` $xmlfile > $tempfile
 head -n `grep -n -m 1 '</testcase>' $tempfile |cut -f1 -d:` $tempfile > $tempfile2
-grep -q 'Found a kcc_config number.*1' $tempfile2 ; one="$?"
-grep -q 'Found a kcc_config number.*2' $tempfile2 ; two="$?"
+grep -q 'Found a kcc_config number.*-0' $tempfile2 ; one="$?"
+grep -q 'Found a kcc_config number.*-1' $tempfile2 ; two="$?"
 if [ "$one" == "0" ] && [ "$two" == "1" ] ; then
     echo "\"one_kcc_config\" test          : passes."
 else
@@ -78,8 +78,8 @@ fi
 # No kcc_config
 tail -n +`grep -n -m 1 'no_kcc_config.*make success' $xmlfile |cut -f1 -d:` $xmlfile > $tempfile
 head -n `grep -n -m 1 '</testcase>' $tempfile |cut -f1 -d:` $tempfile > $tempfile2
-grep -q 'Found a kcc_config number.*1' $tempfile2 ; one="$?"
-grep -q 'Found a kcc_config number.*2' $tempfile2 ; two="$?"
+grep -q 'Found a kcc_config number.*-0' $tempfile2 ; one="$?"
+grep -q 'Found a kcc_config number.*-1' $tempfile2 ; two="$?"
 if [ "$one" == "1" ] && [ "$two" == "1" ] ; then
     echo "\"no_kcc_config\" test           : passes."
 else
@@ -241,12 +241,12 @@ else
     fi
 fi
 
-rm $tempfile
-rm $tempfile2
-rm $tempfile3
+#rm $tempfile
+#rm $tempfile2
+#rm $tempfile3
 
-rm "results/report.xml"
-rm "results/acceptance.xml"
-rm "results/regression.xml"
+#rm "results/report.xml"
+#rm "results/acceptance.xml"
+#rm "results/regression.xml"
 
 exit $returnvalue
