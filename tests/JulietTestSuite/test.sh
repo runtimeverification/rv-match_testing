@@ -7,9 +7,9 @@ _download() {
 }
 
 _build() {
-    unzip Juliet_Test_Suite_v1.3_for_C_Cpp.zip |& tee kcc_build_0.txt ; results[0]="$?"
+    unzip Juliet_Test_Suite_v1.3_for_C_Cpp.zip |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     rm Juliet_Test_Suite_v1.3_for_C_Cpp.zip
-    cd C/ && make |& tee kcc_build_1.txt ; results[1]="$?"
+    cd C/ && make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 }
 
 _test() {

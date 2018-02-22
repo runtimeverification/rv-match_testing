@@ -12,13 +12,13 @@ _build() {
     cd dhcpcd/
     if [[ $compiler == "kcc" ]]; then
         kcc -profile x86_64-linux-gcc-glibc
-        ./configure CC=kcc CFLAGS="-D__packed='__attribute__((packed))' -frecover-all-errors" LD=kcc |& tee kcc_build_0.txt ; results[0]="$?"
+        ./configure CC=kcc CFLAGS="-D__packed='__attribute__((packed))' -frecover-all-errors" LD=kcc |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     else
-        ./configure CC=$compiler |& tee kcc_build_0.txt ; results[0]="$?"
+        ./configure CC=$compiler |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     fi
     set -o pipefail
     make |& tee kcc_build_1.txt
-    [ -f src/dhcpcd ] ; results[1]="$?"
+    [ -f src/dhcpcd ] ; results[1]="$?" ; process_kcc_config 1
 }
 
 init

@@ -9,8 +9,8 @@ _download() {
 }
 
 _build() {
-    cd meltdown/ ; results[0]="$?"
-    make CC=$compiler LD=$compiler |& tee kcc_build_1.txt ; results[1]="$?"
+    cd meltdown/ ; results[0]="$?" ; process_kcc_config 0
+    make CC=$compiler LD=$compiler |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 }
 
 _test() {

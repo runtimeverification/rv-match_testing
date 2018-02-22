@@ -18,13 +18,13 @@ _build() {
     autoreconf
     set -o pipefail
     if [[ $compiler == "kcc" ]]; then
-        ./configure CC=kcc CFLAGS="-std=gnu11 -no-pedantic -frecover-all-errors" LD=kcc --disable-threads --disable-atomic --disable-shared |& tee kcc_build_0.txt ; results[0]="$?"
+        ./configure CC=kcc CFLAGS="-std=gnu11 -no-pedantic -frecover-all-errors" LD=kcc --disable-threads --disable-atomic --disable-shared |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     else
-        ./configure CC=$compiler --disable-threads --disable-atomic --disable-shared |& tee kcc_build_0.txt ; results[0]="$?"
+        ./configure CC=$compiler --disable-threads --disable-atomic --disable-shared |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     fi
     gcc -Ilib/isc/include -o lib/dns/gen lib/dns/gen.c
     ulimit -s
-    bash $base_dir/timeout.sh -t 8000 make |& tee kcc_build_1.txt ; results[1]="$?"
+    bash $base_dir/timeout.sh -t 8000 make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 }
 
 init

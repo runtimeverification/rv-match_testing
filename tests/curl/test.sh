@@ -15,11 +15,11 @@ _download() {
 _build() {
     cd curl/
     if [[ $compiler == "kcc" ]]; then
-        CC=kcc CFLAGS="-std=gnu11 -no-pedantic -frecover-all-errors" LD=kcc cmake -DCURL_STATICLIB=ON . |& tee kcc_build_0.txt ; results[0]="$?"
+        CC=kcc CFLAGS="-std=gnu11 -no-pedantic -frecover-all-errors" LD=kcc cmake -DCURL_STATICLIB=ON . |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     else
-        CC=$compiler cmake -DCURL_STATICLIB=ON . |& tee kcc_build_0.txt ; results[0]="$?"
+        CC=$compiler cmake -DCURL_STATICLIB=ON . |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     fi
-    make |& tee kcc_build_1.txt ; results[1]="$?"
+    make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 }
 
 init

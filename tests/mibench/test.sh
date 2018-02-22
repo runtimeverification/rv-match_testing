@@ -17,7 +17,7 @@ _build() {
     top=$(pwd)
     out=$top/kcc_build_1.txt
     results[0]="0"
-    _build_helper ; results[1]="$?"
+    _build_helper ; results[1]="$?" ; process_kcc_config 1
 }
 
 _build_helper() {

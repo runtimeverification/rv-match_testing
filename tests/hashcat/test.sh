@@ -19,8 +19,8 @@ _build() {
     echo "Running special command:"
     kcc -d -c -pipe -std=gnu99 -Iinclude/ -Iinclude/lzma_sdk/ -IOpenCL/ -W -Wall -Wextra -Wfloat-equal -Wundef -Wshadow -Wmissing-declarations -Wmissing-prototypes -Wpointer-arith -Wstrict-prototypes -Waggregate-return -Wswitch-enum -Winit-self -Werror-implicit-function-declaration -Wformat -ftrapv -Wwrite-strings -Wno-cast-align -Wno-cast-qual -Wno-conversion -Wno-padded -Wno-pedantic -Wno-sizeof-pointer-memaccess -O2 -Ideps/OpenCL-Headers/ -DWITH_HWMON src/rp_kernel_on_cpu_optimized.c -o obj/rp_kernel_on_cpu_optimized.NATIVE.STATIC.o
     echo "/Running special command."
-    sed -i -e "s/gcc/$compiler/g" ./src/Makefile |& tee kcc_build_0.txt ; results[0]="$?"
-    make |& tee kcc_build_1.txt ; results[1]="$?"
+    sed -i -e "s/gcc/$compiler/g" ./src/Makefile |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+    make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 }
 
 init

@@ -81,8 +81,8 @@ _download() {
 }
 
 _build() {
-    cd bogosort/ ; results[0]="$?"
-    $compiler bogosort.c ; results[1]="$?"
+    cd bogosort/ ; results[0]="$?" ; process_kcc_config 0
+    $compiler bogosort.c ; results[1]="$?" ; process_kcc_config 1
 }
 
 _test() {

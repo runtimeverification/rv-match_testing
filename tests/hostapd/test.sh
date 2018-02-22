@@ -29,8 +29,8 @@ _build() {
     fi
     cp defconfig .config
     sed -i '/CONFIG_LIBNL32=y/s/^#//g' .config
-    sed -i '157iOBJS_c += ../src/utils/wpabuf.o' Makefile ; results[0]="$?"
-    make |& tee kcc_build_1.txt ; results[1]="$?"
+    sed -i '157iOBJS_c += ../src/utils/wpabuf.o' Makefile ; results[0]="$?" ; process_kcc_config 0
+    make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 }
 
 #sed -i '/<pattern>/s/^#//g' file
