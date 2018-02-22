@@ -3,7 +3,8 @@ exportfile="report"
 currentscript="jenkins_run.sh"
 containerscriptflags=" -"
 hadflag="1"
-while getopts ":rsatdgeEqpP" opt; do
+usetrusty="1"
+while getopts ":rsatdgeEqpPT" opt; do
   hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -42,7 +43,11 @@ while getopts ":rsatdgeEqpP" opt; do
     P ) echo $currentscript" rv-predict option selected. (uppercase 'P')"
         containerscriptflags=$containerscriptflags"P"
       ;;
-    \? ) echo "Usage: $currentscript [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-E] [-q] [-p] [-P]"
+    T ) echo $currentscript" Trusty option selected."
+        containerscriptflags=$containerscriptflags"T"
+        usetrusty="0"
+      ;;
+    \? ) echo "Usage: $currentscript [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-E] [-q] [-p] [-P] [-T]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -54,6 +59,7 @@ while getopts ":rsatdgeEqpP" opt; do
          echo " -q don't update rv-match"
          echo " -p prepare only"
          echo " -P rv-predict option selected"
+         echo " -T use Trusty"
       ;;
   esac
 done

@@ -1,9 +1,12 @@
 // testing.c
-// https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html
+// https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html_
+#include <stdio.h>
 int main() {
-	_Complex double x;
-	__complex__ double y;
-	double a = __real__ y;
-	double b = __imag__ x;
+	float a = 1.55e1;
+	float b = 0x1.fp3;
+	float c = 2.1;
+	printf("%.6f\n", a);
+	printf("%.6f\n", b);
+	printf("%.5f\n", c);
 	return 0;
 }

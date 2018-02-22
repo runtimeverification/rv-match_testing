@@ -12,7 +12,19 @@
 # cd ..
 # bash rv-match_testing/jenkins_create_source_container.sh
 
-name="match-testing-source"
+if [ "$1" == "xenial" ] ; then
+    name="match-testing-xenial-source"
+    version="16.04"
+else
+    if [ "$1" == "trusty" ] ; then
+        name="match-testing-trusty-source"
+        version="14.04"
+    else
+        echo "Need argument (xenial|trusty)."
+        exit 1
+    fi
+fi
+
 guest_script="rv-match_testing/source_guest_run.sh"
 # Top folder is expected to contain both rv-match and rv-match_testing projects inside it.
 
@@ -36,7 +48,7 @@ lxc delete --force "$name"
 lxc list
 
 echo "Creating new $name:"
-lxc launch ubuntu:16.04 "$name"
+lxc launch ubuntu:$version "$name"
 lxc list
 
 echo "Sleeping so networking should begin:"

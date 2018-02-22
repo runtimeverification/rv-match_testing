@@ -8,7 +8,8 @@ guest_script_flags=" -"
 use_existing_container="1"
 hadflag="1"
 stop_container="0"
-while getopts ":rsatdgeEqpP" opt; do
+source_container="match-xenial-testing-source"
+while getopts ":rsatdgeEqpPT" opt; do
   hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -44,7 +45,11 @@ while getopts ":rsatdgeEqpP" opt; do
     P ) echo $currentscript" rv-predict option selected."
         guest_script_flags=$guest_script_flags"P"
       ;;
-    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-E] [-q] [-p] [-P]"
+    T ) echo $currentscript" Trusty option selected."
+        source_container="match-trusty-testing-source"
+        guest_script_flags=$guest_script_flags"T"
+      ;;
+    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-E] [-q] [-p] [-P] [-T]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -56,6 +61,7 @@ while getopts ":rsatdgeEqpP" opt; do
          echo " -q don't update rv-match"
          echo " -p prepare only"
          echo " -P rv-predict"
+         echo " -T Trusty"
       ;;
   esac
 done
@@ -81,7 +87,7 @@ if [ ! "$use_existing_container" == "0" ] ; then
     echo "=== First listing:"
     lxc list
     echo "=== Copying:"
-    lxc copy match-testing-source $container -e
+    lxc copy $source_container $container -e
     echo "=== Second listing:"
     lxc list
     echo "=== Starting:"
