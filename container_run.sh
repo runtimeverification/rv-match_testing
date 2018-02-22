@@ -96,6 +96,10 @@ if [ "$oldmachine" == "0" ] ; then
     if [[ `lxc-ls` == *"$container"* ]] ; then
         echo "Temporary container destroying."
         lxc-destroy -f -n $container
+    else
+        echo "Bash claims the following list does not have $container:"
+        lxc-ls
+        echo "End list. "
     fi
 
     #ls ~/.config/lxc

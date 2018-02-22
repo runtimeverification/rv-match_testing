@@ -85,7 +85,7 @@ chmod a+rw results/$exportfile.xml
 chmod a+rw logs/
 if [ "$useoldmachine" == "0" ] ; then
     bash copy_kcc_from_rv-match-master_to_jenkins_workspace.sh
-    bash other_container_run.sh$containerscriptflags
+    bash container_run.sh$containerscriptflags
 else
     bash container_run.sh$containerscriptflags
 fi
