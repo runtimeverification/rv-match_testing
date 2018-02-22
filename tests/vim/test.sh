@@ -18,7 +18,7 @@ _download() {
 _build() {
     cd vim/
     kcc -profile x86_64-linux-gcc-glibc
-    ./configure CC=$compiler CFLAGS="-std=gnu11" LD=$compiler LDFLAGS="-ldl" |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+    ./configure CC=$compiler CFLAGS="-std=gnu11" LD=$compiler LDFLAGS="-ldl" LINK_AS_NEEDED="yes" |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     bash $base_dir/timeout.sh -t 8000 make |&2 tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 }
 
