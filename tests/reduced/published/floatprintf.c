@@ -1,5 +1,4 @@
-// testing.c
-// https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html_
+// floatprintf.c
 #include <stdio.h>
 int main() {
 	float a = 1.55e1;
