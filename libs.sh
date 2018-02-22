@@ -34,8 +34,9 @@ echo $printheader"post-flushing apt"
 sudo apt update
 sudo apt -y upgrade
 
-#    which cpan
-#    cpan YAML
-#    cpan String::Escape
-#    cpan Getopt::Declare
-#    cpan UUID::Tiny
+# For old containers to use:
+    which cpan
+    cpan YAML
+    cpan String::Escape
+    cpan Getopt::Declare
+    cpan UUID::Tiny
