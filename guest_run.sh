@@ -86,7 +86,9 @@ ping -c 1 www.google.com
 set +e
 echo "</$currentscript assert network>"
 
-if [ ! "$othermachine" == "0" ] ; then
+if [ "$othermachine" == "0" ] ; then
+    bash libs.sh
+else
     printf "\n<$currentscript assert k-bin-to-text>\n"
     export PATH=/root/rv-match/k/k-distribution/target/release/k/bin:$PATH
     k-bin-to-text ; testout=$(echo "$?")
