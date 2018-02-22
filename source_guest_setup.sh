@@ -6,7 +6,7 @@ echo "Entered source container at: "$(pwd)
 echo "Network test:"
 ping -c 1 www.google.com
 
-# Part 2: Apt installs
+# Part 2: apt installs
 cp $hostspace/libs.sh /root/libs.sh
 cd /root/
 echo "Run 0 of 4 complete. [libs.sh]"

@@ -4,7 +4,8 @@ currentscript="jenkins_run.sh"
 containerscriptflags=" -"
 hadflag="1"
 usetrusty="1"
-while getopts ":rsatdgeEqpPT" opt; do
+useoldmachine="1"
+while getopts ":rsatdgeEqpPTo" opt; do
   hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -47,7 +48,11 @@ while getopts ":rsatdgeEqpPT" opt; do
         containerscriptflags=$containerscriptflags"T"
         usetrusty="0"
       ;;
-    \? ) echo "Usage: $currentscript [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-E] [-q] [-p] [-P] [-T]"
+    o ) echo $currentscript" other (old) machine option selected."
+        containerscriptflags=$containerscriptflags"o"
+        useoldmachine="0"
+      ;;
+    \? ) echo "Usage: $currentscript [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-E] [-q] [-p] [-P] [-T] [-o]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -60,6 +65,7 @@ while getopts ":rsatdgeEqpPT" opt; do
          echo " -p prepare only"
          echo " -P rv-predict option selected"
          echo " -T use Trusty"
+         echo " -o other machine"
       ;;
   esac
 done
@@ -77,4 +83,9 @@ if [ ! -f results/$exportfile.xml ] ; then
 fi
 chmod a+rw results/$exportfile.xml
 chmod a+rw logs/
-bash container_run.sh$containerscriptflags
+if [ "$useoldmachine" == "0" ] ; then
+    bash copy_kcc_from_rv-match-master_to_jenkins_workspace.sh
+    bash other_container_run.sh$containerscriptflags
+else
+    bash container_run.sh$containerscriptflags
+fi

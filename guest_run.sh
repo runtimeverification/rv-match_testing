@@ -12,8 +12,9 @@ unittestsetprefix=""
 hadflag="1"
 reinstallmatch="0"
 rvpredict="1"
+othermachine="1"
 echo "========= Beginning container guest scripts."
-while getopts ":rsatdgqpP" opt; do
+while getopts ":rsatdgqpPo" opt; do
   hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -49,7 +50,11 @@ while getopts ":rsatdgqpP" opt; do
         rvpredict="0"
         reinstallmatch="1"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-q] [-p] [-P]"
+    o ) echo $currentscript" other option selected."
+        runsetparams=$runsetparams"o"
+        othermachine="0"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-q] [-p] [-P] [-o]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -59,6 +64,7 @@ while getopts ":rsatdgqpP" opt; do
          echo " -q don't update rv-match"
          echo " -p prepare only"
          echo " -P rv-predict"
+         echo " -o other"
       ;;
   esac
 done
@@ -133,31 +139,47 @@ if [ "$rvpredict" == "0" ] ; then
     echo "</install rv-predict>"
 fi
 
-# https://github.com/runtimeverification/rv-match/blob/master/installer-linux/scripts/install-in-container
-cd /root/
-mv rv-match-linux-64-1.0-SNAPSHOT.jar rv-match-linux-64-1.0-SNAPSHOT.jar.old
-wget -q https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT.jar
-diff rv-match-linux-64-1.0-SNAPSHOT.jar rv-match-linux-64-1.0-SNAPSHOT.jar.old ; checknew="$?"
-kcc -v ; checkinstalled="$?"
-if [ "$checknew" == "0" ] && [ "$checkinstalled" == "0" ] ; then
-    reinstallmatch="2"
-fi
-if [ ! "$reinstallmatch" == "0" ] ; then
-    echo "Not installing rv-match since either these two criterion hold:"
-    echo "1. Already downloaded .jar matches the new."
-    echo "2. \"kcc -v\" functions."
-    echo "And we are assuming based on that that rv-match is already installed and updated to the latest version."
-    echo "Or the -q or -P option was used."
+if [ "$othermachine" == "0" ] ; then
+    cd /root/
+    rm -rf kcc_dependency_1/
+    rm -rf kcc_dependency_2/
+    rm -rf kcc_dependency_3/
+    cp -r /mnt/jenkins/kcc_dependency_1/ .
+    cp -r /mnt/jenkins/kcc_dependency_2/ .
+    mkdir kcc_dependency_3/
+    cp -r /mnt/jenkins/kcc_dependency_3/bin/ ./kcc_dependency_3/
+    cp -r /mnt/jenkins/kcc_dependency_3/lib/ ./kcc_dependency_3/
+    export PATH=/root/kcc_dependency_1:/root/kcc_dependency_2:/root/kcc_dependency_3/bin:$PATH
+    set -e
+    which kcc
+    kcc -v
+    set +e
 else
-    if [ "$checknew" == 0 ] ; then
-        echo "\"kcc -v\" doesn't function, even though the new version matches the old."
-        echo "Therefore, we will attempt install of rv-match."
-    else
-        echo "Either the new rv-match differs from the old or the old doesn't exist, so we will install it."
+    # https://github.com/runtimeverification/rv-match/blob/master/installer-linux/scripts/install-in-container
+    cd /root/
+    mv rv-match-linux-64-1.0-SNAPSHOT.jar rv-match-linux-64-1.0-SNAPSHOT.jar.old
+    wget -q https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT.jar
+    diff rv-match-linux-64-1.0-SNAPSHOT.jar rv-match-linux-64-1.0-SNAPSHOT.jar.old ; checknew="$?"
+    kcc -v ; checkinstalled="$?"
+    if [ "$checknew" == "0" ] && [ "$checkinstalled" == "0" ] ; then
+        reinstallmatch="2"
     fi
-    (echo "" | /opt/rv-match/uninstall 2> /dev/null) 2> /dev/null
-    sudo rm -f /usr/bin/rv-match
-    printf "
+    if [ ! "$reinstallmatch" == "0" ] ; then
+        echo "Not installing rv-match since either these two criterion hold:"
+        echo "1. Already downloaded .jar matches the new."
+        echo "2. \"kcc -v\" functions."
+        echo "And we are assuming based on that that rv-match is already installed and updated to the latest version."
+        echo "Or the -q or -P option was used."
+    else
+        if [ "$checknew" == 0 ] ; then
+            echo "\"kcc -v\" doesn't function, even though the new version matches the old."
+            echo "Therefore, we will attempt install of rv-match."
+        else
+            echo "Either the new rv-match differs from the old or the old doesn't exist, so we will install it."
+        fi
+        (echo "" | /opt/rv-match/uninstall 2> /dev/null) 2> /dev/null
+        sudo rm -f /usr/bin/rv-match
+        printf "
 1
 
 
@@ -166,7 +188,8 @@ y
 1
 1
 " > stdinfile.txt
-    cat stdinfile.txt | java -jar rv-match-linux-64*.jar -console 2> /dev/null ; rm stdinfile.txt
+        cat stdinfile.txt | java -jar rv-match-linux-64*.jar -console 2> /dev/null ; rm stdinfile.txt
+    fi
 fi
 
 echo "<$currentscript assert self-unit-tests>"

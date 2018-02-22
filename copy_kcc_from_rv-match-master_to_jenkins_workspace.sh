@@ -1,7 +1,8 @@
 #!/bin/bash
 currentdir=$(pwd)
 #kccsource="/var/lib/jenkins/jobs/rv-match-master-copy/workspace"
-kccsource="/var/jenkins/workspace/rv-match-master-copy"
+#kccsource="/var/jenkins/workspace/rv-match-master-copy"
+kccsource="~chrishathhorn/rv-match"
 cd $kccsource
 echo "Should be inside the proper jenkins folder to get kcc from..."
 pwd
@@ -25,21 +26,7 @@ if [[ $kccgithash != $kccgithash2 ]] ; then
 else
     echo "Git hash remained the same during copy."
 fi
-echo "Found by running \"git rev-parse HEAD\" in \"$kccsource\"."
-#echo k-bin-to-text
-#if [[ $(k-bin-to-text)  == "Error: Could not find or load main class org.kframework.main.BinaryToText" ]] ; then
-#    echo "Starting kserver..."
-#    kserver &
-#else
-#    echo "Looks like kserver was already started:"
-#    echo $(k-bin-to-text)
-#fi
-
 cd $currentdir
 cd kcc_dependency_1/ ; ls ; cd ..
 cd kcc_dependency_2/ ; ls ; cd ..
 cd kcc_dependency_3/ ; ls ; cd ..
-# Exporting PATH here won't work on Jenkins. Must run directly from start script.
-#echo "Old PATH: "$PATH
-#export PATH=$(pwd)/kcc_dependency_1:$(pwd)/kcc_dependency_2:$(pwd)/kcc_dependency_3:$PATH
-#echo "New PATH: "$PATH

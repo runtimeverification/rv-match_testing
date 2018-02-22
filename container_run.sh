@@ -9,7 +9,8 @@ use_existing_container="1"
 hadflag="1"
 stop_container="0"
 source_container="match-testing-xenial-source"
-while getopts ":rsatdgeEqpPT" opt; do
+oldmachine="1"
+while getopts ":rsatdgeEqpPTo" opt; do
   hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -49,7 +50,11 @@ while getopts ":rsatdgeEqpPT" opt; do
         source_container="match-testing-trusty-source"
         guest_script_flags=$guest_script_flags"T"
       ;;
-    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-E] [-q] [-p] [-P] [-T]"
+    o ) echo $currentscript" other machine option selected."
+        guest_script_flags=$guest_script_flags"o"
+        oldmachine="0"
+      ;;
+    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-E] [-q] [-p] [-P] [-T] [-o]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -62,6 +67,7 @@ while getopts ":rsatdgeEqpPT" opt; do
          echo " -p prepare only"
          echo " -P rv-predict"
          echo " -T Trusty"
+         echo " -o other machine"
       ;;
   esac
 done
@@ -74,47 +80,86 @@ else
     guest_script_flags="$guest_script_flags $1"
 fi
 guest_script=$guest_script$guest_script_flags
-echo "`git rev-parse --verify HEAD`" > githash.ini
-lxc info $container &> /dev/null ; container_exists="$?"
-if [ ! "$container_exists" == "0" ] ; then
-    use_existing_container="2"
-fi
-if [ ! "$use_existing_container" == "0" ] ; then
-    echo "=== Stopping (destroying) old container:"
-    lxc exec $container -- poweroff
-    sleep 2
-    lxc stop $container --force
-    echo "=== First listing:"
-    lxc list
-    echo "=== Copying:"
-    lxc copy $source_container $container -e
-    echo "=== Second listing:"
-    lxc list
-    echo "=== Starting:"
-    lxc start $container
-    echo "=== Third listing:"
+
+if [ "$oldmachine" == "0" ] ; then
+    source_container="ubuntu-14.04-java"
+    container="rv-match_testing_container"
+    function stopLxc {
+        lxc-stop -n $container
+    }
+    unset XDG_SESSION_ID
+    unset XDG_RUNTIME_DIR
+    unset XDG_SESSION_COOKIE
+    echo "source_container: $source_container"
+    echo "container: $container"
+
+    if [[ `lxc-ls` == *"$container"* ]] ; then
+        echo "Temporary container destroying."
+        lxc-destroy -f -n $container
+    fi
+
+    #ls ~/.config/lxc
+    # mkdir -p ~/.config/lxc
+    # echo "lxc.id_map = u 0 494216 65536" > ~/.config/lxc/default.conf
+    # echo "lxc.id_map = g 0 494216 65536" >> ~/.config/lxc/default.conf
+    # echo "lxc.network.type = veth" >> ~/.config/lxc/default.conf
+    # echo "lxc.network.link = lxcbr0" >> ~/.config/lxc/default.conf
+
+    lxc-checkconfig
+    #lxc-create -t download -n $source_container -- -d ubuntu -r trusty -a amd64
+    lxc-copy -s -e -B overlay -m bind=`pwd`:/mnt/jenkins:rw -n $source_container -N $container \
+    && trap stopLxc EXIT
+    lxc-checkconfig
+    uname -a
+    cat /proc/self/cgroup
+    cat /proc/1/mounts
+    lxc-info --name $container
+    lxc-start -n $container
+    lxc-ls
+    lxc-attach -n $container -- su -l -c "/mnt/jenkins/$guest_script"
+    #lxc-attach -n $container -- su -l -c "/mnt/jenkins/source_guest_setup.sh"
 else
-    echo "Attaching to the existing container, $container, in:"
-fi
-lxc list
-echo "=== Source path:"
-pwd
-echo "=== Mounting:"
-lxc config device add $container shared-folder-device disk source=`pwd` path=/mnt/jenkins
-echo "Sleeping.."
-sleep 5
-lxc list
-echo "=== Exec:"
-echo "$currentscript: '$guest_script'"
-lxc exec $container -- bash -c "/mnt/jenkins/$guest_script"
-echo "=== End Exec"
-if [ "$stop_container" == "0" ] ; then
-    echo "=== Stopping $container"
-    lxc stop $container --force
-    echo "=== Stopped  $container"
-else
-    echo "$container was left running because of the -E option."
-    echo "You can access it with:"
-    echo "\"lxc exec $container -- bash\""
-    echo "Or stop it with: \"lxc stop $container\""
+    lxc info $container &> /dev/null ; container_exists="$?"
+    if [ ! "$container_exists" == "0" ] ; then
+        use_existing_container="2"
+    fi
+    if [ ! "$use_existing_container" == "0" ] ; then
+        echo "=== Stopping (destroying) old container:"
+        lxc exec $container -- poweroff
+        sleep 2
+        lxc stop $container --force
+        echo "=== First listing:"
+        lxc list
+        echo "=== Copying:"
+        lxc copy $source_container $container -e
+        echo "=== Second listing:"
+        lxc list
+        echo "=== Starting:"
+        lxc start $container
+        echo "=== Third listing:"
+    else
+        echo "Attaching to the existing container, $container, in:"
+    fi
+    lxc list
+    echo "=== Source path:"
+    pwd
+    echo "=== Mounting:"
+    lxc config device add $container shared-folder-device disk source=`pwd` path=/mnt/jenkins
+    echo "Sleeping.."
+    sleep 5
+    lxc list
+    echo "=== Exec:"
+    echo "$currentscript: '$guest_script'"
+    lxc exec $container -- bash -c "/mnt/jenkins/$guest_script"
+    echo "=== End Exec"
+    if [ "$stop_container" == "0" ] ; then
+        echo "=== Stopping $container"
+        lxc stop $container --force
+        echo "=== Stopped  $container"
+    else
+        echo "$container was left running because of the -E option."
+        echo "You can access it with:"
+        echo "\"lxc exec $container -- bash\""
+        echo "Or stop it with: \"lxc stop $container\""
+    fi
 fi
