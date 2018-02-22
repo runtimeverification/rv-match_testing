@@ -263,8 +263,6 @@ prep_extract() {
                         fi
                     done
                 fi
-                echo "DEBUG: $t"
-                pwd ; ls ; echo "kcc_build_$t.txt ??"
                 if [[ -e "kcc_build_$t.txt" ]] ; then
                         print=$print$'\nBuild step log tail: \n'$(tail -20 kcc_build_$t.txt)
                 fi
