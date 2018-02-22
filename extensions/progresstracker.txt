@@ -1,0 +1,74 @@
+https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html
+
+* => no code example
+. => all example code works already
+- => tried and failed to find something
+! => possibly needs ARM or other system/hardware
+? => gcc and kcc behavior may match, but at least kcc behavior may be incorrect
+"1 " => found 1 compilation example
+" 1" => found 1 runtime example
+
+- • Statement Exprs:	  	Putting statements and declarations inside expressions.
+- • Local Labels:	  	Labels local to a block.
+1 • Labels as Values:	  	Getting pointers to labels, and computed gotos.
+1 • Nested Functions:	  	As in Algol and Pascal, lexical scoping of functions.
+  • Constructing Calls:	  	Dispatching a call to another function.
+1 • Typeof:	  		typeof: referring to the type of an expression.
+1 • Conditionals:	  	Omitting the middle operand of a ‘?:’ expression.
+- • __int128:	  		128-bit integers—__int128.
+1 • Long Long:	  		Double-word integers—long long int.
+1 • Complex:	  		Data types for complex numbers.
+1 • Floating Types:	  	Additional Floating Types.
+! • Half-Precision:	  	Half-Precision Floating Point.
+1 • Decimal Float:	  	Decimal Floating Types.
+- • Hex Floats:	  		Hexadecimal floating-point constants.
+  • Fixed-Point:	  	Fixed-Point Types.
+  • Named Address Spaces:	Named address spaces.
+1 • Zero Length:	  	Zero-length arrays.
+ 1• Empty Structures:	  	Structures with no members.
+  • Variable Length:	  	Arrays whose length is computed at run time.
+  • Variadic Macros:	  	Macros with a variable number of arguments.
+1 • Escaped Newlines:	  	Slightly looser rules for escaped newlines.
+  • Subscripting:	  	Any array can be subscripted, even if not an lvalue.
+  • Pointer Arith:	  	Arithmetic on void-pointers and function pointers.
+  • Pointers to Arrays:	  	Pointers to arrays with qualifiers work as expected.
+  • Initializers:	  	Non-constant initializers.
+  • Compound Literals:	  	Compound literals give structures, unions or arrays as values.
+  • Designated Inits:	  	Labeling elements of initializers.
+1 • Case Ranges:	  	‘case 1 ... 9’ and such.
+  • Cast to Union:	  	Casting to union type from any member of the union.
+* • Mixed Declarations:	  	Mixing declarations and code.
+  • Function Attributes:	Declaring that functions have no side effects, or that they can never return.
+  • Variable Attributes:	Specifying attributes of variables.
+  • Type Attributes:	  	Specifying attributes of types.
+  • Label Attributes:	  	Specifying attributes on labels.
+  • Enumerator Attributes:	Specifying attributes on enumerators.
+  • Statement Attributes:	Specifying attributes on statements.
+  • Attribute Syntax:	  	Formal syntax for attributes.
+  • Function Prototypes:	Prototype declarations and old-style definitions.
+. • C++ Comments:	  	C++ comments are recognized.
+* • Dollar Signs:	  	Dollar sign is allowed in identifiers.
+. • Character Escapes:	  	‘\e’ stands for the character ESC.
+ ?• Alignment:	  		Inquiring about the alignment of a type or variable.
+- • Inline:	  		Defining inline functions (as fast as macros).
+  • Volatiles:	  		What constitutes an access to a volatile object.
+  • Using Assembly Language with C:	  	Instructions and extensions for interfacing C with assembler.
+- • Alternate Keywords:	  	__const__, __asm__, etc., for header files.
+- • Incomplete Enums:	  	enum foo;, with details to follow.
+  • Function Names:	  	Printable strings which are the name of the current function.
+ 1• Return Address:	  	Getting the return or frame address of a function.
+  • Vector Extensions:	  	Using vector instructions through built-in functions.
+  • Offsetof:	  		Special syntax for implementing offsetof.
+  • __sync Builtins:	  	Legacy built-in functions for atomic memory access.
+  • __atomic Builtins:	  	Atomic built-in functions with memory model.
+  • Integer Overflow Builtins:	Built-in functions to perform arithmetics and arithmetic overflow checking.
+  • x86 specific memory model extensions for transactional memory:	  	x86 memory models.
+  • Object Size Checking:	Built-in functions for limited buffer overflow checking.
+  • Pointer Bounds Checker builtins:	  	Built-in functions for Pointer Bounds Checker.
+  • Other Builtins:	  	Other built-in functions.
+  • Target Builtins:	  	Built-in functions specific to particular targets.
+  • Target Format Checks:	Format checks specific to particular targets.
+  • Pragmas:	  		Pragmas accepted by GCC.
+  • Unnamed Fields:	  	Unnamed struct/union fields within structs/unions.
+  • Thread-Local:	  	Per-thread variables.
+  • Binary constants:	  	Binary constants using the ‘0b’ prefix.

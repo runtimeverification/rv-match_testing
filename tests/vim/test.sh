@@ -19,7 +19,7 @@ _build() {
     cd vim/
     kcc -profile x86_64-linux-gcc-glibc
     ./configure CC=$compiler CFLAGS="-std=gnu11" LD=$compiler LDFLAGS="-ldl" |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
-    bash $base_dir/timeout.sh -t 2 make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    bash $base_dir/timeout.sh -t 8000 make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 }
 
 init

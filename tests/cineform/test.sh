@@ -25,6 +25,7 @@ _dependencies() {
     #cmake --version
     #cd $strtatdir
     #rm -r tempun1qu5ch4ract3r2/
+    :
 }
 
 _download() {

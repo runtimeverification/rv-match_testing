@@ -23,7 +23,7 @@ _build() {
         ./configure CC=$compiler --disable-threads --disable-atomic --disable-shared |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     fi
     gcc -Ilib/isc/include -o lib/dns/gen lib/dns/gen.c
-    ulimit -s
+    ulimit -s 16777216
     bash $base_dir/timeout.sh -t 8000 make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 }
 
