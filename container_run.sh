@@ -8,7 +8,7 @@ guest_script_flags=" -"
 use_existing_container="1"
 hadflag="1"
 stop_container="0"
-source_container="match-xenial-testing-source"
+source_container="match-testing-xenial-source"
 while getopts ":rsatdgeEqpPT" opt; do
   hadflag="0"
   case ${opt} in
@@ -46,7 +46,7 @@ while getopts ":rsatdgeEqpPT" opt; do
         guest_script_flags=$guest_script_flags"P"
       ;;
     T ) echo $currentscript" Trusty option selected."
-        source_container="match-trusty-testing-source"
+        source_container="match-testing-trusty-source"
         guest_script_flags=$guest_script_flags"T"
       ;;
     \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-E] [-q] [-p] [-P] [-T]"
