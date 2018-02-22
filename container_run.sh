@@ -93,7 +93,7 @@ if [ "$oldmachine" == "0" ] ; then
     echo "source_container: $source_container"
     echo "container: $container"
 
-    if [[ `lxc-ls` == *"$container"* ]] ; then
+    if [[ `lxc-ls` == *"$container"* ]] && [ ! $use_existing_container == "0" ] ; then
         echo "Temporary container destroying."
         lxc-destroy -f -n $container
     else
