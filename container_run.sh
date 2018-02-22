@@ -108,10 +108,10 @@ if [ "$oldmachine" == "0" ] ; then
     # echo "lxc.id_map = g 0 494216 65536" >> ~/.config/lxc/default.conf
     # echo "lxc.network.type = veth" >> ~/.config/lxc/default.conf
     # echo "lxc.network.link = lxcbr0" >> ~/.config/lxc/default.conf
-    lxc-destroy -f -n rv-match_projtesting_container
-    lxc-destroy -f -n rv-match_acceptance_container
+    lxc-destroy -f -n ubuntu-temp-trusty-source-rv-match_testing
+    lxc-destroy -f -n rv-match_regression_container
     lxc-checkconfig
-    #lxc-create -t download -n $source_container -- -d ubuntu -r trusty -a amd64
+    #lxc-create -t download -n $some_source_container -- -d ubuntu -r trusty -a amd64
     lxc-copy -s -e -B overlay -m bind=`pwd`:/mnt/jenkins:rw -n $source_container -N $container \
     && trap stopLxc EXIT
     lxc-checkconfig
@@ -124,7 +124,6 @@ if [ "$oldmachine" == "0" ] ; then
     sleep 5
     lxc-ls
     lxc-attach -n $container -- su -l -c "/mnt/jenkins/$guest_script"
-    #lxc-attach -n $container -- su -l -c "/mnt/jenkins/source_guest_setup.sh"
 else
     lxc info $container &> /dev/null ; container_exists="$?"
     if [ ! "$container_exists" == "0" ] ; then
