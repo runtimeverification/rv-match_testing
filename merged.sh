@@ -54,12 +54,14 @@ if [ "$flagsfortests" == "-" ] ; then
 fi
 
 # Handle .ini argument
+isset="1"
 testname=$1
 if [ ! -e "sets/$testname.ini" ] && [ ! -e "tests/$testname/test.sh" ] ; then
     testname=$2
 fi
 if [ -e "sets/$testname.ini" ] ; then
     filepath="sets/$testname.ini"
+    isset="0"
 else
     if [ -e "tests/$testname/test.sh" ] ; then
         filepath="sets/_generated_single.ini"
@@ -216,7 +218,11 @@ while read line; do
             log_output="logs/$logdate/$line.log"
         fi
         echo "     writing to log at $log_output"
-        bash "$testsfolder/$line/test.sh" "$flagsfortests" &> $log_output
+        if [ "$isset" == "0" ] ; then
+            bash "$testsfolder/$line/test.sh" "$flagsfortests" &> $log_output
+        else
+            bash "$testsfolder/$line/test.sh" "$flagsfortests" |& tee $log_output
+        fi
         echo "==== $line finished at $(date)"
     else
         echo "Status option was selected, so the tests are not being run right now."
