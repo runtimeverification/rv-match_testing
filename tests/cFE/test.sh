@@ -41,10 +41,13 @@ _build() {
     else
         echo "Not using -frecover-all-errors"
     fi
-    cmake -DCMAKE_C_COMPILER=$compilerwithkccflags -DENABLE_UNIT_TESTS=TRUE --build ../cfe |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
-    make mission-all |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
-    if [ $results[1] -eq 0 ] ; then
-        cd native/osal/unit-tests/ && make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    cmake -DCMAKE_C_COMPILER=$compilerwithkccflags -DENABLE_UNIT_TESTS=TRUE --build ../cfe |& tee kcc_build_0.txt ; names[0]="cmake" ; results[0]="$?" ; process_kcc_config 0
+    make mission-all |& tee kcc_build_1.txt ; names[1]="make mission-all" ; results[1]="$?" ; process_kcc_config 1
+    
+    names[2]="unit-tests folder found"
+    [ -d native/osal/unit-tests/ ] |& tee kcc_build_2.txt ; results[2]="$?" ; process_kcc_config 2
+    if [ "${results[2]}" == "0" ] ; then
+        cd native/osal/unit-tests/ && make |& tee kcc_build_3.txt ; names[3]="make unit-tests" ; results[3]="$?" ; process_kcc_config 3
     fi
 }
 

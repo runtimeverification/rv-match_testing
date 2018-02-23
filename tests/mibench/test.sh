@@ -12,172 +12,72 @@ _download() {
     git checkout 0f3cbcf6b3d589a2b0753cfb9289ddf40b6b9ed8
 }
 
-_build() {
-    cd mibench/
-    top=$(pwd)
-    out=$top/kcc_build_1.txt
-    results[0]="0"
-    _build_helper ; results[1]="$?" ; process_kcc_config 1
+_helper() {
+    if [ -z "$path" ] ; then path="$name" ; fi
+    cd "$top/$folder/$path/"
+    names[$mii]="$name Makefile alteration"
+    sed -i -e "s/gcc/$compiler/g" Makefile |& tee kcc_build_$mii.txt ; results[$mii]="$?" ; process_kcc_config $mii
+    let "mii += 1"
+    if [ "$configure_flag" == "0" ] ; then
+        names[$mii]="$name configure"
+        CC=$compiler LD=$compiler ./configure |& tee kcc_build_$mii.txt ; results[$mii]="$?" ; process_kcc_config $mii
+        let "mii += 1"
+    fi
+    names[$mii]="$name make"
+    make$make_arg |& tee kcc_build_$mii.txt ; results[$mii]="$?" ; process_kcc_config $mii
+    
+    path=""
+    make_arg=""
+    let "mii += 1"
+    configure_flag="1"
 }
 
-_build_helper() {
+_build() {
+    names[0]="mibench folder found"
+    [ -d mibench/ ] |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+    if [ "${results[0]}" == "0" ] ; then cd mibench/ ; else return 1 ; fi
 
-# These commands are purposely flattened and redundant to provide ease of direct access to customizing each as necessary. Most currently look the same because minimal effort was put into getting much of the project built. As more customized effort is put forth, the script is expected to become more detailed and differ for the sub-components.
+top=$(pwd)
+path=""
+make_arg=""
+mii=1
+configure_flag="1"
 
+folder="automotive" # automotive: 4
+name="basicmath" ; _helper
+name="bitcount"  ; _helper
+name="qsort"     ; _helper
+name="susan"     ; _helper
 
-# automotive: 4
+folder="consumer"   # consumer: 5
+path="jpeg/jpeg-6a"      ; name="jpeg" ; _helper
+path="lame/lame3.70"     ; name="lame" ; _helper
+#path="mad/mad-0.14.2b"   ; name="mad"  ; configure_flag="0" ; _helper
+#path="tiff-v3.5.4"       ; name="tiff" ; configure_flag="0" ; _helper
+path="typeset/lout-3.24" ; name="typeset" ; _helper
 
-dir="$top/automotive/basicmath/"
-echo "$dir" >> $out
-cd "$dir"
-sed -i -e "s/gcc/$compiler/g" Makefile
-make |& tee -a $out || return 1
+folder="network" # network: 2
+name="dijkstra"  ; _helper
+name="patricia"  ; _helper
 
-dir="$top/automotive/bitcount/"
-echo "$dir" >> $out
-cd "$dir"
-sed -i -e "s/gcc/$compiler/g" Makefile
-make |& tee -a $out || return 1
+folder="office" # office: 5
+#path="ghostscript/src" ; name="ghostscript" ; _helper
+#name="ispell" ; _helper
+#name="rsynth" ; configure_flag="0" ; _helper
+#name="sphinx" ; configure_flag="0" ; _helper
+name="stringsearch" ; _helper
 
-dir="$top/automotive/qsort/"
-echo "$dir" >> $out
-cd "$dir"
-sed -i -e "s/gcc/$compiler/g" Makefile
-make |& tee -a $out || return 1
+folder="security" # security: 4
+name="blowfish" ; _helper
+#path="pgp/src" ; name="pgp" ; make_arg=" linux" ; _helper
+#name="rijndael" ; _helper
+name="sha" ; _helper
 
-dir="$top/automotive/susan/"
-echo "$dir" >> $out
-cd "$dir"
-sed -i -e "s/gcc/$compiler/g" Makefile
-make |& tee -a $out || return 1
-
-
-# consumer: 5
-
-dir="$top/consumer/jpeg/jpeg-6a/"
-echo "$dir" >> $out
-cd "$dir"
-sed -i -e "s/gcc/$compiler/g" Makefile
-make |& tee -a $out || return 1
-
-dir="$top/consumer/lame/lame3.70/"
-echo "$dir" >> $out
-cd "$dir"
-sed -i -e "s/gcc/$compiler/g" Makefile
-make |& tee -a $out || return 1
-
-#dir="$top/consumer/mad/mad-0.14.2b/"
-#echo "$dir" >> $out
-#cd "$dir"
-#./configure && make |& tee -a $out || return 1
-
-#dir="$top/consumer/tiff-v3.5.4/"
-#echo "$dir" >> $out
-#cd "$dir"
-#./configure && make |& tee -a $out || return 1
-
-dir="$top/consumer/typeset/lout-3.24/"
-echo "$dir" >> $out
-cd "$dir"
-sed -i -e "s/gcc/$compiler/g" Makefile
-make |& tee -a $out || return 1
-
-
-# network: 2
-
-dir="$top/network/dijkstra/"
-echo "$dir" >> $out
-cd "$dir"
-sed -i -e "s/gcc/$compiler/g" Makefile
-make |& tee -a $out || return 1
-
-dir="$top/network/patricia/"
-echo "$dir" >> $out
-cd "$dir"
-sed -i -e "s/gcc/$compiler/g" Makefile
-make |& tee -a $out || return 1
-
-
-# office: 5
-
-#dir="$top/office/ghostscript/src/"
-#echo "$dir" >> $out
-#cd "$dir"
-#make |& tee -a $out || return 1
-
-#dir="$top/office/ispell/"
-#echo "$dir" >> $out
-#cd "$dir"
-#make |& tee -a $out || return 1
-
-#dir="$top/office/rsynth/"
-#echo "$dir" >> $out
-#cd "$dir"
-#./configure && make |& tee -a $out || return 1
-
-#dir="$top/office/sphinx/"
-#echo "$dir" >> $out
-#cd "$dir"
-#./configure && make |& tee -a $out || return 1
-
-dir="$top/office/stringsearch/"
-echo "$dir" >> $out
-cd "$dir"
-sed -i -e "s/gcc/$compiler/g" Makefile
-make |& tee -a $out || return 1
-
-
-# security: 4
-
-dir="$top/security/blowfish/"
-echo "$dir" >> $out
-cd "$dir"
-sed -i -e "s/gcc/$compiler/g" Makefile
-make |& tee -a $out || return 1
-
-#dir="$top/security/pgp/src/"
-#echo "$dir" >> $out
-#cd "$dir"
-#make linux |& tee -a $out || return 1
-
-#dir="$top/security/rijndael/"
-#echo "$dir" >> $out
-#cd "$dir"
-#make |& tee -a $out || return 1
-
-dir="$top/security/sha/"
-echo "$dir" >> $out
-cd "$dir"
-sed -i -e "s/gcc/$compiler/g" Makefile
-make |& tee -a $out || return 1
-
-
-# telecomm: 4
-
-#dir="$top/telecomm/adpcm/src/"
-#echo "$dir" >> $out
-#cd "$dir"
-#make |& tee -a $out || return 1
-
-dir="$top/telecomm/CRC32/"
-echo "$dir" >> $out
-cd "$dir"
-sed -i -e "s/gcc/$compiler/g" Makefile
-make |& tee -a $out || return 1
-
-dir="$top/telecomm/FFT/"
-echo "$dir" >> $out
-cd "$dir"
-sed -i -e "s/gcc/$compiler/g" Makefile
-make |& tee -a $out || return 1
-
-dir="$top/telecomm/gsm/"
-echo "$dir" >> $out
-cd "$dir"
-sed -i -e "s/gcc/$compiler/g" Makefile
-make |& tee -a $out || return 1
-
-return 0
+folder="telecomm" # telecomm: 4
+#path="adpcm/src" ; name="adpcm" ; _helper
+name="CRC32" ; _helper
+name="FFT" ; _helper
+name="gsm" ; _helper
 
 }
 
