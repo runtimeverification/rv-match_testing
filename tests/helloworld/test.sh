@@ -25,7 +25,7 @@ int main()
 
 _build() {
     cd helloworld/ ; echo "$?" |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
-    bash $base_dir/timeout.sh -t 10 $compiler helloworld.c |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    bash $base_dir/timeout.sh -t 0 $compiler helloworld.c |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 }
 
 _test() {
