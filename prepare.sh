@@ -81,38 +81,10 @@ test_name=$(basename $(pwd))
 test_dir=$(pwd)
 test_file=$test_dir/test.sh
 enforce_common_init_in_test_files
+dependency_dir=$test_dir/dependency
 download_dir=$test_dir/download
 report_file=$test_dir/$exportfile.xml
 rm $report_file ; touch $report_file
-
-#internal_process_kcc_config() {
-#    location=$(pwd) ; cd $build_log_dir
-#    if [ -e kcc_config ] ; then
-#        k-bin-to-text kcc_config kcc_config.txt |& tee kcc_config_k_summary.txt
-#        if [ $? -eq 0 ] ; then
-#            grep -o "<k>.\{500\}" kcc_config.txt &> kcc_config_k_summary.txt
-#            if [ $? -eq 0 ] ; then
-#                cat kcc_config_k_summary.txt
-#            else
-#                echo "term <k> was not found in the parsed kcc_config" >> kcc_config_k_summary.txt
-#            fi
-#        else
-#            echo "k-bin-to-text command failed with above error" >> kcc_config_k_summary.txt
-#        fi
-#        echo "The processed kcc_config was dropped in $location" >> kcc_config_k_summary.txt
-#    fi
-#}
-
-#process_kcc_config() {
-#    echo "Inside process_kcc_config function."
-#    if cp kcc_config $build_log_dir
-#    then
-#        internal_process_kcc_config
-#    else
-#        echo "prepare.sh did not find a kcc_config in "$(dirname $(pwd))
-#    fi
-#    cd $build_dir
-#}
 
 prep_prepare() {
     report_string=" ===> "$test_name" "$compiler" "
@@ -123,30 +95,25 @@ prep_prepare() {
     unit_test_dir=$test_dir/$compiler/unit_test
     mkdir -p $unit_test_dir
 
+    if [ ! -d $dependency_dir ] || [ -z "$(ls -A $dependency_dir)" ] || [ ! -e $dependency_dir/dependency_function_hash ] || [ "$(echo $(sha1sum <<< $(type _dependencies)))" != "$(head -n 1 $dependency_dir/dependency_function_hash)" ] ; then
     _dependencies
+    echo $report_string" installing dependencies. Either this is the initial installation or the dependency hash has changed since the last install."
+        rm $dependency_dir/dependency_function_hash ; rm -r $dependency_dir
+        mkdir -p $dependency_dir
+        cd $dependency_dir && _dependencies && cd $dependency_dir && echo $(sha1sum <<< $(type _dependencies)) > dependency_function_hash
+    else
+        echo $report_string" not installing dependencies. They should already be installed."
+    fi
 }
 
 prep_download() {
     if [ ! -d $download_dir ] || [ -z "$(ls -A $download_dir)" ] || [ ! -e $download_dir/download_function_hash ] || [ "$(echo $(sha1sum <<< $(type _download)))" != "$(head -n 1 $download_dir/download_function_hash)" ] ; then
         echo $report_string" downloading. Either this is the initial download or the download hash has changed since the last download."
-        if [ ! -d $download_dir ] ; then
-            echo "first"
-            if [ -z "$(ls -A $download_dir)" ] ; then
-                echo "second"
-                if [ ! -e $download_dir/download_function_hash ] ; then
-                    echo "third"
-                    if [ "$(echo $(sha1sum <<< $(type _download)))" != "$(head -n 1 $download_dir/download_function_hash)" ] ; then
-                        echo "fourth"
-                    fi
-                fi
-            fi
-        fi
         rm $download_dir/download_function_hash ; rm -r $download_dir
         mkdir -p $download_dir
         cd $download_dir && _download && cd $download_dir && echo $(sha1sum <<< $(type _download)) > download_function_hash
     else
         echo $report_string" not downloading. Copying from there."
-        find $download_dir -maxdepth 2
     fi
 }
 
@@ -231,8 +198,14 @@ prep_extract() {
     i=${#results[@]}
     process_kcc_config "$i"
     if [ ! "$counter" == "0" ] ; then
+        names[$i]="GENERATED-TEST[kcc_config]"
         results[$i]="1"
-        names[$i]="AUTO GENERATED TEST for reporting kcc_configs"
+        echo "Fix test.sh to call process_kcc_config after tests." > $build_log_dir/kcc_build_$i.txt
+    fi
+    if [ "$i" == "0" ] ; then
+        names[$i]="GENERATED-TEST[feedback]"
+        results[$i]="1"
+        echo "Fix test.sh to report some sort of build feedback." > $build_log_dir/kcc_build_$i.txt
     fi
     # Extract log details: copy the non-kcc_config log files.
     find $build_dir -name "kcc_*" -not -name "kcc_config" -exec cp {} $build_log_dir \;
@@ -283,7 +256,7 @@ prep_build() {
     log_dir=$build_log_dir #until scripts are updated
 
     # Build hash is dependent on 3 things: {_build() function definition, $compiler --version, download hash}.
-    buildhashinfo=$(type _build)$($compiler --version)$(head -n 1 $download_dir/download_function_hash)
+    buildhashinfo=$(type _build)$($compiler --version)$(head -n 1 $download_dir/download_function_hash)$(head -n 1 $dependency_dir/dependency_function_hash)
     if [ ! -e $build_dir/build_function_hash ] || [ "$(echo $(sha1sum <<< $buildhashinfo))" != "$(head -n 1 $build_dir/build_function_hash)" ] || [ "0" == "0" ] ; then
 
         # build
@@ -403,10 +376,8 @@ init() {
     echo "base_dir:"
     echo "$base_dir"
     if [ ! -f $base_dir/timeout.sh ] ; then
-        echo "prepare.sh $currentscript there is NOT timeout file."
+        echo "$currentscript: downloading timeout.sh."
         wget -P $base_dir https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/timeout.sh
-    else
-        echo "prepare.sh $currentscript timeout is NOT missing"
     fi
     if [ ! "$exportfile" == "regression" ] ; then
         compiler="gcc" && init_helper

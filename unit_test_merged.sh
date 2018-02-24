@@ -1,15 +1,117 @@
 #!/bin/bash
-bash merged.sh -ut selftest
-bash merged.sh -ur selftest
-bash merged.sh -ua selftest
 returnvalue=0
-echo $'\n\nTest results: '
-xmlfile="results/report.xml"
 tempfile="results/temporary"
 tempfile2="results/temporary2"
 tempfile3="results/temporary3"
 failelement='<error message="Failed.">'
-ping -c 1 www.google.com ; network_works="$?"
+similarity() {
+
+# Regression xml similarity test
+xmlfile="results/regression.xml"
+samplefile="selftest/regression_sample.xml"
+cp $xmlfile $tempfile
+cp $samplefile $tempfile2
+rightTypes="1"
+similar="0"
+while [ "$(grep "<testcase classname=" $tempfile)" ] || [ "$(grep "<testcase classname=" $tempfile2)" ] && [ "$similar" == "0" ] ;
+do
+    rightTypes="0"
+    tail -n +`grep -n -m 1 '<testcase classname=' $tempfile |cut -f1 -d:` $tempfile > $tempfile3
+    one="$(head -n 1 $tempfile3)"
+    one=${one%time*}
+    tail -n +2 "$tempfile3" > $tempfile
+    tail -n +`grep -n -m 1 '<testcase classname=' $tempfile2 |cut -f1 -d:` $tempfile2 > $tempfile3
+    two="$(head -n 1 $tempfile3)"
+    two=${two%time*}
+    tail -n +2 "$tempfile3" > $tempfile2
+    if [ ! "$one" == "$two" ] ; then
+        similar="1"
+    fi
+done
+if [ "$rightTypes" == "0" ] && [ $similar == "0" ] ; then
+    echo "\"regression similarity\" test   : passes."
+    rm $xmlfile
+else
+    echo "\"regression similarity\" test   : fails." ; returnvalue=1
+    echo "  - the xml is supposed to be similar in structure to the past sample."
+    if [ ! "$rightTypes" == "0" ] ; then
+        echo "  - the xml files were not formatted properly."
+    fi
+    if [ ! "$similar" == "0" ] ; then
+        echo "  - xml is not similar to past regression structure."
+    fi
+    echo "  - to update samples, run again with \"r\"."
+fi
+# Acceptance xml similarity test (similar code to regression test)
+xmlfile="results/acceptance.xml"
+samplefile="selftest/acceptance_sample.xml"
+cp $xmlfile $tempfile
+cp $samplefile $tempfile2
+rightTypes="1"
+similar="0"
+while [ "$(grep "<testcase classname=" $tempfile)" ] || [ "$(grep "<testcase classname=" $tempfile2)" ] && [ "$similar" == "0" ] ;
+do
+    rightTypes="0"
+    tail -n +`grep -n -m 1 '<testcase classname=' $tempfile |cut -f1 -d:` $tempfile > $tempfile3
+    one="$(head -n 1 $tempfile3)"
+    one=${one%time*}
+    tail -n +2 "$tempfile3" > $tempfile
+    tail -n +`grep -n -m 1 '<testcase classname=' $tempfile2 |cut -f1 -d:` $tempfile2 > $tempfile3
+    two="$(head -n 1 $tempfile3)"
+    two=${two%time*}
+    tail -n +2 "$tempfile3" > $tempfile2
+    if [ ! "$one" == "$two" ] ; then
+        similar="1"
+    fi
+done
+if [ "$rightTypes" == "0" ] && [ $similar == "0" ] ; then
+    echo "\"acceptance similarity\" test   : passes."
+    rm $xmlfile
+else
+    echo "\"acceptance similarity\" test   : fails." ; returnvalue=1
+    echo "  - the xml is supposed to be similar in structure to the past sample."
+    if [ ! "$rightTypes" == "0" ] ; then
+        echo "  - the xml files were not formatted properly."
+    fi
+    if [ ! "$similar" == "0" ] ; then
+        echo "  - xml is not similar to past regression structure."
+    fi
+    echo "  - to update samples, run again with \"r\"."
+fi
+
+}
+
+if [ "$1" == "r" ] || [ "$1" == "-r" ] ; then
+    if [ -e results/regression.xml ] ; then
+        cp results/regression.xml selftest/regression_sample.xml
+        echo "regression sample updated"
+    fi
+    if [ -e results/acceptance.xml ] ; then
+        cp results/acceptance.xml selftest/acceptance_sample.xml
+        echo "acceptance sample updated"
+    fi
+    if [ ! -e results/acceptance.xml ] && [ ! -e results/regression.xml ] ; then
+        echo "No new updates detected."
+        exit 0
+    fi
+    echo "Ensuring that the new samples match against the current project..."
+    bash merged.sh -ur selftest &> /dev/null
+    bash merged.sh -ua selftest &> /dev/null
+    similarity
+    exit 0
+fi
+echo "Testing the rv-match_testing project, especially for expected xml format."
+echo -ne '[                     ](0%  )\r'
+bash merged.sh -ut selftest &> /dev/null
+echo -ne '[#######              ](33% )\r'
+bash merged.sh -ur selftest &> /dev/null
+echo -ne '[##############       ](66% )\r'
+bash merged.sh -ua selftest &> /dev/null
+echo -ne '[#####################](100%)\r'
+echo $'\n\nTest results: '
+xmlfile="results/report.xml"
+ping -c 1 www.google.com &> /dev/null ; network_works="$?"
+echo -ne '\n'
 if [ "$network_works" == "0" ] ; then
     echo "\"network\" test                 : passes."
 else
@@ -148,75 +250,7 @@ else
     echo "  - xml is supposed to contain the tail of kcc_out_0.txt."
 fi
 
-# Regression xml similarity test
-xmlfile="results/regression.xml"
-samplefile="selftest/regression_sample.xml"
-cp $xmlfile $tempfile
-cp $samplefile $tempfile2
-rightTypes="1"
-similar="0"
-while [ "$(grep "<testcase classname=" $tempfile)" ] || [ "$(grep "<testcase classname=" $tempfile2)" ] && [ "$similar" == "0" ] ;
-do
-    rightTypes="0"
-    tail -n +`grep -n -m 1 '<testcase classname=' $tempfile |cut -f1 -d:` $tempfile > $tempfile3
-    one="$(head -n 1 $tempfile3)"
-    one=${one%time*}
-    tail -n +2 "$tempfile3" > $tempfile
-    tail -n +`grep -n -m 1 '<testcase classname=' $tempfile2 |cut -f1 -d:` $tempfile2 > $tempfile3
-    two="$(head -n 1 $tempfile3)"
-    two=${two%time*}
-    tail -n +2 "$tempfile3" > $tempfile2
-    if [ ! "$one" == "$two" ] ; then
-        similar="1"
-    fi
-done
-if [ "$rightTypes" == "0" ] && [ $similar == "0" ] ; then
-    echo "\"regression similarity\" test   : passes."
-else
-    echo "\"regression similarity\" test   : fails." ; returnvalue=1
-    echo "  - the xml is supposed to be similar in structure to the past sample."
-    if [ ! "$rightTypes" == "0" ] ; then
-        echo "  - the xml files were not formatted properly."
-    fi
-    if [ ! "$similar" == "0" ] ; then
-        echo "  - xml is not similar to past regression structure."
-    fi
-fi
-
-# Acceptance xml similarity test (similar code to regression test)
-xmlfile="results/acceptance.xml"
-samplefile="selftest/acceptance_sample.xml"
-cp $xmlfile $tempfile
-cp $samplefile $tempfile2
-rightTypes="1"
-similar="0"
-while [ "$(grep "<testcase classname=" $tempfile)" ] || [ "$(grep "<testcase classname=" $tempfile2)" ] && [ "$similar" == "0" ] ;
-do
-    rightTypes="0"
-    tail -n +`grep -n -m 1 '<testcase classname=' $tempfile |cut -f1 -d:` $tempfile > $tempfile3
-    one="$(head -n 1 $tempfile3)"
-    one=${one%time*}
-    tail -n +2 "$tempfile3" > $tempfile
-    tail -n +`grep -n -m 1 '<testcase classname=' $tempfile2 |cut -f1 -d:` $tempfile2 > $tempfile3
-    two="$(head -n 1 $tempfile3)"
-    two=${two%time*}
-    tail -n +2 "$tempfile3" > $tempfile2
-    if [ ! "$one" == "$two" ] ; then
-        similar="1"
-    fi
-done
-if [ "$rightTypes" == "0" ] && [ $similar == "0" ] ; then
-    echo "\"acceptance similarity\" test   : passes."
-else
-    echo "\"acceptance similarity\" test   : fails." ; returnvalue=1
-    echo "  - the xml is supposed to be similar in structure to the past sample."
-    if [ ! "$rightTypes" == "0" ] ; then
-        echo "  - the xml files were not formatted properly."
-    fi
-    if [ ! "$similar" == "0" ] ; then
-        echo "  - xml is not similar to past regression structure."
-    fi
-fi
+similarity
 
 # k-bin-to-text test
 kbinin="selftest/k-bin-to-text_runs/kcc_config"
@@ -246,7 +280,7 @@ rm $tempfile2
 rm $tempfile3
 
 rm "results/report.xml"
-rm "results/acceptance.xml"
-rm "results/regression.xml"
+#rm "results/acceptance.xml"
+#rm "results/regression.xml"
 
 exit $returnvalue

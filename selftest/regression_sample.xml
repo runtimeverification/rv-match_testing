@@ -2,6 +2,22 @@
 <testsuites>
 <testsuite name="ReportScriptReport" package="ReportPackage">
 <properties/>
+<testcase classname="regression.empty_body" name="kcc GENERATED-TEST[feedback]">
+<error message="Failed.">
+<![CDATA[
+Build step 0, "GENERATED-TEST[feedback]": {
+Build step log tail: 
+Fix test.sh to report some sort of build feedback.
+}]]></error>
+</testcase>
+<testcase classname="regression.empty_functions" name="kcc GENERATED-TEST[feedback]">
+<error message="Failed.">
+<![CDATA[
+Build step 0, "GENERATED-TEST[feedback]": {
+Build step log tail: 
+Fix test.sh to report some sort of build feedback.
+}]]></error>
+</testcase>
 <testcase classname="regression.make_fail" name="kcc configure success">
 </testcase>
 <testcase classname="regression.make_fail" name="kcc make success">
@@ -35,7 +51,8 @@ Important debug output produced by make. Umbrella satire.
 <![CDATA[
 Build step 1, "make success": {
 Build step log tail: 
-
+timeout.sh: Terminating.
+timeout.sh: Termination delay passed. Killing.
 }]]></error>
 </testcase>
 <testcase classname="regression.many_kcc_config" name="kcc configure success">
@@ -47,7 +64,7 @@ Build step 1, "make success": {
 kcc_config info: 
 
 Found a kcc_config number 1-0:
-Location: /home/timothy/Desktop/matchTesting/devel-testing/selftest/many_kcc_config/kcc/build/directory_one/sub_directory_one_B
+Location: /home/timothy/Desktop/matchTesting/rv-match_testing/selftest/many_kcc_config/kcc/build/directory_one/sub_directory_one_B
 Exception in thread "main" java.nio.BufferUnderflowException
 	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
 	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
@@ -58,7 +75,7 @@ k-bin-to-text command failed with above error.
 kcc_config info: 
 
 Found a kcc_config number 1-1:
-Location: /home/timothy/Desktop/matchTesting/devel-testing/selftest/many_kcc_config/kcc/build/directory_two
+Location: /home/timothy/Desktop/matchTesting/rv-match_testing/selftest/many_kcc_config/kcc/build/directory_two
 Exception in thread "main" java.nio.BufferUnderflowException
 	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
 	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
@@ -85,7 +102,7 @@ Build step 1, "make success": {
 kcc_config info: 
 
 Found a kcc_config number 1-0:
-Location: /home/timothy/Desktop/matchTesting/devel-testing/selftest/one_kcc_config/kcc/build/directory_one/sub_directory_one_B
+Location: /home/timothy/Desktop/matchTesting/rv-match_testing/selftest/one_kcc_config/kcc/build/directory_one/sub_directory_one_B
 Exception in thread "main" java.nio.BufferUnderflowException
 	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
 	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)

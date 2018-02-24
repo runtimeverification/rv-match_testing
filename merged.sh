@@ -200,7 +200,11 @@ read_log_files() {
         fi
     fi
 }
-logdate="$(date +%Y-%m-%d.%H:%M:%S)-$testname"
+if [ "$testsfolder" == "selftest" ] ; then
+    logdate="selftest/$exportfile"
+else
+    logdate="$(date +%Y-%m-%d.%H:%M:%S)-$testname"
+fi
 mkdir -p logs/$logdate
 if [ -d /mnt/jenkins/logs ] ; then
     mkdir -p /mnt/jenkins/logs/$logdate
@@ -218,10 +222,11 @@ while read line; do
             log_output="logs/$logdate/$line.log"
         fi
         echo "     writing to log at $log_output"
+        set -e ; rm -f "$testsfolder/$line/$exportfile.xml" ; set +e # prevents a false test report
         if [ "$isset" == "0" ] ; then
-            bash "$testsfolder/$line/test.sh" "$flagsfortests" &> $log_output
+            bash timeout.sh -t 20000 bash "$testsfolder/$line/test.sh" "$flagsfortests" &> $log_output
         else
-            bash "$testsfolder/$line/test.sh" "$flagsfortests" |& tee $log_output
+            bash timeout.sh -t 20000 bash "$testsfolder/$line/test.sh" "$flagsfortests" |& tee $log_output
         fi
         echo "==== $line finished at $(date)"
     else
@@ -229,6 +234,7 @@ while read line; do
     fi
     #read_log_files
     cat "$testsfolder/$line/$exportfile.xml" >> $exportpath
+    
 done < $whitelistpath
 
 # The above segment should:

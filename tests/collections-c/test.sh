@@ -5,7 +5,7 @@ base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 _dependencies() {
     sudo apt -y install pkg-config
 
-    start_dep_dir=$(pwd)
+    #start_dep_dir=$(pwd)
     wget https://github.com/cpputest/cpputest/releases/download/v3.8/cpputest-3.8.tar.gz
     tar -xzvf cpputest-3.8.tar.gz
     cd cpputest-3.8/
@@ -13,9 +13,9 @@ _dependencies() {
     ./configure
     make
     sudo make install
-    cd "$start_dep_dir"
-    rm -r cpputest-3.8/
-    rm cpputest-3.8.tar.gz
+    #cd "$start_dep_dir"
+    #rm -r cpputest-3.8/
+    #rm cpputest-3.8.tar.gz
 }
 
 _download() {
@@ -26,8 +26,8 @@ _download() {
 
 _build() {
     cd Collections-C/
-    CC=$compiler cmake . ; echo "$?" |& tee kcc_configure_out.txt ; configure_success="$?"
-    make |& tee kcc_make_out.txt ; make_success="$?"
+    CC=$compiler cmake . |& tee kcc_build_0.txt ; results[0]="$?"
+    make |& tee kcc_build_1.txt ; results[1]="$?"
 }
 
 _test() {
