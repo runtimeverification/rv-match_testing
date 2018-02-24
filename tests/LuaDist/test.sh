@@ -4,6 +4,10 @@ base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
 _dependencies() {
     sudo apt -y install libreadline-dev
+    sudo apt -y install ncurses-dev
+    sudo apt -y install libncurses5-dev
+    sudo apt -y install libncursesw5-dev
+
 }
 
 _download() {
