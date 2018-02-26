@@ -177,6 +177,9 @@ process_kcc_config() { # Called by _build in test.sh which is called by prep_bui
         cd $(dirname $line) && log_dir=$build_log_dir && increment_process_kcc_config
         cd $return_dir
     done < <(find . -type f -iname "kcc_config" -print0)
+    now=`date +%s.%N`
+    build_time[$1]=`echo "$now - $intervalstarttime" | bc -l`
+    intervalstarttime=$now
     cd $returnspot
 }
 
@@ -228,7 +231,7 @@ prep_extract() {
     if [[ -v results[@] ]] ; then
         for t in "${!results[@]}"
         do
-            echo '<testcase classname="'$exportfile'.'${test_name/./"_"}'" name="'$compiler' '${names[$t]}'">' >> $report_file
+            echo '<testcase classname="'$exportfile'.'${test_name/./"_"}'" name="'$compiler' '${names[$t]}'" time="'${build_time[$t]}'">' >> $report_file
             if [[ ${results[$t]} == 0 ]] ; then
                 echo $report_string" build step: "${names[$t]}" Passed!"
             else
@@ -282,6 +285,7 @@ prep_build() {
         unset names
         starttime=`date +%s.%N`
         kcc -profile x86_64-linux-gcc-glibc
+        intervalstarttime="$starttime"
         names[0]="configure success"
         names[1]="make success"
         cd $build_dir && _build
