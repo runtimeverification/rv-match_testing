@@ -12,6 +12,8 @@
 # cd ..
 # bash rv-match_testing/jenkins_create_source_container.sh
 
+set -e
+
 if [ "$1" == "xenial" ] ; then
     name="match-testing-xenial-source"
     version="16.04"
@@ -59,11 +61,8 @@ echo "Mounting $name:"
 lxc config device add $name shared-folder-device-source disk source="$initialfolder" path=/mnt/jenkins-source
 lxc list
 
-echo "Running script on $name"
-echo "  Purpose of script:"
-echo "    1. To prep apt installs"
-echo "    2. To prep k-bin-to-text"
-lxc exec $name -- bash -c "/mnt/jenkins-source/$guest_script"
+echo "Running $guest_script on $name"
+set -e ; lxc exec $name -- bash -c "/mnt/jenkins-source/$guest_script"
 
 echo "Stopping $name. ($name should be persistent.)"
 lxc stop $name

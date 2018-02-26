@@ -137,6 +137,14 @@ else
     echo "  - xml is supposed to embed kcc_build_1.txt when make fails."
 fi
 
+# Non-empty times
+if [ ! grep 'time=""' $xmlfile ] ; then
+    echo "\"non-empty time\" test          : passes."
+else
+    echo "\"non-empty time\" test           : fails." ; returnvalue=1
+    echo "  - xml should not contain this string: 'time=\"\"'."
+fi
+
 # Timeout pass
 if [[ ! "`grep -A1 'timeout_pass.*make success' $xmlfile | tail -n 1`" == "$failelement" ]] ; then
     echo "\"timeout pass\" test            : passes."
