@@ -37,7 +37,7 @@ pwd ; ls
 echo "Initial lxc state:"
 lxc list
 
-if test lxc info $name ; then
+if [ $(lxc info $name) ] ; then
     echo "Shutting down old $name:"
     lxc exec $name -- poweroff
     sleep 5
