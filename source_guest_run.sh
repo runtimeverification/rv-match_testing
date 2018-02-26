@@ -31,11 +31,11 @@ cd rv-match/k/
 ls
 
 printf "\nInstalling maven.\n"
-sudo apt update
-sudo apt -y install build-essential m4 openjdk-8-jdk libgmp-dev libmpfr-dev pkg-config flex z3 maven opam
+sudo apt update &> /dev/null
+sudo apt -y install build-essential m4 openjdk-8-jdk libgmp-dev libmpfr-dev pkg-config flex z3 maven opam &> /dev/null
 
 printf "\nBuilding rv-match/k with maven for using k-bin-to-text.\n"
-mvn package -DskipTests
+mvn package -DskipTests &> /dev/null
 
 printf "\nMaking sure that k-bin-to-text works...\n"
 set +e
@@ -49,7 +49,7 @@ printf "\n  return value test:\n"
 printf "\nPassed! k-bin-to-text works in source container.\n"
 
 printf "\nInstalling rv-predict\n" # uninstall "sudo dpkg -r rv-predict-c"
-wget -q https://runtimeverification.com/predict/download/c?v=1.9
+wget -q https://runtimeverification.com/predict/download/c?v=1.9 &> /dev/null
 mv c\?v\=1.9 predict.jar
 printf "
 
@@ -58,14 +58,14 @@ printf "
 1
 1
 " > stdinfile.txt
-cat stdinfile.txt | sudo java -jar predict.jar -console ; rm stdinfile.txt
+cat stdinfile.txt | sudo java -jar predict.jar -console &> /dev/null ; rm stdinfile.txt
 
 printf "\nAsserting rvpc functions.\n"
 which rvpc &> /dev/null
 rvpc -help &> /dev/null
 
 printf "\nInstalling the latest rv-match so copied containers can at least use some version of kcc without an install.\n"
-cd /root/ ; wget -q https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT.jar
+cd /root/ ; wget -q https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT.jar &> /dev/null
 printf "
 1
 
@@ -75,7 +75,7 @@ y
 1
 1
 " > stdinfile.txt
-cat stdinfile.txt | java -jar rv-match-linux-64*.jar -console ; rm stdinfile.txt
+cat stdinfile.txt | java -jar rv-match-linux-64*.jar -console &> /dev/null ; rm stdinfile.txt
 set -e ; which kcc
 
 printf "\nAsserting that rv-match_testing self-unit-tests pass.\n"

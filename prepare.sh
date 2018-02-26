@@ -62,11 +62,6 @@ enforce_common_init_in_test_files() {
     line1='#!/bin/bash'
     line2='[ ! -f prepare.sh ] \&\& wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/prepare.sh'
     line3='base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"'
-    echo "Variables:"
-    echo $line1
-    echo $line2
-    echo $line3
-    echo "End variables."
     sed -i '1s|.*|'"$line1"'|' $test_file
     sed -i '2s|.*|'"$line2"'|' $test_file
     sed -i '3s|.*|'"$line3"'|' $test_file
@@ -96,17 +91,12 @@ prep_prepare() {
     mkdir -p $unit_test_dir
 
     if [ ! -d $dependency_dir ] || [ -z "$(ls -A $dependency_dir)" ] || [ ! -e $dependency_dir/dependency_function_hash ] || [ "$(echo $(sha1sum <<< $(type _dependencies)))" != "$(head -n 1 $dependency_dir/dependency_function_hash)" ] ; then
+    echo $report_string" installing dependencies. Either this is the initial installation or the dependency hash has changed since the last install."
     i=0
-    tput sc
+    if [ fuser /var/lib/dpkg/lock >/dev/null 2>&1 ] ; then
+        echo "$report_string: $current_script: Waiting for other software managers to finish..."
+    fi
     while fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; do
-        case $(($i % 4)) in
-            0 ) j="-" ;;
-            1 ) j="\\" ;;
-            2 ) j="|" ;;
-            3 ) j="/" ;;
-        esac
-        tput rc
-        echo -en "\r[$j] Waiting for other software managers to finish..." 
         sleep 0.5
         ((i=i+1))
     done 
