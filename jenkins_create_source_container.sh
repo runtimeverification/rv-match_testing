@@ -37,17 +37,21 @@ pwd ; ls
 echo "Initial lxc state:"
 lxc list
 
-echo "Shutting down old $name:"
-lxc exec $name -- poweroff
-sleep 5
+if test lxc info $name ; then
+    echo "Shutting down old $name:"
+    lxc exec $name -- poweroff
+    sleep 5
 
-echo "Stopping old $name:"
-lxc stop "$name"
-sleep 5
+    echo "Stopping old $name:"
+    lxc stop "$name"
+    sleep 5
 
-echo "Deleting old $name:"
-lxc delete --force "$name"
-lxc list
+    echo "Deleting old $name:"
+    lxc delete --force "$name"
+    lxc list
+else
+    echo "Existing $name was not found so we skip shut down, stop, and delete steps."
+fi
 
 echo "Creating new $name:"
 lxc launch ubuntu:$version "$name"
