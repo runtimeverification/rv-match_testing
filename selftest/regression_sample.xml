@@ -2,7 +2,7 @@
 <testsuites>
 <testsuite name="ReportScriptReport" package="ReportPackage">
 <properties/>
-<testcase classname="regression.empty_body" name="kcc GENERATED-TEST[feedback]">
+<testcase classname="regression.empty_body" name="kcc GENERATED-TEST[feedback]" time=".123760372">
 <error message="Failed.">
 <![CDATA[
 Build step 0, "GENERATED-TEST[feedback]": {
@@ -10,7 +10,7 @@ Build step log tail:
 Fix test.sh to report some sort of build feedback.
 }]]></error>
 </testcase>
-<testcase classname="regression.empty_functions" name="kcc GENERATED-TEST[feedback]">
+<testcase classname="regression.empty_functions" name="kcc GENERATED-TEST[feedback]" time=".121578789">
 <error message="Failed.">
 <![CDATA[
 Build step 0, "GENERATED-TEST[feedback]": {
@@ -18,17 +18,17 @@ Build step log tail:
 Fix test.sh to report some sort of build feedback.
 }]]></error>
 </testcase>
-<testcase classname="regression.make_fail" name="kcc configure success">
+<testcase classname="regression.make_fail" name="kcc configure success" time="">
 </testcase>
-<testcase classname="regression.make_fail" name="kcc make success">
+<testcase classname="regression.make_fail" name="kcc make success" time="">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
 }]]></error>
 </testcase>
-<testcase classname="regression.make_log_tail" name="kcc configure success">
+<testcase classname="regression.make_log_tail" name="kcc configure success" time="">
 </testcase>
-<testcase classname="regression.make_log_tail" name="kcc make success">
+<testcase classname="regression.make_log_tail" name="kcc make success" time="">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
@@ -36,17 +36,17 @@ Build step log tail:
 Important debug output produced by make. Umbrella satire.
 }]]></error>
 </testcase>
-<testcase classname="regression.make_pass" name="kcc configure success">
+<testcase classname="regression.make_pass" name="kcc configure success" time="">
 </testcase>
-<testcase classname="regression.make_pass" name="kcc make success">
+<testcase classname="regression.make_pass" name="kcc make success" time="">
 </testcase>
-<testcase classname="regression.timeout_pass" name="kcc configure success">
+<testcase classname="regression.timeout_pass" name="kcc configure success" time="">
 </testcase>
-<testcase classname="regression.timeout_pass" name="kcc make success">
+<testcase classname="regression.timeout_pass" name="kcc make success" time="">
 </testcase>
-<testcase classname="regression.timeout_fail" name="kcc configure success">
+<testcase classname="regression.timeout_fail" name="kcc configure success" time="">
 </testcase>
-<testcase classname="regression.timeout_fail" name="kcc make success">
+<testcase classname="regression.timeout_fail" name="kcc make success" time="">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
@@ -55,9 +55,9 @@ timeout.sh: Terminating.
 timeout.sh: Termination delay passed. Killing.
 }]]></error>
 </testcase>
-<testcase classname="regression.many_kcc_config" name="kcc configure success">
+<testcase classname="regression.many_kcc_config" name="kcc configure success" time="">
 </testcase>
-<testcase classname="regression.many_kcc_config" name="kcc make success">
+<testcase classname="regression.many_kcc_config" name="kcc make success" time=".609767154">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
@@ -85,17 +85,17 @@ Exception in thread "main" java.nio.BufferUnderflowException
 k-bin-to-text command failed with above error.
 }]]></error>
 </testcase>
-<testcase classname="regression.no_kcc_config" name="kcc configure success">
+<testcase classname="regression.no_kcc_config" name="kcc configure success" time="">
 </testcase>
-<testcase classname="regression.no_kcc_config" name="kcc make success">
+<testcase classname="regression.no_kcc_config" name="kcc make success" time="">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
 }]]></error>
 </testcase>
-<testcase classname="regression.one_kcc_config" name="kcc configure success">
+<testcase classname="regression.one_kcc_config" name="kcc configure success" time="">
 </testcase>
-<testcase classname="regression.one_kcc_config" name="kcc make success">
+<testcase classname="regression.one_kcc_config" name="kcc make success" time=".372278233">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
@@ -112,29 +112,29 @@ Exception in thread "main" java.nio.BufferUnderflowException
 k-bin-to-text command failed with above error.
 }]]></error>
 </testcase>
-<testcase classname="regression.unit_test_single_pass" name="kcc configure success">
+<testcase classname="regression.unit_test_single_pass" name="kcc configure success" time="">
 </testcase>
-<testcase classname="regression.unit_test_single_pass" name="kcc make success">
+<testcase classname="regression.unit_test_single_pass" name="kcc make success" time="">
 </testcase>
-<testcase classname="regression.unit_test_single_fail" name="kcc configure success">
+<testcase classname="regression.unit_test_single_fail" name="kcc configure success" time="">
 </testcase>
-<testcase classname="regression.unit_test_single_fail" name="kcc make success">
+<testcase classname="regression.unit_test_single_fail" name="kcc make success" time="">
 </testcase>
-<testcase classname="regression.unit_test_pass_then_fail" name="kcc configure success">
+<testcase classname="regression.unit_test_pass_then_fail" name="kcc configure success" time="">
 </testcase>
-<testcase classname="regression.unit_test_pass_then_fail" name="kcc make success">
+<testcase classname="regression.unit_test_pass_then_fail" name="kcc make success" time="">
 </testcase>
-<testcase classname="regression.unit_test_k_term" name="kcc configure success">
+<testcase classname="regression.unit_test_k_term" name="kcc configure success" time="">
 </testcase>
-<testcase classname="regression.unit_test_k_term" name="kcc make success">
+<testcase classname="regression.unit_test_k_term" name="kcc make success" time="">
 </testcase>
-<testcase classname="regression.unit_test_location_term" name="kcc configure success">
+<testcase classname="regression.unit_test_location_term" name="kcc configure success" time="">
 </testcase>
-<testcase classname="regression.unit_test_location_term" name="kcc make success">
+<testcase classname="regression.unit_test_location_term" name="kcc make success" time="">
 </testcase>
-<testcase classname="regression.unit_test_log" name="kcc configure success">
+<testcase classname="regression.unit_test_log" name="kcc configure success" time="">
 </testcase>
-<testcase classname="regression.unit_test_log" name="kcc make success">
+<testcase classname="regression.unit_test_log" name="kcc make success" time="">
 </testcase>
 </testsuite>
 </testsuites>
