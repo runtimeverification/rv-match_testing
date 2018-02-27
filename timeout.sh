@@ -94,7 +94,4 @@ fi
     kill -s SIGKILL $$
 ) 2> /dev/null &
 
-echo "ULIMIT DEBUG 3"
-ulimit -a
-
 exec "$@"

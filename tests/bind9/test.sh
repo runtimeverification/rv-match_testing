@@ -30,11 +30,12 @@ _build() {
     names[2]="compile gen with gcc"
     gcc -Ilib/isc/include -o lib/dns/gen lib/dns/gen.c |& tee -a kcc_build_2.txt ; results[2]="$?" ; process_kcc_config 2
 
-    names[3]="set ulimit"
-    ulimit -s 16777216 |& tee -a kcc_build_3.txt ; results[3]="$?" ; process_kcc_config 3
+    #names[3]="set ulimit"
+    #ulimit -s 16777216 |& tee -a kcc_build_3.txt ; results[3]="$?" ; process_kcc_config 3
 
-    names[4]="make success"
-    bash $base_dir/timeout.sh -t 10000 make |& tee kcc_build_4.txt ; results[4]="$?" ; process_kcc_config 4
+    names[3]="make success"
+    ulimit -s 16777216
+    bash $base_dir/timeout.sh -t 10000 make |& tee kcc_build_3.txt ; results[3]="$?" ; process_kcc_config 3
 }
 
 init
