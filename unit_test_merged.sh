@@ -111,25 +111,28 @@ echo -ne '[#####################](100%)\r'
 echo $'\n\nTest results: '
 xmlfile="results/report.xml"
 which date &> /dev/null ; date_works="$?"
-if [ "$network_works" == "0" ] ; then
+if [ "$date_works" == "0" ] ; then
     echo "\"date command\" test            : passes."
 else
     echo "\"date command\" test            : fails." ; returnvalue=1
-    echo "  - \"which date\" failed."
+    echo "  - \"which date\" failed:"
+    which date
 fi
 which fuser &> /dev/null ; fuser_works="$?"
-if [ "$network_works" == "0" ] ; then
+if [ "$fuser_works" == "0" ] ; then
     echo "\"fuser command\" test           : passes."
 else
     echo "\"fuser command\" test           : fails." ; returnvalue=1
-    echo "  - \"which fuser\" failed."
+    echo "  - \"which fuser\" failed:"
+    which fuser
 fi
 which bc &> /dev/null ; bc_works="$?"
-if [ "$network_works" == "0" ] ; then
+if [ "$bc_works" == "0" ] ; then
     echo "\"bc command\" test              : passes."
 else
     echo "\"bc command\" test              : fails." ; returnvalue=1
-    echo "  - \"which bc\" failed."
+    echo "  - \"which bc\" failed:"
+    which bc
 fi
 ping -c 1 www.google.com &> /dev/null ; network_works="$?"
 echo -ne '\n'
