@@ -50,9 +50,9 @@ printf "\nPassed! k-bin-to-text works in source container.\n"
 
 # We don't care if installer fails as long as rvpc functions afterwards.
 set +e
-printf "\nInstalling rv-predict\n" # uninstall "sudo dpkg -r rv-predict-c"
+printf "\nInstalling rv-predict[c]\n" # uninstall "sudo dpkg -r rv-predict-c"
 wget -q https://runtimeverification.com/predict/download/c?v=1.9 &> /dev/null
-mv c\?v\=1.9 predict.jar
+mv c\?v\=1.9 predict-c.jar
 printf "
 
 
@@ -60,12 +60,32 @@ printf "
 1
 1
 " > stdinfile.txt
-cat stdinfile.txt | sudo java -jar predict.jar -console &> /dev/null ; rm stdinfile.txt
+cat stdinfile.txt | sudo java -jar predict-c.jar -console &> /dev/null ; rm stdinfile.txt
 
 set -e
 printf "\nAsserting rvpc functions.\n"
 which rvpc &> /dev/null
 rvpc -help &> /dev/null
+
+set +e
+printf "\nInstalling rv-predict[java]\n" # uninstall "sudo dpkg -r rv-predict-c"
+wget -q https://runtimeverification.com/predict/download/java?v=1.9 &> /dev/null
+mv java\?v\=1.9 predict-java.jar
+printf "
+1
+
+1
+Y
+1
+
+1
+" > stdinfile.txt
+cat stdinfile.txt | sudo java -jar predict-java.jar -console &> /dev/null ; rm stdinfile.txt
+
+set -e
+printf "\nAsserting 'rv-predict' command functions.\n"
+which rv-predict #&> /dev/null
+rv-predict -help #&> /dev/null
 
 printf "\nInstalling the latest rv-match so copied containers can at least use some version of kcc without an install.\n"
 cd /root/ ; wget -q https://runtimeverification.com/match/1.0/rv-match-linux-64-1.0-SNAPSHOT.jar &> /dev/null
