@@ -81,6 +81,25 @@ y
 cat stdinfile.txt | java -jar rv-match-linux-64*.jar -console &> /dev/null ; rm stdinfile.txt
 set -e ; which kcc
 
+printf "\nInstalling basic libraries to be used by rv-match_testing in copied containers.\n"
+set +e
+which date
+which bc
+which fuser
+set -e
+cd /root/rv-match_testing/
+bash libs.sh
+i=0
+if [ fuser /var/lib/dpkg/lock >/dev/null 2>&1 ] ; then
+    echo "$report_string: $current_script: Waiting for other software managers to finish..."
+fi
+while fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; do
+    sleep 0.5
+    ((i=i+1))
+done
+bash libs.sh
+bash libs.sh
+
 printf "\nAsserting that rv-match_testing self-unit-tests pass.\n"
 cd /root/rv-match_testing/
 set +e ; bash unit_test_merged.sh ; testout="$?"
@@ -94,12 +113,6 @@ else
     fi
 fi
 set -e ; [ "$testout" == "0" ]
-
-printf "\nInstalling basic libraries to be used by rv-match_testing in copied containers.\n"
-cd /root/rv-match_testing/
-bash libs.sh
-bash libs.sh
-bash libs.sh
 
 printf "\nIterating through all projects, installing their dependencies and downloading their source.\n"
 cd /root/rv-match_testing/
