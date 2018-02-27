@@ -17,6 +17,26 @@ ls /root
 printf "\nBasic network test, not that we need it here in the source container, but to debug container networking since it should be working here."
 ping -c 1 www.google.com
 
+# ===================
+wget -q https://runtimeverification.com/predict/download/java?v=1.9 &> /dev/null
+mv java\?v\=1.9 predict-java.jar
+printf "
+1
+
+1
+Y
+1
+
+1
+" > stdinfile.txt
+cat stdinfile.txt | sudo java -jar predict-java.jar -console ; rm stdinfile.txt
+
+set -e
+printf "\nAsserting 'rv-predict' command functions.\n"
+which rv-predict #&> /dev/null
+rv-predict -help #&> /dev/null
+# =========================
+
 printf "\nCopying rv-match from jenkins space to /root/ folder here.\n"
 cd /root/
 cp -r "$hostspace" .
@@ -80,7 +100,7 @@ Y
 
 1
 " > stdinfile.txt
-cat stdinfile.txt | sudo java -jar predict-java.jar -console &> /dev/null ; rm stdinfile.txt
+cat stdinfile.txt | sudo java -jar predict-java.jar -console ; rm stdinfile.txt
 
 set -e
 printf "\nAsserting 'rv-predict' command functions.\n"
