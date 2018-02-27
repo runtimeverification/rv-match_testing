@@ -18,7 +18,7 @@ printf "\nBasic network test, not that we need it here in the source container, 
 ping -c 1 www.google.com
 
 # ===================
-sudp apt update --fix-missing
+sudo apt update --fix-missing
 sudo apt -y install openjdk-8-jdk
 wget -q https://runtimeverification.com/predict/download/java?v=1.9 &> /dev/null
 mv java\?v\=1.9 predict-java.jar
