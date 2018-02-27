@@ -10,7 +10,7 @@ _download() {
 }
 
 _build() {
-    results[0]="0"
+    results[0]="0" ; process_kcc_config 0
     touch directory_two/kcc_config
     touch directory_one/sub_directory_one_B/kcc_config
     results[1]="2" ; process_kcc_config 1

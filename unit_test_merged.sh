@@ -138,11 +138,13 @@ else
 fi
 
 # Non-empty times
-if [ ! grep 'time=""' $xmlfile ] ; then
+grep 'time=""' $xmlfile &> /dev/null ; nonemptytest="$?"
+if [ ! "$nonemptytest" == "0" ] ; then
     echo "\"non-empty time\" test          : passes."
 else
     echo "\"non-empty time\" test           : fails." ; returnvalue=1
-    echo "  - xml should not contain this string: 'time=\"\"'."
+    echo "  - xml should not contain this string: 'time=\"\"', but it does:"
+    grep 'time=""' $xmlfile
 fi
 
 # Timeout pass

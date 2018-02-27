@@ -16,24 +16,16 @@ _download() {
 }
 
 _build() {
-    set -o pipefail
     cd hostap/hostapd/
-    export CC=$compiler
-    echo "HOSTAPD DEBUG"
-    if [[ $compiler == "kcc" ]] ; then
+    if [[ "$compiler" == "kcc" ]] ; then
         export CFLAGS="-std=gnu11 -frecover-all-errors"
-        echo 'if [[ $compiler == "kcc" ]] ; then'" showed true"
     else
         export CFLAGS="-std=gnu11"
-        echo 'if [[ $compiler == "kcc" ]] ; then'" showed false"
     fi
     cp defconfig .config
     sed -i '/CONFIG_LIBNL32=y/s/^#//g' .config
     sed -i '157iOBJS_c += ../src/utils/wpabuf.o' Makefile ; results[0]="$?" ; process_kcc_config 0
-    make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    CC=$compiler make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 }
-
-#sed -i '/<pattern>/s/^#//g' file
-#https://askubuntu.com/questions/617973/fatal-error-netlink-genl-genl-h-no-such-file-or-directory
 
 init

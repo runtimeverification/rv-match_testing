@@ -16,12 +16,13 @@ _download() {
 _build() {
     cd Spin/Src6.4.7
     if [[ $compiler == "kcc" ]] ; then
-        sed -i -e "s/CC=gcc/CC=$compiler -frecover-all-errors/g" makefile ; results[0]="$?" ; process_kcc_config 0
+        sed -i -e "s/CC=gcc/CC=$compiler -frecover-all-errors/g" makefile ; results[0]="$?"
     else
-        sed -i -e "s/CC=gcc/CC=$compiler/g" makefile ; results[0]="$?" ; process_kcc_config 0
+        sed -i -e "s/CC=gcc/CC=$compiler/g" makefile ; results[0]="$?"
     fi
+    process_kcc_config 0
+
     make ; results[1]="$?" ; process_kcc_config 1
-    echo "sdufhod"
 }
 
 _test() {

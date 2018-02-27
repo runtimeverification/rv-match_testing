@@ -21,12 +21,13 @@ _build() {
     cd lua/
     CC=$compiler CFLAGS="-std=gnu11" LD=$compiler LDFLAGS="-lm -ldl" cmake . |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     results[1]="2"
-    if [ "$results[0]" == "0" ] ; then
+    if [ "${results[0]}" == "0" ] ; then
         CC=$compiler CFLAGS="-std=gnu11" LD=$compiler LDFLAGS="-lm -ldl" make |& tee kcc_build_1.txt ; temp_success="$?"
         if [ "$temp_success" == "0" ] && [ -f lua ] ; then
             results[1]="0"
         fi
     fi
+    process_kcc_config 1
 }
 
 init

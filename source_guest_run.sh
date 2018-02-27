@@ -83,7 +83,7 @@ set -e ; which kcc
 
 printf "\nAsserting that rv-match_testing self-unit-tests pass.\n"
 cd /root/rv-match_testing/
-bash unit_test_merged.sh &>/dev/null ; testout=$(echo "$?")
+set +e ; bash unit_test_merged.sh &>/dev/null ; testout="$?"
 if [ "$testout" == "0" ] ; then
     echo "  self-unit-tests all passed."
 else

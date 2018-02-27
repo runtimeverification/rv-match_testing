@@ -15,16 +15,26 @@ _download() {
 
 _build() {
     cd bind9/
-    autoreconf
+    names[0]="autoreconf"
+    autoreconf |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     set -o pipefail
-    if [[ $compiler == "kcc" ]]; then
-        ./configure CC=kcc CFLAGS="-std=gnu11 -no-pedantic -frecover-all-errors" LD=kcc --disable-threads --disable-atomic --disable-shared |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+
+    names[1]="configure success"
+    if [[ "$compiler" == "kcc" ]]; then
+        ./configure CC=kcc CFLAGS="-std=gnu11 -no-pedantic -frecover-all-errors" LD=kcc --disable-threads --disable-atomic --disable-shared |& tee kcc_build_1.txt ; results[1]="$?"
     else
-        ./configure CC=$compiler --disable-threads --disable-atomic --disable-shared |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+        ./configure CC=$compiler --disable-threads --disable-atomic --disable-shared |& tee kcc_build_1.txt ; results[1]="$?"
     fi
-    gcc -Ilib/isc/include -o lib/dns/gen lib/dns/gen.c
-    ulimit -s 16777216
-    bash $base_dir/timeout.sh -t 8000 make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    process_kcc_config 1
+
+    names[2]="compile gen with gcc"
+    gcc -Ilib/isc/include -o lib/dns/gen lib/dns/gen.c |& tee -a kcc_build_2.txt ; results[2]="$?" ; process_kcc_config 2
+
+    names[3]="set ulimit"
+    ulimit -s 16777216 |& tee -a kcc_build_3.txt ; results[3]="$?" ; process_kcc_config 3
+
+    names[4]="make success"
+    bash $base_dir/timeout.sh -t 8000 make |& tee kcc_build_4.txt ; results[4]="$?" ; process_kcc_config 4
 }
 
 init
