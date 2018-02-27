@@ -37,7 +37,8 @@ pwd ; ls
 echo "Initial lxc state:"
 lxc list
 
-if ! lxc info $name ; then
+if lxc info $name ; then
+    set +e
     echo "Shutting down old $name:"
     lxc exec $name -- poweroff
     sleep 5
@@ -49,6 +50,10 @@ if ! lxc info $name ; then
     echo "Deleting old $name:"
     lxc delete --force "$name"
     lxc list
+
+    lxc info $name &> /dev/null ; testme="$?"
+    set -e
+    [ ! "$testme" == "0" ]
 else
     echo "Existing $name was not found so we skip shut down, stop, and delete steps."
 fi
