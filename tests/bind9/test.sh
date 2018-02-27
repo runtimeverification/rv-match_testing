@@ -34,7 +34,7 @@ _build() {
     ulimit -s 16777216 |& tee -a kcc_build_3.txt ; results[3]="$?" ; process_kcc_config 3
 
     names[4]="make success"
-    bash $base_dir/timeout.sh -t 8000 make |& tee kcc_build_4.txt ; results[4]="$?" ; process_kcc_config 4
+    bash $base_dir/timeout.sh -t 10000 make |& tee kcc_build_4.txt ; results[4]="$?" ; process_kcc_config 4
 }
 
 init
