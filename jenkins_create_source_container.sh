@@ -38,6 +38,7 @@ echo "Initial lxc state:"
 lxc list
 
 if lxc info $name ; then
+    # We don't care if shut down or stop commands fail.
     set +e
     echo "Shutting down old $name:"
     lxc exec $name -- poweroff
@@ -47,12 +48,11 @@ if lxc info $name ; then
     lxc stop "$name"
     sleep 5
 
+    # We care if the delete command fails.
+    set -e
     echo "Deleting old $name:"
     lxc delete --force "$name"
-    lxc list
-
-    lxc info $name &> /dev/null ; testme="$?"
-    set -e
+    set +e ; lxc info $name &> /dev/null ; testme="$?" ; set -e
     [ ! "$testme" == "0" ]
 else
     echo "Existing $name was not found so we skip shut down, stop, and delete steps."
@@ -60,17 +60,14 @@ fi
 
 echo "Creating new $name:"
 lxc launch ubuntu:$version "$name"
-lxc list
 
-echo "Sleeping so networking should begin:"
+echo "Sleeping so networking should begin."
 sleep 5
-lxc list
 
 echo "Mounting $name:"
 lxc config device add $name shared-folder-device-source disk source="$initialfolder" path=/mnt/jenkins-source
-lxc list
 
-echo "Running $guest_script on $name"
+echo "Running $guest_script on $name."
 set -e ; lxc exec $name -- bash -c "/mnt/jenkins-source/$guest_script"
 
 echo "Stopping $name. ($name should be persistent.)"

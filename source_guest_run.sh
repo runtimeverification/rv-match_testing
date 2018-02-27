@@ -48,6 +48,8 @@ printf "\n  return value test:\n"
 [ "$testout" == "1" ]
 printf "\nPassed! k-bin-to-text works in source container.\n"
 
+# We don't care if installer fails as long as rvpc functions afterwards.
+set +e
 printf "\nInstalling rv-predict\n" # uninstall "sudo dpkg -r rv-predict-c"
 wget -q https://runtimeverification.com/predict/download/c?v=1.9 &> /dev/null
 mv c\?v\=1.9 predict.jar
@@ -60,6 +62,7 @@ printf "
 " > stdinfile.txt
 cat stdinfile.txt | sudo java -jar predict.jar -console &> /dev/null ; rm stdinfile.txt
 
+set -e
 printf "\nAsserting rvpc functions.\n"
 which rvpc &> /dev/null
 rvpc -help &> /dev/null
