@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Code to put into jenkins job 'rv-match_prepare_source_container' which auto-checks-out rv-match:
-# Last updated 8 February 2018
+# Last updated 27 February 2018
 # #git clone https://github.com/runtimeverification/rv-match_testing.git
 # cd rv-match_testing/
 # git checkout master
@@ -15,11 +15,13 @@
 set -e
 
 if [ "$1" == "xenial" ] ; then
-    name="match-testing-xenial-source"
+    name="xenial-temp-source"
+    final_name="match-testing-xenial-source"
     version="16.04"
 else
     if [ "$1" == "trusty" ] ; then
-        name="match-testing-trusty-source"
+        name="trusty-temp-source"
+        final_name="match-testing-trusty-source"
         version="14.04"
     else
         echo "Need argument (xenial|trusty)."
@@ -37,26 +39,32 @@ pwd ; ls
 echo "Initial lxc state:"
 lxc list
 
-if lxc info $name ; then
-    # We don't care if shut down or stop commands fail.
-    set +e
-    echo "Shutting down old $name:"
-    lxc exec $name -- poweroff
-    sleep 5
+clean_delete() {
 
-    echo "Stopping old $name:"
-    lxc stop "$name"
-    sleep 5
+    if lxc info $1 ; then
+        # We don't care if shut down or stop commands fail.
+        set +e
+        echo "Shutting down old $1:"
+        lxc exec $1 -- poweroff
+        sleep 5
 
-    # We care if the delete command fails.
-    set -e
-    echo "Deleting old $name:"
-    lxc delete --force "$name"
-    set +e ; lxc info $name &> /dev/null ; testme="$?" ; set -e
-    [ ! "$testme" == "0" ]
-else
-    echo "Existing $name was not found so we skip shut down, stop, and delete steps."
-fi
+        echo "Stopping old $1:"
+        lxc stop "$1"
+        sleep 5
+
+        # We care if the delete command fails.
+        set -e
+        echo "Deleting old $1:"
+        lxc delete --force "$1"
+        set +e ; lxc info $1 &> /dev/null ; testme="$?" ; set -e
+        [ ! "$testme" == "0" ]
+    else
+        echo "Existing $1 was not found so we skip shut down, stop, and delete steps."
+    fi
+
+}
+
+clean_delete "$name"
 
 echo "Creating new $name:"
 lxc launch ubuntu:$version "$name"
@@ -72,3 +80,13 @@ set -e ; lxc exec $name -- bash -c "/mnt/jenkins-source/$guest_script"
 
 echo "Stopping $name. ($name should be persistent.)"
 lxc stop $name
+
+clean_delete "$final_name"
+
+echo "Copying from temporary $name to final $final_name."
+lxc copy $name $final_name
+
+clean_delete "$name"
+
+echo "$name should be deleted and $final_name should exist:"
+lxc list
