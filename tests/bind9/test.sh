@@ -35,7 +35,7 @@ _build() {
 
     names[3]="make success"
     ulimit -s 16777216
-    bash $base_dir/timeout.sh -t 10000 make |& tee kcc_build_3.txt ; results[3]="$?" ; process_kcc_config 3
+    make |& tee kcc_build_3.txt ; results[3]="$?" ; process_kcc_config 3
 }
 
 init

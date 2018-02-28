@@ -223,10 +223,11 @@ while read line; do
         fi
         echo "     writing to log at $log_output"
         set -e ; rm -f "$testsfolder/$line/$exportfile.xml" ; set +e # prevents a false test report
+        # 43200 seconds is 12 hours
         if [ "$isset" == "0" ] ; then
-            bash timeout.sh -t 20000 bash "$testsfolder/$line/test.sh" "$flagsfortests" &> $log_output
+            bash timeout.sh -t 43200 bash "$testsfolder/$line/test.sh" "$flagsfortests" &> $log_output
         else
-            bash timeout.sh -t 20000 bash "$testsfolder/$line/test.sh" "$flagsfortests" |& tee $log_output
+            bash timeout.sh -t 43200 bash "$testsfolder/$line/test.sh" "$flagsfortests" |& tee $log_output
         fi
         echo "==== $line finished at $(date)"
     else

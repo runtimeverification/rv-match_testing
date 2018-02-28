@@ -127,7 +127,7 @@ increment_process_kcc_config() {
     cp kcc_config $log_dir/$copiedfile ; rm kcc_config
     location=$(pwd) ; cd $log_dir
     if [ -e $copiedfile ] ; then
-        echo $'\n'"Found a kcc_config number $increment:" >> kcc_config_k_summary$increment.txt
+        echo $'\n\n'"Found a kcc_config number $increment:" >> kcc_config_k_summary$increment.txt
         echo "Location: $location" >> kcc_config_k_summary$increment.txt
         k-bin-to-text $copiedfile $copiedfile.txt &>> kcc_config_k_summary$increment.txt
         if [ $? -eq 0 ] ; then
@@ -144,7 +144,7 @@ increment_process_kcc_config() {
     echo "$counter" > $index.ini
     let "counter += 1"
     more=`grep -A1 "Translation failed (kcc_config dumped). To repeat, run this command in directory" "$location/kcc_build_$index.txt" | tail -n 1`
-    echo $'\n'"Running \"$more\" to get more information." &>> kcc_config_k_summary$increment.txt
+    echo $'\n\n'"Running \"$more\" to get more information:" &>> kcc_config_k_summary$increment.txt
     cd $location ; eval "$more" &>> $log_dir/kcc_config_k_summary$increment.txt ; rm kcc_config ; cd $log_dir
 }
 
@@ -224,24 +224,24 @@ prep_extract() {
             else
                 echo $report_string" build step: "${names[$t]}" Failed!"
                 echo '<error message="Failed.">' >> $report_file
-                print=$'\nBuild step '"$t"$', '"\"${names[$t]}\""$': {'
+                print=$'\nBuild step '"$t"$', '"\"${names[$t]}\""$': {\n'
                 if [[ -e "$t.ini" ]] ; then
                     for s in `seq 0 "$(head -n 1 $t.ini)"`
                     do
                         i="$t-$s"
                         if [[ -e "kcc_config_k_summary$i.txt" ]] ; then
-                            print=$print$'\nkcc_config info: \n'$(cat kcc_config_k_summary$i.txt)
+                            print=$print$'\n\nkcc_config info: '$(cat kcc_config_k_summary$i.txt)
                         fi
                         if [[ -e "kcc_config_k_term$i.txt" ]] ; then
-                            print=$print$'\n<k> term: \n'$(cat kcc_config_k_term$i.txt)
+                            print=$print$'\n\n<k> term: \n'$(cat kcc_config_k_term$i.txt)
                         fi
                         if [[ -e "kcc_config_loc_term$i.txt" ]] ; then
-                            print=$print$'\nProgram location term: \n'$(cat kcc_config_loc_term$i.txt)
+                            print=$print$'\n\nProgram location term: \n'$(cat kcc_config_loc_term$i.txt)
                         fi
                     done
                 fi
                 if [[ -e "kcc_build_$t.txt" ]] ; then
-                        print=$print$'\nBuild step log tail: \n'$(tail -20 kcc_build_$t.txt)
+                        print=$print$'\n\nBuild step log tail: \n'$(tail -20 kcc_build_$t.txt)
                 fi
                 print=$print$'\n}'
                 printf "<![CDATA[%s]]>" "$print" >> $report_file
