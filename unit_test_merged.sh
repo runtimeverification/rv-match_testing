@@ -154,7 +154,12 @@ else
     echo "\"make pass\" test               : fails." ; returnvalue=1
     echo "  - xml is not supposed to produce string: $failelement when make passes."
 fi
-if [[ "`grep -A5 'make_log_tail.*make success' $xmlfile | tail -n 1`" == *"Umbrella"* ]] ; then
+
+# New make log tail test
+tail -n +`grep -n -m 1 'make_log_tail.*make success' $xmlfile |cut -f1 -d:` $xmlfile > $tempfile
+head -n `grep -n -m 1 '</testcase>' $tempfile |cut -f1 -d:` $tempfile > $tempfile2
+grep -q 'Umbrella' $tempfile2 ; one="$?"
+if [ "$one" == "0" ] ; then
     echo "\"make log tail\" test           : passes."
 else
     echo "\"make log tail\" test           : fails." ; returnvalue=1
