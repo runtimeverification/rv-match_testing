@@ -125,30 +125,27 @@ increment_process_kcc_config() {
     increment="$index"-"$counter"
     copiedfile=kcc_config_no_$increment
     cp kcc_config $log_dir/$copiedfile ; rm kcc_config
-# ---
     location=$(pwd) ; cd $log_dir
-    echo "location $location"
-    echo "log_dir $log_dir"
-    echo "build_log_dir $build_log_dir"
     if [ -e $copiedfile ] ; then
         echo $'\n'"Found a kcc_config number $increment:" >> kcc_config_k_summary$increment.txt
         echo "Location: $location" >> kcc_config_k_summary$increment.txt
         k-bin-to-text $copiedfile $copiedfile.txt &>> kcc_config_k_summary$increment.txt
         if [ $? -eq 0 ] ; then
             grep -o "<k>.\{0,500\}" $copiedfile.txt &> kcc_config_k_term$increment.txt
-            grep -o "<curr-program-loc>.\{500\}" $copiedfile.txt &> kcc_config_loc_term$increment.txt
+            grep -o "<curr-program-loc>.\{0,500\}" $copiedfile.txt &> kcc_config_loc_term$increment.txt
         else
             echo "k-bin-to-text command failed with above error." >> kcc_config_k_summary$increment.txt
         fi
+        echo "$location" &> kcc_config_dir$increment.ini
     else
         echo "Error: report this bug in rv-match_testing. This message should have been unreachable."
-        echo "===== is there a $copiedfile here?"
-        pwd
-        ls
-        echo "====="
+        echo "===== is there a $copiedfile here?" ; pwd ; ls ; echo "=====" ; exit 1
     fi
     echo "$counter" > $index.ini
     let "counter += 1"
+    more=`grep -A1 "Translation failed (kcc_config dumped). To repeat, run this command in directory" "$location/kcc_build_$index.txt" | tail -n 1`
+    echo $'\n'"Running \"$more\" to get more information." &>> kcc_config_k_summary$increment.txt
+    cd $location ; eval "$more" &>> $log_dir/kcc_config_k_summary$increment.txt ; rm kcc_config ; cd $log_dir
 }
 
 process_kcc_config() { # Called by _build in test.sh which is called by prep_build() here
@@ -264,10 +261,11 @@ prep_build() {
 
     # Build hash is dependent on 3 things: {_build() function definition, $compiler --version, download hash}.
     buildhashinfo=$(type _build)$($compiler --version)$(head -n 1 $download_dir/download_function_hash)$(head -n 1 $dependency_dir/dependency_function_hash)
-    if [ ! -e $build_dir/build_function_hash ] || [ "$(echo $(sha1sum <<< $buildhashinfo))" != "$(head -n 1 $build_dir/build_function_hash)" ] || [ "0" == "0" ] ; then
+    echo "`kcc --version`" | grep "Build number" ; kcc_is_versioned="$?"
+    if [ ! -e $build_dir/build_function_hash ] || [ "$(echo $(sha1sum <<< $buildhashinfo))" != "$(head -n 1 $build_dir/build_function_hash)" ] || [ ! "$kcc_is_versioned" == "0" ] || [ "0" == "0" ] ; then
 
         # build
-        echo $report_string" building. Either build hash changed or this is the first time building."
+        echo $report_string" building. Either first build, hash changed, or \"kcc --version\" does not provide a build number."
         rm $build_dir/build_function_hash ; safe_rm=$build_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
         cp $download_dir/* $build_dir -r
         set -o pipefail
@@ -285,7 +283,7 @@ prep_build() {
         cd $build_dir && echo $(sha1sum <<< $buildhashinfo) > build_function_hash
         prep_extract
     else
-        echo $report_string" not building. Build hash is the same as last build."
+        echo $report_string" not building. Same build hash exists."
     fi 
 }
 

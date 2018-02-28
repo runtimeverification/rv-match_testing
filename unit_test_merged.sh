@@ -102,13 +102,14 @@ if [ "$1" == "r" ] || [ "$1" == "-r" ] ; then
 fi
 echo "Testing the rv-match_testing project, especially for expected xml format."
 echo -ne '[                     ](0%  )\r'
-bash merged.sh -ut selftest #&> /dev/null
+bash merged.sh -ut selftest &> /dev/null
 echo -ne '[#######              ](33% )\r'
-bash merged.sh -ur selftest #&> /dev/null
+bash merged.sh -ur selftest &> /dev/null
 echo -ne '[##############       ](66% )\r'
-bash merged.sh -ua selftest #&> /dev/null
+bash merged.sh -ua selftest &> /dev/null
 echo -ne '[#####################](100%)\r'
 echo $'\n\nTest results: '
+echo -ne '\n'
 xmlfile="results/report.xml"
 which date &> /dev/null ; date_works="$?"
 if [ "$date_works" == "0" ] ; then
@@ -135,7 +136,6 @@ else
     which bc
 fi
 ping -c 1 www.google.com &> /dev/null ; network_works="$?"
-echo -ne '\n'
 if [ "$network_works" == "0" ] ; then
     echo "\"network\" test                 : passes."
 else
