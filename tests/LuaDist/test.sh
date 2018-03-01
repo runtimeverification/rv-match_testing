@@ -31,18 +31,18 @@ _build() {
 }
 
 _test() {
-    cd lua/
-    names[0]="bisect"       ; lua bisect.lua    |& tee kcc_out_0.txt ; results[0]="$?" ; process_config
-    names[1]="cf"           ; lua cf.lua        |& tee kcc_out_1.txt ; results[1]="$?" ; process_config
-    names[2]="factorial"    ; lua factorial.lua |& tee kcc_out_2.txt ; results[2]="$?" ; process_config
-    names[3]="fib"          ; lua fib.lua       |& tee kcc_out_3.txt ; results[3]="$?" ; process_config
-    names[4]="fibfor"       ; lua fibfor.lua    |& tee kcc_out_4.txt ; results[4]="$?" ; process_config
-    names[5]="hello"        ; lua hello.lua     |& tee kcc_out_5.txt ; results[5]="$?" ; process_config
-    names[6]="life"         ; lua life.lua      |& tee kcc_out_6.txt ; results[6]="$?" ; process_config
-    names[7]="luac"         ; lua luac.lua hello.lua |& tee kcc_out_7.txt ; results[7]="$?" ; process_config
-    names[8]="printf"       ; lua printf.lua    |& tee kcc_out_8.txt ; results[8]="$?" ; process_config
-    names[9]="sort"         ; lua sort.lua      |& tee kcc_out_9.txt ; results[9]="$?" ; process_config
-    names[10]="trace-calls" ; lua trace-calls.lua |& tee kcc_out_10.txt ; results[10]="$?" ; process_config
+    cd lua/test/
+    names[0]="bisect"       ; ../lua bisect.lua    |& tee kcc_out_0.txt ; results[0]="$?" ; process_config
+    names[1]="cf"           ; ../lua cf.lua        |& tee kcc_out_1.txt ; results[1]="$?" ; process_config
+    names[2]="factorial"    ; ../lua factorial.lua |& tee kcc_out_2.txt ; results[2]="$?" ; process_config
+    names[3]="fib"          ; ../lua fib.lua       |& tee kcc_out_3.txt ; results[3]="$?" ; process_config
+    names[4]="fibfor"       ; ../lua fibfor.lua    |& tee kcc_out_4.txt ; results[4]="$?" ; process_config
+    names[5]="hello"        ; ../lua hello.lua     |& tee kcc_out_5.txt ; results[5]="$?" ; process_config
+    names[6]="life"         ; ../lua life.lua      |& tee kcc_out_6.txt ; results[6]="$?" ; process_config
+    names[7]="luac"         ; ../lua luac.lua hello.lua |& tee kcc_out_7.txt ; results[7]="$?" ; process_config
+    names[8]="printf"       ; ../lua printf.lua    |& tee kcc_out_8.txt ; results[8]="$?" ; process_config
+    names[9]="sort"         ; ../lua sort.lua      |& tee kcc_out_9.txt ; results[9]="$?" ; process_config
+    names[10]="trace-calls" ; ../lua trace-calls.lua |& tee kcc_out_10.txt ; results[10]="$?" ; process_config
 }
 
 init
