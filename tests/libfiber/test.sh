@@ -14,7 +14,8 @@ _download() {
 
 _build() {
     names[0]="make"
-    cd libfiber/ ; CC=$compiler LD=$compiler make |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+    cd libfiber/ ; sed -i -e "s/CC      = gcc/CC      = $compiler/g" Makefile
+    CC=$compiler LD=$compiler make |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     names[1]="make samples"
     cd samples/  ; CC=$compiler LD=$compiler make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 }
