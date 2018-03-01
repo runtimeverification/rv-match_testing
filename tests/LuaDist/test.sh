@@ -31,6 +31,7 @@ _build() {
 }
 
 _test() {
+    cd lua/
     names[0]="bisect"       ; lua bisect.lua    |& tee kcc_out_0.txt ; results[0]="$?" ; process_config
     names[1]="cf"           ; lua cf.lua        |& tee kcc_out_1.txt ; results[1]="$?" ; process_config
     names[2]="factorial"    ; lua factorial.lua |& tee kcc_out_2.txt ; results[2]="$?" ; process_config
