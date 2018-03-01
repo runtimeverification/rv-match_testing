@@ -20,6 +20,21 @@ _build() {
         CC=$compiler cmake -DCURL_STATICLIB=ON . |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     fi
     make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+
+    # Leave the passing regression test alone.
+    if [ "$exportfile" == "regression" ] ; then return ; fi
+
+    names[2]="make tests"
+    make tests |& tee kcc_build_2.txt ; results[2]="$?" ; process_kcc_config 2
+    names[3]="make test-torture"
+    CFLAGS='-fprofile-arcs -ftest-coverage -g -O0' make test-torture ; results[3]="$?" ; process_kcc_config 3
+}
+
+_test() {
+    cd curl/
+    names[0]="test 1" ; ./runtests.pl 1 |& tee kcc_out_0.txt ; results[0]="$?" ; process_config
+    names[1]="test 2" ; ./runtests.pl 2 |& tee kcc_out_1.txt ; results[1]="$?" ; process_config
+    names[2]="test 3" ; ./runtests.pl 3 |& tee kcc_out_2.txt ; results[2]="$?" ; process_config
 }
 
 init
