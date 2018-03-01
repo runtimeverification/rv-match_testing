@@ -106,8 +106,10 @@ fi
 # Part 2 Configure Local Jenkins Dependencies
 #  2a Copy project scripts
 cd /root/
-rm -rf rv-match_testing/
-git clone https://github.com/runtimeverification/rv-match_testing.git
+if [ ! -d rv-match_testing ] ; then
+    echo "rv-match_testing should already be here from the source container" ; exit 1
+    git clone https://github.com/runtimeverification/rv-match_testing.git
+fi
 cd rv-match_testing/
 gitbranch="master"
 if [ "$development_checkout_check" == "1" ] ; then
