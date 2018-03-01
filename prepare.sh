@@ -273,6 +273,7 @@ prep_build() {
         unset names
         starttime=`date +%s.%N`
         kcc -profile x86_64-linux-gcc-glibc
+        export OCAMLRUNPARAM=b
         intervalstarttime="$starttime"
         names[0]="configure success"
         names[1]="make success"
