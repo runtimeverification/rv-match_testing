@@ -13,6 +13,15 @@ cp $xmlfile $tempfile
 cp $samplefile $tempfile2
 rightTypes="1"
 similar="0"
+echo "REGRESSION"
+echo ""
+cat $xmlfile
+echo ""
+echo "SAMPLE-REGRESSION"
+echo ""
+cat $samplefile
+echo ""
+echo "COMPARING"
 while [ "$(grep "<testcase classname=" $tempfile)" ] || [ "$(grep "<testcase classname=" $tempfile2)" ] && [ "$similar" == "0" ] ;
 do
     rightTypes="0"
@@ -24,9 +33,15 @@ do
     two="$(head -n 1 $tempfile3)"
     two=${two%time*}
     tail -n +2 "$tempfile3" > $tempfile2
+    echo "FIRST"
+    echo "$one"
+    echo "SECOND"
+    echo "$two"
     if [ ! "$one" == "$two" ] ; then
         similar="1"
+        echo "DIFFERENT"
     fi
+    echo ""
 done
 if [ "$rightTypes" == "0" ] && [ $similar == "0" ] ; then
     echo "\"regression similarity\" test   : passes."
