@@ -15,6 +15,7 @@ _test() {
     names[0]="test1"
     results[0]="1"
     echo "sample output log" > kcc_out_0.txt
+    process_config 0
 }
 
 init

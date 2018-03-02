@@ -14,8 +14,10 @@ _build() {
 _test() {
     names[0]="test1"
     results[0]="0"
+    process_config 0
     names[1]="test2"
     results[1]="1"
+    process_config 1
 }
 
 init
