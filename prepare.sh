@@ -193,6 +193,9 @@ process_config() { # Called by _test in test.sh which is called by prep_test() h
     else
         echo "No 'config' found for unit-test: \"${names[$increment]}\"." &>> kcc_config_k_summary$increment.txt
     fi
+    now=`date +%s.%N`
+    run_time[$1]=`echo "$now - $intervalstarttime" | bc -l`
+    intervalstarttime=$now
     cd $returnspot
 }
 
@@ -323,7 +326,7 @@ prep_extract_test() {
     if [[ -v results[@] ]] ; then
         for t in "${!results[@]}"
         do
-            echo '<testcase classname="'$exportfile'.'${test_name/./"_"}'" name="'$compiler' '${names[$t]}'">' >> $report_file
+            echo '<testcase classname="'$exportfile'.'${test_name/./"_"}'" name="'$compiler' '${names[$t]}'" time="'${run_time[$t]}'">' >> $report_file
             if [[ ${results[$t]} == 0 ]] ; then
                 echo $report_string" test: "${names[$t]}" Passed!"
             else
@@ -368,6 +371,8 @@ prep_test() {
         cp $build_dir/* $unit_test_dir -r
         set -o pipefail
         unset test_success
+        starttime=`date +%s.%N`
+        intervalstarttime="$starttime"
         cd $unit_test_dir && increment="0" && _test
 
         # generate test hash - should be the last function in the testing process since it indicates completion
