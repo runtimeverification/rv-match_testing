@@ -9,8 +9,12 @@ do
 done
 
 untrackedfile="sets/_generated_untracked.ini"
-temp="sets/.temp.ini"
+temp1="sets/.temp1.ini"
+temp2="sets/.temp2.ini"
 rm $untrackedfile
-comm -23 <(sort $allfile) <(sort sets/acceptance.ini) > $temp
-comm -23 <(sort $temp) <(sort sets/regression.ini) > $untrackedfile
-rm $temp
+comm -23 <(sort $allfile) <(sort sets/acceptance.ini) > $temp1
+comm -23 <(sort $temp1) <(sort sets/regression.ini) > $temp2
+comm -23 <(sort $temp2) <(sort sets/regression_extended.ini) > $temp1
+comm -23 <(sort $temp1) <(sort sets/acceptance_extended.ini) > $untrackedfile
+rm $temp1
+rm $temp2
