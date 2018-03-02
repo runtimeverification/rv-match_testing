@@ -13,15 +13,8 @@ cp $xmlfile $tempfile
 cp $samplefile $tempfile2
 rightTypes="1"
 similar="0"
-echo "REGRESSION"
-echo ""
 cat $xmlfile
-echo ""
-echo "SAMPLE-REGRESSION"
-echo ""
 cat $samplefile
-echo ""
-echo "COMPARING"
 while [ "$(grep "<testcase classname=" $tempfile)" ] || [ "$(grep "<testcase classname=" $tempfile2)" ] && [ "$similar" == "0" ] ;
 do
     rightTypes="0"
@@ -33,15 +26,9 @@ do
     two="$(head -n 1 $tempfile3)"
     two=${two%time*}
     tail -n +2 "$tempfile3" > $tempfile2
-    echo "FIRST"
-    echo "$one"
-    echo "SECOND"
-    echo "$two"
     if [ ! "$one" == "$two" ] ; then
         similar="1"
-        echo "DIFFERENT"
     fi
-    echo ""
 done
 if [ "$rightTypes" == "0" ] && [ $similar == "0" ] ; then
     echo "\"regression similarity\" test   : passes."
@@ -110,18 +97,18 @@ if [ "$1" == "r" ] || [ "$1" == "-r" ] ; then
         exit 0
     fi
     echo "Ensuring that the new samples match against the current project..."
-    bash merged.sh -ur selftest &> /dev/null
-    bash merged.sh -ua selftest &> /dev/null
+    bash merged.sh -urb selftest &> /dev/null
+    bash merged.sh -uab selftest &> /dev/null
     similarity
     exit 0
 fi
 echo "Testing the rv-match_testing project, especially for expected xml format."
 echo -ne '[                     ](0%  )\r'
-bash merged.sh -ut selftest &> /dev/null
+bash merged.sh -utb selftest &> /dev/null
 echo -ne '[#######              ](33% )\r'
-bash merged.sh -ur selftest &> /dev/null
+bash merged.sh -urb selftest &> /dev/null
 echo -ne '[##############       ](66% )\r'
-bash merged.sh -ua selftest &> /dev/null
+bash merged.sh -uab selftest &> /dev/null
 echo -ne '[#####################](100%)\r'
 echo $'\n\nTest results: '
 echo -ne '\n'
