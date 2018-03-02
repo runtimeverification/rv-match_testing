@@ -55,7 +55,7 @@ _test() {
         names[index]=${f%".pml"}
         ../Src6.4.7/spin $f |& tee "kcc_out_$index.txt" ; results[index]="$?"
         index=$((index+1))
-        process_config
+        process_config $index
         cd Spin/Examples/
         echo "---- finished testing spin on "$f
     done

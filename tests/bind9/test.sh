@@ -45,7 +45,7 @@ _build() {
 _test() {
     cd bind9/
     names[0]="make unit"
-    make unit |& tee kcc_out_0.txt ; results[0]="$?" ; process_config
+    make unit |& tee kcc_out_0.txt ; results[0]="$?" ; process_config 0
 }
 
 init

@@ -37,7 +37,7 @@ _test() {
     fi
     for f in *.c; do
         names[index]="run "${f%".c"}
-        ./${f%".c"} |& tee kcc_out_$index.txt ; results[index]="$?" ; process_config
+        ./${f%".c"} |& tee kcc_out_$index.txt ; results[index]="$?" ; process_config $index
         index=$((index+1))
     done
 }

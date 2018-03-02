@@ -16,7 +16,7 @@ _test() {
     results[0]="1"
     touch config
     echo "pre location term sample <curr-program-loc> post location term sample" >> config
-    process_config
+    process_config 0
 }
 
 init

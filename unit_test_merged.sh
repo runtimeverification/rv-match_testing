@@ -13,8 +13,6 @@ cp $xmlfile $tempfile
 cp $samplefile $tempfile2
 rightTypes="1"
 similar="0"
-cat $xmlfile
-cat $samplefile
 while [ "$(grep "<testcase classname=" $tempfile)" ] || [ "$(grep "<testcase classname=" $tempfile2)" ] && [ "$similar" == "0" ] ;
 do
     rightTypes="0"

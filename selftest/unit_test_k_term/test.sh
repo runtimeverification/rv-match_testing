@@ -16,7 +16,7 @@ _test() {
     results[0]="1"
     touch config
     echo "pre k term sample <k> post k term sample" >> config
-    process_config
+    process_config 0
 }
 
 init

@@ -30,10 +30,10 @@ _build() {
 _test() {
     begindhcpcdtestdir=$(pwd)
     cd $begindhcpcdtestdir/dhcpcd/tests/crypt/
-    names[0]="crypt" ; ./run-test |& tee kcc_out_0.txt ; results[0]="$?" ; process_config
+    names[0]="crypt" ; ./run-test |& tee kcc_out_0.txt ; results[0]="$?" ; process_config 0
     
     cd $begindhcpcdtestdir/dhcpcd/tests/eloop-bench/
-    names[1]="eloop-bench" ; ./eloop-bench |& tee kcc_out_1.txt ; results[1]="$?" ; process_config
+    names[1]="eloop-bench" ; ./eloop-bench |& tee kcc_out_1.txt ; results[1]="$?" ; process_config 1
 }
 
 init

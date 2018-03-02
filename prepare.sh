@@ -177,12 +177,22 @@ process_kcc_config() { # Called by _build in test.sh which is called by prep_bui
 
 process_config() { # Called by _test in test.sh which is called by prep_test() here
     returnspot=$(pwd)
-    copiedfile=config_$increment
-    cp config $test_log_dir/$copiedfile
-    cd $test_log_dir
-    grep -o "<k>.\{0,500\}" $copiedfile &> "config_k_summary$increment.txt"
-    grep -o "<curr-program-loc>.\{0,500\}" $copiedfile &> "config_loc_term$increment.txt"
-    let "increment += 1"
+    re='^[0-9]+$'
+    if ! [[ $1 =~ $re ]] ; then
+        echo "rv-match_testing error in prepare.sh: the argument to \"process_config\" should be an integer, not \"$1\"" |& tee -a kcc_config_k_summary$increment.txt
+        increment="0"
+    else
+        increment="$1"
+    fi
+    if [ -f config ] ; then
+        copiedfile=config_$increment
+        cp config $test_log_dir/$copiedfile
+        cd $test_log_dir
+        grep -o "<k>.\{0,500\}" $copiedfile &> "config_k_summary$increment.txt"
+        grep -o "<curr-program-loc>.\{0,500\}" $copiedfile &> "config_loc_term$increment.txt"
+    else
+        echo "No 'config' found for unit-test: \"${names[$increment]}\"." &>> kcc_config_k_summary$increment.txt
+    fi
     cd $returnspot
 }
 

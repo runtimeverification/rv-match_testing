@@ -23,7 +23,7 @@ _build() {
 _test() {
     cd tcpdump/tests/
     names[0]="TESTrun.sh"
-    bash TESTrun.sh |& tee kcc_out_0.txt ; results[0]="$?" ; process_config
+    bash TESTrun.sh |& tee kcc_out_0.txt ; results[0]="$?" ; process_config 0
 }
 
 init
