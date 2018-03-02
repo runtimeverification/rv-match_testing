@@ -20,10 +20,14 @@ _build() {
     set -o pipefail
 
     names[1]="configure success"
-    if [[ "$compiler" == "kcc" ]]; then
-        ./configure CC=kcc CFLAGS="-std=gnu11 -no-pedantic -frecover-all-errors" LD=kcc --disable-threads --disable-atomic --disable-shared |& tee kcc_build_1.txt ; results[1]="$?"
+    if [[ "$compiler" == "kcc" ]] ; then
+        ./configure CC=$compiler CFLAGS="-std=gnu11 -no-pedantic -frecover-all-errors" LD=kcc --disable-threads --disable-atomic --disable-shared |& tee kcc_build_1.txt ; results[1]="$?"
     else
-        ./configure CC=$compiler --disable-threads --disable-atomic --disable-shared |& tee kcc_build_1.txt ; results[1]="$?"
+        if [[ "$compiler" == "rvpc" ]] ; then
+            ./configure CC=$compiler |& tee kcc_build_1.txt ; results[1]="$?"
+        else
+            ./configure CC=$compiler --disable-threads --disable-atomic --disable-shared |& tee kcc_build_1.txt ; results[1]="$?"
+        fi
     fi
     process_kcc_config 1
 
