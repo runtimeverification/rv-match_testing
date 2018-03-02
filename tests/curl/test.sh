@@ -31,7 +31,7 @@ _build() {
 }
 
 _test() {
-    cd curl/
+    cd curl/tests/
     names[0]="test 1" ; ./runtests.pl 1 |& tee kcc_out_0.txt ; results[0]="$?" ; process_config
     names[1]="test 2" ; ./runtests.pl 2 |& tee kcc_out_1.txt ; results[1]="$?" ; process_config
     names[2]="test 3" ; ./runtests.pl 3 |& tee kcc_out_2.txt ; results[2]="$?" ; process_config

@@ -28,10 +28,11 @@ _build() {
 }
 
 _test() {
-    cd dhcpcd/tests/crypt/
+    begindhcpcdtestdir=$(pwd)
+    cd $begindhcpcdtestdir/dhcpcd/tests/crypt/
     names[0]="crypt" ; ./run-test |& tee kcc_out_0.txt ; results[0]="$?" ; process_config
     
-    cd dhcpcd/tests/eloop-bench/
+    cd $begindhcpcdtestdir/dhcpcd/tests/eloop-bench/
     names[1]="eloop-bench" ; ./eloop-bench |& tee kcc_out_1.txt ; results[1]="$?" ; process_config
 }
 

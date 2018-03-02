@@ -26,7 +26,7 @@ _build() {
 _test() {
     cd scrypt/
     names[0]="basic test"
-    ./tests/test_scrypt ; results[0]="$?" ; process_kcc_config 0
+    ./tests/test_scrypt |& tee kcc_out_0.txt ; results[0]="$?" ; process_config
 }
 
 init

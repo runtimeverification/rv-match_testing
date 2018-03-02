@@ -28,6 +28,13 @@ _test() {
     names[0]="kcc -v test"
     kcc -v |& tee "kcc_out_0.txt" ; results[0]="$?"
     index=1
+    if [ "$exportfile" == "regression" ] ; then
+        mkdir ignore/
+        mv *.c ignore/
+        mv ignore/floatprintf.c .
+        mv ignore/emptystructures.c .
+        mv ignore/const.c .
+    fi
     for f in *.c; do
         names[index]="run "${f%".c"}
         ./${f%".c"} |& tee kcc_out_$index.txt ; results[index]="$?" ; process_config
