@@ -5,7 +5,7 @@ containerscriptflags=" -"
 hadflag="1"
 usetrusty="1"
 useoldmachine="1"
-while getopts ":rsatdgeEqpPTo" opt; do
+while getopts ":rsatdgeEqpPTob" opt; do
   hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -52,7 +52,10 @@ while getopts ":rsatdgeEqpPTo" opt; do
         containerscriptflags=$containerscriptflags"o"
         useoldmachine="0"
       ;;
-    \? ) echo "Usage: $currentscript [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-E] [-q] [-p] [-P] [-T] [-o]"
+    b ) echo $currentscript" force build option selected."
+        containerscriptflags=$containerscriptflags"b"
+      ;;
+    \? ) echo "Usage: $currentscript [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-E] [-q] [-p] [-P] [-T] [-o] [-b]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -66,6 +69,7 @@ while getopts ":rsatdgeEqpPTo" opt; do
          echo " -P rv-predict option selected"
          echo " -T use Trusty"
          echo " -o other machine"
+         echo " -b force build"
       ;;
   esac
 done

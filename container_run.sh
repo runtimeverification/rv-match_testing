@@ -10,7 +10,7 @@ hadflag="1"
 stop_container="0"
 source_container="match-testing-xenial-source"
 oldmachine="1"
-while getopts ":rsatdgeEqpPTo" opt; do
+while getopts ":rsatdgeEqpPTob" opt; do
   hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -54,7 +54,10 @@ while getopts ":rsatdgeEqpPTo" opt; do
         guest_script_flags=$guest_script_flags"o"
         oldmachine="0"
       ;;
-    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-E] [-q] [-p] [-P] [-T] [-o]"
+    b ) echo $currentscript" force build option selected."
+        guest_script_flags=$guest_script_flags"b"
+      ;;
+    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-E] [-q] [-p] [-P] [-T] [-o] [-b]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -68,6 +71,7 @@ while getopts ":rsatdgeEqpPTo" opt; do
          echo " -P rv-predict"
          echo " -T Trusty"
          echo " -o other machine"
+         echo " -b force build"
       ;;
   esac
 done

@@ -22,8 +22,9 @@ unittesting="1"
 gcconly="1"
 prepareonly="1"
 rvpredict="1"
+forcebuild="1"
 echo $currentscript" selecting options.."
-while getopts ":rsatgpP" opt; do
+while getopts ":rsatgpPb" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
@@ -46,7 +47,10 @@ while getopts ":rsatgpP" opt; do
     P ) echo $currentscript" rv-predict option selected."
         rvpredict="0"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-g] [-p] [-P]"
+    b ) echo $currentscript" force build option selected."
+        forcebuild="0"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-g] [-p] [-P] [-b]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -54,6 +58,7 @@ while getopts ":rsatgpP" opt; do
          echo " -g gcc only"
          echo " -p prepare only"
          echo " -P rv-predict"
+         echo " -b force build"
       ;;
   esac
 done
@@ -262,10 +267,10 @@ prep_build() {
     # Build hash is dependent on 3 things: {_build() function definition, $compiler --version, download hash}.
     buildhashinfo=$(type _build)$($compiler --version)$(head -n 1 $download_dir/download_function_hash)$(head -n 1 $dependency_dir/dependency_function_hash)
     echo "`kcc --version`" | grep "Build number" ; kcc_is_versioned="$?"
-    if [ ! -e $build_dir/build_function_hash ] || [ "$(echo $(sha1sum <<< $buildhashinfo))" != "$(head -n 1 $build_dir/build_function_hash)" ] || [ ! "$kcc_is_versioned" == "0" ] || [ "0" == "0" ] ; then
+    if [ ! -e $build_dir/build_function_hash ] || [ "$(echo $(sha1sum <<< $buildhashinfo))" != "$(head -n 1 $build_dir/build_function_hash)" ] || [ ! "$kcc_is_versioned" == "0" ] || [ "$forcebuild" == "0" ] ; then
 
         # build
-        echo $report_string" building. Either first build, hash changed, or \"kcc --version\" does not provide a build number."
+        echo $report_string" building. Either first build, hash changed, \"kcc --version\" does not provide a build number, or the 'force build' (-b) option was used."
         rm $build_dir/build_function_hash ; safe_rm=$build_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
         cp $download_dir/* $build_dir -r
         set -o pipefail

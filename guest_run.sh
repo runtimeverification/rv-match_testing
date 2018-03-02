@@ -14,7 +14,7 @@ reinstallmatch="0"
 rvpredict="1"
 othermachine="1"
 echo "========= Beginning container guest scripts."
-while getopts ":rsatdgqpPo" opt; do
+while getopts ":rsatdgqpPob" opt; do
   hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -54,7 +54,10 @@ while getopts ":rsatdgqpPo" opt; do
         runsetparams=$runsetparams"o"
         othermachine="0"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-q] [-p] [-P] [-o]"
+    b ) echo $currentscript" force build option selected."
+        runsetparams=$runsetparams"b"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-q] [-p] [-P] [-o] [-b]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -65,6 +68,7 @@ while getopts ":rsatdgqpPo" opt; do
          echo " -p prepare only"
          echo " -P rv-predict"
          echo " -o other"
+         echo " -b force build"
       ;;
   esac
 done
