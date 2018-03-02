@@ -42,4 +42,10 @@ _build() {
     make |& tee kcc_build_3.txt ; results[3]="$?" ; process_kcc_config 3
 }
 
+_test() {
+    cd bind9/
+    names[0]="make unit"
+    make unit |& tee kcc_out_0.txt ; results[0]="$?" ; process_config
+}
+
 init
