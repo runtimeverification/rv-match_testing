@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Code to put into jenkins job 'rv-match_prepare_source_container' which auto-checks-out rv-match:
-# Last updated 27 February 2018
+# Last updated 27 February 2018:
+#
+# < script >
 # #git clone https://github.com/runtimeverification/rv-match_testing.git
 # cd rv-match_testing/
 # git checkout master
@@ -11,6 +13,7 @@
 # chmod a+x source_guest_run.sh
 # cd ..
 # bash rv-match_testing/jenkins_create_source_container.sh
+# < / script >
 
 set -e
 

@@ -75,17 +75,15 @@ while getopts ":rsatdgeEqpPTob" opt; do
       ;;
   esac
 done
-if [ "$guest_script_flags" == " -" ] ; then
-    guest_script_flags=""
-fi
-if [ "$hadflag" == "0" ] ; then
-    guest_script_flags="$guest_script_flags $2"
-else
-    guest_script_flags="$guest_script_flags $1"
-fi
+if [ "$guest_script_flags" == " -" ] ; then guest_script_flags="" ; fi
+if [ "$hadflag" == "0" ] ; then $1=$2 ; fi
+guest_script_flags="$guest_script_flags $1"
 guest_script=$guest_script$guest_script_flags
 
+# Copy, boot up, run guest script on, and shut down container
 if [ "$oldmachine" == "0" ] ; then
+    # Branch for lxc, old machine containerization
+    
     source_container="ubuntu-14.04-java"
     container="rv-match_testing_container"
     function stopLxc {
@@ -106,12 +104,17 @@ if [ "$oldmachine" == "0" ] ; then
         echo "End list. "
     fi
 
-    #ls ~/.config/lxc
+    # The following script comment is for setting up networking for the lxc containerization.
+    # 
+    # < configuration >
+    # ls ~/.config/lxc
     # mkdir -p ~/.config/lxc
     # echo "lxc.id_map = u 0 494216 65536" > ~/.config/lxc/default.conf
     # echo "lxc.id_map = g 0 494216 65536" >> ~/.config/lxc/default.conf
     # echo "lxc.network.type = veth" >> ~/.config/lxc/default.conf
     # echo "lxc.network.link = lxcbr0" >> ~/.config/lxc/default.conf
+    # < / configuration >
+
     lxc-destroy -f -n ubuntu-temp-trusty-source-rv-match_testing
     lxc-destroy -f -n rv-match_regression_container
     lxc-checkconfig
@@ -129,6 +132,8 @@ if [ "$oldmachine" == "0" ] ; then
     lxc-ls
     lxc-attach -n $container -- su -l -c "/mnt/jenkins/$guest_script"
 else
+    # Branch for lxd, new machine containerization
+
     lxc info $container &> /dev/null ; container_exists="$?"
     if [ ! "$container_exists" == "0" ] ; then
         use_existing_container="2"

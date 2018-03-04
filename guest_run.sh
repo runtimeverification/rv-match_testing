@@ -1,9 +1,9 @@
 #!/bin/bash
 currentscript="guest_run.sh"
 hostspace="/mnt/jenkins"
-# This is the initial script ran from inside the lxc container.
+# This is the initial script ran from inside the lxc/lxd container.
 # Called by: container_run.sh
-# Calls    : libs.sh, run_set.sh
+# Calls    : libs.sh, merged.sh
 
 exportfile="report"
 runsetparams=" -"
@@ -72,27 +72,25 @@ while getopts ":rsatdgqpPob" opt; do
       ;;
   esac
 done
-if [ "$runsetparams" == " -" ] ; then
-    runsetparams=""
-fi
-if [ "$hadflag" == "0" ] ; then
-    runsetparams="$runsetparams $2"
-else
-    runsetparams="$runsetparams $1"
-fi
 
-# Part 1: Basic container debug
+if [ "$runsetparams" == " -" ] ; then runsetparams="" ; fi
+if [ "$hadflag" == "0" ] ; then $1=$2 ; fi
+runsetparams="$runsetparams $1"
+
+# Container log marker
 echo "Entered container at: "$(pwd)
 
+# Assert network functionality in container
 printf "\n<$currentscript assert network>\n"
 set -e
 ping -c 1 www.google.com
 set +e
 echo "</$currentscript assert network>"
 
+# Assert k-bin-to-text functionality
 if [ "$othermachine" == "0" ] ; then
     cp /mnt/jenkins/libs.sh .
-    bash libs.sh
+    bash libs.sh$runsetparams
 else
     printf "\n<$currentscript assert k-bin-to-text>\n"
     export PATH=/root/rv-match/k/k-distribution/target/release/k/bin:$PATH
@@ -105,10 +103,8 @@ else
     set +e
     echo "</$currentscript assert k-bin-to-text>"
 fi
-# /Part 1: Basic container debug
 
-# Part 2 Configure Local Jenkins Dependencies
-#  2a Copy project scripts
+# Update rv-match_testing
 cd /root/
 if [ ! -d rv-match_testing ] ; then
     echo "rv-match_testing should already be here from the source container" ; exit 1
@@ -127,29 +123,31 @@ git reset --hard origin/$gitbranch
 git checkout $gitbranch
 git pull
 
+# Update rvpc (disabled until a URL for latest version is used, 1.9 is preinstalled in source container)
 if [ "$rvpredict" == "0" ] ; then
-    echo "<install rv-predict>"
-    # to uninstall: "sudo dpkg -r rv-predict-c"
-    cd /root/
-    wget -q https://runtimeverification.com/predict/download/c?v=1.9
-    mv c\?v\=1.9 predict.jar
-    printf "
-
-
-1
-1
-1
-" > stdinfile.txt
-    cat stdinfile.txt | sudo java -jar predict.jar -console &> /dev/null
+#    echo "<install rv-predict>"
+#    # to uninstall: "sudo dpkg -r rv-predict-c"
+#    cd /root/
+#    wget -q https://runtimeverification.com/predict/download/c?v=1.9
+#    mv c\?v\=1.9 predict.jar
+#    printf "
+#
+#
+#1
+#1
+#1
+#" > stdinfile.txt
+#    cat stdinfile.txt | sudo java -jar predict.jar -console &> /dev/null
     echo "  <assert rvpc>"
     set -e
     which rvpc &> /dev/null
     rvpc -help &> /dev/null
     set +e
     echo "  </assert rvpc>"
-    echo "</install rv-predict>"
+#    echo "</install rv-predict>"
 fi
 
+# Update kcc
 if [ "$othermachine" == "0" ] ; then
     cd /root/
     rm -rf kcc_dependency_1/
@@ -204,6 +202,7 @@ y
     fi
 fi
 
+# Assert rv-match_testing minimum requirements
 echo "<$currentscript assert self-unit-tests>"
 cd /root/rv-match_testing
 bash unit_test_merged.sh &> selfunittest.log ; testout=$(echo "$?")
@@ -222,10 +221,10 @@ set -e
 set +e
 echo "</$currentscript assert self-unit-tests>"
 
-# Part 3 Run Main Script
+# Run test script, where most of the work happens
 cd /root/rv-match_testing && bash merged.sh$runsetparams
 
-# Part 4 Copy test result xml back to host
+# Container copies results from itself to host
 echo "Container results are in "$exportfile".xml:"
 cat results/$exportfile.xml
 echo "Copying results to host now."

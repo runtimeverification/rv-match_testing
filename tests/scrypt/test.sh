@@ -10,7 +10,6 @@ _download() {
     git clone https://github.com/Tarsnap/scrypt.git
     cd scrypt/
     git checkout 4e4f88ad775fc2ea5e59f38e191ac6f5b3e375c7
-    echo "Force redownload since hash was present somehow."
 }
 
 _build() {
