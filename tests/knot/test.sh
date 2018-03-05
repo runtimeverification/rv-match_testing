@@ -19,6 +19,7 @@ _build() {
     names[0]="autoreconf" ; autoreconf -if                        |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     names[1]="configure"  ; ./configure CC=$compiler LD=$compiler |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
     names[2]="make"       ; make                                  |& tee kcc_build_2.txt ; results[2]="$?" ; process_kcc_config 2
+    #https://gitlab.labs.nic.cz/knot/knot-dns/issues/571
 }
 
 _test() {

@@ -15,8 +15,10 @@ _download() {
 
 _build() {
     cd parsec-3.0/
-    names[0]="parsecmgmt"
-    bin/parsecmgmt -a build |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+    names[0]="sed"
+    sed -i -e 's/all install_docs install_sw/all install_sw/' pkgs/libs/ssl/src/Makefile.org |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0       
+    names[1]="parsecmgmt"
+    bin/parsecmgmt -a build |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 }
 
 _test() {

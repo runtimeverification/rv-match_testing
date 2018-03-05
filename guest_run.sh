@@ -175,7 +175,7 @@ else
         reinstallmatch="2"
     fi
     if [ ! "$reinstallmatch" == "0" ] ; then
-        echo "Not installing rv-match since either these two criterion hold:"
+        echo "Not installing rv-match since both of these two criterion hold:"
         echo "1. Already downloaded .jar matches the new."
         echo "2. \"kcc -v\" functions."
         echo "And we are assuming based on that that rv-match is already installed and updated to the latest version."
