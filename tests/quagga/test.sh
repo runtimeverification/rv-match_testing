@@ -15,6 +15,7 @@ _download() {
 }
 
 _build() {
+    cd quagga/
     names[0]="bootstrap" ; bash bootstrap.sh |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     names[1]="configure" ; ./configure       |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
     names[2]="make"      ; make              |& tee kcc_build_2.txt ; results[2]="$?" ; process_kcc_config 2
