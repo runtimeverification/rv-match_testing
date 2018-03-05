@@ -13,7 +13,7 @@ currentscript="prepare.sh"
 #
 # _download: Download source code and other resources needed here.
 # _build: Set make_success and configure_success. "set -o pipefail" should be run before this function is called, otherwise expect false positive results for compilation.
-# _extract: Move interesting files like kcc_* to log_dir and call process_kcc_config if applicable
+# _extract: Move interesting files like kcc_* to build_log_dir and call process_kcc_config if applicable
 # _test: Set test_success. Same rules as _build for "set -o pipefail".
 # _extract_test: Same rules as _extract except for tests instead of build.
 
@@ -96,7 +96,7 @@ prep_prepare() {
     mkdir -p $unit_test_dir
 
     if [ ! -d $dependency_dir ] || [ -z "$(ls -A $dependency_dir)" ] || [ ! -e $dependency_dir/dependency_function_hash ] || [ "$(echo $(sha1sum <<< $(type _dependencies)))" != "$(head -n 1 $dependency_dir/dependency_function_hash)" ] ; then
-    echo $report_string" installing dependencies. Either this is the initial installation or the dependency hash has changed since the last install."
+    echo $report_string" installing dependencies. Hash is new or changed."
     i=0
     if [ fuser /var/lib/dpkg/lock >/dev/null 2>&1 ] ; then
         echo "$report_string: $current_script: Waiting for other software managers to finish..."
@@ -106,31 +106,30 @@ prep_prepare() {
         ((i=i+1))
     done 
     _dependencies
-    echo $report_string" installing dependencies. Either this is the initial installation or the dependency hash has changed since the last install."
-        rm $dependency_dir/dependency_function_hash ; rm -r $dependency_dir
+        rm -f $dependency_dir/dependency_function_hash ; rm -rf $dependency_dir
         mkdir -p $dependency_dir
         cd $dependency_dir && _dependencies && cd $dependency_dir && echo $(sha1sum <<< $(type _dependencies)) > dependency_function_hash
     else
-        echo $report_string" not installing dependencies. They should already be installed."
+        echo $report_string" not installing dependencies. Hash matches."
     fi
 }
 
 prep_download() {
     if [ ! -d $download_dir ] || [ -z "$(ls -A $download_dir)" ] || [ ! -e $download_dir/download_function_hash ] || [ "$(echo $(sha1sum <<< $(type _download)))" != "$(head -n 1 $download_dir/download_function_hash)" ] ; then
-        echo $report_string" downloading. Either this is the initial download or the download hash has changed since the last download."
-        rm $download_dir/download_function_hash ; rm -r $download_dir
+        echo $report_string" downloading. Hash is new or changed."
+        rm -f $download_dir/download_function_hash ; rm -rf $download_dir
         mkdir -p $download_dir
         cd $download_dir && _download && cd $download_dir && echo $(sha1sum <<< $(type _download)) > download_function_hash
     else
-        echo $report_string" not downloading. Copying from there."
+        echo $report_string" not downloading. Hash matches."
     fi
 }
 
 increment_process_kcc_config() {
     increment="$index"-"$counter"
     copiedfile=kcc_config_no_$increment
-    cp kcc_config $log_dir/$copiedfile ; rm kcc_config
-    location=$(pwd) ; cd $log_dir
+    cp kcc_config $build_log_dir/$copiedfile ; rm kcc_config
+    location=$(pwd) ; cd $build_log_dir
     if [ -e $copiedfile ] ; then
         echo $'\n\n'"Found a kcc_config number $increment:" >> kcc_config_k_summary$increment.txt
         echo "Location: $location" >> kcc_config_k_summary$increment.txt
@@ -150,7 +149,7 @@ increment_process_kcc_config() {
     let "counter += 1"
     more=`grep -A1 "Translation failed (kcc_config dumped). To repeat, run this command in directory" "$location/kcc_build_$index.txt" | tail -n 1`
     echo $'\n\n'"Running \"$more\" to get more information:" &>> kcc_config_k_summary$increment.txt
-    cd $location ; eval "$more" &>> $log_dir/kcc_config_k_summary$increment.txt ; rm kcc_config ; cd $log_dir
+    cd $location ; eval "$more" &>> $build_log_dir/kcc_config_k_summary$increment.txt ; rm kcc_config ; cd $build_log_dir
 }
 
 process_kcc_config() { # Called by _build in test.sh which is called by prep_build() here
@@ -166,7 +165,7 @@ process_kcc_config() { # Called by _build in test.sh which is called by prep_bui
     counter=0
     while IFS= read -r -d $'\0' line; do
         return_dir=$(pwd)
-        cd $(dirname $line) && log_dir=$build_log_dir && increment_process_kcc_config
+        cd $(dirname $line) && increment_process_kcc_config
         cd $return_dir
     done < <(find . -type f -iname "kcc_config" -print0)
     now=`date +%s.%N`
@@ -275,7 +274,6 @@ prep_build() {
     mkdir -p $build_log_dir
     ln -sfn $build_log_dir $test_dir/$compiler/build_log/latest
     echo $build_log_dir    
-    log_dir=$build_log_dir #until scripts are updated
 
     # Build hash is dependent on 3 things: {_build() function definition, $compiler --version, download hash}.
     buildhashinfo=$(type _build)$($compiler --version)$(head -n 1 $download_dir/download_function_hash)$(head -n 1 $dependency_dir/dependency_function_hash)
@@ -359,7 +357,6 @@ prep_test() {
     mkdir -p $test_log_dir
     ln -sfn $test_log_dir $test_dir/$compiler/test_log/latest
     echo $test_log_dir
-    log_dir=$test_log_dir #until scripts are updated
 
     # Test hash is dependent on 3 things: {_test() function definition, $compiler --version, build hash}.
     testhashinfo=$(type _test)$($compiler --version)$(head -n 1 $build_dir/build_function_hash)

@@ -20,7 +20,7 @@ sudo apt-get update
 
 sudo dpkg --configure -a
 
-echo $currentscript" merged.sh"
+echo $currentscript" run-set.sh"
 sudo apt -y install html-xml-utils
 
 echo $currentscript" kcc"

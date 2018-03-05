@@ -3,7 +3,7 @@ currentscript="guest_run.sh"
 hostspace="/mnt/jenkins"
 # This is the initial script ran from inside the lxc/lxd container.
 # Called by: container_run.sh
-# Calls    : libs.sh, merged.sh
+# Calls    : libs.sh, run-set.sh
 
 exportfile="report"
 runsetparams=" -"
@@ -205,7 +205,7 @@ fi
 # Assert rv-match_testing minimum requirements
 echo "<$currentscript assert self-unit-tests>"
 cd /root/rv-match_testing
-bash unit_test_merged.sh &> selfunittest.log ; testout=$(echo "$?")
+bash unit_test_run-set.sh &> selfunittest.log ; testout=$(echo "$?")
 if [ "$testout" == "0" ] ; then
     echo "  self-unit-tests all passed."
 else
@@ -222,7 +222,7 @@ set +e
 echo "</$currentscript assert self-unit-tests>"
 
 # Run test script, where most of the work happens
-cd /root/rv-match_testing && bash merged.sh$runsetparams
+cd /root/rv-match_testing && bash run-set.sh$runsetparams
 
 # Container copies results from itself to host
 echo "Container results are in "$exportfile".xml:"

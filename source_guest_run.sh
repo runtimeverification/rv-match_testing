@@ -122,7 +122,7 @@ bash libs.sh
 
 printf "\nAsserting that rv-match_testing self-unit-tests pass.\n"
 cd /root/rv-match_testing/
-set +e ; bash unit_test_merged.sh ; testout="$?"
+set +e ; bash unit_test_run-set.sh ; testout="$?"
 if [ "$testout" == "0" ] ; then
     echo "  self-unit-tests all passed."
 else
@@ -137,7 +137,7 @@ set -e ; [ "$testout" == "0" ]
 printf "\nIterating through all projects, installing their dependencies and downloading their source.\n"
 cd /root/rv-match_testing/
 bash generate_run_set.sh
-bash merged.sh -p _generated_all
+bash run-set.sh -p _generated_all
 
 printf "\nFlush apt through the basic libraries after project specific dependencies were installed.\n"
 cd /root/rv-match_testing/

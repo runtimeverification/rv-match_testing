@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Handle options
-currentscript="merged.sh"
+currentscript="run-set.sh"
 exportfile="report"
 testsfolder="tests"
 flagsfortests="-"
@@ -87,11 +87,12 @@ fi
 # XML Head
 suiteprefix="Report"
 exportpath=$(pwd)"/results/$exportfile.xml"
-mkdir $(dirname $exportpath) ; touch $exportpath
+exportpathtemp="$exportpath.tmp"
+mkdir $(dirname $exportpath)
 echo '<?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
 <testsuite name="'$suiteprefix'ScriptReport" package="'$suiteprefix'Package">
-<properties/>' > $exportpath
+<properties/>' > $exportpathtemp
 
 # Create (set|project) single run instance log folder on host
 if [ "$testsfolder" == "selftest" ] ; then
@@ -125,20 +126,20 @@ while read line; do
     else
         echo "Status option was selected, so the tests are not being run right now."
     fi
-    cat "$testsfolder/$line/$exportfile.xml" >> $exportpath
+    cat "$testsfolder/$line/$exportfile.xml" >> $exportpathtemp
 done < $whitelistpath
 echo "==== tests finished at $(date)"
 
 # XML Foot
 echo '</testsuite>
 </testsuites>
-' >> $exportpath".tmp"
+' >> $exportpathtemp
 
 # Remove non-XML-parsable characters
 # https://unix.stackexchange.com/questions/421286/how-to-printf-literal-characters-from-to-file-in-bash
 # 'tr/\x09\x0a\x0d\x20-\x{d7ff}\x{e000}-\x{fffd}\x{10000}-\x{10ffff}//cd'
-perl -C -pe 'tr/\x{9}-\x{A}\x{D}-\x{D}\x{20}-\x{D7FF}\x{E000}-\x{FDCF}\x{FE00}-\x{FFFD}\x{10000}-\x{1FFFD}\x{20000}-\x{2FFFD}\x{30000}-\x{3FFFD}\x{40000}-\x{4FFFD}\x{50000}-\x{5FFFD}\x{60000}-\x{6FFFD}\x{70000}-\x{7FFFD}\x{80000}-\x{8FFFD}\x{90000}-\x{9FFFD}\x{A0000}-\x{AFFFD}\x{B0000}-\x{BFFFD}\x{C0000}-\x{CFFFD}\x{D0000}-\x{DFFFD}\x{E0000}-\x{EFFFD}\x{F0000}-\x{FFFFD}\x{100000}-\x{10FFFD}//cd' < $exportpath".tmp" > $exportpath
-rm $exportpath".tmp"
+perl -C -pe 'tr/\x{9}-\x{A}\x{D}-\x{D}\x{20}-\x{D7FF}\x{E000}-\x{FDCF}\x{FE00}-\x{FFFD}\x{10000}-\x{1FFFD}\x{20000}-\x{2FFFD}\x{30000}-\x{3FFFD}\x{40000}-\x{4FFFD}\x{50000}-\x{5FFFD}\x{60000}-\x{6FFFD}\x{70000}-\x{7FFFD}\x{80000}-\x{8FFFD}\x{90000}-\x{9FFFD}\x{A0000}-\x{AFFFD}\x{B0000}-\x{BFFFD}\x{C0000}-\x{CFFFD}\x{D0000}-\x{DFFFD}\x{E0000}-\x{EFFFD}\x{F0000}-\x{FFFFD}\x{100000}-\x{10FFFD}//cd' < $exportpathtemp > $exportpath
+rm $exportpathtemp
 
 # XML to console
 echo "$currentscript produced $exportpath:"
