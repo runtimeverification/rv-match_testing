@@ -74,8 +74,8 @@ while getopts ":rsatdgqpPob" opt; do
 done
 
 if [ "$runsetparams" == " -" ] ; then runsetparams="" ; fi
-if [ "$hadflag" == "0" ] ; then 1=$2 ; fi
-runsetparams="$runsetparams $1"
+if [ "$hadflag" == "0" ] ; then flag=$2 ; else flag=$1 ; fi
+runsetparams="$runsetparams $flag"
 
 # Container log marker
 echo "Entered container at: "$(pwd)
