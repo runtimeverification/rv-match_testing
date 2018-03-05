@@ -76,7 +76,7 @@ while getopts ":rsatdgeEqpPTob" opt; do
   esac
 done
 if [ "$guest_script_flags" == " -" ] ; then guest_script_flags="" ; fi
-if [ "$hadflag" == "0" ] ; then $1=$2 ; fi
+if [ "$hadflag" == "0" ] ; then 1=$2 ; fi
 guest_script_flags="$guest_script_flags $1"
 guest_script=$guest_script$guest_script_flags
 

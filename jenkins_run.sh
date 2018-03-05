@@ -76,11 +76,8 @@ done
 if [ "$containerscriptflags" == " -" ] ; then
     containerscriptflags=""
 fi
-if [ "$hadflag" == "0" ] ; then
-    containerscriptflags="$containerscriptflags $2"
-else
-    containerscriptflags="$containerscriptflags $1"
-fi
+if [ "$hadflag" == "0" ] ; then 1=$2 ; fi
+containerscriptflags="$containerscriptflags $1"
 if [ ! -f results/$exportfile.xml ] ; then
     mkdir -p results/
     touch results/$exportfile.xml

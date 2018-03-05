@@ -74,7 +74,7 @@ while getopts ":rsatdgqpPob" opt; do
 done
 
 if [ "$runsetparams" == " -" ] ; then runsetparams="" ; fi
-if [ "$hadflag" == "0" ] ; then $1=$2 ; fi
+if [ "$hadflag" == "0" ] ; then 1=$2 ; fi
 runsetparams="$runsetparams $1"
 
 # Container log marker
