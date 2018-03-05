@@ -3,26 +3,26 @@
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
 _dependencies() {
-    :
+    sudo apt -y install autoconf2.64
 }
 
 _download() {
-#git clone git://sourceware.org/git/binutils-gdb.git
-#https://www.gnu.org/software/binutils/
-#https://github.com/gittup/binutils
-    git clone https://github.com/gittup/binutils.git
-    cd binutils/
-    git checkout 8db2e9c8d085222ac7b57272ee263733ae193565
+    #git clone git://sourceware.org/git/binutils-gdb.git
+    #https://www.gnu.org/software/binutils/
+    #https://github.com/gittup/binutils
+    wget https://ftp.gnu.org/gnu/binutils/binutils-2.30.tar.gz
+    tar -xzf binutils-2.30.tar.gz
+    rm -f binutils-2.30.tar.gz
 }
 
 _build() {
-    cd binutils/
+    cd binutils-2.30/
     #http://trac.clfs.org/ticket/926
-    names[0]="sed replace"
-    sed -i -e 's/@colophon/@@colophon/' \
-       -e 's/doc@cygnus.com/doc@@cygnus.com/' bfd/doc/bfd.texinfo |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
-    names[1]="configure" ; ./configure CC=$compiler LD=$compiler |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
-    names[2]="make" ; make CC=$compiler LD=$compiler |& tee kcc_build_2.txt ; results[2]="$?" ; process_kcc_config 2
+    #sed -i -e 's/@colophon/@@colophon/' \
+    #   -e 's/doc@cygnus.com/doc@@cygnus.com/' bfd/doc/bfd.texinfo |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+    names[0]="autoreconf" ; autoreconf2.64                        |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+    names[1]="configure"  ; ./configure CC=$compiler LD=$compiler |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    names[2]="make"       ; make        CC=$compiler LD=$compiler |& tee kcc_build_2.txt ; results[2]="$?" ; process_kcc_config 2
 }
 
 _test() {

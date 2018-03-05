@@ -5,6 +5,7 @@ base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 _dependencies() {
     sudo apt -y install libevent-dev
     sudo apt -y install bison
+    sudo apt -y install flex
 }
 
 _download() {
