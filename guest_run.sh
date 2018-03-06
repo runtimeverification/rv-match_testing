@@ -38,6 +38,7 @@ while getopts ":rsatdgqpPob" opt; do
       ;;
     g ) echo $currentscript" gcc only option selected."
         runsetparams=$runsetparams"g"
+        reinstallmatch="1"
       ;;
     q ) echo $currentscript" quick (don't update rv-match) option selected."
         reinstallmatch="1"
@@ -179,7 +180,7 @@ else
         echo "1. Already downloaded .jar matches the new."
         echo "2. \"kcc -v\" functions."
         echo "And we are assuming based on that that rv-match is already installed and updated to the latest version."
-        echo "Or the -q or -P option was used."
+        echo "Or the -q, -P, or -g option was used."
     else
         if [ "$checknew" == 0 ] ; then
             echo "\"kcc -v\" doesn't function, even though the new version matches the old."
