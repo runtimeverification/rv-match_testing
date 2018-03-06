@@ -9,13 +9,16 @@ _dependencies() {
 }
 
 _download() {
-    git clone https://github.com/Quagga/quagga.git
-    cd quagga/
-    git checkout 88d6516676cbcefb6ecdc1828cf59ba3a6e5fe7b
+    wget http://git.savannah.gnu.org/cgit/quagga.git/snapshot/quagga-1.2.4.tar.gz
+    tar -xzf quagga-1.2.4.tar.gz 
+    rm quagga-1.2.4.tar.gz 
+    #git clone https://github.com/Quagga/quagga.git
+    #cd quagga/
+    #git checkout 88d6516676cbcefb6ecdc1828cf59ba3a6e5fe7b
 }
 
 _build() {
-    cd quagga/
+    cd quagga-1.2.4/
     names[0]="bootstrap" ; bash bootstrap.sh |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     names[1]="configure" ; ./configure       |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
     names[2]="make"      ; make              |& tee kcc_build_2.txt ; results[2]="$?" ; process_kcc_config 2
