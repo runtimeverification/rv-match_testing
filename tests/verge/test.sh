@@ -3,7 +3,7 @@
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
 _dependencies() {
-    :
+    sudo apt -y install libdb++-dev
 }
 
 _download() {
@@ -14,9 +14,9 @@ _download() {
 
 _build() {
     cd VERGE/
-    bash autogen.sh
-    ./configure CC=$compiler LD=$compiler |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
-    make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    names[0]="autogen script" ; bash autogen.sh |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+    names[1]="configure"      ; ./configure CC=$compiler LD=$compiler |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    names[2]="make"           ; make            |& tee kcc_build_2.txt ; results[2]="$?" ; process_kcc_config 2
 }
 
 _test() {

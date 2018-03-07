@@ -11,12 +11,12 @@ _download() {
 #https://www.gnu.org/software/binutils/
 #https://github.com/gittup/binutils
     git clone git://sourceware.org/git/binutils-gdb.git
-    cd binutils/
+    cd binutils-gdb/
     git checkout 8db2e9c8d085222ac7b57272ee263733ae193565
 }
 
 _build() {
-    cd binutils/
+    cd binutils-gdb/
     #http://trac.clfs.org/ticket/926
     names[0]="sed replace"
     sed -i -e 's/@colophon/@@colophon/' \

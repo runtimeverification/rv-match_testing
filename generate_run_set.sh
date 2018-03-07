@@ -15,6 +15,7 @@ rm $untrackedfile
 comm -23 <(sort $allfile) <(sort sets/acceptance.ini) > $temp1
 comm -23 <(sort $temp1) <(sort sets/regression.ini) > $temp2
 comm -23 <(sort $temp2) <(sort sets/regression_extended.ini) > $temp1
-comm -23 <(sort $temp1) <(sort sets/acceptance_extended.ini) > $untrackedfile
+comm -23 <(sort $temp1) <(sort sets/acceptance_extended.ini) > $temp2
+comm -23 <(sort $temp2) <(sort sets/gcc_only.ini) > $untrackedfile
 rm $temp1
 rm $temp2

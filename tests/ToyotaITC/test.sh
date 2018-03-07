@@ -12,12 +12,11 @@ _download() {
 }
 
 _build() {
+    # warning: not assigning LD to see if it fixes bit_shift.c:237:9: error: ‘sink’ undeclared
     cd Software-Analysis-Benchmark/
-    autoreconf
-    automake --add-missing --force-missing
-    autoreconf
-    ./configure CC=$compiler LD=$compiler |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
-    make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    names[0]="autoreconf" ; autoreconf -i |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+    names[1]="configure"  ; ./configure CC=$compiler |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    names[2]="make"       ; make          |& tee kcc_build_2.txt ; results[2]="$?" ; process_kcc_config 2
 }
 
 _test() {

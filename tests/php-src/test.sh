@@ -17,17 +17,12 @@ _download() {
 }
 
 _build() {
+    export echo=echo
     cd php-src/
-    autoscan
-    aclocal
-    autoheader
-    autoreconf
-    ./buildconf CC=$compiler LD=$compiler
-    #sudo apt install libxml2-dev
-    ./configure CC=$compiler LD=$compiler |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
-    echo "PHP-SRC DEBUG"
-    cat config.log
-    make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    names[0]="autoreconf" ; autoreconf -i                         |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+    names[1]="buildconf"  ; ./buildconf CC=$compiler LD=$compiler |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    names[2]="configure"  ; ./configure CC=$compiler LD=$compiler |& tee kcc_build_2.txt ; results[2]="$?" ; process_kcc_config 2
+    names[3]="make"       ; make                                  |& tee kcc_build_3.txt ; results[3]="$?" ; process_kcc_config 3
 }
 
 init

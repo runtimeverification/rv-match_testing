@@ -5,7 +5,8 @@ base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 _download() {
     git clone https://github.com/openssl/openssl.git
     cd openssl/
-    git checkout d166ed8c11e10e9fdaeac182effb9dd318843924
+    git checkout 5dd94f1847c744929a3bd24819f1c99644bb18c7
+    # d166ed8c11e10e9fdaeac182effb9dd318843924 was from June 2016 and could be one of the last commits before md4test was removed, but it has build issues, so I'm using a commit from the last stable release before it which is from May 2016.
 }
 
 _build() {
