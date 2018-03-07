@@ -20,9 +20,6 @@ _build() {
     make |& tee kcc_build_1.txt
     [ -f src/dhcpcd ] ; results[1]="$?" ; process_kcc_config 1
 
-    # Leave passing regression tests alone.
-    if [ "$exportfile" == "regression" ] ; then return ; fi
-
     cd tests/ ; names[2]="make tests" ; CC=$compiler LD=$compiler make |& tee kcc_build_2.txt ; results[2]="$?" ; process_kcc_config 2
     
 }
