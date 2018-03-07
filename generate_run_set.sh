@@ -19,3 +19,13 @@ comm -23 <(sort $temp1) <(sort sets/acceptance_extended.ini) > $temp2
 comm -23 <(sort $temp2) <(sort sets/gcc_only.ini) > $untrackedfile
 rm $temp1
 rm $temp2
+p_untrackedfile="sets/_generated_p_untracked.ini"
+rm $p_untrackedfile
+comm -23 <(sort $allfile) <(sort sets/predict_regression.ini) > $temp1
+comm -23 <(sort $temp1) <(sort sets/predict_acceptance.ini) > $temp2
+comm -23 <(sort $temp2) <(sort sets/predict_acceptance_extended.ini) > $temp1
+comm -23 <(sort $temp1) <(sort sets/gcc_only.ini) > $p_untrackedfile
+rm $temp1
+rm $temp2
+p_trackedfile="sets/_generated_p_tracked.ini"
+comm -23 <(sort $allfile) <(sort $p_untrackedfile) > $p_trackedfile
