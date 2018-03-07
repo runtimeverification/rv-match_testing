@@ -307,7 +307,7 @@ prep_build() {
 prep_extract_test() {
     # Save test successes into .ini
     cd $test_log_dir
-    echo "Suppsoed to be in log directory..."
+    echo "Supposed to be in log directory..."
     pwd
     echo "/supposed"
     if [ ! -z ${test_success+x} ]; then

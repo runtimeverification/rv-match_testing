@@ -37,18 +37,8 @@ _test() {
     mv peterson.pml ignore/
     mv priorities.pml ignore/
     mv wordcount.pml ignore/
-    if [ "$exportfile" == "regression" ] ; then
-        mv sat.pml ignore/
-    else
-        if [ "$exportfile" == "acceptance" ] ; then
-            mv sat.pml ignore/
-        else
-            if [ ! "$exportfile" == "report" ] ; then
-                echo "Warning! Unknown testing options detected in spin/test.sh"
-                mv sat.pml ignore/
-            fi
-        fi
-    fi
+    # sat worked for kcc but not gcc
+    mv sat.pml ignore/
     index=0;
     for f in *.pml; do
         echo "---- testing spin on "$f
@@ -59,7 +49,6 @@ _test() {
         cd Spin/Examples/
         echo "---- finished testing spin on "$f
     done
-    echo "akjsndui"
 }
 
 init

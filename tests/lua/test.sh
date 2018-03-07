@@ -22,13 +22,13 @@ _download() {
 }
 
 _build() {
-    cd lua-$VERSION/ && results[0]="$?" ; process_kcc_config 0
-    make linux CC=$compiler LD=$compiler |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    names[0]="folder" ; cd lua-$VERSION/ && results[0]="$?" ; process_kcc_config 0
+    names[1]="make linux" ; make linux CC=$compiler LD=$compiler |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 }
 
 _test() {
     cd lua-$VERSION-tests/
-    $build_dir/lua-$VERSION/src/lua all.lua |& tee kcc_runtime.txt ; test_success="$?"
+    names[0]="lua all" ; $build_dir/lua-$VERSION/src/lua all.lua |& tee kcc_out_0.txt ; results[0]="$?" ; process_config 0
 }
 
 init
