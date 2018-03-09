@@ -133,6 +133,8 @@ git pull
 
 if [ "$rvpredict" == "0" ] ; then
     echo "<install rv-predict>"
+    echo "Prior version:"
+    rvpc --version
     # to uninstall: "sudo dpkg -r rv-predict-c"
     cd /root/
     wget -q https://runtimeverification.com/predict/1.9.1-SNAPSHOT/c/rv-predict-c-installer-1.9.1-SNAPSHOT.jar
@@ -145,6 +147,8 @@ if [ "$rvpredict" == "0" ] ; then
 1
 " > stdinfile.txt
     cat stdinfile.txt | sudo java -jar predict.jar -console &> /dev/null
+    echo "New version:"
+    rvpc --version
     echo "  <assert rvpc>"
     set -e
     which rvpc &> /dev/null
