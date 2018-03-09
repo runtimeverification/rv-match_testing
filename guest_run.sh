@@ -124,12 +124,14 @@ git reset --hard origin/$gitbranch
 git checkout $gitbranch
 git pull
 
-# Update rvpc (disabled until a URL for latest version is used, 1.9 is preinstalled in source container)
-# RV-Predict/Java: `https://runtimeverification.com/predict/1.9.1-SNAPSHOT/rv-predict-installer-1.9.1-SNAPSHOT.jar`
-# RV-Predict/C debian: `https://runtimeverification.com/predict/1.9.1-SNAPSHOT/c/rv-predict-c_1.9.1-SNAPSHOT-1_amd64.deb`
-# RV-Predict/C gui: `https://runtimeverification.com/predict/1.9.1-SNAPSHOT/c/rv-predict-c-installer-1.9.1-SNAPSHOT.jar`
-# Should no longer need to use: https://runtimeverification.com/predict/download/c?v=1.9
-# Should no longer need to use: https://runtimeverification.com/predict/download/java?v=1.9
+# Update rvpc
+
+#  Reference:
+#   RV-Predict/Java: `https://runtimeverification.com/predict/1.9.1-SNAPSHOT/rv-predict-installer-1.9.1-SNAPSHOT.jar`
+#   RV-Predict/C debian: `https://runtimeverification.com/predict/1.9.1-SNAPSHOT/c/rv-predict-c_1.9.1-SNAPSHOT-1_amd64.deb`
+#   RV-Predict/C gui: `https://runtimeverification.com/predict/1.9.1-SNAPSHOT/c/rv-predict-c-installer-1.9.1-SNAPSHOT.jar`
+#   Should no longer need to use: https://runtimeverification.com/predict/download/c?v=1.9
+#   Should no longer need to use: https://runtimeverification.com/predict/download/java?v=1.9
 
 if [ "$rvpredict" == "0" ] ; then
     echo "<install rv-predict>"
@@ -138,7 +140,7 @@ if [ "$rvpredict" == "0" ] ; then
     # to uninstall: "sudo dpkg -r rv-predict-c"
     cd /root/
     sudo dpkg -r rv-predict-c &> /dev/null
-    dpkg --version &> /dev/null ; rvpcstillinstalled="$?"
+    rvpc --version &> /dev/null ; rvpcstillinstalled="$?"
     echo "  <assert rvpc uninstalled before reinstall>"
     set -e ; [ ! "$rvpcstillinstalled" == "0" ] ; set +e
     echo "  </assert rvpc uninstalled before reinstall>"
