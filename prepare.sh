@@ -147,9 +147,19 @@ increment_process_kcc_config() {
     fi
     echo "$counter" > $index.ini
     let "counter += 1"
-    more=`grep -A1 "Translation failed (kcc_config dumped). To repeat, run this command in directory" "$returnspot/kcc_build_$index.txt" | tail -n 1`
-    echo $'\n\n'"Running \"$more\" to get more information:" &>> kcc_config_k_summary$increment.txt
-    cd $location ; eval "$more" &>> $build_log_dir/kcc_config_k_summary$increment.txt ; rm kcc_config ; cd $build_log_dir
+    dumpstring="Translation failed (kcc_config dumped). To repeat, run this command in directory"
+    more=`grep -A0 "$dumpstring" "$returnspot/kcc_build_$index.txt" | tail -n 2`
+    morefolder=`echo ${more#$dumpstring} | head -n 1`
+    morecommand=`echo $more | tail -n 1`
+    echo "more: [$more]"
+    echo "morefolder: [$morefolder]"
+    echo "morecommand: [$morecommand]"
+    echo "location: [$locstr]"
+    echo "grep: [$grepstr]"
+    echo "comparison test (morefolder[$morefolder] vs. locstr[$locstr]): "
+    [ "$locstr" == "$morefolder" ] ; echo "$?"
+    echo $'\n\n'"Running \"$morecommand\" to get more information:" &>> kcc_config_k_summary$increment.txt
+    cd $location ; eval "$morecommand" &>> $build_log_dir/kcc_config_k_summary$increment.txt ; rm kcc_config ; cd $build_log_dir
 }
 
 process_kcc_config() { # Called by _build in test.sh which is called by prep_build() here
