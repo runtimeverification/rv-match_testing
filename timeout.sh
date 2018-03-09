@@ -87,8 +87,6 @@ fi
 
     # Be nice, post SIGTERM first.
     # The 'exit 0' below will be executed if any preceeding command fails.
-    echo "$scriptName: Testing to see if killing will crash jenkings."
-    kill -s SIGKILL $$ ; sleep 10 ; exit 0
     echo "$scriptName: Terminating." # Custom script line inserted by Tim Swan
     kill -s SIGTERM $$ && kill -0 $$ || exit 0
     sleep $delay
