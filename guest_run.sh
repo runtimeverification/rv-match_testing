@@ -137,8 +137,11 @@ if [ "$rvpredict" == "0" ] ; then
     rvpc --version
     # to uninstall: "sudo dpkg -r rv-predict-c"
     cd /root/
-    wget -q https://runtimeverification.com/predict/1.9.1-SNAPSHOT/c/rv-predict-c-installer-1.9.1-SNAPSHOT.jar
-    mv rv-predict-c-installer-1.9.1-SNAPSHOT.jar predict.jar
+    sudo dpkg -r rv-predict-c &> /dev/null
+    dpkg --version &> /dev/null ; rvpcstillinstalled="$?"
+    echo "  <assert rvpc uninstalled before reinstall>"
+    set -e ; [ ! "$rvpcstillinstalled" == "0" ] ; set +e
+    echo "  </assert rvpc uninstalled before reinstall>"
     printf "
 
 
@@ -146,19 +149,8 @@ if [ "$rvpredict" == "0" ] ; then
 1
 1
 " > stdinfile.txt
-    cat stdinfile.txt | sudo java -jar predict.jar -console
-    echo "Version after non-uninstalled-prior reinstall:"
-    rvpc --version
-    sudo dpkg -r rv-predict-c
-    printf "
-
-
-1
-1
-1
-" > stdinfile.txt
-    cat stdinfile.txt | sudo java -jar predict.jar -console
-    echo "Version after uninstalled-prior reinstall:"
+    cat stdinfile.txt | sudo java -jar predict.jar -console &> /dev/null
+    echo "Version after reinstall:"
     rvpc --version
     echo "  <assert rvpc>"
     set -e
