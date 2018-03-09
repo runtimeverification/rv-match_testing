@@ -151,6 +151,8 @@ increment_process_kcc_config() {
     more=`grep -A0 "$dumpstring" "$returnspot/kcc_build_$index.txt" | tail -n 2`
     morefolder=`echo ${more#$dumpstring} | head -n 1`
     morecommand=`echo $more | tail -n 1`
+    locstr="$(basename $location)"
+    echo "current index: [$index]"
     echo "more: [$more]"
     echo "morefolder: [$morefolder]"
     echo "morecommand: [$morecommand]"
@@ -158,8 +160,10 @@ increment_process_kcc_config() {
     echo "grep: [$grepstr]"
     echo "comparison test (morefolder[$morefolder] vs. locstr[$locstr]): "
     [ "$locstr" == "$morefolder" ] ; echo "$?"
-    echo $'\n\n'"Running \"$morecommand\" to get more information:" &>> kcc_config_k_summary$increment.txt
-    cd $location ; eval "$morecommand" &>> $build_log_dir/kcc_config_k_summary$increment.txt ; rm kcc_config ; cd $build_log_dir
+    if [ "$locstr" == "$morefolder" ] ; then
+        echo $'\n\n'"Running \"$morecommand\" to get more information:" &>> kcc_config_k_summary$increment.txt
+        cd $location ; eval "$morecommand" &>> $build_log_dir/kcc_config_k_summary$increment.txt ; rm kcc_config ; cd $build_log_dir
+    fi
 }
 
 process_kcc_config() { # Called by _build in test.sh which is called by prep_build() here

@@ -11,9 +11,8 @@ _download() {
 
 _build() {
     cd openssl/
-    set -o pipefail
-    if [[ $compiler == "kcc" ]]; then
-        CC="kcc -std=gnu11 -no-pedantic -frecover-all-errors" CXX=k++ LD=kcc ./config no-asm no-threads no-hw no-zlib no-shared |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+    if [[ "$compiler" == "kcc" ]]; then
+        CC="kcc -std=gnu11 -no-pedantic -frecover-all-errors" CXX=k++ LD=$compiler ./config no-asm no-threads no-hw no-zlib no-shared |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     else
         CC=$compiler ./config no-asm no-threads no-hw no-zlib no-shared |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     fi

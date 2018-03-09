@@ -138,12 +138,15 @@ if [ "$rvpredict" == "0" ] ; then
     echo "Prior version:"
     rvpc --version
     # to uninstall: "sudo dpkg -r rv-predict-c"
-    cd /root/
     sudo dpkg -r rv-predict-c &> /dev/null
     rvpc --version &> /dev/null ; rvpcstillinstalled="$?"
     echo "  <assert rvpc uninstalled before reinstall>"
     set -e ; [ ! "$rvpcstillinstalled" == "0" ] ; set +e
     echo "  </assert rvpc uninstalled before reinstall>"
+    cd /root/ ; wget -q https://runtimeverification.com/predict/1.9.1-SNAPSHOT/c/rv-predict-c-installer-1.9.1-SNAPSHOT.jar
+    mv predict-c.jar predict-c-old.jar
+    mv rv-predict-c-installer-1.9.1-SNAPSHOT.jar predict-c.jar
+    diff predict-c.jar predict-c-old.jar
     printf "
 
 
