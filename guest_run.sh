@@ -146,8 +146,19 @@ if [ "$rvpredict" == "0" ] ; then
 1
 1
 " > stdinfile.txt
-    cat stdinfile.txt | sudo java -jar predict.jar -console &> /dev/null
-    echo "New version:"
+    cat stdinfile.txt | sudo java -jar predict.jar -console
+    echo "Version after non-uninstalled-prior reinstall:"
+    rvpc --version
+    sudo dpkg -r rv-predict-c
+    printf "
+
+
+1
+1
+1
+" > stdinfile.txt
+    cat stdinfile.txt | sudo java -jar predict.jar -console
+    echo "Version after uninstalled-prior reinstall:"
     rvpc --version
     echo "  <assert rvpc>"
     set -e
