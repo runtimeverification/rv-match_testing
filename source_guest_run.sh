@@ -51,8 +51,8 @@ printf "\nPassed! k-bin-to-text works in source container.\n"
 # We don't care if installer fails as long as rvpc functions afterwards.
 set +e
 printf "\nInstalling rv-predict[c]\n" # uninstall "sudo dpkg -r rv-predict-c"
-wget -q https://runtimeverification.com/predict/download/c?v=1.9 &> /dev/null
-mv c\?v\=1.9 predict-c.jar
+wget -q https://runtimeverification.com/predict/1.9.1-SNAPSHOT/c/rv-predict-c-installer-1.9.1-SNAPSHOT.jar &> /dev/null
+mv rv-predict-c-installer-1.9.1-SNAPSHOT.jar predict-c.jar
 printf "
 
 
@@ -69,8 +69,8 @@ rvpc -help &> /dev/null
 
 set +e
 printf "\nInstalling rv-predict[java]\n"
-wget -q https://runtimeverification.com/predict/download/java?v=1.9 &> /dev/null
-mv java\?v\=1.9 predict-java.jar
+wget -q https://runtimeverification.com/predict/1.9.1-SNAPSHOT/rv-predict-installer-1.9.1-SNAPSHOT.jar &> /dev/null
+mv rv-predict-installer-1.9.1-SNAPSHOT.jar predict-java.jar
 printf "
 1
 

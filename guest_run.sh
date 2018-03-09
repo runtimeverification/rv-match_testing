@@ -125,27 +125,33 @@ git checkout $gitbranch
 git pull
 
 # Update rvpc (disabled until a URL for latest version is used, 1.9 is preinstalled in source container)
+# RV-Predict/Java: `https://runtimeverification.com/predict/1.9.1-SNAPSHOT/rv-predict-installer-1.9.1-SNAPSHOT.jar`
+# RV-Predict/C debian: `https://runtimeverification.com/predict/1.9.1-SNAPSHOT/c/rv-predict-c_1.9.1-SNAPSHOT-1_amd64.deb`
+# RV-Predict/C gui: `https://runtimeverification.com/predict/1.9.1-SNAPSHOT/c/rv-predict-c-installer-1.9.1-SNAPSHOT.jar`
+# Should no longer need to use: https://runtimeverification.com/predict/download/c?v=1.9
+# Should no longer need to use: https://runtimeverification.com/predict/download/java?v=1.9
+
 if [ "$rvpredict" == "0" ] ; then
-#    echo "<install rv-predict>"
-#    # to uninstall: "sudo dpkg -r rv-predict-c"
-#    cd /root/
-#    wget -q https://runtimeverification.com/predict/download/c?v=1.9
-#    mv c\?v\=1.9 predict.jar
-#    printf "
-#
-#
-#1
-#1
-#1
-#" > stdinfile.txt
-#    cat stdinfile.txt | sudo java -jar predict.jar -console &> /dev/null
+    echo "<install rv-predict>"
+    # to uninstall: "sudo dpkg -r rv-predict-c"
+    cd /root/
+    wget -q https://runtimeverification.com/predict/1.9.1-SNAPSHOT/c/rv-predict-c-installer-1.9.1-SNAPSHOT.jar
+    mv rv-predict-c-installer-1.9.1-SNAPSHOT.jar predict.jar
+    printf "
+
+
+1
+1
+1
+" > stdinfile.txt
+    cat stdinfile.txt | sudo java -jar predict.jar -console &> /dev/null
     echo "  <assert rvpc>"
     set -e
     which rvpc &> /dev/null
     rvpc -help &> /dev/null
     set +e
     echo "  </assert rvpc>"
-#    echo "</install rv-predict>"
+    echo "</install rv-predict>"
 fi
 
 # Update kcc
