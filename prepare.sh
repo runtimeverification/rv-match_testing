@@ -148,9 +148,9 @@ increment_process_kcc_config() {
     echo "$counter" > $index.ini
     let "counter += 1"
     dumpstring="Translation failed (kcc_config dumped). To repeat, run this command in directory"
-    more=`grep -A0 "$dumpstring" "$returnspot/kcc_build_$index.txt" | tail -n 2`
-    morefolder=`echo ${more#$dumpstring} | head -n 1`
-    morecommand=`echo $more | tail -n 1`
+    more=`grep -A1 "$dumpstring" "$returnspot/kcc_build_$index.txt"`
+    morefolder=`printf "${more#$dumpstring}" | head -n 1`
+    morecommand=`printf "$more" | tail -n 1`
     locstr="$(basename $location)"
     echo "current index: [$index]"
     echo "more: [$more]"
