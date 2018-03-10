@@ -135,28 +135,33 @@ git pull
 
 if [ "$rvpredict" == "0" ] ; then
     echo "<install rv-predict>"
-    echo "Prior version:"
+    echo "  Existing version:"
     rvpc --version
-    # to uninstall: "sudo dpkg -r rv-predict-c"
-    sudo dpkg -r rv-predict-c &> /dev/null
-    rvpc --version &> /dev/null ; rvpcstillinstalled="$?"
-    echo "  <assert rvpc uninstalled before reinstall>"
-    set -e ; [ ! "$rvpcstillinstalled" == "0" ] ; set +e
-    echo "  </assert rvpc uninstalled before reinstall>"
     cd /root/ ; wget -q https://runtimeverification.com/predict/1.9.1-SNAPSHOT/c/rv-predict-c-installer-1.9.1-SNAPSHOT.jar
-    mv predict-c.jar predict-c-old.jar
+    rm -f predict-c-old.jar
+    mv predict-c.jar predict-c-old.jar &> /dev/null
     mv rv-predict-c-installer-1.9.1-SNAPSHOT.jar predict-c.jar
-    diff predict-c.jar predict-c-old.jar
-    printf "
+    diff predict-c.jar predict-c-old.jar &> /dev/null ; predictissame="$?"
+    if [ -e predict-c-old.jar ] && [ "$predictissame" == "0" ] ; then
+        echo "  New predict file is the same as the old one."
+    else
+        echo "  Old predict file not found. Updating with new."
+        sudo dpkg -r rv-predict-c &> /dev/null
+        rvpc --version &> /dev/null ; rvpcstillinstalled="$?"
+        echo "  <assert rvpc uninstalled before reinstall>"
+        set -e ; [ ! "$rvpcstillinstalled" == "0" ] ; set +e
+        echo "  </assert rvpc uninstalled before reinstall>"
+        printf "
 
 
 1
 1
 1
 " > stdinfile.txt
-    cat stdinfile.txt | sudo java -jar predict.jar -console &> /dev/null
-    echo "Version after reinstall:"
-    rvpc --version
+        cat stdinfile.txt | sudo java -jar predict-c.jar -console &> /dev/null
+        echo "  Version after reinstall:"
+        rvpc --version
+    fi
     echo "  <assert rvpc>"
     set -e
     which rvpc &> /dev/null
