@@ -47,4 +47,10 @@ wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/mast
        - only installs dependencies and downloads, not build
  - P - rv-predict
        - runs and reports gcc and rvpc, not kcc
- - standalone options are limited to `rsatgpP`
+ - T - Trusty
+       - uses Trusty container instead of Xenial
+ - o - old machine
+       - uses scripts that work with lxc (instead of lcd) using the master machine copying a Trusty source container
+ - b - force build
+       - build a project even when the hash matches
+ - standalone options are limited to `rsatgpPb`
