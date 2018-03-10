@@ -150,6 +150,8 @@ increment_process_kcc_config() {
     dumpstring="Translation failed (kcc_config dumped). To repeat, run this command in directory "
     more=`grep -A1 "$dumpstring" "$returnspot/kcc_build_$index.txt"`
     morefolder=`printf "${more#$dumpstring}" | head -n 1`
+    coloncharacter=":"
+    morefolder=${morefolder%$coloncharacter}
     morecommand=`printf "$more" | tail -n 1`
     locstr="$(basename $location)"
     echo "current index: [$index]"
