@@ -147,7 +147,7 @@ increment_process_kcc_config() {
     fi
     echo "$counter" > $index.ini
     let "counter += 1"
-    dumpstring="Translation failed (kcc_config dumped). To repeat, run this command in directory"
+    dumpstring="Translation failed (kcc_config dumped). To repeat, run this command in directory "
     more=`grep -A1 "$dumpstring" "$returnspot/kcc_build_$index.txt"`
     morefolder=`printf "${more#$dumpstring}" | head -n 1`
     morecommand=`printf "$more" | tail -n 1`
