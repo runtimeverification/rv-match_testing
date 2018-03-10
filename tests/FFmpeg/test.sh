@@ -14,7 +14,6 @@ _download() {
 
 _build() {
     cd FFmpeg/
-    set -o pipefail
     if [[ $compiler == "kcc" ]]; then
         ./configure --cc=kcc --ld=kcc --disable-stripping --disable-asm --disable-inline-asm --disable-x86asm --extra-cflags="-std=gnu11 -frecover-all-errors" |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     else

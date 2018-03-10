@@ -163,8 +163,9 @@ increment_process_kcc_config() {
     echo "comparison test (morefolder[$morefolder] vs. locstr[$locstr]): "
     [ "$locstr" == "$morefolder" ] ; echo "$?"
     if [ "$locstr" == "$morefolder" ] ; then
-        echo $'\n\n'"Running \"$morecommand\" to get more information:" &>> kcc_config_k_summary$increment.txt
+        echo $'\n\n'"As requested in the log seem below, running command: {"$'\n'"$morecommand"$'\n'"} in $locstr to get more information: {"$'\n' &>> kcc_config_k_summary$increment.txt
         cd $location ; eval "$morecommand" &>> $build_log_dir/kcc_config_k_summary$increment.txt ; rm kcc_config ; cd $build_log_dir
+        echo "}" &>> kcc_config_k_summary$increment.txt
     fi
 }
 
