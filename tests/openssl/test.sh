@@ -5,7 +5,7 @@ base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 _download() {
     git clone https://github.com/openssl/openssl.git
     cd openssl/
-    git checkout 7a908204ed3afe1379151c6d090148edb2fcc87e
+    git checkout 6941960602658a52742786978fe8e677548f89bf
 }
 
 _build() {
