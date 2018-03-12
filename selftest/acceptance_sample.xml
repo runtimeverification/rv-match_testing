@@ -2,17 +2,7 @@
 <testsuites>
 <testsuite name="ReportScriptReport" package="ReportPackage">
 <properties/>
-Build step 0, "GENERATED-TEST[feedback]": {
-
-
-Build step log tail: 
-Fix test.sh to report some sort of build feedback.
-}]]></error>
-</testcase>
-<testcase classname="acceptance.empty_body" name="GENERATED-TEST[timeout]">
-<error message="Failed.">
-</testcase>
-<testcase classname="acceptance.empty_body" name="kcc GENERATED-TEST[feedback]" time=".012477455">
+<testcase classname="acceptance.empty_body" name="gcc GENERATED-TEST[feedback]" time=".012820187">
 <error message="Failed.">
 <![CDATA[
 Build step 0, "GENERATED-TEST[feedback]": {
@@ -22,17 +12,7 @@ Build step log tail:
 Fix test.sh to report some sort of build feedback.
 }]]></error>
 </testcase>
-Build step 0, "GENERATED-TEST[feedback]": {
-
-
-Build step log tail: 
-Fix test.sh to report some sort of build feedback.
-}]]></error>
-</testcase>
-<testcase classname="acceptance.empty_functions" name="GENERATED-TEST[timeout]">
-<error message="Failed.">
-</testcase>
-<testcase classname="acceptance.empty_functions" name="kcc GENERATED-TEST[feedback]" time=".012590836">
+<testcase classname="acceptance.empty_body" name="kcc GENERATED-TEST[feedback]" time=".012068036">
 <error message="Failed.">
 <![CDATA[
 Build step 0, "GENERATED-TEST[feedback]": {
@@ -42,39 +22,47 @@ Build step log tail:
 Fix test.sh to report some sort of build feedback.
 }]]></error>
 </testcase>
+<testcase classname="acceptance.empty_functions" name="gcc GENERATED-TEST[feedback]" time=".012262425">
+<error message="Failed.">
+<![CDATA[
+Build step 0, "GENERATED-TEST[feedback]": {
+
+
+Build step log tail: 
+Fix test.sh to report some sort of build feedback.
+}]]></error>
+</testcase>
+<testcase classname="acceptance.empty_functions" name="kcc GENERATED-TEST[feedback]" time=".011782505">
+<error message="Failed.">
+<![CDATA[
+Build step 0, "GENERATED-TEST[feedback]": {
+
+
+Build step log tail: 
+Fix test.sh to report some sort of build feedback.
+}]]></error>
+</testcase>
+<testcase classname="acceptance.make_fail" name="gcc configure success" time=".004614545">
+</testcase>
+<testcase classname="acceptance.make_fail" name="gcc make success" time=".005835791">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
 
 }]]></error>
 </testcase>
-<testcase classname="acceptance.make_fail" name="GENERATED-TEST[timeout]">
-<error message="Failed.">
+<testcase classname="acceptance.make_fail" name="kcc configure success" time=".004545025">
 </testcase>
-<testcase classname="acceptance.make_fail" name="kcc configure success" time=".005003912">
-</testcase>
-<testcase classname="acceptance.make_fail" name="kcc make success" time=".006464785">
+<testcase classname="acceptance.make_fail" name="kcc make success" time=".005942108">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
 
 }]]></error>
 </testcase>
-<error message="Failed.">
-<![CDATA[
-Build step 1, "make success": {
-
-
-Build step log tail: 
-Important debug output produced by make. Umbrella satire.
-}]]></error>
+<testcase classname="acceptance.make_log_tail" name="gcc configure success" time=".006223588">
 </testcase>
-<testcase classname="acceptance.make_log_tail" name="GENERATED-TEST[timeout]">
-<error message="Failed.">
-</testcase>
-<testcase classname="acceptance.make_log_tail" name="kcc configure success" time=".006497736">
-</testcase>
-<testcase classname="acceptance.make_log_tail" name="kcc make success" time=".006550855">
+<testcase classname="acceptance.make_log_tail" name="gcc make success" time=".006369012">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
@@ -84,22 +72,37 @@ Build step log tail:
 Important debug output produced by make. Umbrella satire.
 }]]></error>
 </testcase>
+<testcase classname="acceptance.make_log_tail" name="kcc configure success" time=".006123156">
 </testcase>
-<testcase classname="acceptance.make_pass" name="GENERATED-TEST[timeout]">
+<testcase classname="acceptance.make_log_tail" name="kcc make success" time=".006293014">
 <error message="Failed.">
+<![CDATA[
+Build step 1, "make success": {
+
+
+Build step log tail: 
+Important debug output produced by make. Umbrella satire.
+}]]></error>
 </testcase>
-<testcase classname="acceptance.make_pass" name="kcc configure success" time=".005059777">
+<testcase classname="acceptance.make_pass" name="gcc configure success" time=".004645613">
 </testcase>
-<testcase classname="acceptance.make_pass" name="kcc make success" time=".006468764">
+<testcase classname="acceptance.make_pass" name="gcc make success" time=".006375640">
 </testcase>
+<testcase classname="acceptance.make_pass" name="kcc configure success" time=".004744870">
 </testcase>
-<testcase classname="acceptance.timeout_pass" name="GENERATED-TEST[timeout]">
-<error message="Failed.">
+<testcase classname="acceptance.make_pass" name="kcc make success" time=".006031304">
 </testcase>
-<testcase classname="acceptance.timeout_pass" name="kcc configure success" time=".006206981">
+<testcase classname="acceptance.timeout_pass" name="gcc configure success" time=".006096846">
 </testcase>
-<testcase classname="acceptance.timeout_pass" name="kcc make success" time="3.018088010">
+<testcase classname="acceptance.timeout_pass" name="gcc make success" time="3.017225127">
 </testcase>
+<testcase classname="acceptance.timeout_pass" name="kcc configure success" time=".006282493">
+</testcase>
+<testcase classname="acceptance.timeout_pass" name="kcc make success" time="3.017309314">
+</testcase>
+<testcase classname="acceptance.timeout_fail" name="gcc configure success" time=".005927442">
+</testcase>
+<testcase classname="acceptance.timeout_fail" name="gcc make success" time="30.011564105">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
@@ -110,12 +113,9 @@ timeout.sh: Terminating.
 timeout.sh: Termination delay passed. Killing.
 }]]></error>
 </testcase>
-<testcase classname="acceptance.timeout_fail" name="GENERATED-TEST[timeout]">
-<error message="Failed.">
+<testcase classname="acceptance.timeout_fail" name="kcc configure success" time=".006334019">
 </testcase>
-<testcase classname="acceptance.timeout_fail" name="kcc configure success" time=".006065377">
-</testcase>
-<testcase classname="acceptance.timeout_fail" name="kcc make success" time="30.016860127">
+<testcase classname="acceptance.timeout_fail" name="kcc make success" time="30.016767102">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
@@ -126,6 +126,9 @@ timeout.sh: Terminating.
 timeout.sh: Termination delay passed. Killing.
 }]]></error>
 </testcase>
+<testcase classname="acceptance.many_kcc_config" name="gcc configure success" time=".004811259">
+</testcase>
+<testcase classname="acceptance.many_kcc_config" name="gcc make success" time=".033684675">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
@@ -146,12 +149,9 @@ Location: /home/timothy/Desktop/rv-match_testing_/selftest/many_kcc_config/gcc/b
 k-bin-to-text command failed with above error.
 }]]></error>
 </testcase>
-<testcase classname="acceptance.many_kcc_config" name="GENERATED-TEST[timeout]">
-<error message="Failed.">
+<testcase classname="acceptance.many_kcc_config" name="kcc configure success" time=".005240701">
 </testcase>
-<testcase classname="acceptance.many_kcc_config" name="kcc configure success" time=".005130209">
-</testcase>
-<testcase classname="acceptance.many_kcc_config" name="kcc make success" time=".035153853">
+<testcase classname="acceptance.many_kcc_config" name="kcc make success" time=".036423980">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
@@ -172,24 +172,27 @@ Location: /home/timothy/Desktop/rv-match_testing_/selftest/many_kcc_config/kcc/b
 k-bin-to-text command failed with above error.
 }]]></error>
 </testcase>
+<testcase classname="acceptance.no_kcc_config" name="gcc configure success" time=".005038533">
+</testcase>
+<testcase classname="acceptance.no_kcc_config" name="gcc make success" time=".006669577">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
 
 }]]></error>
 </testcase>
-<testcase classname="acceptance.no_kcc_config" name="GENERATED-TEST[timeout]">
-<error message="Failed.">
+<testcase classname="acceptance.no_kcc_config" name="kcc configure success" time=".005388880">
 </testcase>
-<testcase classname="acceptance.no_kcc_config" name="kcc configure success" time=".005168738">
-</testcase>
-<testcase classname="acceptance.no_kcc_config" name="kcc make success" time=".006684071">
+<testcase classname="acceptance.no_kcc_config" name="kcc make success" time=".006717424">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
 
 }]]></error>
 </testcase>
+<testcase classname="acceptance.one_kcc_config" name="gcc configure success" time=".004876036">
+</testcase>
+<testcase classname="acceptance.one_kcc_config" name="gcc make success" time=".019966692">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
@@ -203,12 +206,9 @@ Location: /home/timothy/Desktop/rv-match_testing_/selftest/one_kcc_config/gcc/bu
 k-bin-to-text command failed with above error.
 }]]></error>
 </testcase>
-<testcase classname="acceptance.one_kcc_config" name="GENERATED-TEST[timeout]">
-<error message="Failed.">
+<testcase classname="acceptance.one_kcc_config" name="kcc configure success" time=".005266478">
 </testcase>
-<testcase classname="acceptance.one_kcc_config" name="kcc configure success" time=".010359082">
-</testcase>
-<testcase classname="acceptance.one_kcc_config" name="kcc make success" time=".035985512">
+<testcase classname="acceptance.one_kcc_config" name="kcc make success" time=".020203658">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
@@ -222,53 +222,53 @@ Location: /home/timothy/Desktop/rv-match_testing_/selftest/one_kcc_config/kcc/bu
 k-bin-to-text command failed with above error.
 }]]></error>
 </testcase>
+<testcase classname="acceptance.unit_test_single_pass" name="gcc configure success" time=".004838040">
 </testcase>
-<testcase classname="acceptance.unit_test_single_pass" name="GENERATED-TEST[timeout]">
-<error message="Failed.">
+<testcase classname="acceptance.unit_test_single_pass" name="gcc make success" time=".006218259">
 </testcase>
-<testcase classname="acceptance.unit_test_single_pass" name="kcc configure success" time=".004861880">
+<testcase classname="acceptance.unit_test_single_pass" name="kcc configure success" time=".005050422">
 </testcase>
-<testcase classname="acceptance.unit_test_single_pass" name="kcc make success" time=".006546066">
+<testcase classname="acceptance.unit_test_single_pass" name="kcc make success" time=".006544968">
 </testcase>
+<testcase classname="acceptance.unit_test_single_fail" name="gcc configure success" time=".005451828">
 </testcase>
-<testcase classname="acceptance.unit_test_single_fail" name="GENERATED-TEST[timeout]">
-<error message="Failed.">
+<testcase classname="acceptance.unit_test_single_fail" name="gcc make success" time=".006016018">
 </testcase>
-<testcase classname="acceptance.unit_test_single_fail" name="kcc configure success" time=".004814789">
+<testcase classname="acceptance.unit_test_single_fail" name="kcc configure success" time=".004827488">
 </testcase>
-<testcase classname="acceptance.unit_test_single_fail" name="kcc make success" time=".006393619">
+<testcase classname="acceptance.unit_test_single_fail" name="kcc make success" time=".006283920">
 </testcase>
+<testcase classname="acceptance.unit_test_pass_then_fail" name="gcc configure success" time=".004894959">
 </testcase>
-<testcase classname="acceptance.unit_test_pass_then_fail" name="GENERATED-TEST[timeout]">
-<error message="Failed.">
+<testcase classname="acceptance.unit_test_pass_then_fail" name="gcc make success" time=".006305208">
 </testcase>
-<testcase classname="acceptance.unit_test_pass_then_fail" name="kcc configure success" time=".005016248">
+<testcase classname="acceptance.unit_test_pass_then_fail" name="kcc configure success" time=".004636145">
 </testcase>
-<testcase classname="acceptance.unit_test_pass_then_fail" name="kcc make success" time=".006630214">
+<testcase classname="acceptance.unit_test_pass_then_fail" name="kcc make success" time=".006345027">
 </testcase>
+<testcase classname="acceptance.unit_test_k_term" name="gcc configure success" time=".004721652">
 </testcase>
-<testcase classname="acceptance.unit_test_k_term" name="GENERATED-TEST[timeout]">
-<error message="Failed.">
+<testcase classname="acceptance.unit_test_k_term" name="gcc make success" time=".006977946">
 </testcase>
-<testcase classname="acceptance.unit_test_k_term" name="kcc configure success" time=".005011267">
+<testcase classname="acceptance.unit_test_k_term" name="kcc configure success" time=".005394808">
 </testcase>
-<testcase classname="acceptance.unit_test_k_term" name="kcc make success" time=".007877379">
+<testcase classname="acceptance.unit_test_k_term" name="kcc make success" time=".006219707">
 </testcase>
+<testcase classname="acceptance.unit_test_location_term" name="gcc configure success" time=".005230732">
 </testcase>
-<testcase classname="acceptance.unit_test_location_term" name="GENERATED-TEST[timeout]">
-<error message="Failed.">
+<testcase classname="acceptance.unit_test_location_term" name="gcc make success" time=".006143635">
 </testcase>
-<testcase classname="acceptance.unit_test_location_term" name="kcc configure success" time=".004911301">
+<testcase classname="acceptance.unit_test_location_term" name="kcc configure success" time=".005632339">
 </testcase>
-<testcase classname="acceptance.unit_test_location_term" name="kcc make success" time=".006338015">
+<testcase classname="acceptance.unit_test_location_term" name="kcc make success" time=".006437762">
 </testcase>
+<testcase classname="acceptance.unit_test_log" name="gcc configure success" time=".004984178">
 </testcase>
-<testcase classname="acceptance.unit_test_log" name="GENERATED-TEST[timeout]">
-<error message="Failed.">
+<testcase classname="acceptance.unit_test_log" name="gcc make success" time=".006194770">
 </testcase>
-<testcase classname="acceptance.unit_test_log" name="kcc configure success" time=".005119796">
+<testcase classname="acceptance.unit_test_log" name="kcc configure success" time=".005614087">
 </testcase>
-<testcase classname="acceptance.unit_test_log" name="kcc make success" time=".006059927">
+<testcase classname="acceptance.unit_test_log" name="kcc make success" time=".006700552">
 </testcase>
 </testsuite>
 </testsuites>
