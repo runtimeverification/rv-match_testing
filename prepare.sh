@@ -400,6 +400,9 @@ prep_test() {
 init_helper() {
     prep_prepare
     prep_download
+    echo '<testcase classname="'$exportfile'.'${test_name/./"_"}'" name="GENERATED-TEST[timeout]">' >> $report_file
+    echo '<error message="Failed.">' >> $report_file
+    echo '</testcase>' >> $report_file
     if [ ! "$prepareonly" == "0" ] ; then
         prep_build
         if [ "$unittesting" == "0" ] ; then
@@ -409,6 +412,7 @@ init_helper() {
             echo $currentscript": Not unit testing."
         fi
     fi
+    sed -i '1,3d' $report_file
 }
 
 init() {
