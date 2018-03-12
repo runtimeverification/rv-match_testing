@@ -8,7 +8,7 @@ _download() {
 
 _build() {
     [ : ] |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
-    bash $base_dir/timeout.sh -t 1 [ : ] |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    bash $base_dir/timeout.sh -i 1 -d 1 -t 1 [ : ] |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 }
 
 _test() {

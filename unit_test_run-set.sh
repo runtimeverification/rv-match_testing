@@ -102,7 +102,7 @@ if [ "$1" == "r" ] || [ "$1" == "-r" ] ; then
 fi
 echo "Testing the rv-match_testing project, especially for expected xml format."
 echo -ne '[                     ](0%  )\r'
-bash run-set.sh -utb selftest &> /dev/null
+bash run-set.sh -utb selftest
 echo -ne '[#######              ](33% )\r'
 bash run-set.sh -urb selftest &> /dev/null
 echo -ne '[##############       ](66% )\r'
