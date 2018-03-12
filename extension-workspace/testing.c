@@ -1,14 +1,12 @@
 // testing.c
 // https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html
 int main () {
-enum E {
-  oldval __attribute__((deprecated)),
-  newval
-};
-
-int
-fn (void)
-{
-  return oldval;
+    return test(5);
 }
+int test(int i) {
+  switch(i)
+  {
+  case 1 ... 3:
+    printf("hi");
+  }
 }
