@@ -2,273 +2,273 @@
 <testsuites>
 <testsuite name="ReportScriptReport" package="ReportPackage">
 <properties/>
-<testcase classname="acceptance.empty_body" name="gcc GENERATED-TEST[feedback]" time=".132008892">
-<error message="Failed.">
-<![CDATA[
 Build step 0, "GENERATED-TEST[feedback]": {
+
+
 Build step log tail: 
 Fix test.sh to report some sort of build feedback.
 }]]></error>
 </testcase>
-<testcase classname="acceptance.empty_body" name="kcc GENERATED-TEST[feedback]" time=".126927488">
+<testcase classname="acceptance.empty_body" name="GENERATED-TEST[timeout]">
+<error message="Failed.">
+</testcase>
+<testcase classname="acceptance.empty_body" name="kcc GENERATED-TEST[feedback]" time=".012477455">
 <error message="Failed.">
 <![CDATA[
 Build step 0, "GENERATED-TEST[feedback]": {
+
+
 Build step log tail: 
 Fix test.sh to report some sort of build feedback.
 }]]></error>
 </testcase>
-<testcase classname="acceptance.empty_functions" name="gcc GENERATED-TEST[feedback]" time=".125491038">
-<error message="Failed.">
-<![CDATA[
 Build step 0, "GENERATED-TEST[feedback]": {
+
+
 Build step log tail: 
 Fix test.sh to report some sort of build feedback.
 }]]></error>
 </testcase>
-<testcase classname="acceptance.empty_functions" name="kcc GENERATED-TEST[feedback]" time=".122702360">
+<testcase classname="acceptance.empty_functions" name="GENERATED-TEST[timeout]">
+<error message="Failed.">
+</testcase>
+<testcase classname="acceptance.empty_functions" name="kcc GENERATED-TEST[feedback]" time=".012590836">
 <error message="Failed.">
 <![CDATA[
 Build step 0, "GENERATED-TEST[feedback]": {
+
+
 Build step log tail: 
 Fix test.sh to report some sort of build feedback.
 }]]></error>
 </testcase>
-<testcase classname="acceptance.make_fail" name="gcc configure success" time="">
-</testcase>
-<testcase classname="acceptance.make_fail" name="gcc make success" time="">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
+
 }]]></error>
 </testcase>
-<testcase classname="acceptance.make_fail" name="kcc configure success" time="">
+<testcase classname="acceptance.make_fail" name="GENERATED-TEST[timeout]">
+<error message="Failed.">
 </testcase>
-<testcase classname="acceptance.make_fail" name="kcc make success" time="">
+<testcase classname="acceptance.make_fail" name="kcc configure success" time=".005003912">
+</testcase>
+<testcase classname="acceptance.make_fail" name="kcc make success" time=".006464785">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
+
 }]]></error>
 </testcase>
-<testcase classname="acceptance.make_log_tail" name="gcc configure success" time="">
-</testcase>
-<testcase classname="acceptance.make_log_tail" name="gcc make success" time="">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
+
+
 Build step log tail: 
 Important debug output produced by make. Umbrella satire.
 }]]></error>
 </testcase>
-<testcase classname="acceptance.make_log_tail" name="kcc configure success" time="">
+<testcase classname="acceptance.make_log_tail" name="GENERATED-TEST[timeout]">
+<error message="Failed.">
 </testcase>
-<testcase classname="acceptance.make_log_tail" name="kcc make success" time="">
+<testcase classname="acceptance.make_log_tail" name="kcc configure success" time=".006497736">
+</testcase>
+<testcase classname="acceptance.make_log_tail" name="kcc make success" time=".006550855">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
+
+
 Build step log tail: 
 Important debug output produced by make. Umbrella satire.
 }]]></error>
 </testcase>
-<testcase classname="acceptance.make_pass" name="gcc configure success" time="">
 </testcase>
-<testcase classname="acceptance.make_pass" name="gcc make success" time="">
+<testcase classname="acceptance.make_pass" name="GENERATED-TEST[timeout]">
+<error message="Failed.">
 </testcase>
-<testcase classname="acceptance.make_pass" name="kcc configure success" time="">
+<testcase classname="acceptance.make_pass" name="kcc configure success" time=".005059777">
 </testcase>
-<testcase classname="acceptance.make_pass" name="kcc make success" time="">
+<testcase classname="acceptance.make_pass" name="kcc make success" time=".006468764">
 </testcase>
-<testcase classname="acceptance.timeout_pass" name="gcc configure success" time="">
 </testcase>
-<testcase classname="acceptance.timeout_pass" name="gcc make success" time="">
+<testcase classname="acceptance.timeout_pass" name="GENERATED-TEST[timeout]">
+<error message="Failed.">
 </testcase>
-<testcase classname="acceptance.timeout_pass" name="kcc configure success" time="">
+<testcase classname="acceptance.timeout_pass" name="kcc configure success" time=".006206981">
 </testcase>
-<testcase classname="acceptance.timeout_pass" name="kcc make success" time="">
+<testcase classname="acceptance.timeout_pass" name="kcc make success" time="3.018088010">
 </testcase>
-<testcase classname="acceptance.timeout_fail" name="gcc configure success" time="">
-</testcase>
-<testcase classname="acceptance.timeout_fail" name="gcc make success" time="">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
+
+
 Build step log tail: 
 timeout.sh: Terminating.
 timeout.sh: Termination delay passed. Killing.
 }]]></error>
 </testcase>
-<testcase classname="acceptance.timeout_fail" name="kcc configure success" time="">
+<testcase classname="acceptance.timeout_fail" name="GENERATED-TEST[timeout]">
+<error message="Failed.">
 </testcase>
-<testcase classname="acceptance.timeout_fail" name="kcc make success" time="">
+<testcase classname="acceptance.timeout_fail" name="kcc configure success" time=".006065377">
+</testcase>
+<testcase classname="acceptance.timeout_fail" name="kcc make success" time="30.016860127">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
+
+
 Build step log tail: 
 timeout.sh: Terminating.
 timeout.sh: Termination delay passed. Killing.
 }]]></error>
 </testcase>
-<testcase classname="acceptance.many_kcc_config" name="gcc configure success" time="">
-</testcase>
-<testcase classname="acceptance.many_kcc_config" name="gcc make success" time=".605860344">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
+
+
 kcc_config info: 
 
 Found a kcc_config number 1-0:
-Location: /home/timothy/Desktop/matchTesting/rv-match_testing/selftest/many_kcc_config/gcc/build/directory_one/sub_directory_one_B
-Exception in thread "main" java.nio.BufferUnderflowException
-	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
-	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
-	at java.nio.ByteBuffer.get(ByteBuffer.java:715)
-	at org.kframework.parser.binary.BinaryParser.parse(BinaryParser.java:188)
-	at org.kframework.main.BinaryToText.main(BinaryToText.java:37)
+Location: /home/timothy/Desktop/rv-match_testing_/selftest/many_kcc_config/gcc/build/directory_one/sub_directory_one_B
+/home/timothy/Desktop/rv-match_testing_/prepare.sh: line 136: k-bin-to-text: command not found
 k-bin-to-text command failed with above error.
+
 kcc_config info: 
 
 Found a kcc_config number 1-1:
-Location: /home/timothy/Desktop/matchTesting/rv-match_testing/selftest/many_kcc_config/gcc/build/directory_two
-Exception in thread "main" java.nio.BufferUnderflowException
-	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
-	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
-	at java.nio.ByteBuffer.get(ByteBuffer.java:715)
-	at org.kframework.parser.binary.BinaryParser.parse(BinaryParser.java:188)
-	at org.kframework.main.BinaryToText.main(BinaryToText.java:37)
+Location: /home/timothy/Desktop/rv-match_testing_/selftest/many_kcc_config/gcc/build/directory_two
+/home/timothy/Desktop/rv-match_testing_/prepare.sh: line 136: k-bin-to-text: command not found
 k-bin-to-text command failed with above error.
 }]]></error>
 </testcase>
-<testcase classname="acceptance.many_kcc_config" name="kcc configure success" time="">
+<testcase classname="acceptance.many_kcc_config" name="GENERATED-TEST[timeout]">
+<error message="Failed.">
 </testcase>
-<testcase classname="acceptance.many_kcc_config" name="kcc make success" time=".600178606">
+<testcase classname="acceptance.many_kcc_config" name="kcc configure success" time=".005130209">
+</testcase>
+<testcase classname="acceptance.many_kcc_config" name="kcc make success" time=".035153853">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
+
+
 kcc_config info: 
 
 Found a kcc_config number 1-0:
-Location: /home/timothy/Desktop/matchTesting/rv-match_testing/selftest/many_kcc_config/kcc/build/directory_one/sub_directory_one_B
-Exception in thread "main" java.nio.BufferUnderflowException
-	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
-	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
-	at java.nio.ByteBuffer.get(ByteBuffer.java:715)
-	at org.kframework.parser.binary.BinaryParser.parse(BinaryParser.java:188)
-	at org.kframework.main.BinaryToText.main(BinaryToText.java:37)
+Location: /home/timothy/Desktop/rv-match_testing_/selftest/many_kcc_config/kcc/build/directory_one/sub_directory_one_B
+/home/timothy/Desktop/rv-match_testing_/prepare.sh: line 136: k-bin-to-text: command not found
 k-bin-to-text command failed with above error.
+
 kcc_config info: 
 
 Found a kcc_config number 1-1:
-Location: /home/timothy/Desktop/matchTesting/rv-match_testing/selftest/many_kcc_config/kcc/build/directory_two
-Exception in thread "main" java.nio.BufferUnderflowException
-	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
-	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
-	at java.nio.ByteBuffer.get(ByteBuffer.java:715)
-	at org.kframework.parser.binary.BinaryParser.parse(BinaryParser.java:188)
-	at org.kframework.main.BinaryToText.main(BinaryToText.java:37)
+Location: /home/timothy/Desktop/rv-match_testing_/selftest/many_kcc_config/kcc/build/directory_two
+/home/timothy/Desktop/rv-match_testing_/prepare.sh: line 136: k-bin-to-text: command not found
 k-bin-to-text command failed with above error.
 }]]></error>
 </testcase>
-<testcase classname="acceptance.no_kcc_config" name="gcc configure success" time="">
-</testcase>
-<testcase classname="acceptance.no_kcc_config" name="gcc make success" time="">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
+
 }]]></error>
 </testcase>
-<testcase classname="acceptance.no_kcc_config" name="kcc configure success" time="">
+<testcase classname="acceptance.no_kcc_config" name="GENERATED-TEST[timeout]">
+<error message="Failed.">
 </testcase>
-<testcase classname="acceptance.no_kcc_config" name="kcc make success" time="">
+<testcase classname="acceptance.no_kcc_config" name="kcc configure success" time=".005168738">
+</testcase>
+<testcase classname="acceptance.no_kcc_config" name="kcc make success" time=".006684071">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
+
 }]]></error>
 </testcase>
-<testcase classname="acceptance.one_kcc_config" name="gcc configure success" time="">
-</testcase>
-<testcase classname="acceptance.one_kcc_config" name="gcc make success" time=".355072484">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
+
+
 kcc_config info: 
 
 Found a kcc_config number 1-0:
-Location: /home/timothy/Desktop/matchTesting/rv-match_testing/selftest/one_kcc_config/gcc/build/directory_one/sub_directory_one_B
-Exception in thread "main" java.nio.BufferUnderflowException
-	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
-	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
-	at java.nio.ByteBuffer.get(ByteBuffer.java:715)
-	at org.kframework.parser.binary.BinaryParser.parse(BinaryParser.java:188)
-	at org.kframework.main.BinaryToText.main(BinaryToText.java:37)
+Location: /home/timothy/Desktop/rv-match_testing_/selftest/one_kcc_config/gcc/build/directory_one/sub_directory_one_B
+/home/timothy/Desktop/rv-match_testing_/prepare.sh: line 136: k-bin-to-text: command not found
 k-bin-to-text command failed with above error.
 }]]></error>
 </testcase>
-<testcase classname="acceptance.one_kcc_config" name="kcc configure success" time="">
+<testcase classname="acceptance.one_kcc_config" name="GENERATED-TEST[timeout]">
+<error message="Failed.">
 </testcase>
-<testcase classname="acceptance.one_kcc_config" name="kcc make success" time=".352616305">
+<testcase classname="acceptance.one_kcc_config" name="kcc configure success" time=".010359082">
+</testcase>
+<testcase classname="acceptance.one_kcc_config" name="kcc make success" time=".035985512">
 <error message="Failed.">
 <![CDATA[
 Build step 1, "make success": {
+
+
 kcc_config info: 
 
 Found a kcc_config number 1-0:
-Location: /home/timothy/Desktop/matchTesting/rv-match_testing/selftest/one_kcc_config/kcc/build/directory_one/sub_directory_one_B
-Exception in thread "main" java.nio.BufferUnderflowException
-	at java.nio.ByteBuffer.get(ByteBuffer.java:688)
-	at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:285)
-	at java.nio.ByteBuffer.get(ByteBuffer.java:715)
-	at org.kframework.parser.binary.BinaryParser.parse(BinaryParser.java:188)
-	at org.kframework.main.BinaryToText.main(BinaryToText.java:37)
+Location: /home/timothy/Desktop/rv-match_testing_/selftest/one_kcc_config/kcc/build/directory_one/sub_directory_one_B
+/home/timothy/Desktop/rv-match_testing_/prepare.sh: line 136: k-bin-to-text: command not found
 k-bin-to-text command failed with above error.
 }]]></error>
 </testcase>
-<testcase classname="acceptance.unit_test_single_pass" name="gcc configure success" time="">
 </testcase>
-<testcase classname="acceptance.unit_test_single_pass" name="gcc make success" time="">
+<testcase classname="acceptance.unit_test_single_pass" name="GENERATED-TEST[timeout]">
+<error message="Failed.">
 </testcase>
-<testcase classname="acceptance.unit_test_single_pass" name="kcc configure success" time="">
+<testcase classname="acceptance.unit_test_single_pass" name="kcc configure success" time=".004861880">
 </testcase>
-<testcase classname="acceptance.unit_test_single_pass" name="kcc make success" time="">
+<testcase classname="acceptance.unit_test_single_pass" name="kcc make success" time=".006546066">
 </testcase>
-<testcase classname="acceptance.unit_test_single_fail" name="gcc configure success" time="">
 </testcase>
-<testcase classname="acceptance.unit_test_single_fail" name="gcc make success" time="">
+<testcase classname="acceptance.unit_test_single_fail" name="GENERATED-TEST[timeout]">
+<error message="Failed.">
 </testcase>
-<testcase classname="acceptance.unit_test_single_fail" name="kcc configure success" time="">
+<testcase classname="acceptance.unit_test_single_fail" name="kcc configure success" time=".004814789">
 </testcase>
-<testcase classname="acceptance.unit_test_single_fail" name="kcc make success" time="">
+<testcase classname="acceptance.unit_test_single_fail" name="kcc make success" time=".006393619">
 </testcase>
-<testcase classname="acceptance.unit_test_pass_then_fail" name="gcc configure success" time="">
 </testcase>
-<testcase classname="acceptance.unit_test_pass_then_fail" name="gcc make success" time="">
+<testcase classname="acceptance.unit_test_pass_then_fail" name="GENERATED-TEST[timeout]">
+<error message="Failed.">
 </testcase>
-<testcase classname="acceptance.unit_test_pass_then_fail" name="kcc configure success" time="">
+<testcase classname="acceptance.unit_test_pass_then_fail" name="kcc configure success" time=".005016248">
 </testcase>
-<testcase classname="acceptance.unit_test_pass_then_fail" name="kcc make success" time="">
+<testcase classname="acceptance.unit_test_pass_then_fail" name="kcc make success" time=".006630214">
 </testcase>
-<testcase classname="acceptance.unit_test_k_term" name="gcc configure success" time="">
 </testcase>
-<testcase classname="acceptance.unit_test_k_term" name="gcc make success" time="">
+<testcase classname="acceptance.unit_test_k_term" name="GENERATED-TEST[timeout]">
+<error message="Failed.">
 </testcase>
-<testcase classname="acceptance.unit_test_k_term" name="kcc configure success" time="">
+<testcase classname="acceptance.unit_test_k_term" name="kcc configure success" time=".005011267">
 </testcase>
-<testcase classname="acceptance.unit_test_k_term" name="kcc make success" time="">
+<testcase classname="acceptance.unit_test_k_term" name="kcc make success" time=".007877379">
 </testcase>
-<testcase classname="acceptance.unit_test_location_term" name="gcc configure success" time="">
 </testcase>
-<testcase classname="acceptance.unit_test_location_term" name="gcc make success" time="">
+<testcase classname="acceptance.unit_test_location_term" name="GENERATED-TEST[timeout]">
+<error message="Failed.">
 </testcase>
-<testcase classname="acceptance.unit_test_location_term" name="kcc configure success" time="">
+<testcase classname="acceptance.unit_test_location_term" name="kcc configure success" time=".004911301">
 </testcase>
-<testcase classname="acceptance.unit_test_location_term" name="kcc make success" time="">
+<testcase classname="acceptance.unit_test_location_term" name="kcc make success" time=".006338015">
 </testcase>
-<testcase classname="acceptance.unit_test_log" name="gcc configure success" time="">
 </testcase>
-<testcase classname="acceptance.unit_test_log" name="gcc make success" time="">
+<testcase classname="acceptance.unit_test_log" name="GENERATED-TEST[timeout]">
+<error message="Failed.">
 </testcase>
-<testcase classname="acceptance.unit_test_log" name="kcc configure success" time="">
+<testcase classname="acceptance.unit_test_log" name="kcc configure success" time=".005119796">
 </testcase>
-<testcase classname="acceptance.unit_test_log" name="kcc make success" time="">
+<testcase classname="acceptance.unit_test_log" name="kcc make success" time=".006059927">
 </testcase>
 </testsuite>
 </testsuites>
