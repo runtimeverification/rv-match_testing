@@ -15,8 +15,10 @@
     -fno-native-compilation	
 
 - k-bin-to-text dependencies
-    git clone rv-match
-    In k directory, run "mvn package"
+    sudo apt update
+    sudo apt -y install build-essential m4 openjdk-8-jdk libgmp-dev libmpfr-dev pkg-config flex z3 maven opam
+    git clone https://github.com/runtimeverification/rv-match.git
+    In rv-match/k/, run "mvn package -DskipTests"
     Make sure that the PATH variable points to `rv-match/k/k-distribution/target/release/k/bin`
     Run `kserver &` (& runs something in the background)
 

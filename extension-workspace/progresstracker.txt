@@ -36,13 +36,13 @@ https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html
 - • Compound Literals:	  	Compound literals give structures, unions or arrays as values.
   • Designated Inits:	  	Labeling elements of initializers.
 1 • Case Ranges:	  	‘case 1 ... 9’ and such.
-  • Cast to Union:	  	Casting to union type from any member of the union.
-* • Mixed Declarations:	  	Mixing declarations and code.
-  • Function Attributes:	Declaring that functions have no side effects, or that they can never return.
-  • Variable Attributes:	Specifying attributes of variables.
-  • Type Attributes:	  	Specifying attributes of types.
-  • Label Attributes:	  	Specifying attributes on labels.
-  • Enumerator Attributes:	Specifying attributes on enumerators.
+ 1• Cast to Union:	  	Casting to union type from any member of the union.
+- • Mixed Declarations:	  	Mixing declarations and code.
+1 • Function Attributes:	Declaring that functions have no side effects, or that they can never return.
+- • Variable Attributes:	Specifying attributes of variables.
+- • Type Attributes:	  	Specifying attributes of types.
+- • Label Attributes:	  	Specifying attributes on labels.
+- • Enumerator Attributes:	Specifying attributes on enumerators.
   • Statement Attributes:	Specifying attributes on statements.
   • Attribute Syntax:	  	Formal syntax for attributes.
   • Function Prototypes:	Prototype declarations and old-style definitions.
@@ -68,7 +68,7 @@ https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html
   • Other Builtins:	  	Other built-in functions.
   • Target Builtins:	  	Built-in functions specific to particular targets.
   • Target Format Checks:	Format checks specific to particular targets.
-  • Pragmas:	  		Pragmas accepted by GCC.
-  • Unnamed Fields:	  	Unnamed struct/union fields within structs/unions.
+- • Pragmas:	  		Pragmas accepted by GCC.
+- • Unnamed Fields:	  	Unnamed struct/union fields within structs/unions.
   • Thread-Local:	  	Per-thread variables.
   • Binary constants:	  	Binary constants using the ‘0b’ prefix.
