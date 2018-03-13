@@ -19,6 +19,7 @@ _build() {
     aclocal; autoreconf
     ./configure CC="$compiler -std=gnu11" LD=$compiler |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    sed -i '35,38d' tests/CMakeLists.txt
     sed -i '82d' tests/Makefile
     sed -i -e "s/valgrindtest.c/capturetest.c/g" tests/Makefile
     cd tests/

@@ -113,8 +113,12 @@ while read line; do
             log_output="/mnt/jenkins/logs/$logdate/$line.log"
             touch $log_output
             chmod a+rw $log_output
+            report_output="/mnt/jenkins/logs/$logdate/$line.out"
+            touch $report_output
+            chmod a+rw $report_output
         else
             log_output="logs/$logdate/$line.log"
+            report_output="logs/$logdate/$line.out"
         fi
         echo "     logged at $log_output"
         set -e ; rm -f "$testsfolder/$line/$exportfile.xml" ; set +e # prevents a false test report
@@ -127,6 +131,7 @@ while read line; do
         echo "Status option was selected, so the tests are not being run right now."
     fi
     cat "$testsfolder/$line/$exportfile.xml" >> $exportpathtemp
+    bash extract.sh $log_output $report_output
 done < $whitelistpath
 echo "==== tests finished at $(date)"
 
