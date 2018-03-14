@@ -132,6 +132,7 @@ while read line; do
     fi
     cat "$testsfolder/$line/$exportfile.xml" >> $exportpathtemp
     bash extract.sh $log_output $report_output
+    head -n`grep -n "=========================" $report_output | grep -Eo '^[^:]+'` $report_output
 done < $whitelistpath
 echo "==== tests finished at $(date)"
 

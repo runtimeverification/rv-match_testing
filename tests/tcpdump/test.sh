@@ -9,7 +9,8 @@ _dependencies() {
 _download() {
     git clone https://github.com/the-tcpdump-group/tcpdump.git
     cd tcpdump/
-    git checkout b524a7d97c865bd50abc012f70963350219cf492
+    git checkout af974494da71f2dae8eeac40e1611db5d6a82668
+    #git checkout b524a7d97c865bd50abc012f70963350219cf492
 }
 
 _build() {
