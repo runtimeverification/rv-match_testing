@@ -13,6 +13,7 @@ hadflag="1"
 reinstallmatch="0"
 rvpredict="1"
 othermachine="1"
+selfunittests="0"
 echo "========= Beginning container guest scripts."
 while getopts ":rsatdgqpPob" opt; do
   hadflag="0"
@@ -40,8 +41,9 @@ while getopts ":rsatdgqpPob" opt; do
         runsetparams=$runsetparams"g"
         reinstallmatch="1"
       ;;
-    q ) echo $currentscript" quick (don't update rv-match) option selected."
+    q ) echo $currentscript" quick (skip updating rv-match and running unit tests) option selected."
         reinstallmatch="1"
+        selfunittests="1"
       ;;
     p ) echo $currentscript" prepare option selected."
         runsetparams=$runsetparams"p"
@@ -228,23 +230,27 @@ y
 fi
 
 # Assert rv-match_testing minimum requirements
-echo "<$currentscript assert self-unit-tests>"
-cd /root/rv-match_testing
-bash unit_test_run-set.sh &> selfunittest.log ; testout=$(echo "$?")
-if [ "$testout" == "0" ] ; then
-    echo "  self-unit-tests all passed."
-else
-    if [ "$testout" == "1" ] ; then
-        echo "  self-unit-test(s) failed."
+if [ "$selfunittests" == "0" ] ; then
+    echo "<$currentscript assert self-unit-tests>"
+    cd /root/rv-match_testing
+    bash unit_test_run-set.sh &> selfunittest.log ; testout=$(echo "$?")
+    if [ "$testout" == "0" ] ; then
+        echo "  self-unit-tests all passed."
     else
-        echo "  self-unit-tests did not process properly."
+        if [ "$testout" == "1" ] ; then
+            echo "  self-unit-test(s) failed."
+        else
+            echo "  self-unit-tests did not process properly."
+        fi
+        cat selfunittest.log
     fi
-    cat selfunittest.log
+    set -e
+    [ "$testout" == "0" ]
+    set +e
+    echo "</$currentscript assert self-unit-tests>"
+else
+    echo "[self-unit-tests skipped]"
 fi
-set -e
-[ "$testout" == "0" ]
-set +e
-echo "</$currentscript assert self-unit-tests>"
 
 # Run test script, where most of the work happens
 cd /root/rv-match_testing && bash run-set.sh$runsetparams
