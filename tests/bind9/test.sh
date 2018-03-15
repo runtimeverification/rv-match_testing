@@ -44,6 +44,7 @@ _build() {
 }
 
 _test() {
+    echo "rvpredict var inside: [$rvpredict]"
     if [ ! -z ${rvpredict+x} ]; then names[0]="problem with prepare.sh"; results[0]="1"; echo "'rvpredict' variable wasn't set." ; return; fi
     cd bind9/
     names[0]="make unit"
