@@ -154,13 +154,6 @@ increment_process_kcc_config() {
     morefolder=${morefolder%$coloncharacter}
     morecommand=`printf "$more" | tail -n 1`
     locstr="$(basename $location)"
-    echo "current index: [$index]"
-    echo "more: [$more]"
-    echo "morefolder: [$morefolder]"
-    echo "morecommand: [$morecommand]"
-    echo "location: [$locstr]"
-    echo "grep: [$grepstr]"
-    echo "comparison test (morefolder[$morefolder] vs. locstr[$locstr]): "
     [ "$locstr" == "$morefolder" ] ; echo "$?"
     if [ "$locstr" == "$morefolder" ] ; then
         echo $'\n\n'"As requested in the log seen below, running command: {"$'\n'"$morecommand"$'\n'"} in the \"$locstr\" folder to get more information: {"$'\n' &>> kcc_config_k_summary$increment.txt
@@ -387,7 +380,8 @@ prep_test() {
         unset test_success
         starttime=`date +%s.%N`
         intervalstarttime="$starttime"
-        cd $unit_test_dir && increment="0" && _test
+        cd $unit_test_dir && increment="0"
+        _test
 
         # generate test hash - should be the last function in the testing process since it indicates completion
         cd $unit_test_dir && echo $(sha1sum <<< $testhashinfo) > test_function_hash
