@@ -1,0 +1,32 @@
+https://www.centos.org/docs/5/html/5.2/Deployment_Guide/s2-bind-rndc-configuration-namedconf.html
+https://pgl.yoyo.org/as/bind-zone-file-creator.php
+
+example named.conf
+https://www.pks.mpg.de/~mueller/docs/suse10.1/suselinux-manual_en/manual/sec.dns.named.html
+
+example world.zone
+https://www.pks.mpg.de/~mueller/docs/suse10.1/suselinux-manual_en/manual/sec.dns.zonefile.html
+
+example localhost.zone
+https://www.cs.montana.edu/courses/309/topics/dns/localhost.zone.html
+
+example 127.0.0.zone
+https://github.com/goreliu/my-MSYS2-Packages/blob/master/bind/127.0.0.zone
+
+
+I think I figured out at least how to get dummy files and configurations in place.
+
+chmod 777 myotherdir
+bind9/bin/named/myotherdir$ ls
+127.0.0.zone  localhost.zone  named.conf  root.hint
+
+bind9/bin/named$ sudo ./named -c ./myotherdir/named.conf -d 9 -g -L ./out.log ; echo "$?"
+I got a super long console log from that.
+
+
+
+
+
+
+
+

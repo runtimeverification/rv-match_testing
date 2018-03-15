@@ -9,8 +9,8 @@ _dependencies() {
 _download() {
     git clone https://github.com/the-tcpdump-group/tcpdump.git
     cd tcpdump/
-    git checkout af974494da71f2dae8eeac40e1611db5d6a82668
-    #git checkout b524a7d97c865bd50abc012f70963350219cf492
+    git checkout af974494da71f2dae8eeac40e1611db5d6a82668 # version 4.8
+    #git checkout b524a7d97c865bd50abc012f70963350219cf492 # version we originally were using
 }
 
 _build() {
@@ -23,8 +23,10 @@ _build() {
 
 _test() {
     cd tcpdump/tests/
-    names[0]="TESTrun.sh"
-    bash TESTrun.sh |& tee kcc_out_0.txt ; results[0]="$?" ; process_config 0
+    names[0]="isup.pcap"
+    ../tcpdump -S -t -q -n -r ./isup.pcap |& tee kcc_out_0.txt ; results[0]="$?" ; process_config 0
+    names[1]="TESTrun.sh"
+    bash TESTrun.sh              |& tee kcc_out_1.txt ; results[1]="$?" ; process_config 1
 }
 
 init
