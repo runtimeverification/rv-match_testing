@@ -381,6 +381,8 @@ prep_test() {
         starttime=`date +%s.%N`
         intervalstarttime="$starttime"
         cd $unit_test_dir && increment="0"
+        echo "rvpredict variable: [$rvpredict]"
+        export rvpredict
         _test
 
         # generate test hash - should be the last function in the testing process since it indicates completion
