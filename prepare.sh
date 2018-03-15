@@ -380,10 +380,9 @@ prep_test() {
         unset test_success
         starttime=`date +%s.%N`
         intervalstarttime="$starttime"
-        cd $unit_test_dir && increment="0"
+        cd $unit_test_dir && increment="0" && _test
         echo "rvpredict variable: [$rvpredict]"
         export rvpredict
-        _test
 
         # generate test hash - should be the last function in the testing process since it indicates completion
         cd $unit_test_dir && echo $(sha1sum <<< $testhashinfo) > test_function_hash
