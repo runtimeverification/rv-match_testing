@@ -105,8 +105,8 @@ zone "." in {
         file "root.hint";
 };' > named.conf
 
-    #sed replacemeplease named.conf
-    sed -i -e "s/replacemeplease/$(pwd)/g" named.conf
+    pwdesc=$(echo $PWD | sed 's_/_\\/_g')
+    sed -i -e "s/replacemeplease/$pwdesc/g" named.conf
     echo "named.conf : --------------------"
     cat named.conf
     echo "---------------------------------"
