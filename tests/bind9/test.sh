@@ -125,7 +125,7 @@ mars        IN A        192.168.1.3
 www         IN CNAME    moon' > world.zone    
 
     cd ..
-    sudo ./named -c ./myotherdir/named.conf -d 100 -g -L ./out.log &
+    sudo ./named -c ./$f/named.conf -d 100 -g -L ./out.log &
     for i in `seq 3000`; do
         dig @localhost sun.world.cosmos &
     done
