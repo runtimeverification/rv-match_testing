@@ -142,8 +142,9 @@ if [ "$rvpredict" == "0" ] ; then
     mv predict-c.jar predict-c-old.jar &> /dev/null
     mv rv-predict-c-installer-1.9.1-SNAPSHOT.jar predict-c.jar
     diff predict-c.jar predict-c-old.jar &> /dev/null ; predictissame="$?"
-    if [ -e predict-c-old.jar ] && [ "$predictissame" == "0" ] ; then
-        echo "  New predict file is the same as the old one."
+    which rvpc &> /dev/null ; predictinstalled="$?"
+    if [ -e predict-c-old.jar ] && [ "$predictissame" == "0" ] && [ "$predictinstalled" == "0" ] ; then
+        echo "  New predict file is the same as the old one and rvpc is installed. Not updating."
     else
         echo "  Old predict file not found or differs. Updating with new."
         sudo dpkg -r rv-predict-c &> /dev/null
