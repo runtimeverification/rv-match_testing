@@ -413,7 +413,7 @@ init_helper() {
 
 init() {
     echo '<testcase classname="'$exportfile'.'${test_name/./"_"}'" name="GENERATED-TEST[timeout]">' >> $report_file
-    echo '<error message="Failed.">' >> $report_file
+    echo '<error message="Failed."></error>' >> $report_file
     echo '</testcase>' >> $report_file
     echo "pwd:"
     pwd

@@ -159,7 +159,7 @@ if [ "$rvpredict" == "0" ] ; then
 1
 1
 " > stdinfile.txt
-        cat stdinfile.txt | sudo java -jar predict-c.jar -console
+        cat stdinfile.txt | sudo java -jar predict-c.jar -console &> /dev/null
         echo "  Version after reinstall:"
         rvpc --version
     fi
