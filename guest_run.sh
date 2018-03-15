@@ -145,7 +145,7 @@ if [ "$rvpredict" == "0" ] ; then
     if [ -e predict-c-old.jar ] && [ "$predictissame" == "0" ] ; then
         echo "  New predict file is the same as the old one."
     else
-        echo "  Old predict file not found. Updating with new."
+        echo "  Old predict file not found or differs. Updating with new."
         sudo dpkg -r rv-predict-c &> /dev/null
         rvpc --version &> /dev/null ; rvpcstillinstalled="$?"
         echo "  <assert rvpc uninstalled before reinstall>"
@@ -158,7 +158,7 @@ if [ "$rvpredict" == "0" ] ; then
 1
 1
 " > stdinfile.txt
-        cat stdinfile.txt | sudo java -jar predict-c.jar -console &> /dev/null
+        cat stdinfile.txt | sudo java -jar predict-c.jar -console
         echo "  Version after reinstall:"
         rvpc --version
     fi
