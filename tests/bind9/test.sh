@@ -105,7 +105,7 @@ zone "." in {
         file "root.hint";
 };' > named.conf
 
-    pwdesc=$(echo $PWD | sed 's_/_\\/_g')
+    pwdesc=$(echo "\"$PWD\"" | sed 's_/_\\/_g')
     sed -i -e "s/replacemeplease/$pwdesc/g" named.conf
     echo "named.conf : --------------------"
     cat named.conf
@@ -132,11 +132,11 @@ www         IN CNAME    moon' > world.zone
 
     cd ..
     sudo ./named -c ./$f/named.conf -d 100 -g -L ./out.log &
-    for i in `seq 3000`; do
+    for i in `seq 30`; do
         dig @localhost sun.world.cosmos &
     done
     echo "did loop ======================================================================================="
-    for i in `seq 2 3001`; do
+    for i in `seq 2 31`; do
         wait %${i}
     done
     echo "finished========================================================================================" 
