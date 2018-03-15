@@ -80,7 +80,7 @@ $ORIGIN localhost.
                         1D IN A         127.0.0.1' > localhost.zone
 
     echo 'options { 
-        directory "/home/timothy/Desktop/bind9/bin/named/myotherdir";
+        directory replacemeplease;
         forwarders { 10.0.0.1; };
         notify no;
 };
@@ -104,6 +104,12 @@ zone "." in {
         type hint;
         file "root.hint";
 };' > named.conf
+
+    #sed replacemeplease named.conf
+    sed -i -e "s/replacemeplease/$(pwd)/g" named.conf
+    echo "named.conf : --------------------"
+    cat named.conf
+    echo "---------------------------------"
 
     echo '$TTL 2D
 world.cosmos. IN SOA      gateway  root.world.cosmos. (
