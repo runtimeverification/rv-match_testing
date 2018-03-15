@@ -130,6 +130,8 @@ earth       IN A        192.168.1.2
 mars        IN A        192.168.1.3
 www         IN CNAME    moon' > world.zone    
 
+    touch root.hint    
+
     cd ..
     sudo ./named -c ./$f/named.conf -d 100 -g -L ./out.log &
     for i in `seq 30`; do
