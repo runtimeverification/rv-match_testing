@@ -142,7 +142,9 @@ if [ "$rvpredict" == "0" ] ; then
     cd /root/ ; wget -q https://runtimeverification.com/predict/1.9.1-SNAPSHOT/c/rv-predict-c-installer-1.9.1-SNAPSHOT.jar
     rm -f predict-c-old.jar
     mv predict-c.jar predict-c-old.jar &> /dev/null
+    set -e
     mv rv-predict-c-installer-1.9.1-SNAPSHOT.jar predict-c.jar
+    set +e
     diff predict-c.jar predict-c-old.jar &> /dev/null ; predictissame="$?"
     which rvpc &> /dev/null ; predictinstalled="$?"
     if [ -e predict-c-old.jar ] && [ "$predictissame" == "0" ] && [ "$predictinstalled" == "0" ] ; then
@@ -161,7 +163,7 @@ if [ "$rvpredict" == "0" ] ; then
 1
 1
 " > stdinfile.txt
-        cat stdinfile.txt | sudo java -jar predict-c.jar -console &> /dev/null
+        cat stdinfile.txt | sudo java -jar predict-c.jar -console
         echo "  Version after reinstall:"
         rvpc --version
     fi

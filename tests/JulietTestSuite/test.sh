@@ -8,7 +8,7 @@ _dependencies() {
 
 _download() {
     wget https://samate.nist.gov/SRD/testsuites/juliet/Juliet_Test_Suite_v1.3_for_C_Cpp.zip
-    unzip Juliet_Test_Suite_v1.3_for_C_Cpp.zip
+    unzip -qq Juliet_Test_Suite_v1.3_for_C_Cpp.zip
     rm Juliet_Test_Suite_v1.3_for_C_Cpp.zip
 }
 

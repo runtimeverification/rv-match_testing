@@ -18,7 +18,8 @@ _build() {
     cd bind9/
     bind9dir=$(pwd)
     names[0]="outer configure step"
-    ./configure --prefix=$HOME/bind9 --host=x86_64-linux-gnu --build=x86_64-pc-linux-gnu --with-randomdev=/dev/random --with-ecdsa=yes --with-gost=yes --with-eddsa=no --with-atf=$HOME/rv/bind9/unit/atf BUILD_CC=gcc CC=rvpc CXX=rvpc++ |& tee kcc_make_0.txt ; results[0]="$?" ; process_kcc_config 0
+    # This configuration is setup specifically to work with rvpc
+    ./configure --prefix=$HOME/bind9 --host=x86_64-linux-gnu --build=x86_64-pc-linux-gnu --with-randomdev=/dev/random --with-ecdsa=yes --with-gost=yes --with-eddsa=no --with-atf=$HOME/rv/bind9/unit/atf BUILD_CC=gcc CC=$compiler CXX=$compiler++ |& tee kcc_make_0.txt ; results[0]="$?" ; process_kcc_config 0
     names[1]="found unit/atf-src/" ; [ -d unit/atf-src/ ] ; results[1]="$?" ; process_kcc_config 1
     cd unit/atf-src/
     names[2]="inner configure step"
