@@ -50,6 +50,8 @@ _test() {
     names[0]="make unit"
     make unit |& tee kcc_out_0.txt ; results[0]="$?" ; process_config 0
 
+    return
+
     cd bin/named/
     f="custom_folder"
     mkdir $f
