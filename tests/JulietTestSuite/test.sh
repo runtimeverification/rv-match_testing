@@ -14,7 +14,7 @@ _download() {
 
 _build() {
     cd C/
-    names[0]="make" ; make |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+    names[0]="make" ; make CC=$compiler |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
 }
 
 _test() {
