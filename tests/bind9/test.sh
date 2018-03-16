@@ -21,12 +21,12 @@ _build() {
 
     names[1]="configure success"
     if [[ "$compiler" == "kcc" ]] ; then
-        ./configure CC=$compiler CFLAGS="-std=gnu11 -no-pedantic -frecover-all-errors" LD=kcc --disable-threads --disable-atomic --disable-shared |& tee kcc_build_1.txt ; results[1]="$?"
+        ./configure --with-atf CC=$compiler CFLAGS="-std=gnu11 -no-pedantic -frecover-all-errors" LD=kcc --disable-threads --disable-atomic --disable-shared |& tee kcc_build_1.txt ; results[1]="$?"
     else
         if [[ "$compiler" == "rvpc" ]] ; then
-            ./configure CC=$compiler |& tee kcc_build_1.txt ; results[1]="$?"
+            ./configure --with-atf CC=$compiler |& tee kcc_build_1.txt ; results[1]="$?"
         else
-            ./configure CC=$compiler --disable-threads --disable-atomic --disable-shared |& tee kcc_build_1.txt ; results[1]="$?"
+            ./configure --with-atf CC=$compiler --disable-threads --disable-atomic --disable-shared |& tee kcc_build_1.txt ; results[1]="$?"
         fi
     fi
     process_kcc_config 1
@@ -56,7 +56,7 @@ _test() {
     f="custom_folder"
     mkdir $f
     cd $f
-    # 127.0.0.zone, localhost.zone, named.conf, world.zone
+    # 127.0.0.zone, localhost.zone, named.conf, world.zone, root.hint
 
     echo '@                               1D IN SOA   localhost. root.localhost. (
                                     42    ; serial (yyyymmdd##)
