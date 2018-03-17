@@ -25,7 +25,7 @@ _build() {
     if [ "$compiler" == "kcc" ] || [ "$compiler" == "rvpc" ] ; then
         escapedjson=$(echo "\"$json_out\"" | sed 's_/_\\/_g')
         escapedjson=$(echo "\"$escapedjson\"" | sed 's/:/\\:/g')
-        reportflag="CFLAGS=-fissue-report=$escapedjson"
+        reportflag="CFLAGS=-fissue-report=\"$escapedjson\""
     else
         reportflag=""
     fi
