@@ -27,7 +27,7 @@ _build() {
     names[2]="make tests"
     make tests |& tee kcc_build_2.txt ; results[2]="$?" ; process_kcc_config 2
     names[3]="make test-torture"
-    CFLAGS='-fprofile-arcs -ftest-coverage -g -O0' make test-torture ; results[3]="$?" ; process_kcc_config 3
+    CFLAGS='-fprofile-arcs -ftest-coverage -g -O0' make test-torture |& tee kcc_build_3.txt ; results[3]="$?" ; process_kcc_config 3
 }
 
 _test() {

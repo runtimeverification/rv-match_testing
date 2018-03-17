@@ -27,6 +27,7 @@ _build() {
 
 _test() {
     cd Spin/Examples/
+    spintestdir=$(pwd)
     mkdir ignore/
     mv abp.pml ignore/
     mv cambridge.pml ignore/
@@ -46,7 +47,7 @@ _test() {
         ../Src6.4.7/spin $f |& tee "kcc_out_$index.txt" ; results[index]="$?"
         index=$((index+1))
         process_config $index
-        cd Spin/Examples/
+        cd "$spintestdir"
         echo "---- finished testing spin on "$f
     done
 }
