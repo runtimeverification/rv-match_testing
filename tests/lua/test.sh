@@ -24,7 +24,7 @@ _download() {
 _build() {
     if [ "$compiler" == "kcc" ] || [ "$compiler" == "rvpc" ] ; then
         #escapedjson=$(echo "\"$json_out\"" | sed 's_/_\\/_g')
-        escapedjson=$(echo "$json_out" | sed 's/:/\\:/g')
+        escapedjson=$(echo "$json_out" | sed 's/:/\\\\:/g')
         #escapedjson=$(echo "$escapedjson" | sed 's_/_\\/_g')
         reportflag="CFLAGS=\"-fissue-report=$escapedjson\""
         reportflag=$(echo "$reportflag" | sed 's_/_\\/_g')

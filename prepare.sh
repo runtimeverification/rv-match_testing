@@ -292,7 +292,7 @@ prep_build() {
 
         # build
         echo $report_string" building. Either first build, hash changed, \"kcc --version\" does not provide a build number, or the 'force build' (-b) option was used."
-        echo $(type _build)
+        type _build
         rm $build_dir/build_function_hash ; safe_rm=$build_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
         cp $download_dir/* $build_dir -r
         set -o pipefail
