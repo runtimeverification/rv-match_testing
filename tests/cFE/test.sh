@@ -29,6 +29,7 @@ _download() {
 
 _build() {
 
+    ulimit -s 16777216
     # Step 0
     cd cFE-6.5.0-OSS-release/build/
     export SIMULATION=native
@@ -66,6 +67,7 @@ _build() {
 _test() {
     # tests seem to run indefinitely now   
     #sudo /bin/sh -c "echo 100 > /proc/sys/fs/mqueue/msg_max"
+    ulimit -s 16777216
     cd cFE-6.5.0-OSS-release/build/
     tmot=120
     names[0]="timer" ; bash $base_dir/timeout.sh -t $tmot ./native/osal/unit-tests/ostimer-test/osal_timer_UT |& tee kcc_out_0.txt ; results[0]="$?" ; process_config 0

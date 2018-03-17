@@ -1,6 +1,8 @@
-// testing.c
-// https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html
+// alignment.c
+// Should be returning a 2?
+// https://gcc.gnu.org/onlinedocs/gcc/Alignment.html#Alignment
 int main() {
-	int i;
-	return 0;
+    struct foo { int x; char y; } foo1;
+    int z = __alignof__ (foo1.x);
+    return z;
 }

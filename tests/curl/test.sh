@@ -14,10 +14,11 @@ _download() {
 
 _build() {
     cd curl/
+    moreflags='-fprofile-arcs -ftest-coverage -g -O0'
     if [[ $compiler == "kcc" ]]; then
-        CC=kcc CFLAGS="-std=gnu11 -no-pedantic -frecover-all-errors" LD=kcc cmake -DCURL_STATICLIB=ON . |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+        CC=kcc CFLAGS="-std=gnu11 -no-pedantic -frecover-all-errors $moreflags" LD=kcc cmake -DCURL_STATICLIB=ON . |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     else
-        CC=$compiler cmake -DCURL_STATICLIB=ON . |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+        CC=$compiler CFLAGS="$moreflags" cmake -DCURL_STATICLIB=ON . |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
     fi
     make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 
@@ -27,7 +28,7 @@ _build() {
     names[2]="make tests"
     make tests |& tee kcc_build_2.txt ; results[2]="$?" ; process_kcc_config 2
     names[3]="make test-torture"
-    CFLAGS='-fprofile-arcs -ftest-coverage -g -O0' make test-torture |& tee kcc_build_3.txt ; results[3]="$?" ; process_kcc_config 3
+    make test-torture |& tee kcc_build_3.txt ; results[3]="$?" ; process_kcc_config 3
 }
 
 _test() {

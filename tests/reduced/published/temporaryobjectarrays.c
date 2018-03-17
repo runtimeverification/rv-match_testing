@@ -6,5 +6,5 @@ int main(void) {
             char ca[2];
       };
       union u2 o2 = { .ca = "a" };
-      return (0, o2).ca == o2.ca;
+      return (0, o2).ca == o2.ca - 1;
 }

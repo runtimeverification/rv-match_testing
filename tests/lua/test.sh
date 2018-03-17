@@ -27,7 +27,7 @@ _build() {
     else
         reportflag=""
     fi
-    names[0]="folder" ; cd lua-$VERSION/ && results[0]="$?" ; process_kcc_config 0
+    names[0]="folder" ; cd lua-$VERSION/ ; results[0]="$?" ; process_kcc_config 0
     names[1]="make linux" ; sudo make linux CC=$compiler LD=$compiler $reportflag |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
 }
 
