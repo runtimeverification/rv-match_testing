@@ -252,6 +252,7 @@ prep_extract() {
                 echo $report_string" build step: "${names[$t]}" Failed!"
                 echo '<error message="Failed.">' >> $report_file
                 print=$'\nBuild step '"$t"$', '"\"${names[$t]}\""$': {\n'
+                print=$print$(type _build)$'\n'
                 if [[ -e "$t.ini" ]] ; then
                     for s in `seq 0 "$(head -n 1 $t.ini)"`
                     do
