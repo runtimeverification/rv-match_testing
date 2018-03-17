@@ -18,7 +18,7 @@ _download() {
 _build() {
     cd hostap/hostapd/
     if [[ "$compiler" == "kcc" ]] ; then
-        export CFLAGS="-std=gnu11 -frecover-all-errors"
+        export CFLAGS="-std=gnu11 -frecover-all-errors -fissue-report=$json_out"
     else
         export CFLAGS="-std=gnu11"
     fi
