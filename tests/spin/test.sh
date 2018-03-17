@@ -16,7 +16,7 @@ _download() {
 _build() {
     cd Spin/Src6.4.7
     if [[ $compiler == "kcc" ]] ; then
-        sed -i -e "s/CC=gcc/CC=$compiler -frecover-all-errors/g" makefile ; results[0]="$?"
+        sed -i -e "s/CC=gcc/CC=$compiler -frecover-all-errors -fissue-report=$json_out/g" makefile ; results[0]="$?"
     else
         sed -i -e "s/CC=gcc/CC=$compiler/g" makefile ; results[0]="$?"
     fi
