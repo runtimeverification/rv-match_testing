@@ -119,9 +119,8 @@ while read line; do
             json_out="/mnt/jenkins/logs/$logdate/$line.json"
             touch $json_out
             chmod a+rw $json_out
-            html_out="/mnt/jenkins/logs/$logdate/$line.html"
-            touch $html_out
-            chmod a+rw $html_out
+            html_out="/mnt/jenkins/logs/$logdate/""$line""-html"
+            mkdir $html_out
         else
             log_output="logs/$logdate/$line.log"
             report_output="logs/$logdate/$line.out"
@@ -142,7 +141,7 @@ while read line; do
     cat "$testsfolder/$line/$exportfile.xml" >> $exportpathtemp
     bash extract.sh $log_output $report_output
     head -n`grep -n "=========================" $report_output | grep -Eo '^[^:]+'` $report_output
-    rv-html-report $json_out -o $html_out
+    sudo rv-html-report $json_out -o $html_out
 done < $whitelistpath
 echo "==== tests finished at $(date)"
 

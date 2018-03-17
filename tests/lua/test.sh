@@ -23,7 +23,7 @@ _download() {
 
 _build() {
     if [ "$compiler" == "kcc" ] || [ "$compiler" == "rvpc" ] ; then
-        reportflag="CFLAGS='-fissue-report=$json_out'"
+        reportflag="CFLAGS=\"-fissue-report=$json_out\""
     else
         reportflag=""
     fi
