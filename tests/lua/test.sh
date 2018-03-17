@@ -23,7 +23,8 @@ _download() {
 
 _build() {
     if [ "$compiler" == "kcc" ] || [ "$compiler" == "rvpc" ] ; then
-        reportflag="CFLAGS=\"-fissue-report=$json_out\""
+        escapedjson=$(echo "\"$json_out\"" | sed 's_/_\\/_g')
+        reportflag="CFLAGS=\"-fissue-report=$escapedjson\""
     else
         reportflag=""
     fi
