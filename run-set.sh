@@ -53,6 +53,7 @@ while getopts ":rsatugpPb" opt; do
       ;;
   esac
 done
+echo "$currentscript Build number: ${BUILD_NUMBER}"
 if [ "$flagsfortests" == "-" ] ; then flagsfortests="" ; fi
 
 # Handle (set|project) argument
