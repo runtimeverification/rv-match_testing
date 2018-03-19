@@ -76,6 +76,7 @@ while getopts ":rsatdgqpPob" opt; do
   esac
 done
 
+echo "$currentscript Build number: ${BUILD_NUMBER}"
 if [ "$runsetparams" == " -" ] ; then runsetparams="" ; fi
 if [ "$hadflag" == "0" ] ; then flag=$2 ; else flag=$1 ; fi
 runsetparams="$runsetparams $flag"

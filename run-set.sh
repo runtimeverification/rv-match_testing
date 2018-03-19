@@ -121,10 +121,10 @@ while read line; do
             html_out="/mnt/jenkins/logs/$logdate/""$line""-html"
             mkdir $html_out
         else
-            log_output="logs/$logdate/$line.log"
-            report_output="logs/$logdate/$line.out"
-            html_out="logs/$logdate/$line.html"
-            json_out="logs/temp.json"
+            log_output="$(pwd)/logs/$logdate/$line.log"
+            report_output="$(pwd)/logs/$logdate/$line.out"
+            html_out="$(pwd)/logs/$logdate/$line.html"
+            json_out="$(pwd)/logs/temp.json"
         fi
         rm -f $json_out ; touch $json_out ; export json_out
         echo "     logged at $log_output"

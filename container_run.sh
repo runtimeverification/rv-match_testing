@@ -75,6 +75,7 @@ while getopts ":rsatdgeEqpPTob" opt; do
       ;;
   esac
 done
+echo "$currentscript Build number: ${BUILD_NUMBER}"
 if [ "$guest_script_flags" == " -" ] ; then guest_script_flags="" ; fi
 if [ "$hadflag" == "0" ] ; then flag=$2 ; else flag=$1 ; fi
 guest_script_flags="$guest_script_flags $flag"
