@@ -20,9 +20,9 @@ _build() {
     else
         sed -i -e "s/CC=gcc/CC=$compiler/g" makefile ; results[0]="$?"
     fi
-    process_kcc_config 0
+    postup 0
 
-    make ; results[1]="$?" ; process_kcc_config 1
+    make ; results[1]="$?" ; postup 1
 }
 
 _test() {

@@ -14,9 +14,9 @@ _download() {
 
 _build() {
     cd VERGE/
-    names[0]="autogen script" ; bash autogen.sh |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
-    names[1]="configure"      ; ./configure CC=$compiler LD=$compiler |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
-    names[2]="make"           ; make            |& tee kcc_build_2.txt ; results[2]="$?" ; process_kcc_config 2
+    names[0]="autogen script" ; bash autogen.sh |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
+    names[1]="configure"      ; ./configure CC=$compiler LD=$compiler |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    names[2]="make"           ; make            |& tee kcc_build_2.txt ; results[2]="$?" ; postup 2
 }
 
 _test() {

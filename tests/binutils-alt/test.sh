@@ -20,9 +20,9 @@ _build() {
     #http://trac.clfs.org/ticket/926
     names[0]="sed replace"
     sed -i -e 's/@colophon/@@colophon/' \
-       -e 's/doc@cygnus.com/doc@@cygnus.com/' bfd/doc/bfd.texinfo |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
-    names[1]="configure" ; ./configure CC=$compiler LD=$compiler |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
-    names[2]="make" ; make CC=$compiler LD=$compiler |& tee kcc_build_2.txt ; results[2]="$?" ; process_kcc_config 2
+       -e 's/doc@cygnus.com/doc@@cygnus.com/' bfd/doc/bfd.texinfo |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
+    names[1]="configure" ; ./configure CC=$compiler LD=$compiler |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    names[2]="make" ; make CC=$compiler LD=$compiler |& tee kcc_build_2.txt ; results[2]="$?" ; postup 2
 }
 
 _test() {

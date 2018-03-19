@@ -8,8 +8,8 @@ _download() {
 
 _build() {
     results[0]="0"
-    echo "Important debug output produced by make. Umbrella satire." |& tee kcc_build_1.txt ; process_kcc_config 0
-    results[1]="2" ; process_kcc_config 1
+    echo "Important debug output produced by make. Umbrella satire." |& tee kcc_build_1.txt ; postup 0
+    results[1]="2" ; postup 1
     # "2" instead of "$?" to imply failure
 }
 

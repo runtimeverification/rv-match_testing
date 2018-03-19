@@ -15,11 +15,11 @@ _download() {
 }
 
 _build() {
-    cd Reptile/ ; results[0]="$?" ; process_kcc_config 0
+    cd Reptile/ ; results[0]="$?" ; postup 0
     #sudo apt install linux-headers-$(uname -r)
     #apt -f install
     flaggedcompiler=$compiler" -no-pedantic -std=gnu11"
-    CC=$flaggedcompiler LD=$flaggedcompiler make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    CC=$flaggedcompiler LD=$flaggedcompiler make |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 init

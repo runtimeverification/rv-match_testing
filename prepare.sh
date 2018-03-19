@@ -13,7 +13,7 @@ currentscript="prepare.sh"
 #
 # _download: Download source code and other resources needed here.
 # _build: Set make_success and configure_success. "set -o pipefail" should be run before this function is called, otherwise expect false positive results for compilation.
-# _extract: Move interesting files like kcc_* to build_log_dir and call process_kcc_config if applicable
+# _extract: Move interesting files like kcc_* to build_log_dir and call postup if applicable
 # _test: Set test_success. Same rules as _build for "set -o pipefail".
 # _extract_test: Same rules as _extract except for tests instead of build.
 
@@ -125,7 +125,7 @@ prep_download() {
     fi
 }
 
-increment_process_kcc_config() {
+increment_postup() {
     increment="$index"-"$counter"
     copiedfile=kcc_config_no_$increment
     cp kcc_config $build_log_dir/$copiedfile ; rm kcc_config
@@ -162,11 +162,11 @@ increment_process_kcc_config() {
     fi
 }
 
-process_kcc_config() { # Called by _build in test.sh which is called by prep_build() here
+postup() { # Called by _build in test.sh which is called by prep_build() here
     returnspot=$(pwd)
     re='^[0-9]+$'
     if ! [[ $1 =~ $re ]] ; then
-        echo "rv-match_testing error in prepare.sh: the argument to \"process_kcc_config\" should be an integer, not \"$1\"" |& tee -a kcc_config_k_summary$increment.txt
+        echo "rv-match_testing error in prepare.sh: the argument to \"postup\" should be an integer, not \"$1\"" |& tee -a kcc_config_k_summary$increment.txt
         index="0"
     else
         index="$1"
@@ -175,7 +175,7 @@ process_kcc_config() { # Called by _build in test.sh which is called by prep_bui
     counter=0
     while IFS= read -r -d $'\0' line; do
         return_dir=$(pwd)
-        cd $(dirname $line) && increment_process_kcc_config
+        cd $(dirname $line) && increment_postup
         cd $return_dir
     done < <(find . -type f -iname "kcc_config" -print0)
     now=`date +%s.%N`
@@ -227,11 +227,11 @@ prep_extract() {
         echo $report_string"      make:"$make_success
     fi
     i=${#results[@]}
-    process_kcc_config "$i"
+    postup "$i"
     if [ ! "$counter" == "0" ] ; then
         names[$i]="GENERATED-TEST[kcc_config]"
         results[$i]="1"
-        echo "Fix test.sh to call process_kcc_config after tests." > $build_log_dir/kcc_build_$i.txt
+        echo "Fix test.sh to call postup after tests." > $build_log_dir/kcc_build_$i.txt
     fi
     if [ "$i" == "0" ] ; then
         names[$i]="GENERATED-TEST[feedback]"
