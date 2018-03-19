@@ -21,6 +21,17 @@ wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/mast
     - runs all projects in regression set
     - format test to -r flag
 
+- Post jenkins debug steps.
+    - 0. Note: A container will be destroyed upon exit unless `-E` option was used, so if it wasn't, then have the test run again in one of the temporary oriented jobs: `rv-match_development` `rv-match_trusty_testing` `rv-match_testing` with command `bash -ex jenkins_run.sh -eEPt bind9-alt` will run `rvpredict` with `unit tests` with the existing container (`-e`) then leave it for inspection (`E`).
+    - 1. Log into rvwork-2 `ssh -p 6666 username@office.runtimeverification.com`
+    - 2. Log into the container with `lxc exec <name> -- bash`
+        - For example, `lxc exec rv-match-development -- bash` connects to the container associated with the jenkins job `rv-match_development`.
+        - Note: the container name is the same (with hyphens for underscores) as the jenkins job name, use `lxc list`.
+    - 3. `cd rv-match_testing`
+    - 4. To build/run a project, `bash run-set.sh -P helloworld` runs helloworld with rv-predict using the same download, build, and test folders as the report.
+    - 5. To enter the build environment of a project, `cd tests/bind9/rvpc/build/bind9/` because:
+        - `tests/` contains project specific files.
+
 ## Flags
 
  - r - regression
