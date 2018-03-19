@@ -99,7 +99,11 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 if [ "$testsfolder" == "selftest" ] ; then
     logdate="selftest/$exportfile"
 else
-    logdate="$(date +%Y-%m-%d.%H:%M:%S)-$testname"
+    if [ -z "${BUILD_NUMBER}" ] ; then
+        logdate="$(date +%Y-%m-%d.%H:%M:%S)-$testname"
+    else
+        logdate="${BUILD_NUMBER}-$testname"
+    fi
 fi
 mkdir -p logs/$logdate
 if [ -d /mnt/jenkins/logs ] ; then
