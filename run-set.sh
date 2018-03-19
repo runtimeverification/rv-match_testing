@@ -87,7 +87,8 @@ fi
 
 # XML Head
 suiteprefix="Report"
-exportpath=$(pwd)"/results/$exportfile.xml"
+exportpath="$(pwd)/results/$exportfile.xml"
+rm -f "$(pwd)/results/*.xml"
 exportpathtemp="$exportpath.tmp"
 mkdir $(dirname $exportpath)
 echo '<?xml version="1.0" encoding="UTF-8"?>
