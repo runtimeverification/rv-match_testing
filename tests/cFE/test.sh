@@ -39,7 +39,7 @@ _build() {
     #CMAKE_C_FLAGS
     compilerwithkccflags=$compiler
     if [[ $compiler = "kcc" ]] ; then
-        compilerwithkccflags="kcc -frecover-all-errors"
+        compilerwithkccflags="kcc -frecover-all-errors -fissue-report=$json_out"
         echo "Using -frecover-all-errors"
     else
         echo "Not using -frecover-all-errors"
@@ -69,7 +69,7 @@ _test() {
     #sudo /bin/sh -c "echo 100 > /proc/sys/fs/mqueue/msg_max"
     ulimit -s 16777216
     cd cFE-6.5.0-OSS-release/build/
-    tmot=120
+    tmot=1200
     names[0]="timer" ; bash $base_dir/timeout.sh -t $tmot ./native/osal/unit-tests/ostimer-test/osal_timer_UT |& tee kcc_out_0.txt ; results[0]="$?" ; process_config 0
     names[1]="network" ; bash $base_dir/timeout.sh -t $tmot ./native/osal/unit-tests/osnetwork-test/osal_network_UT |& tee kcc_out_1.txt ; results[1]="$?" ; process_config 1
     names[2]="loader" ; bash $base_dir/timeout.sh -t $tmot ./native/osal/unit-tests/osloader-test/osal_loader_UT |& tee kcc_out_2.txt ; results[2]="$?" ; process_config 2
