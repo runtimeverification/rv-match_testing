@@ -12,7 +12,7 @@ _build() {
     cd dhcpcd/
     if [[ $compiler == "kcc" ]]; then
         kcc -profile x86_64-linux-gcc-glibc
-        ./configure CC=kcc CFLAGS="-D__packed='__attribute__((packed))' -frecover-all-errors" LD=kcc |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
+        ./configure CC=kcc CFLAGS="-D__packed='__attribute__((packed))' -frecover-all-errors -fissue-report=$json_out" LD=kcc |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
     else
         ./configure CC=$compiler |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
     fi

@@ -123,13 +123,15 @@ while read line; do
             chmod a+rw $report_output
             json_out="/mnt/jenkins/logs/temp.json"
             chmod a+rw $json_out
-            html_out="/mnt/jenkins/logs/$logdate/""$line""-html"
+            html_out="/mnt/jenkins/logs/$logdate/$line""-html"
             mkdir $html_out
+            perm_json="/mnt/jenkins/logs/$logdate/$line.json"
         else
             log_output="$(pwd)/logs/$logdate/$line.log"
             report_output="$(pwd)/logs/$logdate/$line.out"
             html_out="$(pwd)/logs/$logdate/$line.html"
             json_out="$(pwd)/logs/temp.json"
+            perm_json="$(pwd)/logs/$logdate/$line.log"
         fi
         rm -f $json_out ; touch $json_out ; export json_out
         echo "     logged at $log_output"
@@ -145,7 +147,7 @@ while read line; do
     cat "$testsfolder/$line/$exportfile.xml" >> $exportpathtemp
     bash extract.sh $log_output $report_output
     head -n`grep -n "=========================" $report_output | grep -Eo '^[^:]+'` $report_output
-    sudo rv-html-report $json_out -o $html_out ; rm -f $json_out
+    sudo rv-html-report $json_out -o $html_out ; mv $json_out $perm_json ; rm -f $json_out
 done < $whitelistpath
 echo "==== tests finished at $(date)"
 
