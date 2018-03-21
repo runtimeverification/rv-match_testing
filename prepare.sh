@@ -211,6 +211,8 @@ process_config() { # Called by _test in test.sh which is called by prep_test() h
 prep_extract() {
 
     # Extract build results
+    mv $json_out $build_json
+
     [ "$(find $build_dir -name "kcc_config")" == "" ] ; no_kcc_config_generated_success="$?"
     cd $build_log_dir
     echo $no_kcc_config_generated_success > no_kcc_config_generated_success.ini
@@ -317,6 +319,9 @@ prep_build() {
 }
 
 prep_extract_test() {
+
+    mv $json_out $test_json
+
     # Save test successes into .ini
     cd $test_log_dir
     echo "Supposed to be in log directory..."

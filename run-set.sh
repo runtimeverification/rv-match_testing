@@ -122,18 +122,21 @@ while read line; do
             touch $report_output
             chmod a+rw $report_output
             json_out="/mnt/jenkins/logs/temp.json"
-            chmod a+rw $json_out
-            html_out="/mnt/jenkins/logs/$logdate/$line""-html"
-            mkdir $html_out
-            perm_json="/mnt/jenkins/logs/$logdate/$line.json"
+            rm -f $json_out ; touch $json_out ; export json_out ; chmod a+rw $json_out
+            build_html="/mnt/jenkins/logs/$logdate/${line}-build-html" ; mkdir $build_html
+            test_html="/mnt/jenkins/logs/$logdate/${line}-test-html" ; mkdir $test_html
+            build_json="/mnt/jenkins/logs/$logdate/${line}-build.json"
+            test_json="/mnt/jenkins/logs/$logdate/${line}-test.json"
+            touch $build_json ; export build_json ; chmod a+rw $build_json
+            touch $test_json  ; export test_json  ; chmod a+rw $test_json
         else
             log_output="$(pwd)/logs/$logdate/$line.log"
             report_output="$(pwd)/logs/$logdate/$line.out"
             html_out="$(pwd)/logs/$logdate/$line.html"
             json_out="$(pwd)/logs/temp.json"
-            perm_json="$(pwd)/logs/$logdate/$line.log"
+            build_json="$(pwd)/logs/$logdate/${line}-build.json"
+            test_json="$(pwd)/logs/$logdate/${line}-test.json"
         fi
-        rm -f $json_out ; touch $json_out ; export json_out
         echo "     logged at $log_output"
         set -e ; rm -f "$testsfolder/$line/$exportfile.xml" ; set +e # prevents a false test report
         if [ "$isset" == "0" ] ; then
@@ -147,7 +150,8 @@ while read line; do
     cat "$testsfolder/$line/$exportfile.xml" >> $exportpathtemp
     bash extract.sh $log_output $report_output
     head -n`grep -n "=========================" $report_output | grep -Eo '^[^:]+'` $report_output
-    sudo rv-html-report $json_out -o $html_out ; mv $json_out $perm_json ; rm -f $json_out
+    sudo rv-html-report $build_json -o $build_html
+    sudo rv-html-report  $test_json -o $test_html
 done < $whitelistpath
 echo "==== tests finished at $(date)"
 
