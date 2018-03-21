@@ -39,7 +39,7 @@ rm sets/sort-by-project.txt
 for x in tests/*/test.sh
 do
     test_name=$(basename $(dirname $x))
-    append="$test_name "
-    append=$append$(grep -oP '(?<=sets/).*?(?=.ini)' <(grep -r "$test_name" ./sets/))
+    append="$test_name"$'\t\t'" "
+    append="$append$(sed '/^_/d' <(grep -oP '(?<=sets/).*?(?=.ini)' <(grep -r "$test_name" ./sets/)))"
     echo $append >> sets/sort-by-project.txt
 done
