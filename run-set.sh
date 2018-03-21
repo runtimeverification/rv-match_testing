@@ -150,8 +150,8 @@ while read line; do
     cat "$testsfolder/$line/$exportfile.xml" >> $exportpathtemp
     bash extract.sh $log_output $report_output
     head -n`grep -n "=========================" $report_output | grep -Eo '^[^:]+'` $report_output
-    sudo rv-html-report $build_json -o $build_html
-    sudo rv-html-report  $test_json -o $test_html
+    sudo rv-html-report $build_json -o $build_html ; chmod a+rw $build_json
+    sudo rv-html-report $test_json -o $test_html ; chmod a+rw $test_json
 done < $whitelistpath
 echo "==== tests finished at $(date)"
 
