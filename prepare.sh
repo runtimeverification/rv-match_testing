@@ -403,10 +403,10 @@ init_helper() {
     prep_prepare
     prep_download
     if [ ! "$prepareonly" == "0" ] ; then
-        prep_build
+        prep_build |& tee $log_output_build
         if [ "$unittesting" == "0" ] ; then
             echo $currentscript": Unit testing."
-            prep_test
+            prep_test |& tee $log_output_test
         else
             echo $currentscript": Not unit testing."
         fi

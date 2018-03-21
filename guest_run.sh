@@ -157,6 +157,14 @@ if [ "$rvpredict" == "0" ] ; then
         echo "  <assert rvpc uninstalled before reinstall>"
         set -e ; [ ! "$rvpcstillinstalled" == "0" ] ; set +e
         echo "  </assert rvpc uninstalled before reinstall>"
+        i=0
+        if [ fuser /var/lib/dpkg/lock >/dev/null 2>&1 ] ; then
+            echo "$report_string: $current_script: Waiting for other software managers to finish..."
+        fi
+        while fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; do
+            sleep 0.5
+            ((i=i+1))
+        done
         printf "
 
 
