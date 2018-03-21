@@ -32,6 +32,14 @@ done
 for t in "${!std[@]}"
 do
     while read -r line ; do
+        code=$(grep -oP '(?<=\().*?(?=\))' <(tail -n+$line $1 | head -1))
+        codes[$code]=1
+        for i in "${!codes[@]}"
+        do
+	    echo $i
+        done
+
+        
         # Search up & save line number
         up=`head -n+$line $1 | tac | grep -m 1 -ne '^[^[:space:]]' | grep -Eo '^[^:]+'`
         
