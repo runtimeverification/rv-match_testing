@@ -141,8 +141,11 @@ while read line; do
             test_json="/mnt/jenkins/logs/$logdate/${line}-test.json"
             touch $build_json ; chmod a+rw $build_json
             touch $test_json  ; chmod a+rw $test_json
+            
         else
-            log_output="$(pwd)/logs/$logdate/$line.log"
+            log_output="$(pwd)/logs/$logdate/${line}-all.log"
+            log_output_build="$(pwd)/logs/$logdate/${line}-build.log"
+            log_output_test="$(pwd)/logs/$logdate/${line}-test.log"
             report_output="$(pwd)/logs/$logdate/$line.out"
             html_out="$(pwd)/logs/$logdate/$line.html"
             json_out="$(pwd)/logs/temp.json"
@@ -151,6 +154,7 @@ while read line; do
             report_output_build="$(pwd)/logs/$logdate/${line}-build.out"
             report_output_test="$(pwd)/logs/$logdate/${line}-test.out"
         fi
+        touch $log_output_build ; touch $log_output_test ; touch $build_json ; touch $test_json
         export build_json ; export test_json ; export log_output_build ; export log_output_test
         echo "     logged at $log_output"
         set -e ; rm -f "$testsfolder/$line/$exportfile.xml" ; set +e # prevents a false test report
@@ -164,6 +168,8 @@ while read line; do
     fi
     cat "$testsfolder/$line/$exportfile.xml" >> $exportpathtemp
     if [ ! "$testsfolder" == "selftest" ] ; then
+        echo "build: $log_output_build"
+        echo "test : $log_output_test"
         bash extract.sh $log_output $report_output
         bash extract.sh $log_output_build $report_output_build
         bash extract.sh $log_output_test $report_output_test

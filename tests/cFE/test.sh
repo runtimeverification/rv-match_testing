@@ -70,12 +70,12 @@ _test() {
     ulimit -s 16777216
     cd cFE-6.5.0-OSS-release/build/
     tmot=1200
-    names[0]="timer"   ; bash $base_dir/timeout.sh -t $tmot ./native/osal/unit-tests/ostimer-test/osal_timer_UT |& tee kcc_out_0.txt ; results[0]="$?" ; process_config 0
-    names[1]="network" ; bash $base_dir/timeout.sh -t $tmot ./native/osal/unit-tests/osnetwork-test/osal_network_UT |& tee kcc_out_1.txt ; results[1]="$?" ; process_config 1
-    names[2]="loader"  ; bash $base_dir/timeout.sh -t $tmot ./native/osal/unit-tests/osloader-test/osal_loader_UT |& tee kcc_out_2.txt ; results[2]="$?" ; process_config 2
-    names[3]="file"    ; bash $base_dir/timeout.sh -t $tmot ./native/osal/unit-tests/osfile-test/osal_file_UT |& tee kcc_out_3.txt ; results[3]="$?" ; process_config 3
-    names[4]="filesys" ; bash $base_dir/timeout.sh -t $tmot ./native/osal/unit-tests/osfilesys-test/osal_filesys_UT |& tee kcc_out_4.txt ; results[4]="$?" ; process_config 4
-    names[5]="core"    ; bash $base_dir/timeout.sh -t $tmot ./native/osal/unit-tests/oscore-test/osal_core_UT |& tee kcc_out_5.txt ; results[5]="$?" ; process_config 5
+    names[0]="ostimer"   ; bash $base_dir/timeout.sh -t $tmot ./native/osal/unit-tests/ostimer-test/osal_timer_UT |& tee kcc_out_0.txt ; results[0]="$?" ; process_config 0
+    names[1]="osnetwork" ; bash $base_dir/timeout.sh -t $tmot ./native/osal/unit-tests/osnetwork-test/osal_network_UT |& tee kcc_out_1.txt ; results[1]="$?" ; process_config 1
+    names[2]="osloader"  ; bash $base_dir/timeout.sh -t $tmot ./native/osal/unit-tests/osloader-test/osal_loader_UT |& tee kcc_out_2.txt ; results[2]="$?" ; process_config 2
+    names[3]="osfile"    ; bash $base_dir/timeout.sh -t $tmot ./native/osal/unit-tests/osfile-test/osal_file_UT |& tee kcc_out_3.txt ; results[3]="$?" ; process_config 3
+    names[4]="osfilesys" ; bash $base_dir/timeout.sh -t $tmot ./native/osal/unit-tests/osfilesys-test/osal_filesys_UT |& tee kcc_out_4.txt ; results[4]="$?" ; process_config 4
+    names[5]="oscore"    ; bash $base_dir/timeout.sh -t $tmot ./native/osal/unit-tests/oscore-test/osal_core_UT |& tee kcc_out_5.txt ; results[5]="$?" ; process_config 5
     names[6]="bin-sem-flush"   ; bash $base_dir/timeout.sh -t $tmot ./native/osal/tests/bin-sem-flush-test |& tee kcc_out_6.txt ; results[6]="$?" ; process_config 6
     names[7]="bin-sem" ; bash $base_dir/timeout.sh -t $tmot ./native/osal/tests/bin-sem-test |& tee kcc_out_7.txt ; results[7]="$?" ; process_config 7
     names[8]="bin-sem-timeout" ; bash $base_dir/timeout.sh -t $tmot ./native/osal/tests/bin-sem-timeout-test |& tee kcc_out_8.txt ; results[8]="$?" ; process_config 8

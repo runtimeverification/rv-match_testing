@@ -98,7 +98,7 @@ prep_prepare() {
     if [ ! -d $dependency_dir ] || [ -z "$(ls -A $dependency_dir)" ] || [ ! -e $dependency_dir/dependency_function_hash ] || [ "$(echo $(sha1sum <<< $(type _dependencies)))" != "$(head -n 1 $dependency_dir/dependency_function_hash)" ] ; then
     echo $report_string" installing dependencies. Hash is new or changed."
     i=0
-    if [ fuser /var/lib/dpkg/lock >/dev/null 2>&1 ] ; then
+    if fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; then
         echo "$report_string: $current_script: Waiting for other software managers to finish..."
     fi
     while fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; do
@@ -402,6 +402,7 @@ prep_test() {
 init_helper() {
     prep_prepare
     prep_download
+    echo "May write to [$log_output_build] and [$log_output_test]"
     if [ ! "$prepareonly" == "0" ] ; then
         prep_build |& tee $log_output_build
         if [ "$unittesting" == "0" ] ; then
