@@ -9,9 +9,9 @@ _download() {
 }
 
 _build() {
-    cd Remotery/ ; results[0]="$?" ; process_kcc_config 0
+    cd Remotery/ ; results[0]="$?" ; postup 0
     kcc -profile x86_64-linux-gcc-glibc-gnuc
-    $compiler -std=gnu11 lib/Remotery.c sample/sample.c -I lib -pthread -lm |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    $compiler -std=gnu11 lib/Remotery.c sample/sample.c -I lib -pthread -lm |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
     kcc -profile x86_64-linux-gcc-glibc
 }
 

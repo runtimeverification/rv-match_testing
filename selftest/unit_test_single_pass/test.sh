@@ -7,8 +7,8 @@ _download() {
 }
 
 _build() {
-    results[0]="0" ; process_kcc_config 0
-    results[1]="0" ; process_kcc_config 1
+    results[0]="0" ; postup 0
+    results[1]="0" ; postup 1
 }
 
 _test() {

@@ -157,6 +157,12 @@ if [ "$rvpredict" == "0" ] ; then
         echo "  <assert rvpc uninstalled before reinstall>"
         set -e ; [ ! "$rvpcstillinstalled" == "0" ] ; set +e
         echo "  </assert rvpc uninstalled before reinstall>"
+        while fuser /var/lib/dpkg/lock || fuser /var/lib/apt/lists/lock ; do
+            echo "$report_string: $current_script: Waiting for other software managers to finish..."
+            sleep 0.5
+        done
+        fuser /var/lib/dpkg/lock      ; echo "     dpkg lock check: [$?]"
+        fuser /var/lib/apt/lists/lock ; echo "apt lists lock check: [$?]"
         printf "
 
 

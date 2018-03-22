@@ -35,14 +35,14 @@ _build() {
     else
         ./configure CC=$compiler |& tee kcc_build_0.txt ; results[0]="$?"
     fi
-    process_kcc_config 0
+    postup 0
 
-    make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    make |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
 
     if [ "$exportfile" == "regression" ] ; then return ; fi
 
     names[2]="make check"
-    make check |& tee kcc_build_2.txt ; results[2]="$?" ; process_kcc_config 2
+    make check |& tee kcc_build_2.txt ; results[2]="$?" ; postup 2
 }
 
 _test() {

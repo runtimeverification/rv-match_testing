@@ -27,7 +27,10 @@ _download() {
 _build() {
     cd Collections-C/
     sed -i -e "s/ -Werror//g" CMakeLists.txt
-    CC=$compiler cmake . |& tee kcc_build_0.txt ; results[0]="$?"
+    if [ "$compiler" == "kcc" ] ; then
+          flaggedcompiler="$compiler -fissue-report=$json_out"
+    fi
+    CC=$flaggedcompiler cmake . |& tee kcc_build_0.txt ; results[0]="$?"
     make |& tee kcc_build_1.txt ; results[1]="$?"
     names[2]="make test" ; make test |& tee kcc_build_2.txt ; results[2]="$?"
 }

@@ -16,7 +16,7 @@ _download() {
 _build() {
     cd bind9/
     names[0]="autoreconf"
-    autoreconf |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+    autoreconf |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
     set -o pipefail
 
     names[1]="configure success"
@@ -29,17 +29,17 @@ _build() {
             ./configure --with-atf CC=$compiler --disable-threads --disable-atomic --disable-shared |& tee kcc_build_1.txt ; results[1]="$?"
         fi
     fi
-    process_kcc_config 1
+    postup 1
 
     names[2]="compile gen with gcc"
-    gcc -Ilib/isc/include -o lib/dns/gen lib/dns/gen.c |& tee -a kcc_build_2.txt ; results[2]="$?" ; process_kcc_config 2
+    gcc -Ilib/isc/include -o lib/dns/gen lib/dns/gen.c |& tee -a kcc_build_2.txt ; results[2]="$?" ; postup 2
 
     #names[3]="set ulimit"
-    #ulimit -s 16777216 |& tee -a kcc_build_3.txt ; results[3]="$?" ; process_kcc_config 3
+    #ulimit -s 16777216 |& tee -a kcc_build_3.txt ; results[3]="$?" ; postup 3
 
     names[3]="make success"
     ulimit -s 16777216
-    make |& tee kcc_build_3.txt ; results[3]="$?" ; process_kcc_config 3
+    make |& tee kcc_build_3.txt ; results[3]="$?" ; postup 3
 
 }
 

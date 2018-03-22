@@ -16,12 +16,12 @@ _build() {
         cppcompiler="k++"
         sed -i -e "s/GPP   = g++/GPP   = $cppcompiler/g" Rules.mk
         sed -i -e "s/LD    = ld/LD    = kcc/g" Rules.mk
-        sed -i -e "s/CC    = gcc/CFLAGS += -std=gnu11 -frecover-all-errors\nCC    = kcc/g" Rules.mk |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+        sed -i -e "s/CC    = gcc/CFLAGS += -std=gnu11 -frecover-all-errors\nCC    = kcc/g" Rules.mk |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
     else
         cppcompiler="g++"
-        sed -i -e "s/GPP   = g++/GPP   = $cppcompiler/g" Rules.mk && sed -i -e "s/CC    = gcc/CC    = $compiler/g" Rules.mk |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
+        sed -i -e "s/GPP   = g++/GPP   = $cppcompiler/g" Rules.mk && sed -i -e "s/CC    = gcc/CC    = $compiler/g" Rules.mk |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
     fi
-    make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    make |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 init

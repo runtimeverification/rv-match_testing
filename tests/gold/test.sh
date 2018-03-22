@@ -15,8 +15,8 @@ _download() {
 _build() {
     # https://github.com/linux-on-ibm-z/docs/wiki/Building-Gold-Linker
     cd binutils-gdb/
-    names[0]="configure" ; ./configure CC=$compiler --prefix=/opt/binutils-2.27 --enable-gold |& tee kcc_build_0.txt ; results[0]="$?" ; process_kcc_config 0
-    names[1]="make" ; make |& tee kcc_build_1.txt ; results[1]="$?" ; process_kcc_config 1
+    names[0]="configure" ; ./configure CC=$compiler --prefix=/opt/binutils-2.27 --enable-gold |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
+    names[1]="make" ; make |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 _test() {
