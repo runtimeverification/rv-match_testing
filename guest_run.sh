@@ -161,7 +161,7 @@ if [ "$rvpredict" == "0" ] ; then
         if [ fuser /var/lib/dpkg/lock >/dev/null 2>&1 ] ; then
             echo "$report_string: $current_script: Waiting for other software managers to finish..."
         fi
-        while fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; do
+        while [ fuser /var/lib/dpkg/lock >/dev/null 2>&1 ] || [ fuser /var/lib/apt/lists/lock >/dev/null 2>&1 ] ; do
             sleep 0.5
             ((i=i+1))
         done
