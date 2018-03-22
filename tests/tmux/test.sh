@@ -16,13 +16,13 @@ _build() {
     cd tmux/
     bash autogen.sh
     if [[ $compiler == "kcc" ]]; then
-        ./configure CC=kcc CFLAGS="-no-pedantic" LD=kcc |& tee kcc_build_0.txt ; results[0]="$?"
+        ./configure CC=kcc CFLAGS="-no-pedantic" LD=kcc |& tee rv_build_0.txt ; results[0]="$?"
     else
-        ./configure CC=$compiler |& tee kcc_build_0.txt ; results[0]="$?"
+        ./configure CC=$compiler |& tee rv_build_0.txt ; results[0]="$?"
     fi
     postup 0
 
-    make |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    make |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 init

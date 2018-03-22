@@ -31,18 +31,18 @@ _build() {
     automake --add-missing
     autoreconf -vif
     if [[ $compiler == "kcc" ]]; then
-        ./configure CC=kcc LD=kcc LDFLAGS="-lz" |& tee kcc_build_0.txt ; results[0]="$?"
+        ./configure CC=kcc LD=kcc LDFLAGS="-lz" |& tee rv_build_0.txt ; results[0]="$?"
     else
-        ./configure CC=$compiler |& tee kcc_build_0.txt ; results[0]="$?"
+        ./configure CC=$compiler |& tee rv_build_0.txt ; results[0]="$?"
     fi
     postup 0
 
-    make |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    make |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 
     if [ "$exportfile" == "regression" ] ; then return ; fi
 
     names[2]="make check"
-    make check |& tee kcc_build_2.txt ; results[2]="$?" ; postup 2
+    make check |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
 }
 
 _test() {

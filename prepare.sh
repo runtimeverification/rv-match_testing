@@ -13,7 +13,7 @@ currentscript="prepare.sh"
 #
 # _download: Download source code and other resources needed here.
 # _build: Set make_success and configure_success. "set -o pipefail" should be run before this function is called, otherwise expect false positive results for compilation.
-# _extract: Move interesting files like kcc_* to build_log_dir and call postup if applicable
+# _extract: Move interesting files like kcc_* and rv_* to build_log_dir and call postup if applicable
 # _test: Set test_success. Same rules as _build for "set -o pipefail".
 # _extract_test: Same rules as _extract except for tests instead of build.
 
@@ -148,7 +148,7 @@ increment_postup() {
     echo "$counter" > $index.ini
     let "counter += 1"
     dumpstring="Translation failed (kcc_config dumped). To repeat, run this command in directory "
-    more=`grep -A1 "$dumpstring" "$returnspot/kcc_build_$index.txt"`
+    more=`grep -A1 "$dumpstring" "$returnspot/rv_build_$index.txt"`
     morefolder=`printf "${more#$dumpstring}" | head -n 1`
     coloncharacter=":"
     morefolder=${morefolder%$coloncharacter}
@@ -233,15 +233,16 @@ prep_extract() {
     if [ ! "$counter" == "0" ] ; then
         names[$i]="GENERATED-TEST[kcc_config]"
         results[$i]="1"
-        echo "Fix test.sh to call postup after tests." > $build_log_dir/kcc_build_$i.txt
+        echo "Fix test.sh to call postup after tests." > $build_log_dir/rv_build_$i.txt
     fi
     if [ "$i" == "0" ] ; then
         names[$i]="GENERATED-TEST[feedback]"
         results[$i]="1"
-        echo "Fix test.sh to report some sort of build feedback." > $build_log_dir/kcc_build_$i.txt
+        echo "Fix test.sh to report some sort of build feedback." > $build_log_dir/rv_build_$i.txt
     fi
     # Extract log details: copy the non-kcc_config log files.
     find $build_dir -name "kcc_*" -not -name "kcc_config" -exec cp {} $build_log_dir \;
+    find $build_dir -name "rv_*" -not -name "kcc_config" -exec cp {} $build_log_dir \;
     # New: Generate XML just like in extract_test()
     cd $build_log_dir
     if [[ -v results[@] ]] ; then
@@ -270,8 +271,8 @@ prep_extract() {
                         fi
                     done
                 fi
-                if [[ -e "kcc_build_$t.txt" ]] ; then
-                        print=$print$'\n\nBuild step log tail: \n'$(tail -20 kcc_build_$t.txt)
+                if [[ -e "rv_build_$t.txt" ]] ; then
+                        print=$print$'\n\nBuild step log tail: \n'$(tail -20 rv_build_$t.txt)
                 fi
                 print=$print$'\n}'
                 printf "<![CDATA[%s]]>" "$print" >> $report_file
@@ -332,9 +333,10 @@ prep_extract_test() {
         echo $test_success > test_success.ini
     fi
 
-    # Copy output logs (kcc_out_#.txt)
+    # Copy output logs (rv_out_#.txt)
     cd $unit_test_dir
     find . -name "kcc_*" -not -name "kcc_config" -exec cp {} $test_log_dir \;
+    find . -name "rv_*" -not -name "kcc_config" -exec cp {} $test_log_dir \;
     cd $test_log_dir
 
     # Generate xml
@@ -354,8 +356,8 @@ prep_extract_test() {
                 if [[ -e "config_loc_term$t.txt" ]] ; then
                     print=$print$'\nProgram location term: \n'$(cat config_loc_term$t.txt)
                 fi
-                if [[ -e "kcc_out_$t.txt" ]] ; then
-                    print=$print$'\nTest log tail: \n'$(tail -20 kcc_out_$t.txt)
+                if [[ -e "rv_out_$t.txt" ]] ; then
+                    print=$print$'\nTest log tail: \n'$(tail -20 rv_out_$t.txt)
                 fi
                 print=$print$'\n}'
                 printf "<![CDATA[%s]]>" "$print" >> $report_file

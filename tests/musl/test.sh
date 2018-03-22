@@ -10,8 +10,8 @@ _download() {
 
 _build() {
     cd musl/
-    ./configure --target=x86_64-linux-gnu CC=$compiler LD=$compiler |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
-    make |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    ./configure --target=x86_64-linux-gnu CC=$compiler LD=$compiler |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
+    make |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 init

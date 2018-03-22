@@ -10,7 +10,7 @@ _download() {
 
 _build() {
     cd darknet/ && sed -i -e "s/gcc/$compiler/g" Makefile ; results[0]="$?" ; postup 0
-    make |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    make |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 _test() {

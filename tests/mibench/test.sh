@@ -16,15 +16,15 @@ _helper() {
     if [ -z "$path" ] ; then path="$name" ; fi
     cd "$top/$folder/$path/"
     names[$mii]="$name Makefile alteration"
-    sed -i -e "s/gcc/$compiler/g" Makefile |& tee kcc_build_$mii.txt ; results[$mii]="$?" ; postup $mii
+    sed -i -e "s/gcc/$compiler/g" Makefile |& tee rv_build_$mii.txt ; results[$mii]="$?" ; postup $mii
     let "mii += 1"
     if [ "$configure_flag" == "0" ] ; then
         names[$mii]="$name configure"
-        CC=$compiler LD=$compiler ./configure |& tee kcc_build_$mii.txt ; results[$mii]="$?" ; postup $mii
+        CC=$compiler LD=$compiler ./configure |& tee rv_build_$mii.txt ; results[$mii]="$?" ; postup $mii
         let "mii += 1"
     fi
     names[$mii]="$name make"
-    make$make_arg |& tee kcc_build_$mii.txt ; results[$mii]="$?" ; postup $mii
+    make$make_arg |& tee rv_build_$mii.txt ; results[$mii]="$?" ; postup $mii
     
     path=""
     make_arg=""
@@ -34,7 +34,7 @@ _helper() {
 
 _build() {
     names[0]="mibench folder found"
-    [ -d mibench/ ] |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
+    [ -d mibench/ ] |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     if [ "${results[0]}" == "0" ] ; then cd mibench/ ; else return 1 ; fi
 
 top=$(pwd)

@@ -14,11 +14,11 @@ _download() {
 }
 
 _build() {
-    cd published_copy/ ; echo "$?" |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
+    cd published_copy/ ; echo "$?" |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     index=1
     for f in *.c; do
         names[index]="build "${f%".c"}
-        $compiler -o ${f%".c"} $f |& tee kcc_build_$index.txt ; results[index]="$?" ; postup $index
+        $compiler -o ${f%".c"} $f |& tee rv_build_$index.txt ; results[index]="$?" ; postup $index
         index=$((index+1))
     done
 }
@@ -26,7 +26,7 @@ _build() {
 _test() {
     cd published_copy/
     names[0]="kcc -v test"
-    kcc -v |& tee "kcc_out_0.txt" ; results[0]="$?"
+    kcc -v |& tee "rv_out_0.txt" ; results[0]="$?"
     index=1
     if [ "$exportfile" == "regression" ] ; then
         mkdir ignore/
@@ -37,7 +37,7 @@ _test() {
     fi
     for f in *.c; do
         names[index]="run "${f%".c"}
-        ./${f%".c"} |& tee kcc_out_$index.txt ; results[index]="$?" ; process_config $index
+        ./${f%".c"} |& tee rv_out_$index.txt ; results[index]="$?" ; process_config $index
         index=$((index+1))
     done
 }

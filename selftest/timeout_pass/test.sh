@@ -7,8 +7,8 @@ _download() {
 }
 
 _build() {
-    [ : ] |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
-    bash $base_dir/timeout.sh -i 1 -d 1 -t 1 [ : ] |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    [ : ] |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
+    bash $base_dir/timeout.sh -i 1 -d 1 -t 1 [ : ] |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 _test() {

@@ -10,7 +10,7 @@ _download() {
 
 _build() {
     cd luna/ ; results[0]="$?" ; postup 0
-    make CC=$compiler LD=$compiler |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    make CC=$compiler LD=$compiler |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 _test() {

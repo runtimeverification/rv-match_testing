@@ -17,16 +17,16 @@ _build() {
     cd tcpdump/
     #sudo apt intall libpcap-dev
     aclocal; autoreconf
-    ./configure CC="$compiler -std=gnu11" LD=$compiler |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
-    make |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    ./configure CC="$compiler -std=gnu11" LD=$compiler |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
+    make |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 _test() {
     cd tcpdump/tests/
     names[0]="isup.pcap"
-    ../tcpdump -S -t -q -n -r ./isup.pcap |& tee kcc_out_0.txt ; results[0]="$?" ; process_config 0
+    ../tcpdump -S -t -q -n -r ./isup.pcap |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
     names[1]="TESTrun.sh"
-    bash TESTrun.sh              |& tee kcc_out_1.txt ; results[1]="$?" ; process_config 1
+    bash TESTrun.sh              |& tee rv_out_1.txt ; results[1]="$?" ; process_config 1
 }
 
 init

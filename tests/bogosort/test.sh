@@ -88,7 +88,7 @@ _build() {
 _test() {
     cd bogosort/
     name[0]="basic test"
-    echo "9 43 27 12 5 9 3" | ./a.out |& tee kcc_out_0.txt ; results[0]="$?" ; process_config 0
+    echo "9 43 27 12 5 9 3" | ./a.out |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
 }
 
 init
