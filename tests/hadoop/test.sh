@@ -3,6 +3,7 @@
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
 _dependencies() {
+    :
     #* Oracle JDK 1.8 (preferred)
     #$ sudo apt-get purge openjdk*
     #$ sudo apt-get install software-properties-common
