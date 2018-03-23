@@ -15,8 +15,8 @@ _download() {
 _build() {
     cd apache-tomcat-9.0.6-src/
     cp build.properties.default build.properties
-    names[0]="replace basepath" ; sed -i "s|^.*base.path=.*$|base.path=$(pwd)/build-libraries/|" build.properties |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
-    names[1]="ant" ; ant |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    names[0]="replace basepath" ; sed -i "s|^.*base.path=.*$|base.path=$(pwd)/build-libraries/|" build.properties |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
+    names[1]="ant" ; ant |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 _test() {
