@@ -15,7 +15,7 @@ _download() {
 _build() {
     cd getty/ ; results[0]="$?" ; postup 0
     sed -i "/strip/d" Makefile
-    make CC=$compiler LD=$compiler |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    make CC=$compiler LD=$compiler |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 init

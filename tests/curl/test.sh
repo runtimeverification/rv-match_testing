@@ -16,26 +16,26 @@ _build() {
     cd curl/
     moreflags='-fprofile-arcs -ftest-coverage -g -O0'
     if [[ $compiler == "kcc" ]]; then
-        CC=kcc CFLAGS="-std=gnu11 -no-pedantic -frecover-all-errors $moreflags" LD=kcc cmake -DCURL_STATICLIB=ON . |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
+        CC=kcc CFLAGS="-std=gnu11 -no-pedantic -frecover-all-errors $moreflags" LD=kcc cmake -DCURL_STATICLIB=ON . |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     else
-        CC=$compiler CFLAGS="$moreflags" cmake -DCURL_STATICLIB=ON . |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
+        CC=$compiler CFLAGS="$moreflags" cmake -DCURL_STATICLIB=ON . |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     fi
-    make |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    make |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 
     # Leave the passing regression test alone.
     if [ "$exportfile" == "regression" ] ; then return ; fi
 
     names[2]="make tests"
-    make tests |& tee kcc_build_2.txt ; results[2]="$?" ; postup 2
+    make tests |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
     names[3]="make test-torture"
-    make test-torture |& tee kcc_build_3.txt ; results[3]="$?" ; postup 3
+    make test-torture |& tee rv_build_3.txt ; results[3]="$?" ; postup 3
 }
 
 _test() {
     cd curl/tests/
-    names[0]="test 1" ; ./runtests.pl 1 |& tee kcc_out_0.txt ; results[0]="$?" ; process_config 0
-    names[1]="test 2" ; ./runtests.pl 2 |& tee kcc_out_1.txt ; results[1]="$?" ; process_config 1
-    names[2]="test 3" ; ./runtests.pl 3 |& tee kcc_out_2.txt ; results[2]="$?" ; process_config 2
+    names[0]="test 1" ; ./runtests.pl 1 |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
+    names[1]="test 2" ; ./runtests.pl 2 |& tee rv_out_1.txt ; results[1]="$?" ; process_config 1
+    names[2]="test 3" ; ./runtests.pl 3 |& tee rv_out_2.txt ; results[2]="$?" ; process_config 2
 }
 
 init

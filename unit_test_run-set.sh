@@ -163,7 +163,7 @@ if [ "$one" == "0" ] ; then
     echo "\"make log tail\" test           : passes."
 else
     echo "\"make log tail\" test           : fails." ; returnvalue=1
-    echo "  - xml is supposed to embed kcc_build_1.txt when make fails."
+    echo "  - xml is supposed to embed rv_build_1.txt when make fails."
 fi
 
 # Non-empty times
@@ -286,7 +286,7 @@ if [ "$one" == "0" ] ; then
     echo "\"unit_test_log\" test           : passes."
 else
     echo "\"unit_test_log\" test           : fails." ; returnvalue=1
-    echo "  - xml is supposed to contain the tail of kcc_out_0.txt."
+    echo "  - xml is supposed to contain the tail of rv_out_0.txt."
 fi
 
 similarity

@@ -12,19 +12,19 @@ _download() {
 _build() {
     cd openssl/
     if [[ "$compiler" == "kcc" ]]; then
-        CC="kcc -std=gnu11 -no-pedantic -frecover-all-errors -fissue-report=$json_out" CXX=k++ LD=$compiler ./config no-asm no-threads no-hw no-zlib no-shared |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
+        CC="kcc -std=gnu11 -no-pedantic -frecover-all-errors -fissue-report=$json_out" CXX=k++ LD=$compiler ./config no-asm no-threads no-hw no-zlib no-shared |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     else
-        CC=$compiler ./config no-asm no-threads no-hw no-zlib no-shared |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
+        CC=$compiler ./config no-asm no-threads no-hw no-zlib no-shared |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     fi
-    make |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    make |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 _test() {
     cd openssl/
     names[0]="md4test"
-    ./test/md4test |& tee "kcc_out_0.txt" ; results[0]="$?"
+    ./test/md4test |& tee "rv_out_0.txt" ; results[0]="$?"
     names[1]="md5test"
-    ./test/md5test |& tee "kcc_out_1.txt" ; results[1]="$?"
+    ./test/md5test |& tee "rv_out_1.txt" ; results[1]="$?"
 }
 
 

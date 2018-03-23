@@ -36,8 +36,8 @@ _download() {
 
 _build() {
     cd cineform-sdk/
-    CC=$compiler LD=$compiler cmake . |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
-    make |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    CC=$compiler LD=$compiler cmake . |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
+    make |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 init

@@ -16,8 +16,8 @@ _download() {
 _build() {
     # Note: C++ project
     cd systemc-2.3/
-    names[0]="configure" ; ./configure CC=$compiler |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
-    names[1]="make"      ; make                     |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    names[0]="configure" ; ./configure CC=$compiler |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
+    names[1]="make"      ; make                     |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 _test() {

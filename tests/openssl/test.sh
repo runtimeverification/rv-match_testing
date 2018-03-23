@@ -11,17 +11,17 @@ _download() {
 _build() {
     cd openssl/
     if [[ $compiler == "kcc" ]]; then
-        CC="$compiler -std=gnu11 -no-pedantic -frecover-all-errors" CXX=k++ LD=$compiler ./config no-asm no-threads no-hw no-zlib no-shared |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
+        CC="$compiler -std=gnu11 -no-pedantic -frecover-all-errors" CXX=k++ LD=$compiler ./config no-asm no-threads no-hw no-zlib no-shared |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     else
-        CC=$compiler ./config no-asm no-threads no-hw no-zlib no-shared |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
+        CC=$compiler ./config no-asm no-threads no-hw no-zlib no-shared |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     fi
-    make |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    make |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 _test() {
     cd openssl/
     names[0]="ecdsatest"
-    ./test/ecdsatest |& tee "kcc_out_0.txt" ; results[0]="$?"
+    ./test/ecdsatest |& tee "rv_out_0.txt" ; results[0]="$?"
 }
 
 

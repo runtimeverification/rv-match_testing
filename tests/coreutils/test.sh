@@ -17,13 +17,13 @@ _build() {
     cd coreutils-8.28/
     autoreconf
     if [[ $compiler == "kcc" ]]; then
-        ./configure CC=kcc CFLAGS="-std=gnu11 -frecover-all-errors -no-pedantic" LD=kcc --disable-threads FORCE_UNSAFE_CONFIGURE=1 |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
+        ./configure CC=kcc CFLAGS="-std=gnu11 -frecover-all-errors -no-pedantic" LD=kcc --disable-threads FORCE_UNSAFE_CONFIGURE=1 |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     else
-        ./configure CC=$compiler --disable-threads FORCE_UNSAFE_CONFIGURE=1 |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
+        ./configure CC=$compiler --disable-threads FORCE_UNSAFE_CONFIGURE=1 |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     fi
     echo "COREUTILS DEBUG"
     cat config.log
-    make |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    make |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 init

@@ -20,9 +20,9 @@ _download() {
 _build() {
     # Note: non-trivial linking
     cd quagga-1.2.4/
-    names[0]="bootstrap" ; bash bootstrap.sh |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
-    names[1]="configure" ; ./configure CC=$compiler |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
-    names[2]="make"      ; make              |& tee kcc_build_2.txt ; results[2]="$?" ; postup 2
+    names[0]="bootstrap" ; bash bootstrap.sh |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
+    names[1]="configure" ; ./configure CC=$compiler |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
+    names[2]="make"      ; make              |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
 }
 
 _test() {

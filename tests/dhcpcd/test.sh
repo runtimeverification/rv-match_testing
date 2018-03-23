@@ -12,25 +12,25 @@ _build() {
     cd dhcpcd/
     if [[ $compiler == "kcc" ]]; then
         kcc -profile x86_64-linux-gcc-glibc
-        ./configure CC=kcc CFLAGS="-D__packed='__attribute__((packed))' -frecover-all-errors -fissue-report=$json_out" LD=kcc |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
+        ./configure CC=kcc CFLAGS="-D__packed='__attribute__((packed))' -frecover-all-errors -fissue-report=$json_out" LD=kcc |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     else
-        ./configure CC=$compiler |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
+        ./configure CC=$compiler |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     fi
     set -o pipefail
-    make |& tee kcc_build_1.txt
+    make |& tee rv_build_1.txt
     [ -f src/dhcpcd ] ; results[1]="$?" ; postup 1
 
-    cd tests/ ; names[2]="make tests" ; CC=$compiler LD=$compiler make |& tee kcc_build_2.txt ; results[2]="$?" ; postup 2
+    cd tests/ ; names[2]="make tests" ; CC=$compiler LD=$compiler make |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
     
 }
 
 _test() {
     begindhcpcdtestdir=$(pwd)
     cd $begindhcpcdtestdir/dhcpcd/tests/crypt/
-    names[0]="crypt" ; ./run-test |& tee kcc_out_0.txt ; results[0]="$?" ; process_config 0
+    names[0]="crypt" ; ./run-test |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
     
     cd $begindhcpcdtestdir/dhcpcd/tests/eloop-bench/
-    names[1]="eloop-bench" ; ./eloop-bench |& tee kcc_out_1.txt ; results[1]="$?" ; process_config 1
+    names[1]="eloop-bench" ; ./eloop-bench |& tee rv_out_1.txt ; results[1]="$?" ; process_config 1
 }
 
 init

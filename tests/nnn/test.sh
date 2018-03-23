@@ -14,9 +14,9 @@ _download() {
 
 _build() {
     names[0]="make"
-    cd nnn/ ; CC=$compiler LD=$compiler make |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
+    cd nnn/ ; CC=$compiler LD=$compiler make |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     names[1]="make install"
-    CC=$compiler LD=$compiler make install |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    CC=$compiler LD=$compiler make install |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 _test() {

@@ -18,14 +18,14 @@ _build() {
     aclocal ; autoheader ; autoreconf
     automake --add-missing
     autoreconf
-    ./configure CC=$compiler LD=$compiler |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
-    make |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    ./configure CC=$compiler LD=$compiler |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
+    make |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 _test() {
     cd scrypt/
     names[0]="basic test"
-    ./tests/test_scrypt |& tee kcc_out_0.txt ; results[0]="$?" ; process_config 0
+    ./tests/test_scrypt |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
 }
 
 init

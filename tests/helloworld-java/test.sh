@@ -23,15 +23,15 @@ public class HelloWorld {
 }
 
 _build() {
-    [ -d helloworld/ ] |& tee kcc_build_0.txt ; results[0]="$?" ; postup 0
+    [ -d helloworld/ ] |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     if [ "${results[0]}" == "0" ] ; then cd helloworld/ ; else return ; fi
-    bash $base_dir/timeout.sh -t 10 javac HelloWorld.java |& tee kcc_build_1.txt ; results[1]="$?" ; postup 1
+    bash $base_dir/timeout.sh -t 10 javac HelloWorld.java |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 _test() {
     cd helloworld/
     names[0]="basic run"
-    java HelloWorld |& tee "kcc_out_0.txt" ; results[0]="$?"
+    java HelloWorld |& tee "rv_out_0.txt" ; results[0]="$?"
 }
 
 init
