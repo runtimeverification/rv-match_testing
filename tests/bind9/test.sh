@@ -26,7 +26,8 @@ _build() {
         if [[ "$compiler" == "rvpc" ]] ; then
             ./configure --with-atf CC=$compiler |& tee rv_build_1.txt ; results[1]="$?"
         else
-            ./configure --with-atf CC=$compiler --disable-threads --disable-atomic --disable-shared |& tee rv_build_1.txt ; results[1]="$?"
+            #./configure --with-atf CC=$compiler --disable-threads --disable-atomic --disable-shared |& tee rv_build_1.txt ; results[1]="$?"
+            ./configure --with-atf CC=$compiler |& tee rv_build_1.txt ; results[1]="$?"
         fi
     fi
     postup 1
