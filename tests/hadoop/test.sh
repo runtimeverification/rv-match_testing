@@ -3,7 +3,6 @@
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
 _dependencies() {
-    :
     #* Oracle JDK 1.8 (preferred)
     #$ sudo apt-get purge openjdk*
     #$ sudo apt-get install software-properties-common
@@ -15,7 +14,7 @@ _dependencies() {
     #* Native libraries
     #$ sudo apt-get -y install build-essential autoconf automake libtool cmake zlib1g-dev pkg-config libssl-dev
     #* ProtocolBuffer 2.5.0 (required)
-    #$ sudo apt-get -y install protobuf-compiler
+    sudo apt -y install protobuf-compiler
 }
 
 _download() {

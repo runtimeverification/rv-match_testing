@@ -13,6 +13,7 @@ _download() {
 }
 
 _build() {
+    # Do not place this on regression sets! It does not use a custom compiler yet.
     cd apache-tomcat-9.0.6-src/
     cp build.properties.default build.properties
     names[0]="replace basepath" ; sed -i "s|^.*base.path=.*$|base.path=$(pwd)/build-libraries/|" build.properties |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
