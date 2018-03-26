@@ -22,7 +22,12 @@ _build() {
 }
 
 _test() {
-    :
+    cd libfiber/samples/server/
+    ./server &
+    PID=$!
+    cd ../client/
+    names[0]="client return code" ; ./client |& tee rv_out_0.txt ; results[0]="$?" ; postup 0
+    kill $PID
 }
 
 init
