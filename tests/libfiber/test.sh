@@ -26,7 +26,7 @@ _test() {
     ./server &
     PID=$!
     cd ../client/
-    names[0]="client return code" ; ./client |& tee rv_out_0.txt ; results[0]="$?" ; postup 0
+    names[0]="client return code" ; ./client |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
     kill $PID
 }
 
