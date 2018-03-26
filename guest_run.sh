@@ -14,6 +14,7 @@ reinstallmatch="0"
 rvpredict="1"
 othermachine="1"
 selfunittests="0"
+quickoption="1"
 echo "========= Beginning container guest scripts."
 while getopts ":rsatdgqpPob" opt; do
   hadflag="0"
@@ -41,9 +42,10 @@ while getopts ":rsatdgqpPob" opt; do
         runsetparams=$runsetparams"g"
         reinstallmatch="1"
       ;;
-    q ) echo $currentscript" quick (skip updating rv-match and running unit tests) option selected."
+    q ) echo $currentscript" quick (skip updating rv-tools & self unit tests) option selected."
         reinstallmatch="1"
         selfunittests="1"
+        quickoption="0"
       ;;
     p ) echo $currentscript" prepare option selected."
         runsetparams=$runsetparams"p"
@@ -148,8 +150,17 @@ if [ "$rvpredict" == "0" ] ; then
     set +e
     diff predict-c.jar predict-c-old.jar &> /dev/null ; predictissame="$?"
     which rvpc &> /dev/null ; predictinstalled="$?"
-    if [ -e predict-c-old.jar ] && [ "$predictissame" == "0" ] && [ "$predictinstalled" == "0" ] ; then
-        echo "  New predict file is the same as the old one and rvpc is installed. Not updating."
+    if [ "$quickoption" == "0" ] ; then
+        installpredict="2"
+    else
+        if [ -e predict-c-old.jar ] && [ "$predictissame" == "0" ] && [ "$predictinstalled" == "0" ] ; then
+            installpredict="1"
+        else
+            installpredict="0"
+        fi
+    fi
+    if [ ! "$installpredict" == "0" ] ; then
+        echo "  New predict file is the same as the old one or -q and rvpc is installed. Not updating."
     else
         echo "  Old predict file not found or differs. Updating with new."
         sudo dpkg -r rv-predict-c &> /dev/null
