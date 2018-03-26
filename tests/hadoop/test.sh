@@ -14,6 +14,7 @@ _dependencies() {
     #* Native libraries
     #$ sudo apt-get -y install build-essential autoconf automake libtool cmake zlib1g-dev pkg-config libssl-dev
     #* ProtocolBuffer 2.5.0 (required)
+    install this one: https://github.com/google/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz
     sudo apt -y install protobuf-compiler
 }
 

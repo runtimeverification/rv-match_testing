@@ -12,23 +12,24 @@ _dependencies() {
 }
 
 _download() {
+    cFEdir=$(pwd)
     wget "https://sourceforge.net/projects/coreflightexec/files/cFE-6.5.0a-OSS-release.tar.gz"
     tar -xvzf cFE-6.5.0a-OSS-release.tar.gz
     wget "https://sourceforge.net/projects/osal/files/osal-4.2.1a-release.tar.gz"
     tar zxf osal-4.2.1a-release.tar.gz
-    cd osal-4.2.1a-release/src/os/
+    #wget "https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/cFE/cFE.m64.patch"
+    cd $cFEdir/osal-4.2.1a-release/src/os/
     ln -sf posix posix-ng
-    cd ../../../cFE-6.5.0-OSS-release/
-    rm -r osal
-    ln -s ../osal-4.2.1a-release ./osal
+    cd $cFEdir/cFE-6.5.0-OSS-release/
+    rm -r osal/
+    ln -s $cFEdir/osal-4.2.1a-release/ ./osal
     cp -a cfe/cmake/sample_defs/ .
     rm -r build/
     mkdir build/
-    # Refer to the other files for getting rvpc to work
 }
 
 _build() {
-
+    find . -type f -exec sed -i 's/-m32/-m64/g' {} \;
     ulimit -s 16777216
     # Step 0
     cd cFE-6.5.0-OSS-release/build/
