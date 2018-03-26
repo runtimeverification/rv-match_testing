@@ -159,7 +159,7 @@ if [ "$rvpredict" == "0" ] ; then
         set -e ; [ ! "$rvpcstillinstalled" == "0" ] ; set +e
         echo "  </assert rvpc uninstalled before reinstall>"
         while fuser /var/lib/dpkg/lock || fuser /var/lib/apt/lists/lock ; do
-            echo "$report_string: $current_script: Waiting for other software managers to finish..."
+            echo "Waiting for other software managers to finish..."
             sleep 0.5
         done
         fuser /var/lib/dpkg/lock      ; echo "     dpkg lock check: [$?]"
@@ -172,6 +172,7 @@ if [ "$rvpredict" == "0" ] ; then
 1
 " > stdinfile.txt
         cat stdinfile.txt | sudo java -jar predict-c.jar -console
+        sleep 1
         echo "  Version after reinstall:"
         rvpc --version
     fi
