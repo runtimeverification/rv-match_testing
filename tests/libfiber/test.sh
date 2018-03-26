@@ -3,7 +3,7 @@
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
 _dependencies() {
-    :
+    sudo apt -y install valgrind
 }
 
 _download() {
