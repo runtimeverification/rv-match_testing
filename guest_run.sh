@@ -153,6 +153,7 @@ if [ "$rvpredict" == "0" ] ; then
     else
         echo "  Old predict file not found or differs. Updating with new."
         sudo dpkg -r rv-predict-c &> /dev/null
+        sleep 2
         rvpc --version &> /dev/null ; rvpcstillinstalled="$?"
         echo "  <assert rvpc uninstalled before reinstall>"
         set -e ; [ ! "$rvpcstillinstalled" == "0" ] ; set +e
