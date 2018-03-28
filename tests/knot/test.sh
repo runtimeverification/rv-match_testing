@@ -11,6 +11,7 @@ _dependencies() {
 _download() {
     git clone https://github.com/CZ-NIC/knot.git
     cd knot/
+    echo "force"
     git checkout 5244cab52de6ba99ae174c040b0973665fa590b8
 }
 
