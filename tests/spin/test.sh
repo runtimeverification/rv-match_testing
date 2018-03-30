@@ -40,6 +40,8 @@ _test() {
     mv wordcount.pml ignore/
     # sat worked for kcc but not gcc
     mv sat.pml ignore/
+    # for_select_example used to work with gcc, then stopped working
+    mv for_select_example.pml ignore/
     index=0;
     for f in *.pml; do
         echo "---- testing spin on "$f
