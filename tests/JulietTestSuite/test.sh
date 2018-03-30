@@ -13,7 +13,7 @@ _download() {
 }
 
 _build() {
-    #cd C/testcases/
+    cd C/testcases/
     #bash ../../../../categorize.sh
     #cd ../..
     #../../runner.pl
