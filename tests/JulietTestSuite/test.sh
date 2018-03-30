@@ -13,11 +13,11 @@ _download() {
 }
 
 _build() {
-    cd C/testcases/
-    bash ../../../../categorize.sh
-    cd ../..
-    ../../runner.pl
-    #names[0]="make" ; make CC=$compiler |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
+    #cd C/testcases/
+    #bash ../../../../categorize.sh
+    #cd ../..
+    #../../runner.pl
+    names[0]="make" ; make CC="$compiler -fissue-report=$json_out" |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
 }
 
 _test() {
