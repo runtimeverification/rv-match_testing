@@ -7,7 +7,7 @@
 #   juliet.pl
 #   runner.pl
 
-cd juliet/C/testcases
+#cd juliet/C/testcases
 
 rm -rf ../../not_applicable
 

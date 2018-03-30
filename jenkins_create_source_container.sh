@@ -75,7 +75,7 @@ lxc launch ubuntu:$version "$name"
 echo "Stopping, sleeping, and configuring CPU and memory limits."
 lxc stop $name
 sleep 5
-set -e ; lxc config set $name limits.memory 24GB
+set -e ; lxc config set $name limits.memory 12GB
 set -e ; lxc config set $name limits.cpu 0-16
 
 echo "Starting up again."

@@ -15,7 +15,7 @@ my $_timer = [gettimeofday];
 my $childPid = 0;
 
 # good
-bench("juliet/filtered_tests");
+bench("filtered_tests");
 # bench("testcases/CWE121_Stack_Based_Buffer_Overflow");
 # bench("testcases/CWE122_Heap_Based_Buffer_Overflow");
 # bench("testcases/CWE124_Buffer_Underwrite");
