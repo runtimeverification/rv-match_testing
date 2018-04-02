@@ -15,7 +15,7 @@ _download() {
 _build() {
     # categorize.sh  count.sh  dependency  download  fetch.sh  gcc  juliet.pl  kcc  report.xml  runner.pl  summary.sh  test.sh
     mydir=$(pwd)
-    cd ..
+    cd ../..
     cp runner.pl $mydir
     cp juliet.pl $mydir
     # fetch.sh categorize.sh
