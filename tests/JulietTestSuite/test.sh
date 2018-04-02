@@ -13,14 +13,26 @@ _download() {
 }
 
 _build() {
-    cd C/testcases/
-    bash ../../../../categorize.sh
-    cd ../..
-    ../../runner.pl
-    export CC="kcc -DOOMITBAD"
-    ../../runner.pl
-    export CC="kcc -DOOMITGOOD"
-    ../../runner.pl
+    # categorize.sh  count.sh  dependency  download  fetch.sh  gcc  juliet.pl  kcc  report.xml  runner.pl  summary.sh  test.sh
+    mydir=$(pwd)
+    cd ..
+    cp runner.pl $mydir
+    cp juliet.pl $mydir
+    # fetch.sh categorize.sh
+    cp count.sh $mydir
+    cp summary.sh $mydir
+    cd $mydir
+    mkdir allc/
+    find C -name '*.c' -exec mv {} allc \;
+    mv allc/io.c C/testcasesupport/io.c
+    mv allc/std_thread.c C/testcasesupport/std_thread.c
+    cd C/testcasesupport/
+    kcc -c io.c
+    cd $mydir
+    mkdir juliet
+    mv allc juliet
+    mv C juliet
+    ./runner.pl
     #cd C/
     #names[0]="make" ; make CC="$compiler -fissue-report=$json_out" |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
 }

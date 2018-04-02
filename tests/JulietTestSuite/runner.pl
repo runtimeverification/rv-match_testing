@@ -10,12 +10,19 @@
 use strict;
 use Time::HiRes qw(gettimeofday tv_interval);
 use File::Basename;
+use feature qw(say);
 
 my $_timer = [gettimeofday];
-my $childPid = 0;
+my $pid = 0;
 
 # good
-bench("filtered_tests");
+#bench("juliet/one_test");
+#bench("juliet/filtered_tests");
+
+#jtesting2/juliet$ mkdir good_c_files
+#jtesting2/juliet$ find good -name \*.c -exec cp {} good_c_files \;
+#bench("juliet/good_c_files");
+bench("juliet/allc");
 # bench("testcases/CWE121_Stack_Based_Buffer_Overflow");
 # bench("testcases/CWE122_Heap_Based_Buffer_Overflow");
 # bench("testcases/CWE124_Buffer_Underwrite");
@@ -47,6 +54,19 @@ my %seenFilenames = ();
 sub bench {
       my ($dir) = (@_);
       opendir (DIR, $dir) or die $!;
+      unlink "nono.txt" or warn "Could not unlink nono: $!";
+      unlink "noyes.txt" or warn "Could not unlink noyes: $!";
+      unlink "yesno.txt" or warn "Could not unlink yesno: $!";
+      unlink "yesyes.txt" or warn "Could not unlink yesyes: $!";
+      unlink "timeout.txt" or warn "Could not unlink timeout: $!";
+      unlink "strange.txt" or warn "Could not unlink strange: $!";
+      open(my $fd_nono, ">>nono.txt");
+      open(my $fd_noyes, ">>noyes.txt");
+      open(my $fd_yesno, ">>yesno.txt");
+      open(my $fd_yesyes, ">>yesyes.txt");
+      open(my $fd_timeout, ">>timeout.txt");
+      open(my $fd_strange, ">>strange.txt");
+      my $counter = 0;
       while (my $file = readdir(DIR)) {
             next if !($file =~ m/\.c$/);
             my ($baseFilename, $dirname, $suffix) = fileparse($file, ".c");
@@ -60,19 +80,59 @@ sub bench {
                   $file = "$rootFilename*.c";
             }
             my $filename = "$dir/$file";
+            $counter++;
+            print "$file\n";
             $_timer = [gettimeofday];
             print "Commencing test of $filename...\n";
-            test($file, $filename);
-
+#            print "Testing GOOD:\n";
+            my ($g, $gr) = test($file, $filename, '-DOMITBAD');
+            $_timer = [gettimeofday];
+#            print "Testing  BAD:\n";
+            my ($b, $br) = test($file, $filename, '-DOMITGOOD');
+            if (index("$br$gr", 'TIMEOUT') != -1) {
+#                printf("-> timedout\n");
+                print $fd_timeout "$file {Good: $gr, Bad: $br}\n" or warn "Can't print to timeout: $!";
+            } elsif ($br == "1" || $gr == "1" || $br == "2" || $gr == "2") {
+#                printf("-> Strange: [$gr] [$br]\n");
+                print $fd_strange "$file {Good: $gr, Bad: $br}\n" or warn "Can't print to strange: $!";
+            } else {
+            if ($g) {
+#                printf("-> good no\n");
+                if ($b) {
+#                    printf("-> bad no\n");
+                    # kcc didn't find UB
+                    print $fd_nono "$file {Good: $gr, Bad: $br}\n" or warn "Can't print to nono: $!";
+                } else {
+#                    printf("-> bad yes: %-10s\n", $br);
+                    # Happens in the normal case
+                    print $fd_noyes "$file {Good: $gr, Bad: $br}\n" or warn "Can't print to noyes: $!";
+                }
+            } else {
+#                printf("-> good yes: %-10s\n", $gr);
+                if ($b) {
+#                    printf("-> bad no\n");
+                    # Very strange case, UB only found in "good" version
+                    print $fd_yesno "$file {Good: $gr, Bad: $br}\n" or warn "Can't print to yesno: $!";
+                } else {
+#                    printf("-> bad yes: %-10s\n", $br);
+                    # kcc also found error in test code
+                    print $fd_yesyes "$file {Good: $gr, Bad: $br}\n" or warn "Can't print to yesyes: $!";
+                }
+            }
+            }
+            system("/bin/bash summary.sh");
       }
+      print "total projects: $counter";
       closedir(DIR);
 }
 
 sub test {
-      my ($testname, $filename) = (@_);
+      my ($testname, $filename, $flag) = (@_);
       my $tool = 'kcc';
+      #print "Using \"$tool\"\n";
 
-      my ($signal, $retval, $output, $stderr) = run("./juliet.pl $tool \"$filename\"");
+      my ($signal, $retval, $output, $stderr) = run("./juliet.pl $tool $flag \"$filename\"");
+
       if ($signal) {
             return report($testname, $tool, '256', "Failed to run normally: signal $signal");
       }
@@ -87,16 +147,21 @@ sub report {
       my ($test, $name, $result, $msg) = (@_);
       my $elapsed = tv_interval($_timer, [gettimeofday]);
       printf("%-74s\t%-10s\t%.3f\t%s\n", $test, $result, $elapsed, $msg);
+      return ($result eq "(no errors)", $result)
 }
 
 sub run {
       my ($theircommand) = (@_);
 
       my $command = "$theircommand 1>stdout.txt 2>stderr.txt";
-      # print "Running $command\n";
-      $childPid = open P, "$command |" or die "Error running \"$command\"!";
-      #my @data=<P>;
-      close P;
+#      print " --------- running $command\n";
+      my $pid = open(my $pipe, "$command |") or die "Error running \"$command\"!\n";
+#      print " -------- closing\n";
+      unless (close($pipe)) {
+           ;
+#          print "ERROR: Cannot close pipe to iostat process: $! $?\n" if $! != 0 || $? != 9;
+      }
+#      print " -------- closed!\n";
       # my $retval = $? >> 8;
       my $retval = 0;
       if ($? == -1) {
@@ -114,7 +179,7 @@ sub run {
       open FILE, "stderr.txt" or die "Couldn't open file: $!"; 
       my $stderr = join("", <FILE>); 
       close FILE;
-
-      $childPid = 0;
+      kill('SIGTERM', $pid);
+      $pid = 0;
       return ($signal, $retval, $stdout, $stderr);
 }
