@@ -140,6 +140,7 @@ while read line; do
             test_html="/mnt/jenkins/logs/$logdate/${line}-test-html" ; mkdir $test_html
             build_json="/mnt/jenkins/logs/$logdate/${line}-build.json"
             test_json="/mnt/jenkins/logs/$logdate/${line}-test.json"
+            build_json_perm=$build_json ; test_json_perm=$test_json
             touch $build_json ; chmod a+rw $build_json
             touch $test_json  ; chmod a+rw $test_json
             
@@ -150,8 +151,10 @@ while read line; do
             report_output="$(pwd)/logs/$logdate/$line.out"
             html_out="$(pwd)/logs/$logdate/$line.html"
             json_out="$(pwd)/logs/temp.json"
-            build_json="$(pwd)/logs/$logdate/${line}-build.json"
-            test_json="$(pwd)/logs/$logdate/${line}-test.json"
+            build_json="$(pwd)/logs/temp-build.json"
+            test_json="$(pwd)/logs/temp-test.json"
+            build_json_perm="$(pwd)/logs/$logdate/${line}-build.json"
+            test_json_perm="$(pwd)/logs/$logdate/${line}-test.json"
             report_output_build="$(pwd)/logs/$logdate/${line}-build.out"
             report_output_test="$(pwd)/logs/$logdate/${line}-test.out"
         fi
@@ -175,6 +178,8 @@ while read line; do
         bash extract.sh $log_output_build $report_output_build
         bash extract.sh $log_output_test $report_output_test
         head -n`grep -n "=========================" $report_output | grep -Eo '^[^:]+'` $report_output
+        cp $test_json $test_json_perm
+        cp $build_json $build_json_perm
         sudo rv-html-report $build_json -o $build_html ; chmod a+rw $build_json
         sudo rv-html-report $test_json -o $test_html ; chmod a+rw $test_json
     fi
