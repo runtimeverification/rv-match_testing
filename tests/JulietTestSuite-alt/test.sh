@@ -17,7 +17,7 @@ _build() {
     if [ "$compiler" == "kcc" ] ; then
         julcompiler="kcc -fissue-report=$json_out"
     fi
-    julcompiler="kcc -fissue-report=$json_out"
+    julcompiler="kcc"
     cd C/
     names[0]="sed" ; find . -name "Makefile" -exec sed -i 's/individuals: $(INDIVIDUALS_C) $(INDIVIDUALS_CPP)/individuals: $(INDIVIDUALS_C)/' {} \; |& tee rv_build_0.txt ; results[0]="$?"
     names[1]="make" ; make -i individuals CC="$julcompiler" LD="$julcompiler" |& tee rv_build_1.txt ; results[1]="$?"
