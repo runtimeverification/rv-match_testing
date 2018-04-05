@@ -157,6 +157,7 @@ while read line; do
             test_json_perm="$(pwd)/logs/$logdate/${line}-test.json"
             report_output_build="$(pwd)/logs/$logdate/${line}-build.out"
             report_output_test="$(pwd)/logs/$logdate/${line}-test.out"
+            rm -f $json_out ; touch $json_out ; export json_out
         fi
         touch $log_output_build ; touch $log_output_test ; touch $build_json ; touch $test_json
         export build_json ; export test_json ; export log_output_build ; export log_output_test

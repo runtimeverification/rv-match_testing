@@ -20,7 +20,7 @@ _build() {
     julcompiler="kcc"
     cd C/
     names[0]="sed" ; find . -name "Makefile" -exec sed -i 's/individuals: $(INDIVIDUALS_C) $(INDIVIDUALS_CPP)/individuals: $(INDIVIDUALS_C)/' {} \; |& tee rv_build_0.txt ; results[0]="$?"
-    names[1]="make" ; CC="kcc -fissue-report=$json_out" make -i individuals |& tee rv_build_1.txt ; results[1]="$?"
+    names[1]="make" ; make -i individuals CC="kcc -std=gnu11 -fno-native-compilation -fissue-report=$json_out" |& tee rv_build_1.txt ; results[1]="$?"
 }
 
 _test() {
