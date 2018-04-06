@@ -142,18 +142,24 @@ if [ "$rvpredict" == "0" ] ; then
     echo "<install rv-predict>"
     echo "  Existing version:"
     rvpc --version
-    cd /root/ ; wget -q https://runtimeverification.com/predict/1.9.1-SNAPSHOT/c/rv-predict-c-installer-1.9.1-SNAPSHOT.jar
-    rm -f predict-c-old.jar
-    mv predict-c.jar predict-c-old.jar &> /dev/null
+    #cd /root/ ; wget -q https://runtimeverification.com/predict/1.9.1-SNAPSHOT/c/rv-predict-c-installer-1.9.1-SNAPSHOT.jar
+    cd /root/ ; wget -q https://runtimeverification.com/predict/1.9.1-SNAPSHOT/c/rv-predict-c_1.9.1-SNAPSHOT-1_amd64.deb
+    #rm -f predict-c-old.jar
+    rm -f predict-c-old.deb
+    #mv predict-c.jar predict-c-old.jar &> /dev/null
+    mv predict-c.deb predict-c-old.deb &> /dev/null
     set -e
-    mv rv-predict-c-installer-1.9.1-SNAPSHOT.jar predict-c.jar
+    #mv rv-predict-c-installer-1.9.1-SNAPSHOT.jar predict-c.jar
+    mv rv-predict-c_1.9.1-SNAPSHOT-1_amd64.deb predict-c.deb
     set +e
-    diff predict-c.jar predict-c-old.jar &> /dev/null ; predictissame="$?"
+    #diff predict-c.jar predict-c-old.jar &> /dev/null ; predictissame="$?"
+    diff predict-c.deb predict-c-old.deb &> /dev/null ; predictissame="$?"
     which rvpc &> /dev/null ; predictinstalled="$?"
     if [ "$quickoption" == "0" ] ; then
         installpredict="2"
     else
-        if [ -e predict-c-old.jar ] && [ "$predictissame" == "0" ] && [ "$predictinstalled" == "0" ] ; then
+        #if [ -e predict-c-old.jar ] && [ "$predictissame" == "0" ] && [ "$predictinstalled" == "0" ] ; then
+        if [ -e predict-c-old.deb ] && [ "$predictissame" == "0" ] && [ "$predictinstalled" == "0" ] ; then
             installpredict="1"
         else
             installpredict="0"
@@ -175,14 +181,17 @@ if [ "$rvpredict" == "0" ] ; then
         done
         fuser /var/lib/dpkg/lock      ; echo "     dpkg lock check: [$?]"
         fuser /var/lib/apt/lists/lock ; echo "apt lists lock check: [$?]"
-        printf "
-
-
-1
-1
-1
-" > stdinfile.txt
-        cat stdinfile.txt | sudo java -jar predict-c.jar -console
+        #printf "
+#
+#
+#1
+#1
+#1
+#" > stdinfile.txt
+        #cat stdinfile.txt | sudo java -jar predict-c.jar -console
+        sudo apt-get update # deb line 1 of 3
+        sudo dpkg -i rv-predict-c_1.9.1-SNAPSHOT-1_amd64.deb # deb line 2 of 3
+        sudo apt-get install -f -y # deb line 3 of 3
         sleep 1
         echo "  Version after reinstall:"
         rvpc --version
