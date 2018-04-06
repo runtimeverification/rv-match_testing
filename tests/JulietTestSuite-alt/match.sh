@@ -305,7 +305,7 @@ do_build()
 		    -o ${outdir}/$(basename $module .c) \
 		    $module $LDFLAGS
 	done
-	rm ${restart_fn}
+	rm -f ${restart_fn}
 }
 
 # A do run run run, a do run run.
@@ -320,7 +320,7 @@ do_run()
 		    ${outdir}/$(basename $module .c) < /dev/null || \
 		echo "-- failed --"
 	done
-	rm ${restart_fn}
+	rm -f ${restart_fn}
 }
 
 # Suppress "$ " output, which seems to be caused by "set -i" and "set +i".
