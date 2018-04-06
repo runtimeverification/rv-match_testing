@@ -1,0 +1,3 @@
+C/testcases/CWE758_Undefined_Behavior/CWE758_Undefined_Behavior__w32_bare_return_implicit_01.c
+C/testcases/CWE758_Undefined_Behavior/CWE758_Undefined_Behavior__w32_no_return_implicit_01.c
+C/testcases/CWE758_Undefined_Behavior/CWE758_Undefined_Behavior__w32_return_implicit_01.c
