@@ -177,7 +177,7 @@ if [ "$rvpredict" == "0" ] ; then
         echo "  </assert rvpc uninstalled before reinstall>"
         while fuser /var/lib/dpkg/lock || fuser /var/lib/apt/lists/lock ; do
             echo "Waiting for other software managers to finish..."
-            sleep 0.5
+            sleep 2
         done
         fuser /var/lib/dpkg/lock      ; echo "     dpkg lock check: [$?]"
         fuser /var/lib/apt/lists/lock ; echo "apt lists lock check: [$?]"
@@ -192,14 +192,14 @@ if [ "$rvpredict" == "0" ] ; then
         sudo apt-get update # deb line 1 of 3
         while fuser /var/lib/dpkg/lock || fuser /var/lib/apt/lists/lock ; do
             echo "Waiting for other software managers to finish... (2)"
-            sleep 0.5
+            sleep 2
         done
         fuser /var/lib/dpkg/lock      ; echo "     dpkg lock check (2): [$?]"
         fuser /var/lib/apt/lists/lock ; echo "apt lists lock check (2): [$?]"
-        sudo dpkg -i rv-predict-c_1.9.1-SNAPSHOT-1_amd64.deb # deb line 2 of 3
+        sudo dpkg -i predict-c.deb # deb line 2 of 3
         while fuser /var/lib/dpkg/lock || fuser /var/lib/apt/lists/lock ; do
             echo "Waiting for other software managers to finish... (3)"
-            sleep 0.5
+            sleep 2
         done
         fuser /var/lib/dpkg/lock      ; echo "     dpkg lock check (3): [$?]"
         fuser /var/lib/apt/lists/lock ; echo "apt lists lock check (3): [$?]"
