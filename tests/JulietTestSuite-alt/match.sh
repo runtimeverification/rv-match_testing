@@ -97,7 +97,7 @@ cleanup_hook()
 		echo "$(basename $0): caught signal $reason.  Cleaning up." 1>&2
 	fi
 	rm -rf $tmpdir
-	cp $json $json.backup
+	if [ -v json ] && [ -e ${json} ] ; then echo "Keeping a json backup." ; cp $json $json.backup ; fi
 	exit $exitcode
 }
 
@@ -268,7 +268,7 @@ list_cases()
 
 usage()
 {
-	echo "usage: ${prog} [build|run|reset-build|reset-run]" 1>&2
+	echo "usage: ${prog} [build|run|reset-build|reset-run|html|download]" 1>&2
 	exit 1
 }
 
@@ -365,6 +365,7 @@ outdir=match
 selected_cases=thread_cases
 
 [ $# -lt 1 ] && usage
+if [ ! -d skiplists ] ; then echo "You need the \"skiplists\" directory here." ; exit 1 ; fi
 
 case ${prog} in
 *-predict.sh)
@@ -407,6 +408,7 @@ json=$(pwd)/${outdir}.json
 JSON_REP="-fissue-report=$json"
 
 for cmd in "$@"; do
+	if [ ! -d "C" ] && [ ${cmd} != download ] ; then echo "Cannot \"${cmd}\" without the C folder." ; continue ; fi	
 	case "${cmd}" in
 	reset-build)
 		rm -f ${build_restart_fn} ${build_json}
@@ -425,12 +427,20 @@ for cmd in "$@"; do
 	html)
 		rv-html-report -o ${outdir}.html ${json}
 		;;
+	download)
+		echo -n "Downloading Juliet Suite..."
+        	wget -qq https://samate.nist.gov/SRD/testsuites/juliet/Juliet_Test_Suite_v1.3_for_C_Cpp.zip
+        	echo -en "\rUnzipping Juliet Suite..."
+        	unzip -qq Juliet_Test_Suite_v1.3_for_C_Cpp.zip
+        	echo -e "\rJuliet Suite has arrived."
+		;;
 	*)
 		usage
 		;;
 	esac
 done
 
+if [ ! -d "C" ] ; then echo "No test suite found (C folder). Try \"bash ${prog} download\""; exit 1; fi
 exitcode=0
 
 exit 0
