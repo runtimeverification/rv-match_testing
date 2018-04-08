@@ -315,12 +315,13 @@ build()
         echo "============="
 	name=$(basename $module)
 	output=${outdir}/${name}
-	if [ -e ${output} ] ; then echo "-- skipping ${name} --" ; return 0 ; fi
+	if [ -e ${output} ] || [ -e ${output}.compiled ] ; then echo "-- skipping ${name} --" ; return 0 ; fi
         echo "-- ${name} --"
         files=$(find $(dirname $module) -name "${name}*.c" | tr '\r\n' ' ')
         echo ${files}
 	echo "compiling..."
         $CC $JSON_REP $CPPFLAGS $COPTS $SUPPORT_OBJECT_IO $SUPPORT_OBJECT_STD_THREAD -o ${output} ${files} $LDFLAGS
+	touch ${output}.compiled
 }
 
 do_build()
