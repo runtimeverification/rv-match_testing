@@ -319,7 +319,7 @@ do_build()
 	$CC $JSON_REP -c $CPPFLAGS $COPTS $SUPPORT_STD_THREAD -o $SUPPORT_OBJECT_STD_THREAD
 	#export -f build
 	set -e
-	list_modules | parallel --timeout 2000% "build {}"
+	list_modules | parallel --eta --timeout 2000% "build {}"
 	set +e
 	rm -f ${build_restart_fn}
 }
@@ -354,7 +354,7 @@ run() {
 do_run()
 {
 	set -e
-        list_modules | parallel --timeout 500% "run {}"
+        list_modules | parallel --eta --timeout 500% "run {}"
         set +e
 	rm -f ${run_restart_fn}
 }
