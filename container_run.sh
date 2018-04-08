@@ -10,7 +10,8 @@ hadflag="1"
 stop_container="0"
 source_container="match-testing-xenial-source"
 oldmachine="1"
-while getopts ":rsatdgeEqpPTob" opt; do
+persistent="1"
+while getopts ":rsatdgeEqpPTobJ" opt; do
   hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -57,7 +58,10 @@ while getopts ":rsatdgeEqpPTob" opt; do
     b ) echo $currentscript" force build option selected."
         guest_script_flags=$guest_script_flags"b"
       ;;
-    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-E] [-q] [-p] [-P] [-T] [-o] [-b]"
+    J ) echo $currentscript" use persistent container."
+        persistent="0"
+      ;;
+    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-E] [-q] [-p] [-P] [-T] [-o] [-b] [-J]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -72,6 +76,7 @@ while getopts ":rsatdgeEqpPTob" opt; do
          echo " -T Trusty"
          echo " -o other machine"
          echo " -b force build"
+         echo " -J persistent"
       ;;
   esac
 done
@@ -146,8 +151,13 @@ else
         lxc stop $container --force
         echo "=== First listing:"
         lxc list
-        echo "=== Copying:"
-        lxc copy $source_container $container -e
+	if [ "$persistent" == "0" ] ; then
+        	echo "=== Copying (persistent):"
+        	lxc copy $source_container $container
+	else
+		echo "=== Copying (ephemeral):"
+                lxc copy $source_container $container -e
+	fi
         echo "=== Second listing:"
         lxc list
         echo "=== Starting:"
