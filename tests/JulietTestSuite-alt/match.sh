@@ -313,10 +313,14 @@ build()
         #fi
 	module=$1
         echo "============="
-        echo "-- $(basename $module) --"
-        echo $(find $(dirname $module) -name "$(basename $module)*.c" | tr '\r\n' ' ')
-        echo "compiling..."
-        $CC $JSON_REP $CPPFLAGS $COPTS $SUPPORT_OBJECT_IO $SUPPORT_OBJECT_STD_THREAD -o ${outdir}/$(basename $module) $(find $(dirname $module) -name "$(basename $module)*.c" | tr '\r\n' ' ') $LDFLAGS
+	name=$(basename $module)
+	output=${outdir}/${name}
+	if [ -e ${output} ] ; then echo "-- skipping ${name} --" ; return 0 ; fi
+        echo "-- ${name} --"
+        files=$(find $(dirname $module) -name "${name}*.c" | tr '\r\n' ' ')
+        echo ${files}
+	echo "compiling..."
+        $CC $JSON_REP $CPPFLAGS $COPTS $SUPPORT_OBJECT_IO $SUPPORT_OBJECT_STD_THREAD -o ${output} ${files} $LDFLAGS
 }
 
 do_build()
