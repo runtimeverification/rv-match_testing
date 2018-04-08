@@ -7,7 +7,7 @@ testsfolder="tests"
 flagsfortests="-"
 gcconly="1"
 rvpredict="1"
-while getopts ":rsatugpPb" opt; do
+while getopts ":rsatugpPbJ" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
@@ -40,7 +40,10 @@ while getopts ":rsatugpPb" opt; do
     b ) echo $currentscript" force build option selected."
         flagsfortests=$flagsfortests"b"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-u] [-g] [-p] [-P] [-b]"
+    J ) echo $currentscript" persistent option selected."
+        flagsfortests=$flagsfortests"J"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-u] [-g] [-p] [-P] [-b] [-J]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -50,6 +53,7 @@ while getopts ":rsatugpPb" opt; do
          echo " -p prepare only"
          echo " -P rv-predict"
          echo " -b force build"
+         echo " -J persistent"
       ;;
   esac
 done
