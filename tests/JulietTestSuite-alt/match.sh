@@ -87,6 +87,7 @@
 
 set -e
 set -u
+set -a
 
 cleanup_hook()
 {
@@ -282,6 +283,7 @@ any_exist()
 
 filter_until_restart()
 {
+cat ; return 0
 	if [ ! -e ${restart_fn} ] ; then
 		cat
 		return 0
@@ -304,25 +306,28 @@ list_modules()
 	done | generalize | filter_until_restart | join -v 1 - $skiplist
 }
 
+build()
+{
+	#if [ x${build_restart_fn:-} != x ]; then
+        #                echo ${module} > ${build_restart_fn}
+        #fi
+	module=$1
+        echo "============="
+        echo "-- $(basename $module) --"
+        echo $(find $(dirname $module) -name "$(basename $module)*.c" | tr '\r\n' ' ')
+        echo "compiling..."
+        $CC $JSON_REP $CPPFLAGS $COPTS $SUPPORT_OBJECT_IO $SUPPORT_OBJECT_STD_THREAD -o ${outdir}/$(basename $module) $(find $(dirname $module) -name "$(basename $module)*.c" | tr '\r\n' ' ') $LDFLAGS
+}
+
 do_build()
 {
 	mkdir -p ${outdir} ${sprtdir}
 	$CC $JSON_REP -c $CPPFLAGS $COPTS $SUPPORT_IO -o $SUPPORT_OBJECT_IO
 	$CC $JSON_REP -c $CPPFLAGS $COPTS $SUPPORT_STD_THREAD -o $SUPPORT_OBJECT_STD_THREAD
-	list_modules | while read module; do
-		if [ x${build_restart_fn:-} != x ]; then
-			echo ${module} > ${build_restart_fn}
-		fi
-		echo "============="
-		echo "-- $(basename $module) --"
-		echo $(find $(dirname $module) -name "$(basename $module)*.c" | tr '\r\n' ' ')
-		echo "compiling..."
-		set +e
-		$CC $JSON_REP $CPPFLAGS $COPTS $SUPPORT_OBJECT_IO $SUPPORT_OBJECT_STD_THREAD \
-		    -o ${outdir}/$(basename $module) \
-		    $(find $(dirname $module) -name "$(basename $module)*.c" | tr '\r\n' ' ') $LDFLAGS
-		set -e
-	done
+	export -f build
+	set -e
+	list_modules | parallel "build {}"
+	set +e
 	rm -f ${build_restart_fn}
 }
 
