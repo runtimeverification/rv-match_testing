@@ -59,6 +59,7 @@ while getopts ":rsatdgeEqpPTobJ" opt; do
         guest_script_flags=$guest_script_flags"b"
       ;;
     J ) echo $currentscript" use persistent container."
+        guest_script_flags=$guest_script_flags"J"
         persistent="0"
       ;;
     \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-E] [-q] [-p] [-P] [-T] [-o] [-b] [-J]"

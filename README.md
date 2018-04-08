@@ -66,4 +66,6 @@ wget https://raw.githubusercontent.com/runtimeverification/rv-match_testing/mast
        - uses scripts that work with lxc (instead of lcd) using the master machine copying a Trusty source container
  - b - force build
        - build a project even when the hash matches
+ - J - persistent
+       - use a persistent container and keep dependency, download, build, and unit test folders in tact for retry runs.
  - standalone options are limited to `rsatgpPb`

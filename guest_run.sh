@@ -16,7 +16,7 @@ othermachine="1"
 selfunittests="0"
 quickoption="1"
 echo "========= Beginning container guest scripts."
-while getopts ":rsatdgqpPob" opt; do
+while getopts ":rsatdgqpPobJ" opt; do
   hadflag="0"
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -62,7 +62,10 @@ while getopts ":rsatdgqpPob" opt; do
     b ) echo $currentscript" force build option selected."
         runsetparams=$runsetparams"b"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-q] [-p] [-P] [-o] [-b]"
+    J ) echo $currentscript" persistent option selected."
+        runsetparams=$runsetparams"J"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-q] [-p] [-P] [-o] [-b] [-J]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -74,6 +77,7 @@ while getopts ":rsatdgqpPob" opt; do
          echo " -P rv-predict"
          echo " -o other"
          echo " -b force build"
+         echo " -J persistent"
       ;;
   esac
 done

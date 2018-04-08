@@ -23,8 +23,9 @@ gcconly="1"
 prepareonly="1"
 rvpredict="1"
 forcebuild="1"
+persistent="1"
 echo $currentscript" selecting options.."
-while getopts ":rsatgpPb" opt; do
+while getopts ":rsatgpPbJ" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
         exportfile="regression"
@@ -50,7 +51,10 @@ while getopts ":rsatgpPb" opt; do
     b ) echo $currentscript" force build option selected."
         forcebuild="0"
       ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-g] [-p] [-P] [-b]"
+    J ) echo $currentscript" persistent option selected."
+        persistent="0"
+      ;;
+    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-g] [-p] [-P] [-b] [-J]"
          echo " -r regression"
          echo " -s status"
          echo " -a acceptance"
@@ -59,6 +63,7 @@ while getopts ":rsatgpPb" opt; do
          echo " -p prepare only"
          echo " -P rv-predict"
          echo " -b force build"
+         echo " -J persistent folders"
       ;;
   esac
 done
@@ -106,7 +111,7 @@ prep_prepare() {
         ((i=i+1))
     done 
     _dependencies
-        rm -f $dependency_dir/dependency_function_hash ; rm -rf $dependency_dir
+        if [ ! "$persistent" == "0" ] ; then rm -f $dependency_dir/dependency_function_hash ; rm -rf $dependency_dir ; fi
         mkdir -p $dependency_dir
         cd $dependency_dir && _dependencies && cd $dependency_dir && echo $(sha1sum <<< $(type _dependencies)) > dependency_function_hash
     else
@@ -117,7 +122,7 @@ prep_prepare() {
 prep_download() {
     if [ ! -d $download_dir ] || [ -z "$(ls -A $download_dir)" ] || [ ! -e $download_dir/download_function_hash ] || [ "$(echo $(sha1sum <<< $(type _download)))" != "$(head -n 1 $download_dir/download_function_hash)" ] ; then
         echo $report_string" downloading. Hash is new or changed."
-        rm -f $download_dir/download_function_hash ; rm -rf $download_dir
+        if [ ! "$persistent" == "0" ] ; then rm -f $download_dir/download_function_hash ; rm -rf $download_dir ; fi
         mkdir -p $download_dir
         cd $download_dir && _download && cd $download_dir && echo $(sha1sum <<< $(type _download)) > download_function_hash
     else
@@ -297,8 +302,8 @@ prep_build() {
         # build
         echo $report_string" building. Either first build, hash changed, \"kcc --version\" does not provide a build number, or the 'force build' (-b) option was used."
         type _build
-        rm $build_dir/build_function_hash ; safe_rm=$build_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
-        cp $download_dir/* $build_dir -r
+        if [ ! "$persistent" == "0" ] ; then rm $build_dir/build_function_hash ; safe_rm=$build_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/* ; fi
+        if [ ! -d $build_dir ] || [ ! "$persistent" == "0" ] ; then cp $download_dir/* $build_dir -r ; fi
         set -o pipefail
         unset results
         unset names
@@ -383,8 +388,8 @@ prep_test() {
 
         # test
         echo $report_string" testing. Either the test hash changed or this is the first unit test run."
-        safe_rm=$unit_test_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
-        cp $build_dir/* $unit_test_dir -r
+        if [ ! "$persistent" == "0" ] ; then rm $unit_test_dir/test_function_hash ; safe_rm=$unit_test_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/* ; fi
+        if [ ! -d $unit_test_dir ] || [ ! "$persistent" == "0" ] ; then cp $build_dir/* $unit_test_dir -r ; fi
         set -o pipefail
         unset test_success
         starttime=`date +%s.%N`

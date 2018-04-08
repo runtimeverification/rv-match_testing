@@ -316,10 +316,12 @@ do_build()
 		echo "============="
 		echo "-- $(basename $module) --"
 		echo $(find $(dirname $module) -name "$(basename $module)*.c" | tr '\r\n' ' ')
-		echo " ++ compiling... :)"
+		echo "compiling..."
+		set +e
 		$CC $JSON_REP $CPPFLAGS $COPTS $SUPPORT_OBJECT_IO $SUPPORT_OBJECT_STD_THREAD \
 		    -o ${outdir}/$(basename $module) \
 		    $(find $(dirname $module) -name "$(basename $module)*.c" | tr '\r\n' ' ') $LDFLAGS
+		set -e
 	done
 	rm -f ${build_restart_fn}
 }
