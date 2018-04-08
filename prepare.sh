@@ -303,9 +303,12 @@ prep_build() {
         # build
         echo $report_string" building. Either first build, hash changed, \"kcc --version\" does not provide a build number, or the 'force build' (-b) option was used."
         type _build
-        if [ ! "$persistent" == "0" ] ; then rm $build_dir/build_function_hash ; safe_rm=$build_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/* ; fi
-        if [ ! -d $build_dir ] || [ ! "$persistent" == "0" ] ; then cp $download_dir/* $build_dir -r ; fi
-        set -o pipefail
+        if [ ! -e $build_dir/persistent_first_build ] || [ ! "$persistent" == "0" ] ; then 
+		rm $build_dir/build_function_hash ; safe_rm=$build_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
+		cp $download_dir/* $build_dir -r
+		if [ "$persistent" == "0" ] ; then touch $build_dir/persistent_first_build ; fi
+	fi
+	set -o pipefail
         unset results
         unset names
         starttime=`date +%s.%N`
@@ -392,8 +395,11 @@ prep_test() {
 
         # test
         echo $report_string" testing. Either the test hash changed or this is the first unit test run."
-        if [ ! "$persistent" == "0" ] ; then rm $unit_test_dir/test_function_hash ; safe_rm=$unit_test_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/* ; fi
-        if [ ! -d $unit_test_dir ] || [ ! "$persistent" == "0" ] ; then cp $build_dir/* $unit_test_dir -r ; fi
+        if [ ! -e $unit_test_dir/persistent_first_run_test ] || [ ! "$persistent" == "0" ] ; then
+		rm $unit_test_dir/test_function_hash ; safe_rm=$unit_test_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
+        	cp $build_dir/* $unit_test_dir -r
+		if [ "$persistent" == "0" ] ; then touch $unit_test_dir/persistent_first_run_test ; fi
+	fi
         set -o pipefail
         unset test_success
         starttime=`date +%s.%N`

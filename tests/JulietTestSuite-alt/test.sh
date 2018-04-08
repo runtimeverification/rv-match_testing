@@ -29,7 +29,7 @@ _build() {
 
 _test() {
     if [ -e match.json ] ; then echo "Trying to keep build/test json results separate" ; return 1 ; fi
-    names[0]="match run"   ; bash match.sh run   |& tee rv_out_0.txt ; results[0]="$?" ; process_config
+    names[0]="match run"   ; bash match.sh run   |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
     mv match.json test.json
 }
 
