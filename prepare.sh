@@ -297,6 +297,7 @@ prep_build() {
     # Build hash is dependent on 3 things: {_build() function definition, $compiler --version, download hash}.
     buildhashinfo=$(type _build)$($compiler --version)$(head -n 1 $download_dir/download_function_hash)$(head -n 1 $dependency_dir/dependency_function_hash)
     echo "`kcc --version`" | grep "Build number" ; kcc_is_versioned="$?"
+    if [ "$forcebuild" == "0" ] || [ ! "$persistent" == "0" ] ; then
     if [ ! -e $build_dir/build_function_hash ] || [ "$(echo $(sha1sum <<< $buildhashinfo))" != "$(head -n 1 $build_dir/build_function_hash)" ] || [ ! "$kcc_is_versioned" == "0" ] || [ "$forcebuild" == "0" ] ; then
 
         # build
@@ -321,7 +322,10 @@ prep_build() {
         prep_extract
     else
         echo $report_string" not building. Same build hash exists."
-    fi 
+    fi
+    else
+	echo $report_string" skip building in persistent mode unless (-b) is explicitly set (since persistence expects that the build state tracks its own progress) so that tests can be ran prematurely if needed."
+    fi
 }
 
 prep_extract_test() {
