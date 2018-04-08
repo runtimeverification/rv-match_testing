@@ -328,26 +328,37 @@ do_build()
 	mkdir -p ${outdir} ${sprtdir}
 	$CC $JSON_REP -c $CPPFLAGS $COPTS $SUPPORT_IO -o $SUPPORT_OBJECT_IO
 	$CC $JSON_REP -c $CPPFLAGS $COPTS $SUPPORT_STD_THREAD -o $SUPPORT_OBJECT_STD_THREAD
-	export -f build
+	#export -f build
 	set -e
 	list_modules | parallel "build {}"
 	set +e
 	rm -f ${build_restart_fn}
 }
 
+trap_run() {
+	echo "-- timeout ${name} --"
+	touch ${path}.tmout
+	exit 1
+}
+
 run() {
 	#if [ x${run_restart_fn:-} != x ]; then
         #	echo ${module} > ${run_restart_fn}
         #fi
-	module=$1
-        echo "-- $(basename $module) --"
-        if [ -e ${outdir}/$(basename $module) ] ; then
+	name=$(basename $1)
+	path="${outdir}/${name}"
+	if [ -e ${path}.check ] ; then echo "-- skipping [previously completed] ${name} --" ; exit 1 ; fi
+	if [ -e ${path}.tmout ] ; then echo "-- skipping [previously timed out] ${name} --" ; exit 1 ; fi
+	trap trap_run SIGTERM SIGKILL
+        echo "-- ${name} --"
+        if [ -e ${path} ] ; then
         	RVP_TRACE_FILE="${outdir}/%n.trace" \
-                	${outdir}/$(basename $module) < /dev/null || \
+                	${path} < /dev/null || \
                 	echo "-- failed --"
         else
         	echo "-- not compiled --" ; exit 1
         fi
+	touch ${path}.check
 }
 
 # A do run run run, a do run run.
