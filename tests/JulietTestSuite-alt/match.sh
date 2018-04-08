@@ -16,9 +16,10 @@
 #
 # `build`       create executables
 # `run`         run the executables created by the `build` step
-# `reset`       perform the next action from its beginning---i.e., do
+# `reset-[build|run]`       perform the next action from its beginning---i.e., do
 #               not restart the action where the script previously left
 #               off
+# `html`	produce html from json UB
 #
 # This script must run at the top of the Juliet 1.3 sources, where
 # there is a subdirectory called `C`. 
@@ -60,10 +61,7 @@
 #
 # CAVEAT
 #
-# This script does *not* run any of the tests that consist of multiple
-# C files ending in `[a-z].c`.  It also skips the tests that are named
-# `C/testcases/*/s[0-9][0-9]/*.c`. This is something that will be
-# fixed in a later version.
+# This script does not run tests parallel. This could be helpful.
 #
 # BUGS
 #
@@ -72,10 +70,20 @@
 # those, it just leaves `.trace` files beside their corresponding
 # executables in `predict/`.
 #
-# AUTHOR
+# MODIFICATIONS (Tim)
+# - Support files are only built once for each top level build command
+#	rather than for each test.
+# - Modules are no longer individual c files, they are test basenames.
+#	This means that the previously unused tests ending in
+#	`[a-z].c` and `C/testcases/*/s[0-9][0-9]/*.c` are now used.
+# - Build and run progress are tracked by separate files. Run now
+#	automatically stops at the last compiled module.
+# - Produce html report.
+#
+# AUTHORS
 #
 # David Young (david.young@runtimeverification.com)
-#
+# Timothy Swan
 
 set -e
 set -u
@@ -89,6 +97,7 @@ cleanup_hook()
 		echo "$(basename $0): caught signal $reason.  Cleaning up." 1>&2
 	fi
 	rm -rf $tmpdir
+	cp $json $json.backup
 	exit $exitcode
 }
 
@@ -102,18 +111,18 @@ trap_with_reason()
 }
 
 signal_cases()
-{
+{ # 1
 	echo C/testcases/CWE364_Signal_Handler_Race_Condition
 }
 
 thread_cases()
-{
+{ # 2
 	echo C/testcases/CWE366_Race_Condition_Within_Thread
 	echo C/testcases/CWE367_TOC_TOU
 }
 
 unused_by_match_cases()
-{
+{ # 75
 	cat<<EOF
 C/testcases/CWE114_Process_Control
 C/testcases/CWE15_External_Control_of_System_or_Configuration_Setting
@@ -194,7 +203,7 @@ EOF
 }
 
 windows_cases()
-{
+{ # 2
 	cat<<EOF
 C/testcases/CWE244_Heap_Inspection
 C/testcases/CWE785_Path_Manipulation_Function_Without_Max_Sized_Buffer
@@ -202,7 +211,7 @@ EOF
 }
 
 match_cases()
-{
+{ # 40
 	cat<<EOF
 C/testcases/CWE121_Stack_Based_Buffer_Overflow
 C/testcases/CWE122_Heap_Based_Buffer_Overflow
@@ -247,6 +256,11 @@ C/testcases/CWE843_Type_Confusion
 EOF
 }
 
+generalize()
+{
+	cat $@ | sed 's|[a-z]\{0,1\}.c$||' | sort | uniq
+}
+
 list_cases()
 {
 	$selected_cases
@@ -254,7 +268,7 @@ list_cases()
 
 usage()
 {
-	echo "usage: ${prog} [build|run]" 1>&2
+	echo "usage: ${prog} [build|run|reset-build|reset-run]" 1>&2
 	exit 1
 }
 
@@ -268,10 +282,11 @@ any_exist()
 
 filter_until_restart()
 {
-	if ! restart=$(readlink ${restart_fn:-} 2> /dev/null); then
+	if [ ! -e ${restart_fn} ] ; then
 		cat
 		return 0
 	fi
+	restart=$(head -n 1 ${restart_fn})
 	while read src; do
 		if [ ${src} = ${restart} ]; then
 			echo ${src}
@@ -282,45 +297,50 @@ filter_until_restart()
 	cat
 }
 
-list_c_sources()
+list_modules()
 {
 	list_cases | while read cases_dir; do
-		any_exist ${cases_dir}/*.c || continue
-		ls ${cases_dir}/*.c
-	done | sort | filter_until_restart | join -v 1 - $skiplist | \
-	    grep -v '[^0-9].c$'
-	
+		find ${cases_dir} -name '*.c'
+	done | generalize | filter_until_restart | join -v 1 - $skiplist
 }
 
 do_build()
 {
-	mkdir -p ${outdir}
-
-	list_c_sources | while read module; do
-		if [ x${restart_fn:-} != x ]; then
-			ln -sf ${module} ${restart_fn}
+	mkdir -p ${outdir} ${sprtdir}
+	$CC $JSON_REP -c $CPPFLAGS $COPTS $SUPPORT_IO -o $SUPPORT_OBJECT_IO
+	$CC $JSON_REP -c $CPPFLAGS $COPTS $SUPPORT_STD_THREAD -o $SUPPORT_OBJECT_STD_THREAD
+	list_modules | while read module; do
+		if [ x${build_restart_fn:-} != x ]; then
+			echo ${module} > ${build_restart_fn}
 		fi
-		echo "-- $(basename $module .c) --"
-		$CC $CPPFLAGS $COPTS $SUPPORT \
-		    -o ${outdir}/$(basename $module .c) \
-		    $module $LDFLAGS
+		echo "============="
+		echo "-- $(basename $module) --"
+		echo $(find $(dirname $module) -name "$(basename $module)*.c" | tr '\r\n' ' ')
+		echo " ++ compiling... :)"
+		$CC $JSON_REP $CPPFLAGS $COPTS $SUPPORT_OBJECT_IO $SUPPORT_OBJECT_STD_THREAD \
+		    -o ${outdir}/$(basename $module) \
+		    $(find $(dirname $module) -name "$(basename $module)*.c" | tr '\r\n' ' ') $LDFLAGS
 	done
-	rm -f ${restart_fn}
+	rm -f ${build_restart_fn}
 }
 
 # A do run run run, a do run run.
 do_run()
 {
-	list_c_sources | while read module; do
-		if [ x${restart_fn:-} != x ]; then
-			ln -sf ${module} ${restart_fn}
+	list_modules | while read module; do
+		if [ x${run_restart_fn:-} != x ]; then
+			echo ${module} > ${run_restart_fn}
 		fi
-		echo "-- $(basename $module .c) --"
-		RVP_TRACE_FILE="${outdir}/%n.trace" \
-		    ${outdir}/$(basename $module .c) < /dev/null || \
-		echo "-- failed --"
+		echo "-- $(basename $module) --"
+		if [ -e ${outdir}/$(basename $module) ] ; then
+			RVP_TRACE_FILE="${outdir}/%n.trace" \
+		    		${outdir}/$(basename $module) < /dev/null || \
+				echo "-- failed --"
+		else
+			echo "-- not compiled --" ; exit 1
+		fi
 	done
-	rm -f ${restart_fn}
+	rm -f ${run_restart_fn}
 }
 
 # Suppress "$ " output, which seems to be caused by "set -i" and "set +i".
@@ -339,7 +359,8 @@ skiplist=${tmpdir}/skiplist
 COPTS=-pthread
 LDFLAGS=-lm
 CPPFLAGS="-I C/testcasesupport -D INCLUDEMAIN"
-SUPPORT="C/testcasesupport/io.c C/testcasesupport/std_thread.c"
+SUPPORT_IO="C/testcasesupport/io.c"
+SUPPORT_STD_THREAD="C/testcasesupport/std_thread.c"
 outdir=match
 selected_cases=thread_cases
 
@@ -350,9 +371,9 @@ case ${prog} in
 	CC=rvpc
 	COPTS="--sigsim=simple"
 	outdir=predict
-	sort -u skiplists/predict/* > $skiplist
-	restart_fn=.predict-last
-
+	sort -u skiplists/predict/* | generalize > $skiplist
+	build_restart_fn=.predict-last-build
+	run_restart_fn=.predict-last-run
 	case ${prog} in
 	signal-predict.sh)
 		export RVP_WINDOW_SIZE=250
@@ -370,24 +391,39 @@ case ${prog} in
 	;;
 match.sh)
 	selected_cases=match_cases
-	restart_fn=.match-last
-	sort -u skiplists/match/* > $skiplist
+	build_restart_fn=.match-last-build
+	run_restart_fn=.match-last-run
+	sort -u skiplists/match/* | generalize > $skiplist
 	;;
 *)
 	echo "expected \`${prog}\` to match \`*-predict.sh\` or \`match.sh\`" 1>&2
 	exit 1
 esac
 
+sprtdir="support-${CC}"
+SUPPORT_OBJECT_IO="${sprtdir}/io.o"
+SUPPORT_OBJECT_STD_THREAD="${sprtdir}/std_thread.o"
+json=$(pwd)/${outdir}.json
+JSON_REP="-fissue-report=$json"
+
 for cmd in "$@"; do
 	case "${cmd}" in
-	reset)
-		rm -f ${restart_fn}
+	reset-build)
+		rm -f ${build_restart_fn} ${build_json}
 		;;
+	reset-run)
+                rm -f ${run_restart_fn} ${run_json}
+                ;;
 	build)
+		restart_fn=${build_restart_fn}
 		do_build
 		;;
 	run)
+		restart_fn=${run_restart_fn}
 		do_run
+		;;
+	html)
+		rv-html-report -o ${outdir}.html ${json}
 		;;
 	*)
 		usage
