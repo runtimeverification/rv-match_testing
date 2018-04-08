@@ -15,7 +15,8 @@ _download() {
 _build() {
     cp ../../match.sh .
     cp -r ../../skiplists/ .
-    names[0]="testsuite script" ; bash match.sh build run |& tee rv_build_0.txt ; results[0]="$?"
+    names[0]="match build" ; bash match.sh build |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
+    mv match.json build.json
     #julcompiler=$compiler
     #if [ "$compiler" == "kcc" ] ; then
     #    julcompiler="kcc -fissue-report=$json_out"
@@ -27,7 +28,9 @@ _build() {
 }
 
 _test() {
-    :
+    if [ -e match.json ] ; then echo "Trying to keep build/test json results separate" ; return 1 ; fi
+    names[0]="match run"   ; bash match.sh run   |& tee rv_out_0.txt ; results[0]="$?" ; process_config
+    mv match.json test.json
 }
 
 init
