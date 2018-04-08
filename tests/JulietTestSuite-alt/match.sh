@@ -281,29 +281,17 @@ any_exist()
 	return 1
 }
 
-filter_until_restart()
-{
-cat ; return 0
-	if [ ! -e ${restart_fn} ] ; then
-		cat
-		return 0
-	fi
-	restart=$(head -n 1 ${restart_fn})
-	while read src; do
-		if [ ${src} = ${restart} ]; then
-			echo ${src}
-			break
-		fi
-		echo "-- skipping ${src} --" 1>&2
-	done
-	cat
-}
-
 list_modules()
 {
 	list_cases | while read cases_dir; do
 		find ${cases_dir} -name '*.c'
-	done | generalize | filter_until_restart | join -v 1 - $skiplist
+	done | generalize | join -v 1 - $skiplist
+}
+
+trap_build() {
+	echo "-- compile timeout ${name} --"
+        touch ${output}.buildtimeout
+        exit 1
 }
 
 build()
@@ -315,7 +303,7 @@ build()
         echo "============="
 	name=$(basename $module)
 	output=${outdir}/${name}
-	if [ -e ${output} ] || [ -e ${output}.compiled ] ; then echo "-- skipping ${name} --" ; return 0 ; fi
+	if [ -e ${output}.buildtimeout ] || [ -e ${output}.compiled ] ; then echo "-- skipping [previously compiled] ${name} --" ; exit 1 ; fi
         echo "-- ${name} --"
         files=$(find $(dirname $module) -name "${name}*.c" | tr '\r\n' ' ')
         echo ${files}
@@ -331,7 +319,7 @@ do_build()
 	$CC $JSON_REP -c $CPPFLAGS $COPTS $SUPPORT_STD_THREAD -o $SUPPORT_OBJECT_STD_THREAD
 	#export -f build
 	set -e
-	list_modules | parallel "build {}"
+	list_modules | parallel --timeout 2000% "build {}"
 	set +e
 	rm -f ${build_restart_fn}
 }
@@ -366,7 +354,7 @@ run() {
 do_run()
 {
 	set -e
-        list_modules | parallel --timeout 300% "run {}"
+        list_modules | parallel --timeout 500% "run {}"
         set +e
 	rm -f ${run_restart_fn}
 }
