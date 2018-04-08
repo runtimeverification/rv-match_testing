@@ -13,6 +13,8 @@ _download() {
 }
 
 _build() {
+    cp ../../match.sh .
+    cp -r ../../skiplists/ .
     names[0]="testsuite script" ; bash match.sh build run |& tee rv_build_0.txt ; results[0]="$?"
     #julcompiler=$compiler
     #if [ "$compiler" == "kcc" ] ; then
