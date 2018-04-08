@@ -304,7 +304,8 @@ build()
 	name=$(basename $module)
 	output=${outdir}/${name}
 	if [ -e ${output}.buildtimeout ] || [ -e ${output}.compiled ] ; then echo "-- skipping [previously compiled] ${name} --" ; exit 1 ; fi
-        echo "-- ${name} --"
+        if [ -e ${output} ] ; then echo "-- skipping [previously unmarked compiled] ${name} --" ; touch ${output}.compiled ; exit 1 ; fi
+	echo "-- ${name} --"
         files=$(find $(dirname $module) -name "${name}*.c" | tr '\r\n' ' ')
         echo ${files}
 	echo "compiling..."
