@@ -331,22 +331,27 @@ do_build()
 	rm -f ${build_restart_fn}
 }
 
+run() {
+	#if [ x${run_restart_fn:-} != x ]; then
+        #	echo ${module} > ${run_restart_fn}
+        #fi
+	module=$1
+        echo "-- $(basename $module) --"
+        if [ -e ${outdir}/$(basename $module) ] ; then
+        	RVP_TRACE_FILE="${outdir}/%n.trace" \
+                	${outdir}/$(basename $module) < /dev/null || \
+                	echo "-- failed --"
+        else
+        	echo "-- not compiled --" ; exit 1
+        fi
+}
+
 # A do run run run, a do run run.
 do_run()
 {
-	list_modules | while read module; do
-		if [ x${run_restart_fn:-} != x ]; then
-			echo ${module} > ${run_restart_fn}
-		fi
-		echo "-- $(basename $module) --"
-		if [ -e ${outdir}/$(basename $module) ] ; then
-			RVP_TRACE_FILE="${outdir}/%n.trace" \
-		    		${outdir}/$(basename $module) < /dev/null || \
-				echo "-- failed --"
-		else
-			echo "-- not compiled --" ; exit 1
-		fi
-	done
+	set -e
+        list_modules | parallel --timeout 300% "run {}"
+        set +e
 	rm -f ${run_restart_fn}
 }
 
