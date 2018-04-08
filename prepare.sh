@@ -297,16 +297,16 @@ prep_build() {
     # Build hash is dependent on 3 things: {_build() function definition, $compiler --version, download hash}.
     buildhashinfo=$(type _build)$($compiler --version)$(head -n 1 $download_dir/download_function_hash)$(head -n 1 $dependency_dir/dependency_function_hash)
     echo "`kcc --version`" | grep "Build number" ; kcc_is_versioned="$?"
-    if [ "$forcebuild" == "0" ] || [ ! "$persistent" == "0" ] ; then
+    if [ "$forcebuild" == "0" ] || [ ! -e $build_dir/started_build ] || [ ! "$persistent" == "0" ] ; then
     if [ ! -e $build_dir/build_function_hash ] || [ "$(echo $(sha1sum <<< $buildhashinfo))" != "$(head -n 1 $build_dir/build_function_hash)" ] || [ ! "$kcc_is_versioned" == "0" ] || [ "$forcebuild" == "0" ] ; then
 
         # build
         echo $report_string" building. Either first build, hash changed, \"kcc --version\" does not provide a build number, or the 'force build' (-b) option was used."
         type _build
-        if [ ! -e $build_dir/persistent_first_build ] || [ ! "$persistent" == "0" ] ; then 
+        if [ ! -e $build_dir/started_build ] || [ ! "$persistent" == "0" ] ; then 
 		rm $build_dir/build_function_hash ; safe_rm=$build_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
 		cp $download_dir/* $build_dir -r
-		if [ "$persistent" == "0" ] ; then touch $build_dir/persistent_first_build ; fi
+		touch $build_dir/started_build
 	fi
 	set -o pipefail
         unset results
@@ -395,10 +395,10 @@ prep_test() {
 
         # test
         echo $report_string" testing. Either the test hash changed or this is the first unit test run."
-        if [ ! -e $unit_test_dir/persistent_first_run_test ] || [ ! "$persistent" == "0" ] ; then
+        if [ ! -e $unit_test_dir/started_test ] || [ ! "$persistent" == "0" ] ; then
 		rm $unit_test_dir/test_function_hash ; safe_rm=$unit_test_dir && [[ ! -z "$safe_rm" ]] && rm -rf $safe_rm/*
         	cp $build_dir/* $unit_test_dir -r
-		if [ "$persistent" == "0" ] ; then touch $unit_test_dir/persistent_first_run_test ; fi
+		touch $unit_test_dir/started_test
 	fi
         set -o pipefail
         unset test_success
