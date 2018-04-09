@@ -95,19 +95,17 @@ if [ "$1" == "r" ] || [ "$1" == "-r" ] ; then
         exit 0
     fi
     echo "Ensuring that the new samples match against the current project..."
-    bash run-set.sh -urb selftest &> /dev/null
-    bash run-set.sh -uab selftest &> /dev/null
+    bash run-set.sh -urb selftest &> /dev/null &
+    bash run-set.sh -uab selftest &> /dev/null &
+    wait %1 %2
     similarity
     exit 0
 fi
 echo "Testing the rv-match_testing project, especially for expected xml format."
-echo -ne '[                     ](0%  )\r'
-bash run-set.sh -utb selftest
-echo -ne '[#######              ](33% )\r'
-bash run-set.sh -urb selftest &> /dev/null
-echo -ne '[##############       ](66% )\r'
-bash run-set.sh -uab selftest &> /dev/null
-echo -ne '[#####################](100%)\r'
+bash run-set.sh -utb selftest &> /dev/null &
+bash run-set.sh -urb selftest &> /dev/null &
+bash run-set.sh -uab selftest &> /dev/null &
+wait %1 %2 %3
 echo $'\n\nTest results: '
 echo -ne '\n'
 xmlfile="results/report.xml"
