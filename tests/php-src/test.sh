@@ -22,7 +22,7 @@ _build() {
     names[0]="autoreconf" ; autoreconf -i                         |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     names[1]="buildconf"  ; ./buildconf CC=$compiler LD=$compiler |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
     names[2]="configure"  ; ./configure CC=$compiler LD=$compiler |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
-    names[3]="make"       ; make                                  |& tee rv_build_3.txt ; results[3]="$?" ; postup 3
+    names[3]="make"       ; make -j 8                             |& tee rv_build_3.txt ; results[3]="$?" ; postup 3
 }
 
 init

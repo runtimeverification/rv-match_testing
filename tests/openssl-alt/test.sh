@@ -15,7 +15,7 @@ _build() {
     else
         CC=$compiler ./config no-asm no-threads no-hw no-zlib no-shared |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     fi
-    make |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
+    make -j 8 |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 _test() {

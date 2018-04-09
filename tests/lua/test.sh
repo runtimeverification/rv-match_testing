@@ -28,7 +28,7 @@ _build() {
         reportflag=""
     fi
     names[0]="folder" ; cd lua-$VERSION/ ; results[0]="$?" ; postup 0
-    names[1]="make linux" ; sudo make linux CC=$compiler LD=$compiler $reportflag |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
+    names[1]="make linux" ; sudo make -j 8 linux CC=$compiler LD=$compiler $reportflag |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 _test() {

@@ -19,9 +19,9 @@ _build() {
     else
         ./configure --cc=$compiler --disable-stripping --disable-asm --disable-inline-asm --disable-x86asm |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     fi
-    bash $base_dir/timeout.sh -t 30000 make |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
+    bash $base_dir/timeout.sh -t 30000 make -j 8 |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
     names[2]="make examples"
-    bash $base_dir/timeout.sh -t 30000 make examples |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
+    bash $base_dir/timeout.sh -t 30000 make -j 8 examples |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
 }
 
 init

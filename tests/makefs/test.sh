@@ -16,7 +16,7 @@ _download() {
 _build() {
     cd makefs/src/
     sed -i -e "s/gcc/$compiler/g" Makefile ; results[0]="$?" ; postup 0
-    make |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
+    make -j 8 |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 init

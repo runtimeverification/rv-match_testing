@@ -11,8 +11,8 @@ _dependencies() {
     cd cpputest-3.8/
     autoreconf
     ./configure
-    make
-    sudo make install
+    make -j 8
+    sudo make -j 8 install
     #cd "$start_dep_dir"
     #rm -r cpputest-3.8/
     #rm cpputest-3.8.tar.gz
@@ -31,8 +31,8 @@ _build() {
           flaggedcompiler="$compiler -fissue-report=$json_out"
     fi
     CC=$flaggedcompiler cmake . |& tee rv_build_0.txt ; results[0]="$?"
-    make |& tee rv_build_1.txt ; results[1]="$?"
-    names[2]="make test" ; make test |& tee rv_build_2.txt ; results[2]="$?"
+    make -j 8 |& tee rv_build_1.txt ; results[1]="$?"
+    names[2]="make test" ; make -j 8 test |& tee rv_build_2.txt ; results[2]="$?"
 }
 
 _test() {

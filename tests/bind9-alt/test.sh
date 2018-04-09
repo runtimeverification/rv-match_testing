@@ -19,21 +19,21 @@ _build() {
     bind9dir=$(pwd)
     names[0]="outer configure step"
     # This configuration is setup specifically to work with rvpc
-    ./configure --prefix=$HOME/bind9 --host=x86_64-linux-gnu --build=x86_64-pc-linux-gnu --with-randomdev=/dev/random --with-ecdsa=yes --with-gost=yes --with-eddsa=no --with-atf=$HOME/rv/bind9/unit/atf BUILD_CC=gcc CC=$compiler CXX=$compiler++ |& tee kcc_make_0.txt ; results[0]="$?" ; postup 0
+    ./configure --prefix=$HOME/bind9 --host=x86_64-linux-gnu --build=x86_64-pc-linux-gnu --with-randomdev=/dev/random --with-ecdsa=yes --with-gost=yes --with-eddsa=no --with-atf=$HOME/rv/bind9/unit/atf BUILD_CC=gcc CC=$compiler CXX=$compiler++ |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     names[1]="found unit/atf-src/" ; [ -d unit/atf-src/ ] ; results[1]="$?" ; postup 1
     cd unit/atf-src/
     names[2]="inner configure step"
-    ./configure --prefix=$HOME/rv/bind9/unit/atf --enable-tools --disable-shared |& tee kcc_make_2.txt ; results[2]="$?" ; postup 2
-    names[3]="inner make" ; make |& tee kcc_make_3.txt ; results[3]="$?" ; postup 3
-    names[4]="inner make install" ; make install |& tee kcc_make_4.txt ; results[4]="$?" ; postup 4
+    ./configure --prefix=$HOME/rv/bind9/unit/atf --enable-tools --disable-shared |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
+    names[3]="inner make" ; make -j 8 |& tee rv_build_3.txt ; results[3]="$?" ; postup 3
+    names[4]="inner make install" ; make -j 8 install |& tee rv_build_4.txt ; results[4]="$?" ; postup 4
     cd $bind9dir
-    names[5]="outer make" ; make |& tee kcc_make_5.txt ; results[5]="$?" ; postup 5
+    names[5]="outer make" ; make -j 8 |& tee rv_build_5.txt ; results[5]="$?" ; postup 5
 }
 
 _test() {
     cd bind9/
     names[0]="make unit"
-    make unit |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
+    make -j 8 unit |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
 
 
     cd bin/named/

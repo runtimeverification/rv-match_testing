@@ -22,7 +22,7 @@ _build() {
     #   -e 's/doc@cygnus.com/doc@@cygnus.com/' bfd/doc/bfd.texinfo |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     names[0]="autoreconf" ; autoreconf2.64                        |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     names[1]="configure"  ; ./configure CC=$compiler LD=$compiler |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
-    names[2]="make"       ; make        CC=$compiler LD=$compiler |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
+    names[2]="make"       ; make -j 8   CC=$compiler LD=$compiler |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
 }
 
 _test() {

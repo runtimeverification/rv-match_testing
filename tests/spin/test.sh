@@ -22,7 +22,7 @@ _build() {
     fi
     postup 0
 
-    make ; results[1]="$?" ; postup 1
+    make -j 8 ; results[1]="$?" ; postup 1
 }
 
 _test() {

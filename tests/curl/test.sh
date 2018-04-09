@@ -20,15 +20,15 @@ _build() {
     else
         CC=$compiler CFLAGS="$moreflags" cmake -DCURL_STATICLIB=ON . |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     fi
-    make |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
+    make -j 8 |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 
     # Leave the passing regression test alone.
     if [ "$exportfile" == "regression" ] ; then return ; fi
 
     names[2]="make tests"
-    make tests |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
+    make -j 8 tests |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
     names[3]="make test-torture"
-    make test-torture |& tee rv_build_3.txt ; results[3]="$?" ; postup 3
+    make -j 8 test-torture |& tee rv_build_3.txt ; results[3]="$?" ; postup 3
 }
 
 _test() {

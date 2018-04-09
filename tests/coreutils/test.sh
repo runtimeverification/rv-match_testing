@@ -23,7 +23,7 @@ _build() {
     fi
     echo "COREUTILS DEBUG"
     cat config.log
-    make |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
+    make -j 8 |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 init

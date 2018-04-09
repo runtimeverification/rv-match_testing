@@ -33,7 +33,7 @@ _build() {
     else
         MATHLIB='/lib/x86_64-linux-gnu/libm.so.6' CC=$compiler LD=$compiler ./configure |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     fi
-    make |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
+    make -j 8 |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 init

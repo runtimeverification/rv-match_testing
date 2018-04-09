@@ -17,10 +17,10 @@ _build() {
         ./configure CC=$compiler |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     fi
     set -o pipefail
-    make |& tee rv_build_1.txt
+    make -j 8 |& tee rv_build_1.txt
     [ -f src/dhcpcd ] ; results[1]="$?" ; postup 1
 
-    cd tests/ ; names[2]="make tests" ; CC=$compiler LD=$compiler make |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
+    cd tests/ ; names[2]="make tests" ; CC=$compiler LD=$compiler make -j 8 |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
     
 }
 

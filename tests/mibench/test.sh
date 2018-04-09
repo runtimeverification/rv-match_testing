@@ -24,7 +24,7 @@ _helper() {
         let "mii += 1"
     fi
     names[$mii]="$name make"
-    make$make_arg |& tee rv_build_$mii.txt ; results[$mii]="$?" ; postup $mii
+    make -j 8 $make_arg |& tee rv_build_$mii.txt ; results[$mii]="$?" ; postup $mii
     
     path=""
     make_arg=""
@@ -69,7 +69,7 @@ name="stringsearch" ; _helper
 
 folder="security" # security: 4
 name="blowfish" ; _helper
-#path="pgp/src" ; name="pgp" ; make_arg=" linux" ; _helper
+#path="pgp/src" ; name="pgp" ; make_arg="linux" ; _helper
 #name="rijndael" ; _helper
 name="sha" ; _helper
 

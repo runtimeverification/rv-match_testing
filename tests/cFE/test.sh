@@ -35,7 +35,7 @@ _build() {
     cd cFE-6.5.0-OSS-release/build/
     export SIMULATION=native
     #cmake -DCMAKE_C_COMPILER=gcc -DENABLE_UNIT_TESTS=TRUE --build ../cfe
-    #make mission-all
+    #make -j 8 mission-all
     #CMAKE_C_LINK_EXECUTABLE
     #CMAKE_C_FLAGS
     compilerwithkccflags=$compiler
@@ -48,7 +48,7 @@ _build() {
     cmake -DCMAKE_C_COMPILER=$compilerwithkccflags -DENABLE_UNIT_TESTS=TRUE --build ../cfe |& tee rv_build_0.txt ; results[0]="$?" ; names[0]="cmake" ; postup 0
 
     # Step 1
-    make mission-all |& tee rv_build_1.txt ; results[1]="$?" ; names[1]="make mission-all" ; postup 1
+    make -j 8 mission-all |& tee rv_build_1.txt ; results[1]="$?" ; names[1]="make mission-all" ; postup 1
     
     # Step 2
     names[2]="unit-tests folder found"
@@ -57,7 +57,7 @@ _build() {
     # Step 3
     names[3]="make unit-tests" ; results[3]="1"
     if [ "${results[2]}" == "0" ] ; then
-        cd native/osal/unit-tests/ && make |& tee rv_build_3.txt ; results[3]="$?"
+        cd native/osal/unit-tests/ && make -j 8 |& tee rv_build_3.txt ; results[3]="$?"
     else
         echo "Unit tests folder was not found, so their build fails." > rv_build_3.txt
     fi
