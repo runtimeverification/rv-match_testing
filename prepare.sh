@@ -444,10 +444,10 @@ init() {
         wget -P $base_dir https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/timeout.sh
     fi
     if [ ! "$exportfile" == "regression" ] ; then
-        compiler="gcc" && init_helper
+        compilerpp="g++" && compiler="gcc" && init_helper
     fi
     if [ ! "$gcconly" == "0" ] && [ ! "$rvpredict" == "0" ] ; then
-        compiler="kcc" && init_helper
+        compilerpp="k++" && compiler="kcc" && init_helper
     fi
     if [ ! "$gcconly" == "0" ] && [ "$rvpredict" == "0" ] ; then
         compiler="rvpc" && init_helper
