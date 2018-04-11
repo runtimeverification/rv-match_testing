@@ -40,7 +40,7 @@ _build() {
 
     names[3]="make success"
     ulimit -s 16777216
-    make -j 8 |& tee rv_build_3.txt ; results[3]="$?" ; postup 3
+    make -j`nproc` |& tee rv_build_3.txt ; results[3]="$?" ; postup 3
 
 }
 
@@ -49,7 +49,7 @@ _test() {
     if [ -z ${rvpredict+x} ]; then names[0]="problem with prepare.sh"; results[0]="1"; echo "'rvpredict' variable wasn't set." ; return; fi
     cd bind9/
     names[0]="make unit"
-    make -j 8 unit |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
+    make -j`nproc` unit |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
 
     return
 

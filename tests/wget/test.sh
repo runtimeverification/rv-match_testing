@@ -19,7 +19,7 @@ _download() {
 _build() {
     cd wget/
     ./configure --disable-threads CC=$compiler LD=$compiler |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
-    bash $base_dir/timeout.sh -t 2000 make -j 8 |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
+    bash $base_dir/timeout.sh -t 2000 make -j`nproc` |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 init

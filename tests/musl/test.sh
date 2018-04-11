@@ -11,7 +11,7 @@ _download() {
 _build() {
     cd musl/
     ./configure --target=x86_64-linux-gnu CC=$compiler LD=$compiler |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
-    make -j 8 |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
+    make -j`nproc` |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 init

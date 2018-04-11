@@ -25,9 +25,9 @@ _build() {
     #if [ "$exportfile" == "regression" ] ; then return ; fi
     names[0]="autoreconf" ; autoreconf -i |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     names[1]="configure"  ; ./configure --enable-curldebug CC=$compiler |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
-    names[2]="make" ; make -j 8 |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
-    names[3]="make test" ; make -j 8 test |& tee rv_build_3.txt ; results[3]="$?" ; postup 3
-    names[4]="make test-torture" ; make -j 8 test-torture |& tee rv_build_4.txt ; results[4]="$?" ; postup 4
+    names[2]="make" ; make -j`nproc` |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
+    names[3]="make test" ; make -j`nproc` test |& tee rv_build_3.txt ; results[3]="$?" ; postup 3
+    names[4]="make test-torture" ; make -j`nproc` test-torture |& tee rv_build_4.txt ; results[4]="$?" ; postup 4
 }
 
 _test() {

@@ -14,7 +14,7 @@ _download() {
 
 _build() {
     cd linux/ ; results[0]="$?" ; postup 0
-    make -j 8 mrproper CC=$compiler LD=$compiler |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
+    make -j`nproc` mrproper CC=$compiler LD=$compiler |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 init

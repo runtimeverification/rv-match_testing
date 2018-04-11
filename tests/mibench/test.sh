@@ -24,7 +24,7 @@ _helper() {
         let "mii += 1"
     fi
     names[$mii]="$name make"
-    make -j 8 $make_arg |& tee rv_build_$mii.txt ; results[$mii]="$?" ; postup $mii
+    make -j`nproc` $make_arg |& tee rv_build_$mii.txt ; results[$mii]="$?" ; postup $mii
     
     path=""
     make_arg=""

@@ -25,7 +25,7 @@ _build() {
     cp defconfig .config
     sed -i '/CONFIG_LIBNL32=y/s/^#//g' .config
     sed -i '157iOBJS_c += ../src/utils/wpabuf.o' Makefile ; results[0]="$?" ; postup 0
-    CC=$compiler make -j 8 |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
+    CC=$compiler make -j`nproc` |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 init

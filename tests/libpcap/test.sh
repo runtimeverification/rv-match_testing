@@ -18,12 +18,12 @@ _build() {
     sed -i '124,125d' tests/Makefile.in
     aclocal; autoreconf
     ./configure CC="$compiler -std=gnu11" LD=$compiler |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
-    make -j 8 |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
+    make -j`nproc` |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
     sed -i '35,38d' tests/CMakeLists.txt
     sed -i '82d' tests/Makefile
     sed -i -e "s/valgrindtest.c/capturetest.c/g" tests/Makefile
     cd tests/
-    names[2]="make tests" ; make -j 8 |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
+    names[2]="make tests" ; make -j`nproc` |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
 }
 
 _test() {

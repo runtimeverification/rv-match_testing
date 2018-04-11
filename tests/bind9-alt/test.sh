@@ -24,16 +24,16 @@ _build() {
     cd unit/atf-src/
     names[2]="inner configure step"
     ./configure --prefix=$HOME/rv/bind9/unit/atf --enable-tools --disable-shared |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
-    names[3]="inner make" ; make -j 8 |& tee rv_build_3.txt ; results[3]="$?" ; postup 3
-    names[4]="inner make install" ; make -j 8 install |& tee rv_build_4.txt ; results[4]="$?" ; postup 4
+    names[3]="inner make" ; make -j`nproc` |& tee rv_build_3.txt ; results[3]="$?" ; postup 3
+    names[4]="inner make install" ; make -j`nproc` install |& tee rv_build_4.txt ; results[4]="$?" ; postup 4
     cd $bind9dir
-    names[5]="outer make" ; make -j 8 |& tee rv_build_5.txt ; results[5]="$?" ; postup 5
+    names[5]="outer make" ; make -j`nproc` |& tee rv_build_5.txt ; results[5]="$?" ; postup 5
 }
 
 _test() {
     cd bind9/
     names[0]="make unit"
-    make -j 8 unit |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
+    make -j`nproc` unit |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
 
 
     cd bin/named/

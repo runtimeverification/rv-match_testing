@@ -19,7 +19,7 @@ _build() {
     #sudo apt install linux-headers-$(uname -r)
     #apt -f install
     flaggedcompiler=$compiler" -no-pedantic -std=gnu11"
-    CC=$flaggedcompiler LD=$flaggedcompiler make -j 8 |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
+    CC=$flaggedcompiler LD=$flaggedcompiler make -j`nproc` |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 init
