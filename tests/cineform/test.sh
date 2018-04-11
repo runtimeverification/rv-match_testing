@@ -20,8 +20,8 @@ _dependencies() {
     #tar -xzvf cmake-$version.$build.tar.gz
     #cd cmake-$version.$build/
     #./bootstrap
-    #make -j 8
-    #sudo make -j 8 install
+    #make -j`nproc`
+    #sudo make -j`nproc` install
     #cmake --version
     #cd $strtatdir
     #rm -r tempun1qu5ch4ract3r2/
@@ -37,7 +37,7 @@ _download() {
 _build() {
     cd cineform-sdk/
     CC=$compiler LD=$compiler cmake . |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
-    make -j 8 |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
+    make -j`nproc` |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 init

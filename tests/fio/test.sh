@@ -11,7 +11,7 @@ _download() {
 _build() {
     cd fio/
     CC=$compiler LD=$compiler ./configure --cc=$compiler |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
-    make -j 8 |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
+    make -j`nproc` |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 _test() {

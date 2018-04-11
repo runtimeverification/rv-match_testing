@@ -34,7 +34,7 @@ _build() {
     mv C juliet
     ./runner.pl
     #cd C/
-    #names[0]="make" ; make -j 8 CC="$compiler -fissue-report=$json_out" |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
+    #names[0]="make" ; make -j`nproc` CC="$compiler -fissue-report=$json_out" |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
 }
 
 _test() {

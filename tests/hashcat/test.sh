@@ -20,7 +20,7 @@ _build() {
     kcc -d -c -pipe -std=gnu99 -Iinclude/ -Iinclude/lzma_sdk/ -IOpenCL/ -W -Wall -Wextra -Wfloat-equal -Wundef -Wshadow -Wmissing-declarations -Wmissing-prototypes -Wpointer-arith -Wstrict-prototypes -Waggregate-return -Wswitch-enum -Winit-self -Werror-implicit-function-declaration -Wformat -ftrapv -Wwrite-strings -Wno-cast-align -Wno-cast-qual -Wno-conversion -Wno-padded -Wno-pedantic -Wno-sizeof-pointer-memaccess -O2 -Ideps/OpenCL-Headers/ -DWITH_HWMON src/rp_kernel_on_cpu_optimized.c -o obj/rp_kernel_on_cpu_optimized.NATIVE.STATIC.o
     echo "/Running special command."
     sed -i -e "s/gcc/$compiler/g" ./src/Makefile |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
-    make -j 8 |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
+    make -j`nproc` |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
 }
 
 init

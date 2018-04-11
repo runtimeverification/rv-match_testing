@@ -16,7 +16,7 @@ _build() {
     cd Software-Analysis-Benchmark/
     names[0]="autoreconf" ; autoreconf -i |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     names[1]="configure"  ; ./configure CC=$compiler |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
-    names[2]="make"       ; make -j 8 |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
+    names[2]="make"       ; make -j`nproc` |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
 }
 
 _test() {

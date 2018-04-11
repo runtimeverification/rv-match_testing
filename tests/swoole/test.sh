@@ -17,13 +17,13 @@ _build() {
     cd swoole-src/
     names[0]="phpize"    ; phpize                   |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     names[1]="configure" ; ./configure CC=$compiler |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
-    names[2]="make"      ; make -j 8                |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
+    names[2]="make"      ; make -j`nproc`                |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
 }
 
 _test() {
     cd swoole-src/
     names[0]="make test"
-    make -j 8 test |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
+    make -j`nproc` test |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
 }
 
 init
