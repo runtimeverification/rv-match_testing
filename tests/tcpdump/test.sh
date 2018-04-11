@@ -15,7 +15,6 @@ _download() {
 
 _build() {
     cd tcpdump/
-    #sudo apt intall libpcap-dev
     aclocal; autoreconf
     ./configure CC="$compiler -std=gnu11" LD=$compiler |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     make -j 8 |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
