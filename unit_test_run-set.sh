@@ -3,6 +3,9 @@ returnvalue=0
 tempfile="results/temporary"
 tempfile2="results/temporary2"
 tempfile3="results/temporary3"
+tempfile4="results/temporary4"
+tempfile5="results/temporary5"
+tempfile6="results/temporary6"
 failelement='<error message="Failed.">'
 similarity() {
 
@@ -45,21 +48,21 @@ fi
 # Acceptance xml similarity test (similar code to regression test)
 xmlfile="results/acceptance.xml"
 samplefile="selftest/acceptance_sample.xml"
-cp $xmlfile $tempfile
-cp $samplefile $tempfile2
+cp $xmlfile $tempfile4
+cp $samplefile $tempfile5
 rightTypes="1"
 similar="0"
-while [ "$(grep "<testcase classname=" $tempfile)" ] || [ "$(grep "<testcase classname=" $tempfile2)" ] && [ "$similar" == "0" ] ;
+while [ "$(grep "<testcase classname=" $tempfile4)" ] || [ "$(grep "<testcase classname=" $tempfile5)" ] && [ "$similar" == "0" ] ;
 do
     rightTypes="0"
-    tail -n +`grep -n -m 1 '<testcase classname=' $tempfile |cut -f1 -d:` $tempfile > $tempfile3
-    one="$(head -n 1 $tempfile3)"
+    tail -n +`grep -n -m 1 '<testcase classname=' $tempfile4 |cut -f1 -d:` $tempfile4 > $tempfile6
+    one="$(head -n 1 $tempfile6)"
     one=${one%time*}
-    tail -n +2 "$tempfile3" > $tempfile
-    tail -n +`grep -n -m 1 '<testcase classname=' $tempfile2 |cut -f1 -d:` $tempfile2 > $tempfile3
-    two="$(head -n 1 $tempfile3)"
+    tail -n +2 "$tempfile6" > $tempfile4
+    tail -n +`grep -n -m 1 '<testcase classname=' $tempfile5 |cut -f1 -d:` $tempfile5 > $tempfile6
+    two="$(head -n 1 $tempfile6)"
     two=${two%time*}
-    tail -n +2 "$tempfile3" > $tempfile2
+    tail -n +2 "$tempfile6" > $tempfile5
     if [ ! "$one" == "$two" ] ; then
         similar="1"
     fi
@@ -315,6 +318,8 @@ fi
 rm $tempfile
 rm $tempfile2
 rm $tempfile3
+rm $tempfile4
+rm $tempfile5
 
 rm "results/report.xml"
 #rm "results/acceptance.xml"
