@@ -20,7 +20,13 @@ _build() {
 	fi
 	make -j`nproc` |& tee rv_build_1.txt
 	[ -f src/dhcpcd ] ; results[1]="$?" ; postup 1
+	
+	# Patch 1, try default
+	cd ${dhcfolder}/dhcpcd/
+	
 
+	# Patch 2, try all types
+	cd ${dhcfolder}/dhcpcd/
 	mkdir test-export/
 	cd tests/
 	sed -i -e "s/CPPFLAGS+=\t-DWARN_SELECT/#CPPFLAGS+=\t-DWARN_SELECT/g" eloop-bench/Makefile

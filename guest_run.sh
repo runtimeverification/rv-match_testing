@@ -174,9 +174,14 @@ if [ "$rvpredict" == "0" ] ; then
     else
         echo "  Old predict file not found or differs. Updating with new."
         sudo dpkg -r rv-predict-c &> /dev/null
-        sleep 2
+	echo "  <assert rvpc uninstalled before reinstall>"
+	while fuser /var/lib/dpkg/lock || fuser /var/lib/apt/lists/lock ; do
+            echo "Waiting for other software managers to finish..."
+            sleep 2
+        done
+        fuser /var/lib/dpkg/lock      ; echo "     dpkg lock check: [$?]"
+        fuser /var/lib/apt/lists/lock ; echo "apt lists lock check: [$?]"
         rvpc --version &> /dev/null ; rvpcstillinstalled="$?"
-        echo "  <assert rvpc uninstalled before reinstall>"
         set -e ; [ ! "$rvpcstillinstalled" == "0" ] ; set +e
         echo "  </assert rvpc uninstalled before reinstall>"
         while fuser /var/lib/dpkg/lock || fuser /var/lib/apt/lists/lock ; do
