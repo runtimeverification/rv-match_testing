@@ -145,10 +145,10 @@ git pull
 waitmanage() {
 	while fuser /var/lib/dpkg/lock || fuser /var/lib/apt/lists/lock ; do
 		waitstr="because this should actually be a do-while loop"
-		if [ fuser /var/lib/dpkg/lock ] ; then
+		if fuser /var/lib/dpkg/lock ; then
 			waitstr="on the dpkg lock"
 		fi
-		if [ fuser /var/lib/apt/lists/lock ] ; then
+		if fuser /var/lib/apt/lists/lock ; then
 			waitstr="on the 'apt lists' lock"
 		fi
 		printf "\nWaiting ${waitstr} before ${1}."
