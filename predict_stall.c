@@ -1,3 +1,5 @@
+// Referred to from https://github.com/runtimeverification/rv-predict/issues/926
+
 /* confdefs.h */
 //#define PACKAGE_NAME "NSD"
 //#define PACKAGE_TARNAME "nsd"
