@@ -51,8 +51,8 @@ _test() {
 
     cd bin/named/
     f="custom_folder"
-    mkdir $f
-    cd $f
+    mkdir ${f}
+    cd ${f}
     # 127.0.0.zone, localhost.zone, named.conf, world.zone, root.hint
 
     echo '@                               1D IN SOA   localhost. root.localhost. (
@@ -132,20 +132,29 @@ www         IN CNAME    moon' > world.zone
     touch root.hint
 
     cd ..
-    sudo ./named -c ./$f/named.conf -d 10 -g -L ./out.log &
-    for i in `seq 30`; do
-        dig @localhost sun.world.cosmos &
+    sudo ./named -c ./${f}/named.conf -d 10 -g -L ./out.log > ${bind9testdir}/server.log &
+    for i in `seq 2 31`; do
+        dig @localhost sun.world.cosmos > ${i}.log &
     done
     echo "did loop ======================================================================================="
     for i in `seq 2 31`; do
         wait %${i}
+        echo "<< ${i} >>"
+        cat ${i}.log
+        echo ">> ${i} <<"
+        rm ${i}.log
     done
     echo "dns test ======================================================================================="
     cd ${bind9testdir}/dnstest/
     sed -i -e "s/port, 8053/port, 53/g" dnstest.config
-    bash run.sh &
-    sleep 5
+    bash run.sh > dnstest.log &
+    sleep 10
     kill %2
+    cat dnstest.log
+    rm dnstest.log
+    echo "server out======================================================================================"
+    cat ${bind9testdir}/server.log
+    rm ${bind9testdir}/server.log
     echo "finished========================================================================================"
 }
 
