@@ -92,7 +92,7 @@ report_file=$test_dir/$exportfile.xml
 rm $report_file ; touch $report_file
 
 prep_prepare() {
-    report_string=" ===> "$test_name" "$compiler" "
+    report_string=" ===> $test_name [$compiler] "
 
     build_dir=$test_dir/$compiler/build
     mkdir -p $build_dir
@@ -372,12 +372,14 @@ prep_extract_test() {
                     print=$print$'\nTest log tail: \n'$(tail -20 rv_out_$t.txt)
                 fi
                 print=$print$'\n}'
-                printf "<![CDATA[%s]]>" "$print" >> $report_file
+                printf "<![CDATA[%s]]> $print" >> $report_file
                 echo '</error>' >> $report_file
             fi
             echo '</testcase>' >> $report_file
+	    echo "DEBUG 2"
         done
     fi
+    echo "DEBUG 1"
 }
 
 prep_test() {
