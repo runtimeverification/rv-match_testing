@@ -45,8 +45,8 @@ _build() {
 _test() {
     bind9testdir=$(pwd)
     cd bind9/
-    names[0]="make unit"
-    make -j`nproc` unit |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
+    #names[0]="make unit"
+    #make -j`nproc` unit |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
 
 
     cd bin/named/
