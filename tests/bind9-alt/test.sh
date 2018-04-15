@@ -3,34 +3,47 @@
 base_dir=$(pwd); cd $(dirname $BASH_SOURCE); . $base_dir/prepare.sh "$@"
 
 _dependencies() {
-    sudo apt -y install openssl
-    sudo apt -y install libssl-dev
+	# dnstest
+	sudo apt -y install erlang
+	
+	# bind9
+    	sudo apt -y install openssl libssl-dev
 }
 
 _download() {
-    git clone https://source.isc.org/git/bind9.git
-    cd bind9/
-    git checkout 63270d33f1103f6193aebd6c205b78064b4cdfe5
+	bind9dl=$(pwd)
+	git clone https://source.isc.org/git/bind9.git
+	cd bind9/
+	git checkout 63270d33f1103f6193aebd6c205b78064b4cdfe5
+
+	cd ${bind9dl}
+	git clone https://github.com/dnsimple/dnstest.git
+	cd dnstest/
+	git checkout 432614579fd5b059fa05d9e457e296ed84b7cc34
 }
 
 _build() {
-    ulimit -s 16777216
-    cd bind9/
-    bind9dir=$(pwd)
-    names[0]="outer configure step"
-    # This configuration is setup specifically to work with rvpc
-    ./configure --prefix=$HOME/bind9 --host=x86_64-linux-gnu --build=x86_64-pc-linux-gnu --with-randomdev=/dev/random --with-ecdsa=yes --with-gost=yes --with-eddsa=no --with-atf=$HOME/rv/bind9/unit/atf BUILD_CC=gcc CC=$compiler CXX=$compiler++ |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
-    names[1]="found unit/atf-src/" ; [ -d unit/atf-src/ ] ; results[1]="$?" ; postup 1
-    cd unit/atf-src/
-    names[2]="inner configure step"
-    ./configure --prefix=$HOME/rv/bind9/unit/atf --enable-tools --disable-shared |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
-    names[3]="inner make" ; make -j`nproc` |& tee rv_build_3.txt ; results[3]="$?" ; postup 3
-    names[4]="inner make install" ; make -j`nproc` install |& tee rv_build_4.txt ; results[4]="$?" ; postup 4
-    cd $bind9dir
-    names[5]="outer make" ; make -j`nproc` |& tee rv_build_5.txt ; results[5]="$?" ; postup 5
+	ulimit -s 16777216
+	bind9dir=$(pwd)
+	cd $bind9dir/dnstest/
+	make
+	
+	cd $bind9dir/bind9/
+	names[0]="outer configure step"
+	# This configuration is setup specifically to work with rvpc
+	./configure --prefix=$HOME/bind9 --host=x86_64-linux-gnu --build=x86_64-pc-linux-gnu --with-randomdev=/dev/random --with-ecdsa=yes --with-gost=yes --with-eddsa=no --with-atf=$HOME/rv/bind9/unit/atf BUILD_CC=gcc CC=$compiler CXX=$compiler++ |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
+	names[1]="found unit/atf-src/" ; [ -d unit/atf-src/ ] ; results[1]="$?" ; postup 1
+	cd unit/atf-src/
+	names[2]="inner configure step"
+	./configure --prefix=$HOME/rv/bind9/unit/atf --enable-tools --disable-shared |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
+	names[3]="inner make" ; make -j`nproc` |& tee rv_build_3.txt ; results[3]="$?" ; postup 3
+	names[4]="inner make install" ; make -j`nproc` install |& tee rv_build_4.txt ; results[4]="$?" ; postup 4
+	cd $bind9dir/bind9/
+	names[5]="outer make" ; make -j`nproc` |& tee rv_build_5.txt ; results[5]="$?" ; postup 5
 }
 
 _test() {
+    bind9testdir=$(pwd)
     cd bind9/
     names[0]="make unit"
     make -j`nproc` unit |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
@@ -119,7 +132,7 @@ www         IN CNAME    moon' > world.zone
     touch root.hint
 
     cd ..
-    sudo ./named -c ./$f/named.conf -d 100 -g -L ./out.log &
+    sudo ./named -c ./$f/named.conf -d 10 -g -L ./out.log &
     for i in `seq 30`; do
         dig @localhost sun.world.cosmos &
     done
@@ -127,6 +140,12 @@ www         IN CNAME    moon' > world.zone
     for i in `seq 2 31`; do
         wait %${i}
     done
+    echo "dns test ======================================================================================="
+    cd ${bind9testdir}/dnstest/
+    sed -i -e "s/port, 8053/port, 53/g" dnstest.config
+    bash run.sh &
+    sleep 5
+    kill %2
     echo "finished========================================================================================"
 }
 

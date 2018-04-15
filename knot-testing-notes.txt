@@ -40,7 +40,8 @@ sudo apt -y install erlang
 
 download:
 git clone https://github.com/dnsimple/dnstest.git
-cd dnsimple/
+cd dnstest/
+git checkout 432614579fd5b059fa05d9e457e296ed84b7cc34
 
 build:
 make
