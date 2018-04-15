@@ -1,0 +1,51 @@
+
+1. queryperf++ {
+
+dependencies:
+depends on bundy (2)
+
+download:
+git clone https://github.com/jinmei/queryperfpp.git
+cd queryperfpp/
+git checkout e7e47f1e268de2c1ab95db589beab8317b9464ed # Tag v0.9.1
+
+build:
+
+}
+
+2. bundy {
+
+dependencies:
+sudo apt-get -y install libtool automake git build-essential pkg-config python3-dev libsqlite3-dev libbotan1.10-dev liblog4cplus-dev libgtest-dev libboost-dev python-setproctitle libssl-dev xsltproc docbook docbook-xsl elinks libmysql++-dev sqlite3 valgrind ccache
+
+download:
+git clone https://github.com/bundy-dns/bundy.git
+cd bundy/
+git checkout 52101dfd4fb6a648927596799461f829ec05eaa2 # Tag 7 Apr 2014 bind10-1.2.0rc1-release
+
+build:
+sed -i -e "645s/rdlen/int(rdlen)/g" src/lib/util/python/gen_wiredata.py
+autoreconf -i
+./configure --disable-generate-docs
+make
+#make check
+make install
+
+}
+
+3. dnstest {
+
+dependencies:
+sudo apt -y install erlang
+
+download:
+git clone https://github.com/dnsimple/dnstest.git
+cd dnsimple/
+
+build:
+make
+
+run:
+bash run.sh
+
+}

@@ -28,8 +28,9 @@ _build() {
 }
 
 _test() {
-    cd knot/
-    names[0]="knotd server" ; knotd -c ./samples/knot.sample.conf |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
+	cd knot/
+	names[0]="knotd server" ; knotd -c ./samples/knot.sample.conf |& tee rv_out_0.txt ; results[0]="$?" ; process_config 0
+	
 }
 
 init

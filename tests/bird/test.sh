@@ -7,9 +7,10 @@ _dependencies() {
 }
 
 _download() {
-    git clone https://github.com/BIRD/bird.git
-    cd bird/
-    git checkout d6cf996151307d083c30e4ecde0f1d7449b19253
+	git clone https://github.com/BIRD/bird.git
+	cd bird/
+	git checkout 4d3d34f5997128824c376a097eee60954c3611cf # Tag v2.0.2
+	#git checkout d6cf996151307d083c30e4ecde0f1d7449b19253
 }
 
 _build() {

@@ -142,6 +142,22 @@ git pull
 #   Should no longer need to use: https://runtimeverification.com/predict/download/c?v=1.9
 #   Should no longer need to use: https://runtimeverification.com/predict/download/java?v=1.9
 
+waitmanage() {
+	while fuser /var/lib/dpkg/lock || fuser /var/lib/apt/lists/lock ; do
+		waitstr="because this should actually be a do-while loop"
+		if fuser /var/lib/dpkg/lock ; then
+			waitstr="on the dpkg lock"
+		fi
+		if fuser /var/lib/apt/lists/lock ; then
+			waitstr="on the 'apt lists' lock"
+		fi
+		printf "\nWaiting ${waitstr} before ${1}."
+		sleep 2
+	done
+	fuser /var/lib/dpkg/lock      ; echo "     dpkg lock check: [$?]"
+	fuser /var/lib/apt/lists/lock ; echo "apt lists lock check: [$?]"
+}
+
 if [ "$rvpredict" == "0" ] ; then
     echo "<install rv-predict>"
     echo "  Existing version:"
@@ -174,18 +190,19 @@ if [ "$rvpredict" == "0" ] ; then
     else
         echo "  Old predict file not found or differs. Updating with new."
         sudo dpkg -r rv-predict-c &> /dev/null
-        sleep 2
-        rvpc --version &> /dev/null ; rvpcstillinstalled="$?"
-        echo "  <assert rvpc uninstalled before reinstall>"
-        set -e ; [ ! "$rvpcstillinstalled" == "0" ] ; set +e
+	echo "  <assert rvpc uninstalled before reinstall>"
+        waitmanage "asserting rvpc is uninstalled"
+	rvpc --version &> /dev/null ; rvpcstillinstalled="$?"
+	if [ "$rvpcstillinstalled" == "0" ] ; then
+		echo "After running 'sudo dpkg -r rv-predict-c', somehow 'rvpc --version' gives: {"
+		rvpc --version ; echo "} with exit code [$?]. Exiting."
+		exit 1
+	fi
+	# Delete next line if the exit 1 above is still around.
+        #set -e ; [ ! "$rvpcstillinstalled" == "0" ] ; set +e
         echo "  </assert rvpc uninstalled before reinstall>"
-        while fuser /var/lib/dpkg/lock || fuser /var/lib/apt/lists/lock ; do
-            echo "Waiting for other software managers to finish..."
-            sleep 2
-        done
-        fuser /var/lib/dpkg/lock      ; echo "     dpkg lock check: [$?]"
-        fuser /var/lib/apt/lists/lock ; echo "apt lists lock check: [$?]"
-        #printf "
+        waitmanage "before updating apt"
+	#printf "
 #
 #
 #1
@@ -194,20 +211,10 @@ if [ "$rvpredict" == "0" ] ; then
 #" > stdinfile.txt
         #cat stdinfile.txt | sudo java -jar predict-c.jar -console
         sudo apt-get update # deb line 1 of 3
-        while fuser /var/lib/dpkg/lock || fuser /var/lib/apt/lists/lock ; do
-            echo "Waiting for other software managers to finish... (2)"
-            sleep 2
-        done
-        fuser /var/lib/dpkg/lock      ; echo "     dpkg lock check (2): [$?]"
-        fuser /var/lib/apt/lists/lock ; echo "apt lists lock check (2): [$?]"
-        sudo dpkg -i predict-c.deb # deb line 2 of 3
-        while fuser /var/lib/dpkg/lock || fuser /var/lib/apt/lists/lock ; do
-            echo "Waiting for other software managers to finish... (3)"
-            sleep 2
-        done
-        fuser /var/lib/dpkg/lock      ; echo "     dpkg lock check (3): [$?]"
-        fuser /var/lib/apt/lists/lock ; echo "apt lists lock check (3): [$?]"
-        sudo apt-get install -f -y # deb line 3 of 3
+        waitmanage "installing predict-c debian"
+	sudo dpkg -i predict-c.deb # deb line 2 of 3
+        waitmanage "apt fix-broken installing"
+	sudo apt-get install -f -y # deb line 3 of 3
         sleep 1
         echo "  Version after reinstall:"
         rvpc --version

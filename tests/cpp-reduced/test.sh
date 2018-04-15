@@ -13,3 +13,6 @@ https://godbolt.org/g/vstq5h
 https://godbolt.org/g/osFjWC
 https://godbolt.org/g/M1SJ1C
 https://godbolt.org/g/2nw8aL
+
+godbolt.org/g/JVJg5v
+https://maciekgajewski.github.io/CloserLookAtUB/#1
