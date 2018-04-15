@@ -132,7 +132,7 @@ www         IN CNAME    moon' > world.zone
     touch root.hint
 
     cd ..
-    sudo ./named -c ./${f}/named.conf -d 10 -g -L ./out.log > ${bind9testdir}/server.log &
+    sudo ./named -c ./${f}/named.conf -d 10 -g -L ./out.log &
     for i in `seq 2 31`; do
         dig @localhost sun.world.cosmos > ${i}.log &
     done
@@ -153,8 +153,7 @@ www         IN CNAME    moon' > world.zone
     cat dnstest.log
     rm dnstest.log
     echo "server out======================================================================================"
-    cat ${bind9testdir}/server.log
-    rm ${bind9testdir}/server.log
+    cat ${bind9testdir}/bind9/bin/named/out.log
     echo "finished========================================================================================"
 }
 
