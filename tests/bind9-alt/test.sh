@@ -148,7 +148,7 @@ www         IN CNAME    moon' > world.zone
     cd ${bind9testdir}/dnstest/
     sed -i -e "s/port, 8053/port, 53/g" dnstest.config
     bash run.sh > dnstest.log &
-    sleep 10
+    sleep 15
     kill %2
     cat dnstest.log
     rm dnstest.log
