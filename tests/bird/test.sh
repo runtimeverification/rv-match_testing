@@ -14,6 +14,7 @@ _download() {
 }
 
 _build() {
+    # BIRD supports either IPv4 or IPv6 protocol, but have to be compiled separately for each one. Therefore, a dualstack router would run two instances of BIRD (one for IPv4 and one for IPv6), with completely separate setups (configuration files, tools ...). http://bird.network.cz/?get_doc&v=16&f=bird-1.html#ss1.1
     cd bird/
     names[0]="autoreconf" ; autoreconf  |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
     names[1]="configure"  ; ./configure CC=$compiler LD=$compiler |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
