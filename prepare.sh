@@ -153,7 +153,11 @@ increment_postup() {
     echo "$counter" > $index.ini
     let "counter += 1"
     dumpstring="Translation failed (kcc_config dumped). To repeat, run this command in directory "
+    alternatestring="Translation failed. To repeat, run this command in directory "
     more=`grep -A1 "$dumpstring" "$returnspot/rv_build_$index.txt"`
+    if [ "$more" == "" ] ; then
+        more=`grep -A1 "$alternatestring" "$returnspot/rv_build_$index.txt"`
+    fi
     morefolder=`printf "${more#$dumpstring}" | head -n 1`
     coloncharacter=":"
     morefolder=${morefolder%$coloncharacter}
