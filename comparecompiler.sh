@@ -37,7 +37,11 @@ doit() {
         echo -e "\r${name} complete."
 }
 set +a
-echo "[$1]"
+cat "gcc
+clang
+kcc
+rvpc
+" > smallcprograms/compilers.ini
 mkdir -p smallcprograms/invalid
 if [ ! "$1" == "" ] ; then
 	find ${1} -name "*.c" -exec cp {} smallcprograms/ \;
