@@ -3,8 +3,9 @@ set -a
 doit() {
 	tt=$1
 	name=$(basename ${tt})
+	log=${tt}.log
         #echo "tt is ${tt}"
-        printf "\n===[${name}]=========================\n\n" >> ${log}
+        printf "\n===[${name}]=========================\n\n" > ${log}
         echo ${tt} >> ${log}
         cat ${tt} >> ${log}
         echo -n "${name}...     "
@@ -12,16 +13,18 @@ doit() {
                 #echo "cc is ${cc}"
                 printf "\n---[compile, ${cc}, ${name}]--------------------------------\n" >> ${log}
                 echo -en "\r[compiling, ${cc}, ${name}]...     "
-                ${cc} ${tt} &>> ${log}
+                ${cc} -o ${tt}.out ${tt} &>> ${log}
                 printf "\n* *[runtime, ${cc}, ${name}] * * * * * * * * * * * * * * * *\n" >> ${log}
                 echo -en "\r[  running, ${cc}, ${name}]...     "
-                ./a.out &>> ${log}
+                ${tt}.out &>> ${log}
+		rm ${tt}.out
         done <smallcprograms/compilers.ini
         echo -e "\r${name} complete."
 }
-
-log="smallcprograms/out.log"
-rm ${log} ; touch ${log}
+set +a
 find smallcprograms -name "*.c" | parallel --eta --timeout 500 "doit {}"
-echo "Log: =-=-=-=-=-=-=-=-=-=-=-=-=-="
+log="smallcprograms/out.all"
+rm ${log} ; touch ${log}
+find smallcprograms -name "*.log" | xargs cat >> ${log}
+echo "Log: =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="
 cat ${log}
