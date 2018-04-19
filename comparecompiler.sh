@@ -164,11 +164,15 @@ if [ ! "${have_clang}${have_gcc}${have_kcc}${have_rvpc}${have_parallel}" == "000
 	exit 1
 fi
 etaflag=""
-if [ "$2" == "-eta" ] ; then
+if [ "$2" == "-eta" ] || [ "$3" == "-eta" ] ; then
 	etaflag="--eta"
 fi
 if [ ! "$1" == "" ] && [ -d "$1" ] ; then
-	find ${1} -name "*.c" | parallel --no-notice ${etaflag} --timeout 500 "doit {}"
+	if [ "$2" == "-shuf" ] || [ "$3" == "-shuf" ] ; then
+		find ${1} -name "*.c" | shuf | parallel --no-notice ${etaflag} --timeout 500 "doit {}"
+	else
+		find ${1} -name "*.c" | parallel --no-notice ${etaflag} --timeout 500 "doit {}"
+	fi
 else
-	echo "usage: bash comparecompilers.sh ./path/to/dir/with/c/files/in/subfolders/ [-eta]"
+	echo "usage: bash comparecompilers.sh ./path/to/dir/with/c/files/in/subfolders/ [-eta] [-shuf]"
 fi
