@@ -18,7 +18,7 @@ printcol() {
 		fi
 	fi
 	page=120
-	wid1=120 ; wid2=59 ; wid3=39 ; wid4=29
+	wid1=${page} ; wid2=$(( ${page} / 2 - 1 )) ; wid3=$(( ${page} / 3 - 1 )) ; wid4=$(( ${page} / 4 - 1 ))
 	s="|"
 	if [ "$d" == "" ] ; then
 		if [ "$c" == "" ] ; then
@@ -61,23 +61,23 @@ report() {
 				: #echo "$1 compiled run of ${tt} matches with gcc & clang compiled runs."
 			else
 				runtimelog=0
-				echo "$1 runtime difference."
-				echo "${tt} returned [$2] when compiled with gcc & clang."
-				echo "Yet it returned [$run_result] when compiled with $1."
+				echo "$1 runtime difference." > ${tt}.runtime-report
+				echo "${tt} returned [$2] when compiled with gcc & clang." >> ${tt}.runtime-report
+				echo "Yet it returned [$run_result] when compiled with $1." >> ${tt}.runtime-report
 			fi
 		else
 			compilelog=0
-			echo "Fatal Error: [${1}, missing output]"
-			echo "${tt} compiled successfully yet ${tt}.compiled-$1 was not produced."
+			echo "Fatal Error: [${1}, missing output]" > ${tt}.compile-report
+			echo "${tt} compiled successfully yet ${tt}.compiled-$1 was not produced." >> ${tt}.compile-report
 		fi
 	else
 		compilelog=0
 		if [ -e ${tt}.compiled-$1 ] ; then
-			echo "Fatal Error: [${1}, unexpected output]"
-                        echo "${tt} compile failure yet ${tt}.compiled-$1 was still produced."
+			echo "Fatal Error: [${1}, unexpected output]" > ${tt}.compile-report
+                        echo "${tt} compile failure yet ${tt}.compiled-$1 was still produced." >> ${tt}.compile-report
                 else
-			echo "${1} compile time deficiency."
-			echo "${tt} failed to compile. Yet could with gcc & clang."
+			echo "${1} compile time deficiency. compilelog[${compilelog}]" > ${tt}.compile-report
+			echo "${tt} failed to compile. Yet could with gcc & clang." >> ${tt}.compile-report
                 fi
 	fi
 }
@@ -118,21 +118,28 @@ doit() {
 		d=${tt}.compile-log-rvpc
 		wid=39
 		page=120
+		echo "compilelog[${compilelog}]"
 		if [ "$compilelog" == "0" ] ; then
-			echo "${q} compile $q"
+			echo "${q}--------------compile--------------$q"
+			cat ${tt}.compile-report
+			echo "${q}-[compiler, compile time exit code]$q"
 			printcol
-			echo "${q}---------$q"
+			echo "${q}-----------------------------------$q"
 		fi
 		a=${tt}.run-log-gcc
                 b=${tt}.run-log-clang
                 c=${tt}.run-log-kcc
                 d=${tt}.run-log-rvpc
 		if [ "$runtimelog" == "0" ] ; then
-			echo "${q}   run   $q"
+			echo "${q}----------------run----------------$q"
+			cat ${tt}.runtime-report
+			echo "${q}---[compiler, runtime exit code]---$q"
 			printcol
-			echo "${q}---------$q"
+			echo "${q}-----------------------------------$q"
 		fi
 	fi
+	rm -f ${tt}.compile-report
+	rm -f ${tt}.runtime-report
 	delete gcc
 	delete clang
 	delete kcc
@@ -155,8 +162,12 @@ if [ ! "${have_clang}${have_gcc}${have_kcc}${have_rvpc}${have_parallel}" == "000
 	if [ ! "${have_parallel}" ] ; then echo "Need GNU parallel. try sudo apt -y install parallel." ; fi
 	exit 1
 fi
-if [ ! "$1" == "" ] ; then
-	find ${1} -name "*.c" | parallel --no-notice --eta --timeout 500 "doit {}"
+etaflag=""
+if [ "$2" == "-eta" ] ; then
+	etaflag="--eta"
+fi
+if [ ! "$1" == "" ] && [ -d "$1" ] ; then
+	find ${1} -name "*.c" | parallel --no-notice ${etaflag} --timeout 500 "doit {}"
 else
-	echo "usage: bash comparecompilers.sh ./path/to/dir/with/c/files/in/subfolders/"
+	echo "usage: bash comparecompilers.sh ./path/to/dir/with/c/files/in/subfolders/ [-eta]"
 fi
