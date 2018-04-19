@@ -58,25 +58,25 @@ report() {
 		if [ -e ${tt}.compiled-$1 ] ; then
 			run $1 ; run_result="$?"
 			if [ "$run_result" == "$2" ] ; then
-				: #echo "$1 compiled run of ${tt} matches with gcc & clang compiled runs."
+				echo "$1 compiled run of ${tt} matches with gcc & clang compiled runs."
 			else
 				runtimelog=0
-				echo "$1 runtime difference." > ${tt}.runtime-report
+				echo "$1 runtime difference." >> ${tt}.runtime-report
 				echo "${tt} returned [$2] when compiled with gcc & clang." >> ${tt}.runtime-report
 				echo "Yet it returned [$run_result] when compiled with $1." >> ${tt}.runtime-report
 			fi
 		else
 			compilelog=0
-			echo "Fatal Error: [${1}, missing output]" > ${tt}.compile-report
+			echo "Fatal Error: [${1}, missing output]" >> ${tt}.compile-report
 			echo "${tt} compiled successfully yet ${tt}.compiled-$1 was not produced." >> ${tt}.compile-report
 		fi
 	else
 		compilelog=0
 		if [ -e ${tt}.compiled-$1 ] ; then
-			echo "Fatal Error: [${1}, unexpected output]" > ${tt}.compile-report
+			echo "Fatal Error: [${1}, unexpected output]" >> ${tt}.compile-report
                         echo "${tt} compile failure yet ${tt}.compiled-$1 was still produced." >> ${tt}.compile-report
                 else
-			echo "${1} compile time deficiency. compilelog[${compilelog}]" > ${tt}.compile-report
+			echo "${1} compile time deficiency." >> ${tt}.compile-report
 			echo "${tt} failed to compile. Yet could with gcc & clang." >> ${tt}.compile-report
                 fi
 	fi
@@ -89,7 +89,7 @@ delete() {
 }
 doit() {
 	name=$(basename $1)
-	tt="./${name}"
+	tt="./pid$$-${name}"
 	cp $1 ${tt}
 	compilelog=1 ; runtimelog=1
         #printf "\n===[${name}]=========================\n"
@@ -100,6 +100,8 @@ doit() {
 			run "gcc" ; gcc_run_result="$?"
 			run "clang" ; clang_run_result="$?"
 			if [ "$gcc_run_result" == "$clang_run_result" ] ; then
+				rm -f ${tt}.compile-report
+				rm -f ${tt}.runtime-report
 				report "kcc" "$gcc_run_result"
 				report "rvpc" "$gcc_run_result"
 			fi
@@ -118,7 +120,6 @@ doit() {
 		d=${tt}.compile-log-rvpc
 		wid=39
 		page=120
-		echo "compilelog[${compilelog}]"
 		if [ "$compilelog" == "0" ] ; then
 			echo "${q}--------------compile--------------$q"
 			cat ${tt}.compile-report
