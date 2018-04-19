@@ -36,7 +36,12 @@ printcol() {
 }
 compile() {
 	echo "." > ${tt}.compile-log-$1
-	$1 -o ${tt}.compiled-$1 ${tt} &>> ${tt}.compile-log-$1 ; retval=$?
+	if [ "$1" == "kcc" ] ; then
+		flag="-frecover-all-errors"
+	else
+		flag=""
+	fi
+	$1 ${flag} -o ${tt}.compiled-$1 ${tt} &>> ${tt}.compile-log-$1 ; retval=$?
 	sed -i "1s/.*/[$1, $retval]\n/" ${tt}.compile-log-$1
 	return $retval
 }
