@@ -137,8 +137,21 @@ doit() {
 }
 p="====================================================="
 q="-----------------------------------------------------"
+which clang &> /dev/null ; have_clang="$?"
+which gcc &> /dev/null ; have_gcc="$?"
+which kcc &> /dev/null ; have_kcc="$?"
+which rvpc &> /dev/null ; have_rvpc="$?"
+which parallel &> /dev/null ; have_parallel="$?"
+if [ ! "${have_clang}${have_gcc}${have_kcc}${have_rvpc}${have_parallel}" == "00000" ] ; then
+	if [ ! "${have_clang}" ] ; then echo "Need clang. try sudo apt -y install clang" ; fi
+	if [ ! "${have_gcc}" ] ; then echo "Need gcc. try sudo apt -y install gcc" ; fi
+	if [ ! "${have_kcc}" ] ; then echo "Need kcc. Get rv-match from the runtimeverification website." ; fi
+	if [ ! "${have_rvpc}" ] ; then echo "Need rvpc. Get rv-predict from the runtimeverification website." ; fi
+	if [ ! "${have_parallel}" ] ; then echo "Need GNU parallel. try sudo apt -y install parallel." ; fi
+	exit 1
+fi
 if [ ! "$1" == "" ] ; then
-	find ${1} -name "*.c" | parallel --eta --timeout 500 "doit {}"
+	find ${1} -name "*.c" | parallel --no-notice --eta --timeout 500 "doit {}"
 else
 	echo "usage: bash comparecompilers.sh ./path/to/dir/with/c/files/in/subfolders/"
 fi
