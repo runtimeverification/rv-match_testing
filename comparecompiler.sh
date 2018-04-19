@@ -53,7 +53,7 @@ report() {
 		if [ -e ${tt}.compiled-$1 ] ; then
 			run $1 ; run_result="$?"
 			if [ "$run_result" == "$2" ] ; then
-				echo "$1 compiled run of ${tt} matches with gcc & clang compiled runs."
+				: #echo "$1 compiled run of ${tt} matches with gcc & clang compiled runs."
 			else
 				runtimelog=0
 				echo "$1 runtime difference."
