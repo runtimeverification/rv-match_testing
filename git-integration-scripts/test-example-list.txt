@@ -1,0 +1,9 @@
+curl
+https://github.com/curl/curl.gi
+00cda0f9b31e45512776670201f9ec2eec095338
+https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/curl/client.sh
+
+FFmpeg
+https://github.com/FFmpeg/FFmpeg.git
+acf70639fb534a4ae9b1e4c76153f0faa0bda190
+https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/FFmpeg/client.sh
