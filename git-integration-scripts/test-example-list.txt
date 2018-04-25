@@ -3,7 +3,7 @@ https://github.com/curl/curl.git
 00cda0f9b31e45512776670201f9ec2eec095338
 https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/curl/client.sh
 
-dhcpcd [to do]
+dhcpcd
 https://github.com/rsmarples/dhcpcd.git
 c80bb16819614b1c7b38dbefa8b4efc81755f138 # Tag v7.0.3
 https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/dhcpcd/client.sh
@@ -13,52 +13,52 @@ https://github.com/FFmpeg/FFmpeg.git
 acf70639fb534a4ae9b1e4c76153f0faa0bda190
 https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/FFmpeg/client.sh
 
-getty [to do]
+getty
 https://github.com/StarchLinux/getty.git
 a6c24ec43804588a3c35c9ed3325ed3086ddd056
 https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/getty/client.sh
 
-libuv [to do]
+libuv
 https://github.com/libuv/libuv.git
 719dfecf95b0c74af6494f05049e56d5771ebfae
 https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/libuv/client.sh
 
-luna [to do]
+luna
 https://github.com/tj/luna.git
 b892a047eacc3caec15c18827c8c57a328f0c4df
 https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/luna/client.sh
 
-mibench [to do]
+mibench
 https://github.com/embecosm/mibench.git
 0f3cbcf6b3d589a2b0753cfb9289ddf40b6b9ed8
 https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/mibench/client.sh
 
-netdata [to do]
+netdata
 https://github.com/firehol/netdata.git
 2bbde1ba150b0d6fb66cd01d94b26da0181fd45e
 https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/netdata/client.sh
 
-nnn [to do]
+nnn
 https://github.com/jarun/nnn.git
 7be0726164442a83f47e5a9a0cdf2db343832d23
 https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/nnn/client.sh
 
-nsd [to do]
+nsd
 https://github.com/NLnetLabs/nsd.git
 ee44df629568c7d01842cc8c56de1840825bf211
 https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/nsd/client.sh
 
-scrypt [to do]
+scrypt
 https://github.com/Tarsnap/scrypt.git
 4e4f88ad775fc2ea5e59f38e191ac6f5b3e375c7
 https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/scrypt/client.sh
 
-tmux [to do]
+tmux
 https://github.com/tmux/tmux.git
 cf782c4f546fb11f3157de7aecff85845b0dbed9
 https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/tmux/client.sh
 
-wget [to do]
+wget
 https://github.com/mirror/wget.git
 6aa6b669efbef62f60471c18e7fdef0206f92337
 https://raw.githubusercontent.com/runtimeverification/rv-match_testing/master/tests/wget/client.sh
