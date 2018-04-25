@@ -21,13 +21,14 @@ _build() {
     # Note: non-trivial linking
     # https://github.com/FRRouting/frr/issues/1834
     cd frr/
-    names[0]="bootstrap"  ; bash bootstrap.sh  |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
-    names[1]="configure"   ; ./configure CC=$compiler |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
-    names[2]="make"        ; make -j`nproc` |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
+    names[0]="bootstrap" ; bash bootstrap.sh        |& tee rv_build_0.txt ; results[0]="$?" ; postup 0
+    names[1]="configure" ; CC=clang ./configure     |& tee rv_build_1.txt ; results[1]="$?" ; postup 1
+    names[2]="make"      ; CC=${compiler} make -j`nproc`           |& tee rv_build_2.txt ; results[2]="$?" ; postup 2
 }
 
 _test() {
-    :
+    cd frr/tests/
+	python runtests.py
 }
 
 init
