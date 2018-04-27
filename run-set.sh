@@ -62,6 +62,7 @@ done
 echo "$currentscript Build number: ${BUILD_NUMBER}"
 if [ "$flagsfortests" == "-" ] ; then flagsfortests="" ; fi
 
+echo "arguments to run-set: $@"
 # Handle (set|project) argument
 isset="1"
 testname=$1
