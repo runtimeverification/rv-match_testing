@@ -33,11 +33,11 @@ while getopts ":rsatugpPbJ" opt; do
       ;;
     p ) echo $currentscript" prepare option selected."
         flagsfortests=$flagsfortests"p"
-	timeout="600"
       ;;
     P ) echo $currentscript" rv-predict option selected."
         rvpredict="0"
         flagsfortests=$flagsfortests"P"
+	timeout="600" # 10 minutes
       ;;
     b ) echo $currentscript" force build option selected."
         flagsfortests=$flagsfortests"b"

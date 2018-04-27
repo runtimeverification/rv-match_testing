@@ -152,7 +152,7 @@ waitmanage() {
 			waitstr="on the 'apt lists' lock"
 		fi
 		printf "\nWaiting ${waitstr} before ${1}."
-		sleep 2
+		sleep 5
 	done
 	fuser /var/lib/dpkg/lock      ; echo "     dpkg lock check: [$?]"
 	fuser /var/lib/apt/lists/lock ; echo "apt lists lock check: [$?]"

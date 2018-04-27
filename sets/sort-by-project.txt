@@ -1,8 +1,8 @@
-bind9-alt acceptance_extended predict_acceptance
-bind9 overminuteregression acceptance_extended acceptance_extended acceptance_and_regression predict_acceptance predict_acceptance crashless
+bind9-alt acceptance_extended predict_regression
+bind9 overminuteregression acceptance_extended acceptance_extended acceptance_and_regression predict_regression predict_acceptance crashless
 binutils-alt gcc_only
 binutils gcc_only acceptance
-bird acceptance predict_acceptance predict_temp
+bird predict_regression acceptance predict_temp
 bitcoin cpp
 bogosort interesting_local unit_acceptance predict_unit_regression acceptance_and_regression quickset predict_regression interesting fiveminuteset regression minuteset gcc_unit_acceptance
 cFE interesting_local unit_acceptance overminuteregression acceptance_and_regression testable predict_unit_acceptance predict_regression interesting regression gcc_unit_acceptance predict_temp
@@ -10,8 +10,9 @@ cineform acceptance
 collections-c regression unit_regression
 coreutils acceptance_extended
 cpp-reduced
-curl-tar
-curl regression_extended unit_acceptance overminuteregression acceptance_and_regression gcc_only gcc_unit_acceptance
+cppunit cpp
+curl-tar acceptance_extended
+curl regression_extended unit_acceptance overminuteregression acceptance_extended acceptance_and_regression gcc_only gcc_unit_acceptance
 curve25519 interesting_local acceptance_and_regression interesting acceptance
 darknet acceptance_and_regression acceptance
 dhcpcd predict_unit_regression acceptance_and_regression predict_regression fiveminuteset regression unit_regression minuteset
@@ -25,8 +26,9 @@ gold acceptance_extended predict_acceptance_extended
 h3 acceptance_and_regression acceptance
 hadoop
 hashcat crashless
+helloworld-cpp cpp
 helloworld-java
-helloworld interesting_local predict_unit_regression acceptance_and_regression unit_general quickset predict_regression openssltesting interesting fiveminuteset regression unit_regression minuteset
+helloworld interesting_local cpp predict_unit_regression acceptance_and_regression unit_general quickset predict_regression openssltesting interesting fiveminuteset regression unit_regression minuteset
 hostapd overminuteregression acceptance_and_regression fiveminuteset regression
 htop overminuteregression fiveminuteset regression
 JulietTestSuite-alt
@@ -44,6 +46,7 @@ mawk acceptance
 mbedtls acceptance_and_regression acceptance
 meltdown acceptance_and_regression acceptance
 mibench regression
+modern-cpp-tutorial cpp
 musl acceptance_and_regression acceptance
 netdata overminuteregression acceptance_and_regression regression
 nnn regression
@@ -63,14 +66,17 @@ Remotery acceptance_and_regression fiveminuteset regression minuteset
 Reptile acceptance_and_regression
 scrypt interesting_local unit_acceptance acceptance_and_regression interesting fiveminuteset regression minuteset
 spin acceptance_and_regression unit_general testable predict_unit_acceptance predict_regression interesting fiveminuteset regression unit_regression minuteset
+swift cpp
 swoole acceptance
-systemc-2.3 cpp acceptance_extended
-SystemC cpp acceptance_extended
+systemc-2.3 cpp
+SystemC cpp
 tcpdump interesting_local unit_acceptance overminuteregression acceptance_and_regression predict_unit_acceptance interesting fiveminuteset regression predict_acceptance_extended gcc_unit_acceptance
+tensorflow cpp
 tmux overminuteregression acceptance_and_regression fiveminuteset regression
 tomcat
 ToyotaITC gcc_only
-verge cpp gcc_only
+verge cpp
 vim regression_extended overminuteregression acceptance_and_regression
 wget interesting_local overminuteregression acceptance_and_regression interesting regression
 wrk acceptance_and_regression acceptance
+yue cpp
