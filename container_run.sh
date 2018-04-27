@@ -11,81 +11,27 @@ stop_container="0"
 source_container="match-testing-xenial-source"
 oldmachine="1"
 persistent="1"
-while getopts ":rsatdgeEqpPTobJ" opt; do
-  hadflag="0"
-  case ${opt} in
-    r ) echo $currentscript" regression option selected."
-        guest_script_flags=$guest_script_flags"r"
-      ;;
-    s ) echo $currentscript" status option selected."
-        guest_script_flags=$guest_script_flags"s"
-      ;;
-    a ) echo $currentscript" acceptance option selected."
-        guest_script_flags=$guest_script_flags"a"
-      ;;
-    t ) echo $currentscript" unit test option selected."
-        guest_script_flags=$guest_script_flags"t"
-      ;;
-    d ) echo $currentscript" development option selected."
-        guest_script_flags=$guest_script_flags"d"
-      ;;
-    g ) echo $currentscript" gcc only option selected."
-        guest_script_flags=$guest_script_flags"g"
-      ;;
-    e ) echo $currentscript" use existing container option selected."
-        use_existing_container="0"
-      ;;
-    E ) echo $currentscript" leave container alive option selected."
-        stop_container="1"
-      ;;
-    q ) echo $currentscript" quick (don't update rv-match) option selected."
-        guest_script_flags=$guest_script_flags"q"
-      ;;
-    p ) echo $currentscript" prepare option selected."
-        guest_script_flags=$guest_script_flags"p"
-      ;;
-    P ) echo $currentscript" rv-predict option selected."
-        guest_script_flags=$guest_script_flags"P"
-      ;;
-    T ) echo $currentscript" Trusty option selected."
-        source_container="match-testing-trusty-source"
-        guest_script_flags=$guest_script_flags"T"
-      ;;
-    o ) echo $currentscript" other machine option selected."
-        guest_script_flags=$guest_script_flags"o"
-        oldmachine="0"
-      ;;
-    b ) echo $currentscript" force build option selected."
-        guest_script_flags=$guest_script_flags"b"
-      ;;
-    J ) echo $currentscript" use persistent container."
-        guest_script_flags=$guest_script_flags"J"
-        persistent="0"
-      ;;
-    \? ) echo "Usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-e] [-E] [-q] [-p] [-P] [-T] [-o] [-b] [-J]"
-         echo " -r regression"
-         echo " -s status"
-         echo " -a acceptance"
-         echo " -t unit tests"
-         echo " -d development"
-         echo " -g gcc only"
-         echo " -e use existing container"
-         echo " -E leave container alive"
-         echo " -q don't update rv-match"
-         echo " -p prepare only"
-         echo " -P rv-predict"
-         echo " -T Trusty"
-         echo " -o other machine"
-         echo " -b force build"
-         echo " -J persistent"
-      ;;
-  esac
+while getopts ":eEToJ" opt; do
+	hadflag="0"
+	case ${opt} in
+                e )
+                        use_existing_container=0
+                        ;;
+                E )
+                        stop_container=1
+                        ;;
+                T )
+                        source_container="match-testing-trusty-source"
+                        ;;
+                o)
+                        oldmachine=0
+                        ;;
+                J)
+                        persistent=0
+                        ;;
+        esac
 done
-echo "$currentscript Build number: ${BUILD_NUMBER}"
-if [ "$guest_script_flags" == " -" ] ; then guest_script_flags="" ; fi
-if [ "$hadflag" == "0" ] ; then flag=$2 ; else flag=$1 ; fi
-guest_script_flags="$guest_script_flags $flag"
-guest_script=$guest_script$guest_script_flags
+guest_script="$guest_script $@"
 
 # Copy, boot up, run guest script on, and shut down container
 if [ "$oldmachine" == "0" ] ; then

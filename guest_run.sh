@@ -17,69 +17,36 @@ selfunittests="0"
 quickoption="1"
 echo "========= Beginning container guest scripts."
 while getopts ":rsatdgqpPobJ" opt; do
-  hadflag="0"
-  case ${opt} in
-    r ) echo $currentscript" regression option selected."
-        exportfile="regression"
-        runsetparams=$runsetparams"r"
-      ;;
-    s ) echo $currentscript" status option selected."
-        exportfile="status"
-        runsetparams=$runsetparams"s"
-      ;;
-    a ) echo $currentscript" acceptance option selected."
-        exportfile="acceptance"
-        runsetparams=$runsetparams"a"
-      ;;
-    t ) echo $currentscript" unit test option selected."
-        runsetparams=$runsetparams"t"
-        unittestsetprefix="unit_"
-      ;;
-    d ) echo $currentscript" development option selected."
-        development_checkout_check="1"
-      ;;
-    g ) echo $currentscript" gcc only option selected."
-        runsetparams=$runsetparams"g"
-        reinstallmatch="1"
-      ;;
-    q ) echo $currentscript" quick (skip updating rv-tools & self unit tests) option selected."
-        reinstallmatch="1"
-        selfunittests="1"
-        quickoption="0"
-      ;;
-    p ) echo $currentscript" prepare option selected."
-        runsetparams=$runsetparams"p"
-      ;;
-    P ) echo $currentscript" rv-predict option selected."
-        runsetparams=$runsetparams"P"
-        rvpredict="0"
-        reinstallmatch="1"
-      ;;
-    o ) echo $currentscript" other option selected."
-        runsetparams=$runsetparams"o"
-        othermachine="0"
-      ;;
-    b ) echo $currentscript" force build option selected."
-        runsetparams=$runsetparams"b"
-      ;;
-    J ) echo $currentscript" persistent option selected."
-        runsetparams=$runsetparams"J"
-      ;;
-    \? ) echo $currentscript" usage: cmd [-r] [-s] [-a] [-t] [-d] [-g] [-q] [-p] [-P] [-o] [-b] [-J]"
-         echo " -r regression"
-         echo " -s status"
-         echo " -a acceptance"
-         echo " -t unit tests"
-         echo " -d development"
-         echo " -g gcc only"
-         echo " -q don't update rv-match"
-         echo " -p prepare only"
-         echo " -P rv-predict"
-         echo " -o other"
-         echo " -b force build"
-         echo " -J persistent"
-      ;;
-  esac
+	hadflag="0"
+	case ${opt} in
+                r )
+                        exportfile="regression"
+                        ;;
+                a )
+                        exportfile="acceptance"
+                        ;;
+                t )
+                        unittestsetprefix="unit_"
+                        ;;
+                d)
+                        development_checkout_check=1
+                        ;;
+                g)
+                        reinstallmatch=1
+                        ;;
+                q)
+                        reinstallmatch=1
+                        selfunittests=1
+                        quickoption=0
+                        ;;
+                P)
+                        rvpredict=0
+                        reinstallmatch=1
+                        ;;
+                o)
+                        othermachine=0
+                        ;;
+        esac
 done
 
 echo "$currentscript Build number: ${BUILD_NUMBER}"
@@ -307,7 +274,7 @@ else
 fi
 
 # Run test script, where most of the work happens
-cd /root/rv-match_testing && bash run-set.sh$runsetparams
+cd /root/rv-match_testing && bash "run-set.sh $@"
 
 # Container copies results from itself to host
 echo "Container results are in $exportfile.xml:"
