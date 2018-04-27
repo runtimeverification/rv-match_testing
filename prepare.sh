@@ -317,6 +317,7 @@ prep_build() {
         unset names
         starttime=`date +%s.%N`
         kcc -profile x86_64-linux-gcc-glibc
+	export RV_MATCH_JSON_REPORT=$build_json
         export OCAMLRUNPARAM=b
         intervalstarttime="$starttime"
         names[0]="configure success"
@@ -408,6 +409,7 @@ prep_test() {
 	fi
         set -o pipefail
         unset test_success
+	export RV_MATCH_JSON_REPORT=$test_json
         starttime=`date +%s.%N`
         intervalstarttime="$starttime"
         cd $unit_test_dir && increment="0" && _test
