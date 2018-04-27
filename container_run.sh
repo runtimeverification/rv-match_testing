@@ -161,12 +161,12 @@ else
 	fi
         echo "=== Second listing:"
         lxc list
-        echo "=== Starting:"
-        lxc start $container
-        echo "=== Third listing:"
     else
         echo "Attaching to the existing container, $container, in:"
     fi
+    echo "=== Starting:"
+    lxc start $container
+    echo "=== Third listing:"
     lxc list
     echo "=== Source path:"
     pwd

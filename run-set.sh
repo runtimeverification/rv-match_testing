@@ -163,6 +163,8 @@ while read line; do
             test_json_perm="$(pwd)/logs/$logdate/${line}-test.json"
             report_output_build="$(pwd)/logs/$logdate/${line}-build.out"
             report_output_test="$(pwd)/logs/$logdate/${line}-test.out"
+            build_html="$(pwd)/logs/$logdate/${line}-build-html" ; mkdir $build_html
+            test_html="$(pwd)/logs/$logdate/${line}-test-html" ; mkdir $test_html
             rm -f $json_out ; touch $json_out ; export json_out
         fi
         touch $log_output_build ; touch $log_output_test ; touch $build_json ; touch $test_json
@@ -187,8 +189,14 @@ while read line; do
         head -n`grep -n "=========================" $report_output | grep -Eo '^[^:]+'` $report_output
         cp $test_json $test_json_perm
         cp $build_json $build_json_perm
+	echo "sudo rv-html-report $build_json -o $build_html ; chmod a+rw $build_json"
+	echo "sudo rv-html-report $test_json -o $test_html ; chmod a+rw $test_json"
         sudo rv-html-report $build_json -o $build_html ; chmod a+rw $build_json
         sudo rv-html-report $test_json -o $test_html ; chmod a+rw $test_json
+	if [ ! -d /mnt/jenkins/logs/$logdate ] ; then
+		if [ -e $build_html/index.html ] ; then echo "`nohup firefox $build_html/index.html &`" ; fi
+		if [ -e $test_html/index.html ] ; then echo "`nohup firefox $test_html/index.html &`" ; fi
+	fi
     fi
 done < $whitelistpath
 echo "==== tests finished at $(date)"
