@@ -7,6 +7,7 @@ testsfolder="tests"
 flagsfortests="-"
 gcconly="1"
 rvpredict="1"
+timeout="43200" # 12 hours
 while getopts ":rsatugpPbJ" opt; do
   case ${opt} in
     r ) echo $currentscript" regression option selected."
@@ -32,6 +33,7 @@ while getopts ":rsatugpPbJ" opt; do
       ;;
     p ) echo $currentscript" prepare option selected."
         flagsfortests=$flagsfortests"p"
+	timeout="600"
       ;;
     P ) echo $currentscript" rv-predict option selected."
         rvpredict="0"
@@ -168,9 +170,9 @@ while read line; do
         echo "     logged at $log_output"
         set -e ; rm -f "$testsfolder/$line/$exportfile.xml" ; set +e # prevents a false test report
         if [ "$isset" == "0" ] ; then
-            bash timeout.sh -t 43200 bash "$testsfolder/$line/test.sh" "$flagsfortests" &> $log_output
+            bash timeout.sh -t $timeout bash "$testsfolder/$line/test.sh" "$flagsfortests" &> $log_output
         else
-            bash timeout.sh -t 43200 bash "$testsfolder/$line/test.sh" "$flagsfortests" |& tee $log_output
+            bash timeout.sh -t $timeout bash "$testsfolder/$line/test.sh" "$flagsfortests" |& tee $log_output
         fi
     else
         echo "Status option was selected, so the tests are not being run right now."

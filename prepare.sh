@@ -376,7 +376,7 @@ prep_extract_test() {
                     print=$print$'\nTest log tail: \n'$(tail -20 rv_out_$t.txt)
                 fi
                 print=$print$'\n}'
-                printf "<![CDATA[%s]]> $print" >> $report_file
+                printf "<![CDATA[%s]]>" "$print" >> $report_file
                 echo '</error>' >> $report_file
             fi
             echo '</testcase>' >> $report_file
