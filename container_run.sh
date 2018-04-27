@@ -31,7 +31,6 @@ while getopts ":eEToJ" opt; do
                         ;;
         esac
 done
-guest_script="$guest_script $@"
 
 # Copy, boot up, run guest script on, and shut down container
 if [ "$oldmachine" == "0" ] ; then
@@ -124,7 +123,7 @@ else
     echo "=== Exec:"
     echo "$currentscript: '$guest_script'"
     lxc config set $container environment.BUILD_NUMBER "${BUILD_NUMBER}"
-    lxc exec $container -- bash -c "/mnt/jenkins/$guest_script"
+    lxc exec $container -- bash -c "/mnt/jenkins/$guest_script" "$@"
     echo "=== End Exec"
     if [ "$stop_container" == "0" ] ; then
         echo "=== Stopping $container"

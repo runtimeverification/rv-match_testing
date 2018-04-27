@@ -274,7 +274,7 @@ else
 fi
 
 # Run test script, where most of the work happens
-cd /root/rv-match_testing && bash "run-set.sh $@"
+cd /root/rv-match_testing && bash run-set.sh "$@"
 
 # Container copies results from itself to host
 echo "Container results are in $exportfile.xml:"

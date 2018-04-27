@@ -31,4 +31,4 @@ if [ "$useoldmachine" == "0" ] ; then
     bash copy_kcc_from_rv-match-master_to_jenkins_workspace.sh
 fi
 echo "$currentscript Build number: ${BUILD_NUMBER}"
-bash "container_run.sh $@"
+bash container_run.sh "$@"
