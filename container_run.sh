@@ -12,6 +12,7 @@ stop_container="0"
 source_container="match-testing-xenial-source"
 oldmachine="1"
 persistent="1"
+echo "DEBUGG 1 $@"
 while getopts ":eEToJ" opt; do
 	hadflag="0"
 	case ${opt} in
@@ -32,7 +33,7 @@ while getopts ":eEToJ" opt; do
                         ;;
         esac
 done
-
+echo "DEBUGG 2 $@"
 # Copy, boot up, run guest script on, and shut down container
 if [ "$oldmachine" == "0" ] ; then
     # Branch for lxc, old machine containerization
@@ -85,6 +86,7 @@ if [ "$oldmachine" == "0" ] ; then
     lxc-ls
     lxc-attach -n $container -- su -l -c "/mnt/jenkins/$guest_script"
 else
+	echo "DEBUGG 3 $@"
     # Branch for lxd, new machine containerization
 
     lxc info $container &> /dev/null ; container_exists="$?"
@@ -110,6 +112,7 @@ else
     else
         echo "Attaching to the existing container, $container, in:"
     fi
+	echo "DEBUGG 4 $@"
     echo "=== Starting:"
     lxc start $container
     echo "=== Third listing:"
