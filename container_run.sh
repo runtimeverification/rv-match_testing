@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "`basename "$0"` $@"
 currentscript="container_run.sh"
 jenkins_folder_name="$(basename `pwd`)"
 hyphen='-'

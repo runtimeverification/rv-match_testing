@@ -1,6 +1,6 @@
 #!/bin/bash
+echo "`basename "$0"` $@"
 exportfile="report"
-currentscript="jenkins_run.sh"
 hadflag="1"
 usetrusty="1"
 useoldmachine="1"
@@ -30,5 +30,4 @@ chmod a+rw logs/
 if [ "$useoldmachine" == "0" ] ; then
     bash copy_kcc_from_rv-match-master_to_jenkins_workspace.sh
 fi
-echo "$currentscript Build number: ${BUILD_NUMBER}"
 bash container_run.sh "$@"

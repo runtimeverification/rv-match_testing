@@ -1,5 +1,5 @@
 #!/bin/bash
-
+echo "`basename "$0"` $@"
 # Handle options
 currentscript="run-set.sh"
 exportfile="report"

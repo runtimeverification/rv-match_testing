@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "`basename "$0"` $@"
 currentscript="guest_run.sh"
 hostspace="/mnt/jenkins"
 # This is the initial script ran from inside the lxc/lxd container.
