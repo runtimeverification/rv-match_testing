@@ -124,9 +124,10 @@ else
     echo "$currentscript: '$guest_script'"
     lxc config set $container environment.BUILD_NUMBER "${BUILD_NUMBER}"
     echo "Parameters being passed:"
-	echo 'lxc exec $container -- bash -c "/mnt/jenkins/$guest_script $@'
-	echo "lxc exec $container -- bash -c \"/mnt/jenkins/$guest_script $@\""
-    lxc exec $container -- bash -c "/mnt/jenkins/$guest_script $@"
+    guest_script="${guest_script} $@"
+	echo 'lxc exec $container -- bash -c "/mnt/jenkins/$guest_script'
+	echo "lxc exec $container -- bash -c \"/mnt/jenkins/$guest_script\""
+    lxc exec $container -- bash -c "/mnt/jenkins/$guest_script"
     echo "=== End Exec"
     if [ "$stop_container" == "0" ] ; then
         echo "=== Stopping $container"
