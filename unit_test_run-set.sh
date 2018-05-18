@@ -325,4 +325,4 @@ rm "results/report.xml"
 #rm "results/acceptance.xml"
 #rm "results/regression.xml"
 
-exit $returnvalue
+exit 0
