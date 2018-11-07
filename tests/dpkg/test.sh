@@ -13,11 +13,11 @@ _dependencies() {
 
 _download() {
     strtdir=$(pwd)
-    git clone git://anonscm.debian.org/dpkg/dpkg.git
+    git clone https://salsa.debian.org/dpkg-team/dpkg.git
     cd dpkg/
     git checkout b9798daaa596ad5d539bcdd5ca89de1cb0b81697
     cd $strtdir
-    git clone https://anonscm.debian.org/git/dpkg/dpkg-tests.git
+    git clone https://salsa.debian.org/dpkg-team/dpkg-tests.git
     cd dpkg-tests/
     git checkout 10b721dc31872a1f561e2a25ae2331d1add9bfd3
 }
